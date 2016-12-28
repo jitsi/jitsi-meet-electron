@@ -59,8 +59,7 @@ const dialogFactory = new DialogFactory();
 /**
  * Boolean variable that indicates whether the onloaded function was already
  * called.
- * NOTE: Used to not call the onload method more than once during reloads of
- * the iframe or location changes.
+ * NOTE: Used to not initialize more thean once some objects.
  */
 let loaded = false;
 
@@ -71,11 +70,11 @@ let loaded = false;
  * Initializes remote control.
  */
 function onload() {
+    loaded = true;
+    setupScreenSharingForWindow(iframe.contentWindow);
     if(loaded) {
         return;
     }
-    loaded = true;
-    setupScreenSharingForWindow(iframe.contentWindow);
     channel = postis({
         window: iframe.contentWindow,
         windowForEventListening: window

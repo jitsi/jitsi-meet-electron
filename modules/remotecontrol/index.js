@@ -1,4 +1,6 @@
 let robot = require("robotjs");
+const constants = require("../../modules/remotecontrol/constants");
+const {EVENT_TYPES, PERMISSIONS_ACTIONS, REMOTE_CONTROL_EVENT_TYPE} = constants;
 
 /**
  * Attaching to the window for debug purposes.
@@ -60,6 +62,45 @@ class RemoteControl {
     }
 
     /**
+     * Initializes the remote control functionality.
+     */
+    init(channel, windowManager) {
+        this.windowManager = windowManager;
+        this.channel = channel;
+        this.start();
+        this.channel.ready(() => {
+            this.channel.listen(REMOTE_CONTROL_EVENT_TYPE,
+                event => this.onRemoteControlEvent(event));
+            this.sendEvent({type: EVENT_TYPES.supported});
+        });
+    }
+
+    /**
+     * Handles permission requests from Jitsi Meet.
+     * @param {object} userInfo - information about the user that has requested
+     * permissions:
+     * @param {string} userInfo.displayName - display name
+     * @param {string} userInfo.userJID - the JID of the user.
+     * @param {string} userInfo.userId - the user id (the resource of the JID)
+     */
+    handlePermissionRequest(userInfo) {
+        this.windowManager.requestRemoteControlPermissions(userInfo)
+            .then(result => {
+                this.sendEvent({
+                    type: EVENT_TYPES.permissions,
+                    action: result ? PERMISSIONS_ACTIONS.grant
+                        : PERMISSIONS_ACTIONS.deny,
+                    userId: userInfo.userId
+                });
+                if(result) {
+                    this.start();
+                }
+            }).catch(e => {
+                console.error(e);
+            });
+    }
+
+    /**
      * Starts processing the events.
      */
     start() {
@@ -77,12 +118,13 @@ class RemoteControl {
      * Executes the passed event.
      * @param {Object} event the remote-control-event.
      */
-    executeRemoteControlEvent(event) {
-        if(!this.started) {
+    onRemoteControlEvent(event) {
+
+        if(!this.started && event.type !== EVENT_TYPES.permissions) {
             return;
         }
         switch(event.type) {
-            case "mousemove":
+            case EVENT_TYPES.mousemove: {
                 const x = event.x * width, y = event.y * height;
                 if(mouseButtonStatus === "down") {
                     robot.dragMouse(x, y);
@@ -90,20 +132,23 @@ class RemoteControl {
                     robot.moveMouse(x, y);
                 }
                 break;
-            case "mousedown":
-            case "mouseup":
+            }
+            case EVENT_TYPES.mousedown:
+            case EVENT_TYPES.mouseup: {
                 mouseButtonStatus = MOUSE_ACTIONS_FROM_EVENT_TYPE[event.type];
                 robot.mouseToggle(
                     mouseButtonStatus,
                     (event.button ? MOUSE_BUTTONS[event.button] : undefined));
                 break;
-            case "mousedblclick":
+            }
+            case EVENT_TYPES.mousedblclick: {
                 robot.mouseClick(
                     (event.button ? MOUSE_BUTTONS[event.button] : undefined),
                     true);
                 break;
-            case "mousescroll":
-                //FIXME: implement horizontal scrolling 
+            }
+            case EVENT_TYPES.mousescroll:{
+                //FIXME: implement horizontal scrolling
                 if(event.y !== 0) {
                     robot.scrollMouse(
                         Math.abs(event.y),
@@ -111,14 +156,39 @@ class RemoteControl {
                     );
                 }
                 break;
-            case "keydown":
-            case "keyup":
+            }
+            case EVENT_TYPES.keydown:
+            case EVENT_TYPES.keyup: {
                 robot.keyToggle(event.key,
                     KEY_ACTIONS_FROM_EVENT_TYPE[event.type], event.modifiers);
                 break;
+            }
+            case EVENT_TYPES.permissions: {
+                if(event.action !== PERMISSIONS_ACTIONS.request)
+                    break;
+
+                //Open Dialog and answer
+                this.handlePermissionRequest({
+                    userId: event.userId,
+                    userJID: event.userJID,
+                    displayName: event.displayName});
+                break;
+            }
+            case EVENT_TYPES.stop: {
+                this.stop();
+                break;
+            }
             default:
                 console.error("Unknown event type!");
         }
+    }
+
+    /**
+     * Sends remote control event to the controlled participant.
+     * @param {Object} event the remote control event.
+     */
+    sendEvent(event) {
+        this.channel.send({method: REMOTE_CONTROL_EVENT_TYPE, params: event});
     }
 }
 

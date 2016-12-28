@@ -32,7 +32,7 @@
     "postis": "^2.2.0"
   },
   "devDependencies": {
-    "electron": "1.4.7",
+    "electron": "1.4.13",
     "eslint": ">=3",
     "eslint-plugin-jsdoc": "*",
     "precommit-hook": "3.0.0"

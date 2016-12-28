@@ -2,6 +2,7 @@ const remoteControl = require("../../modules/remotecontrol");
 let postis = require("postis");
 const setupScreenSharingForWindow = require("../../modules/screensharing");
 const config = require("../../config.js");
+const {dialog} = require('electron').remote;
 
 /**
  * The postis channel.
@@ -18,15 +19,50 @@ iframe.onload = onload;
 document.body.appendChild(iframe);
 
 /**
- * Initializes the remote control functionality.
+ * Factory for dialogs.
  */
-function initRemoteControl() {
-    remoteControl.start();
-    channel.ready(() =>
-        channel.listen('remote-control-event',
-            event => remoteControl.executeRemoteControlEvent(event))
-    );
+class DialogFactory {
+    /**
+     * Creates new instance
+     * @constructor
+     */
+    constructor() { }
+
+    /**
+     * Shows message box dialog for request for remote control permissions
+     * @param {object} userInfo - information about the user that has sent the
+     * request:
+     * @param {string} userInfo.displayName - display name
+     * @param {string} userInfo.userJID - the JID of the user.
+     */
+    requestRemoteControlPermissions(userInfo) {
+        return new Promise( resolve =>
+            dialog.showMessageBox({
+                type: "question",
+                buttons: ["Yes", "No"],
+                defaultId: 0,
+                title: "Request for permission for remote control",
+                message: "Would you like to allow " + userInfo.displayName
+                + " to remotely control your desktop.",
+                detail: "userId: " + userInfo.userJID,
+                cancelId: 1
+            }, response => resolve(response === 0? true : false))
+        );
+    }
 }
+
+/**
+ * Dialog factory instance.
+ */
+const dialogFactory = new DialogFactory();
+
+/**
+ * Boolean variable that indicates whether the onloaded function was already
+ * called.
+ * NOTE: Used to not call the onload method more than once during reloads of
+ * the iframe or location changes.
+ */
+let loaded = false;
 
 /**
  * Handles loaded event for iframe:
@@ -35,10 +71,14 @@ function initRemoteControl() {
  * Initializes remote control.
  */
 function onload() {
+    if(loaded) {
+        return;
+    }
+    loaded = true;
     setupScreenSharingForWindow(iframe.contentWindow);
     channel = postis({
         window: iframe.contentWindow,
         windowForEventListening: window
     });
-    initRemoteControl();
+    remoteControl.init(channel, dialogFactory);
 }

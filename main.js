@@ -1,3 +1,4 @@
+/* global __dirname, process */
 //Electron includes
 const electron = require("electron");
 const APP = electron.app;

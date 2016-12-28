@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "description": "Electron application for Jitsi Meet",
   "main": "main.js",
+  "productName": "Jitsi Meet",
   "scripts": {
     "start": "electron .",
     "build": "./electron_npm_rebuild",
     "clean": "rm -r node_modules .electron-gyp",
     "lint": "eslint .",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "pack": "electron-packager ."
   },
   "pre-commit": [
     "lint"
@@ -35,6 +37,7 @@
     "electron": "1.4.13",
     "eslint": ">=3",
     "eslint-plugin-jsdoc": "*",
-    "precommit-hook": "3.0.0"
+    "precommit-hook": "3.0.0",
+    "electron-packager": "*"
   }
 }

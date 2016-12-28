@@ -1,3 +1,3 @@
 module.exports = {
-    jitsiMeetURL: "https://hristo.jitsi.net/"
+    jitsiMeetURL: "https://meet.jit.si/"
 };

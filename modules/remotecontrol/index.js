@@ -67,12 +67,20 @@ class RemoteControl {
     init(channel, windowManager) {
         this.windowManager = windowManager;
         this.channel = channel;
-        this.start();
         this.channel.ready(() => {
             this.channel.listen(REMOTE_CONTROL_EVENT_TYPE,
                 event => this.onRemoteControlEvent(event));
             this.sendEvent({type: EVENT_TYPES.supported});
         });
+    }
+
+    /**
+     * Disposes the remote control functionality.
+     */
+    dispose() {
+        this.windowManager = null;
+        this.channel = null;
+        this.stop();
     }
 
     /**
@@ -82,6 +90,8 @@ class RemoteControl {
      * @param {string} userInfo.displayName - display name
      * @param {string} userInfo.userJID - the JID of the user.
      * @param {string} userInfo.userId - the user id (the resource of the JID)
+     * @param {boolean} userInfo.screenSharing - true if the screen sharing
+     * is started.
      */
     handlePermissionRequest(userInfo) {
         this.windowManager.requestRemoteControlPermissions(userInfo)
@@ -119,7 +129,6 @@ class RemoteControl {
      * @param {Object} event the remote-control-event.
      */
     onRemoteControlEvent(event) {
-
         if(!this.started && event.type !== EVENT_TYPES.permissions) {
             return;
         }
@@ -171,7 +180,9 @@ class RemoteControl {
                 this.handlePermissionRequest({
                     userId: event.userId,
                     userJID: event.userJID,
-                    displayName: event.displayName});
+                    displayName: event.displayName,
+                    screenSharing: event.screenSharing
+                });
                 break;
             }
             case EVENT_TYPES.stop: {

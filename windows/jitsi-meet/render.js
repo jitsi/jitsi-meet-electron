@@ -34,16 +34,24 @@ class DialogFactory {
      * request:
      * @param {string} userInfo.displayName - display name
      * @param {string} userInfo.userJID - the JID of the user.
+     * @param {boolean} userInfo.screenSharing - true if the screen sharing
+     * is started.
      */
     requestRemoteControlPermissions(userInfo) {
         return new Promise( resolve =>
             dialog.showMessageBox({
                 type: "question",
-                buttons: ["Yes", "No"],
+                buttons: [
+                    "Yes",
+                    "No"
+                ],
                 defaultId: 0,
                 title: "Request for permission for remote control",
                 message: "Would you like to allow " + userInfo.displayName
-                + " to remotely control your desktop.",
+                    + " to remotely control your desktop?"
+                    + (userInfo.screenSharing ? ""
+                        : "\nNote: If you press \"Yes\" the screen sharing "
+                            + "will start!"),
                 detail: "userId: " + userInfo.userJID,
                 cancelId: 1
             }, response => resolve(response === 0? true : false))
@@ -57,27 +65,26 @@ class DialogFactory {
 const dialogFactory = new DialogFactory();
 
 /**
- * Boolean variable that indicates whether the onloaded function was already
- * called.
- * NOTE: Used to not initialize more thean once some objects.
- */
-let loaded = false;
-
-/**
  * Handles loaded event for iframe:
  * Enables screen sharing functionality to the iframe webpage.
  * Initializes postis.
  * Initializes remote control.
  */
 function onload() {
-    loaded = true;
     setupScreenSharingForWindow(iframe.contentWindow);
-    if(loaded) {
-        return;
-    }
+    iframe.contentWindow.onunload = onunload;
     channel = postis({
         window: iframe.contentWindow,
         windowForEventListening: window
     });
     remoteControl.init(channel, dialogFactory);
+}
+
+/**
+ * Clears the postis objects and remoteControl.
+ */
+function onunload() {
+    channel.destroy();
+    channel = null;
+    remoteControl.dispose();
 }

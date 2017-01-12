@@ -6,11 +6,11 @@
   "productName": "Jitsi Meet",
   "scripts": {
     "start": "electron .",
-    "build": "./electron_npm_rebuild",
-    "clean": "rm -r node_modules .electron-gyp",
+    "clean": "rm -rf node_modules",
     "lint": "eslint .",
-    "validate": "npm ls",
-    "pack": "electron-packager ."
+    "pack": "electron-packager .",
+    "postinstall": "electron-rebuild",
+    "validate": "npm ls"
   },
   "pre-commit": [
     "lint"
@@ -35,9 +35,10 @@
   },
   "devDependencies": {
     "electron": "1.4.13",
+    "electron-packager": "*",
+    "electron-rebuild": "^1.5.6",
     "eslint": ">=3",
     "eslint-plugin-jsdoc": "*",
-    "precommit-hook": "3.0.0",
-    "electron-packager": "*"
+    "precommit-hook": "3.0.0"
   }
 }

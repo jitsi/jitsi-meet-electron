@@ -8,7 +8,7 @@ from config.js
 
 ## Building the sources
 ```bash
-npm run build
+npm install
 ```
 
 ## Statring the application

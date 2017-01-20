@@ -199,7 +199,10 @@ class RemoteControl {
      * @param {Object} event the remote control event.
      */
     sendEvent(event) {
-        this.channel.send({method: REMOTE_CONTROL_EVENT_TYPE, params: event});
+        this.channel.send({
+            method: REMOTE_CONTROL_EVENT_TYPE,
+            params: [event]
+        });
     }
 }
 

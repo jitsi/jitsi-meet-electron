@@ -45,7 +45,8 @@ function setAPPListeners () {
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
 function createJitsiMeetWindow () {
-    jitsiMeetWindow = new BrowserWindow({width: 800, height: 600});
+    jitsiMeetWindow =
+        new BrowserWindow({width: 800, height: 600, titleBarStyle: 'hidden'});
     jitsiMeetWindow.loadURL(indexURL);
 
     jitsiMeetWindow.on("closed", () => {

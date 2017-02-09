@@ -5,6 +5,7 @@
   "main": "main.js",
   "productName": "Jitsi Meet",
   "scripts": {
+    "build": "npm install", 
     "start": "electron .",
     "clean": "rm -rf node_modules",
     "lint": "eslint .",

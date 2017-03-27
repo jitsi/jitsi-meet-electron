@@ -1,3 +1,4 @@
+/* global process */
 const remoteControl = require("../../modules/remotecontrol");
 let postis = require("postis");
 const setupScreenSharingForWindow = require("../../modules/screensharing");
@@ -13,7 +14,7 @@ let channel;
  * Cteates the iframe that will load Jitsi Meet.
  */
 let iframe = document.createElement('iframe');
-iframe.src = config.jitsiMeetURL;
+iframe.src = process.env.JITSI_MEET_URL || config.jitsiMeetURL;
 iframe.allowFullscreen = true;
 iframe.onload = onload;
 document.body.appendChild(iframe);

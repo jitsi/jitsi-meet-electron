@@ -50,6 +50,16 @@ function setAPPListeners () {
             createJitsiMeetWindow();
         }
     });
+    APP.on('certificate-error',
+        (event, webContents, url, error, certificate, callback) => {
+            if (url.startsWith('https://localhost')) {
+                event.preventDefault();
+                callback(true);
+            } else {
+                callback(false);
+            }
+        }
+    );
 }
 
 /**

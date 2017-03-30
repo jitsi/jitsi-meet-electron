@@ -1,25 +1,33 @@
 const electron = require("electron");
+
 /**
- * Adds screen sharing support. Prompts the user to choose screen, window or
- * tab to share (not implemented yet). And passes the chosen source to caller
- * of the method.
- * @param {Function} callback the success callback
- * @param {Function} errorCallback the callback for errors
+ * Get sources available for screensharing. The callback is invoked
+ * with an array of DesktopCapturerSources.
+ *
+ * @param {Function} callback - The success callback.
+ * @param {Function} errorCallback - The callback for errors.
+ * @param {Object} options - Configuration for getting sources.
+ * @param {Array} options.types - Specify the desktop source types to get,
+ * with valid sources being "window" and "screen".
+ * @param {Object} options.thumbnailSize - Specify how big the preview
+ * images for the sources should be. The valid keys are height and width,
+ * e.g. { height: number, width: number}. By default electron will return
+ * images with height and width of 150px.
  */
-function obtainDesktopStream (callback, errorCallback) {
-    //FIXME: add more types
-    electron.desktopCapturer.getSources({types: ['screen']},
+function obtainDesktopStreams(callback, errorCallback, options = {}) {
+    electron.desktopCapturer.getSources(options,
         (error, sources) => {
             if (error) {
                 errorCallback(error);
                 return;
             }
-            //FIXME: Implement window picker instead of choosing always the
-            // first sourceId
-            callback(sources[0].id);
+
+            callback(sources);
         });
 }
 
 module.exports = function setupScreenSharingForWindow(pWindow) {
-    pWindow.JitsiMeetElectron = {obtainDesktopStream};
+    pWindow.JitsiMeetElectron = {
+        obtainDesktopStreams
+    };
 };

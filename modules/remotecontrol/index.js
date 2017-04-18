@@ -201,7 +201,7 @@ class RemoteControl {
     sendEvent(event) {
         this.channel.send({
             method: REMOTE_CONTROL_EVENT_TYPE,
-            params: [event]
+            params: event
         });
     }
 }

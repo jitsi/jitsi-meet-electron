@@ -68,6 +68,13 @@ function setAPPListeners () {
 function createJitsiMeetWindow () {
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
     jitsiMeetWindow.loadURL(indexURL);
+    let contents = jitsiMeetWindow.webContents;
+    let shell = electron.shell;
+
+    contents.on('new-window', function(event, url) {
+        event.preventDefault();
+        shell.openExternal(url);
+    });
 
     jitsiMeetWindow.on("closed", () => {
         jitsiMeetWindow = null;

@@ -68,8 +68,12 @@ class RemoteControl {
         this.windowManager = windowManager;
         this.channel = channel;
         this.channel.ready(() => {
-            this.channel.listen(REMOTE_CONTROL_EVENT_TYPE,
-                event => this.onRemoteControlEvent(event));
+            this.channel.listen('message', message => {
+                const event = message.data;
+                if(event.name === REMOTE_CONTROL_EVENT_TYPE) {
+                    this.onRemoteControlEvent(event);
+                }
+            });
             this.sendEvent({type: EVENT_TYPES.supported});
         });
     }
@@ -199,9 +203,13 @@ class RemoteControl {
      * @param {Object} event the remote control event.
      */
     sendEvent(event) {
+        const remoteControlEvent = Object.assign(
+            { name: REMOTE_CONTROL_EVENT_TYPE },
+            event
+        );
         this.channel.send({
-            method: REMOTE_CONTROL_EVENT_TYPE,
-            params: [event]
+            method: 'message',
+            params: { data: remoteControlEvent }
         });
     }
 }

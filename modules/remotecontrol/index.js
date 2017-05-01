@@ -64,7 +64,8 @@ class RemoteControl {
     /**
      * Initializes the remote control functionality.
      */
-    init(channel, windowManager) {
+    init(channel, windowManager, handleAuthorization) {
+        this.handleAuthorization = handleAuthorization;
         this.windowManager = windowManager;
         this.channel = channel;
         this.channel.ready(() => {
@@ -75,6 +76,9 @@ class RemoteControl {
                 }
             });
             this.sendEvent({type: EVENT_TYPES.supported});
+            if (!handleAuthorization) {
+                this.start();
+            }
         });
     }
 
@@ -177,16 +181,16 @@ class RemoteControl {
                 break;
             }
             case EVENT_TYPES.permissions: {
-                if(event.action !== PERMISSIONS_ACTIONS.request)
-                    break;
-
-                //Open Dialog and answer
-                this.handlePermissionRequest({
-                    userId: event.userId,
-                    userJID: event.userJID,
-                    displayName: event.displayName,
-                    screenSharing: event.screenSharing
-                });
+                if(event.action === PERMISSIONS_ACTIONS.request
+                    && this.handleAuthorization) {
+                    // Open Dialog and answer
+                    this.handlePermissionRequest({
+                        userId: event.userId,
+                        userJID: event.userJID,
+                        displayName: event.displayName,
+                        screenSharing: event.screenSharing
+                    });
+                }
                 break;
             }
             case EVENT_TYPES.stop: {

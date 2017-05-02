@@ -69,6 +69,11 @@ function createJitsiMeetWindow () {
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
     jitsiMeetWindow.loadURL(indexURL);
 
+    jitsiMeetWindow.webContents.on('new-window', function(event, url) {
+        event.preventDefault();
+        electron.shell.openExternal(url);
+    });
+
     jitsiMeetWindow.on("closed", () => {
         jitsiMeetWindow = null;
     });

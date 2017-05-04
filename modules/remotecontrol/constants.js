@@ -25,7 +25,7 @@ module.exports = {
     },
 
     /**
-     * The type of remote control events sent trough the API module.
+     * The name of remote control events sent trough the API module.
      */
-    REMOTE_CONTROL_EVENT_TYPE: "remote-control-event"
+    REMOTE_CONTROL_EVENT_NAME: "remote-control-event"
 };

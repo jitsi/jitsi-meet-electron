@@ -1,6 +1,6 @@
 let robot = require("robotjs");
 const constants = require("../../modules/remotecontrol/constants");
-const {EVENT_TYPES, PERMISSIONS_ACTIONS, REMOTE_CONTROL_EVENT_TYPE} = constants;
+const {EVENT_TYPES, PERMISSIONS_ACTIONS, REMOTE_CONTROL_EVENT_NAME} = constants;
 
 /**
  * Attaching to the window for debug purposes.
@@ -64,17 +64,21 @@ class RemoteControl {
     /**
      * Initializes the remote control functionality.
      */
-    init(channel, windowManager) {
+    init(channel, windowManager, handleAuthorization) {
+        this.handleAuthorization = handleAuthorization;
         this.windowManager = windowManager;
         this.channel = channel;
         this.channel.ready(() => {
             this.channel.listen('message', message => {
                 const event = message.data;
-                if(event.name === REMOTE_CONTROL_EVENT_TYPE) {
+                if(event.name === REMOTE_CONTROL_EVENT_NAME) {
                     this.onRemoteControlEvent(event);
                 }
             });
             this.sendEvent({type: EVENT_TYPES.supported});
+            if (!handleAuthorization) {
+                this.start();
+            }
         });
     }
 
@@ -177,16 +181,16 @@ class RemoteControl {
                 break;
             }
             case EVENT_TYPES.permissions: {
-                if(event.action !== PERMISSIONS_ACTIONS.request)
-                    break;
-
-                //Open Dialog and answer
-                this.handlePermissionRequest({
-                    userId: event.userId,
-                    userJID: event.userJID,
-                    displayName: event.displayName,
-                    screenSharing: event.screenSharing
-                });
+                if(event.action === PERMISSIONS_ACTIONS.request
+                    && this.handleAuthorization) {
+                    // Open Dialog and answer
+                    this.handlePermissionRequest({
+                        userId: event.userId,
+                        userJID: event.userJID,
+                        displayName: event.displayName,
+                        screenSharing: event.screenSharing
+                    });
+                }
                 break;
             }
             case EVENT_TYPES.stop: {
@@ -204,7 +208,7 @@ class RemoteControl {
      */
     sendEvent(event) {
         const remoteControlEvent = Object.assign(
-            { name: REMOTE_CONTROL_EVENT_TYPE },
+            { name: REMOTE_CONTROL_EVENT_NAME },
             event
         );
         this.channel.send({

@@ -78,7 +78,10 @@ function onload() {
         window: iframe.contentWindow,
         windowForEventListening: window
     });
-    remoteControl.init(channel, dialogFactory);
+    remoteControl.init(
+        channel,
+        dialogFactory,
+        config.handleRemoteControlAuthorization);
 }
 
 /**

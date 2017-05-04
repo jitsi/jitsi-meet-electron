@@ -1,6 +1,6 @@
 let robot = require("robotjs");
 const constants = require("../../modules/remotecontrol/constants");
-const {EVENT_TYPES, PERMISSIONS_ACTIONS, REMOTE_CONTROL_EVENT_TYPE} = constants;
+const {EVENT_TYPES, PERMISSIONS_ACTIONS, REMOTE_CONTROL_EVENT_NAME} = constants;
 
 /**
  * Attaching to the window for debug purposes.
@@ -71,7 +71,7 @@ class RemoteControl {
         this.channel.ready(() => {
             this.channel.listen('message', message => {
                 const event = message.data;
-                if(event.name === REMOTE_CONTROL_EVENT_TYPE) {
+                if(event.name === REMOTE_CONTROL_EVENT_NAME) {
                     this.onRemoteControlEvent(event);
                 }
             });
@@ -208,7 +208,7 @@ class RemoteControl {
      */
     sendEvent(event) {
         const remoteControlEvent = Object.assign(
-            { name: REMOTE_CONTROL_EVENT_TYPE },
+            { name: REMOTE_CONTROL_EVENT_NAME },
             event
         );
         this.channel.send({

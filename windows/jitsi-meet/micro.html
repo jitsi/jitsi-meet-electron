@@ -11,16 +11,19 @@
                 -webkit-app-region: drag
             }
             iframe {
-                width: 100%;
-                height: 100%;
+                width: 50%;
+                height: 50%;
                 border: 0 none;
+            }
+            #remoteVideo {
+              transform: scale(-1, 1);
             }
         </style>
     </head>
     <body>
       <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-        <script>
-            require('./render.js');
-        </script>
+      <script>
+          require('./micro.js');
+      </script>
     </body>
 </html>

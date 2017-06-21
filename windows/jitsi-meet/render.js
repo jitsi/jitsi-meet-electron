@@ -20,112 +20,15 @@ iframe.allowFullscreen = true;
 iframe.onload = onload;
 document.body.appendChild(iframe);
 
+/**
+ * The jitsi-meet largeVideo MediaStream.
+ */
 let localStream;
-let pc1;
-function connectToPeer(stream) {
-    ipcRenderer.send('log', Date.now()%1000 + ": " +"Received local stream and Sending");
-    localStream = stream;
-    let videoTracks = localStream.getVideoTracks();
-    let audioTracks = localStream.getAudioTracks();
-    if (videoTracks.length > 0) {
-      ipcRenderer.send('log', Date.now()%1000 + ": " +'Using video device: ' + videoTracks[0].label);
-    }
-    if (audioTracks.length > 0) {
-      ipcRenderer.send('log', Date.now()%1000 + ": " +'Using audio device: ' + audioTracks[0].label);
-    }
 
-    let servers = null;
-    pc1 = new RTCPeerConnection(servers);
-    ipcRenderer.send('log', Date.now()%1000 + ": " +"Created local peer connection object pc1");
-
-    ipcRenderer.on('pc2IceCandidateCreated', (event, candidate) => {
-      pc1.addIceCandidate(candidate)
-      .then(
-        function() {
-          ipcRenderer.send('log', Date.now()%1000 + ": " +'pc1 addIceCandidate success');
-        },
-        function(err) {
-          ipcRenderer.send('log', Date.now()%1000 + ": " +'pc1 failed to add ICE Candidate: ' + err.toString());
-        });
-    });
-
-    pc1.onicecandidate = function(event) {
-      if(event.candidate !== null) {
-        ipcRenderer.send('log', Date.now()%1000 + ": " +"pc1 ICE CANDIDATE PUSHED: " + event.candidate);
-        let newIceCandidate = {
-          candidate: event.candidate.candidate,
-          sdpMLineIndex: event.candidate.sdpMLineIndex,
-          sdpMid: event.candidate.sdpMid
-        };
-        ipcRenderer.send('pc1IceCandidateCreated', newIceCandidate);
-      }
-    };
-    pc1.oniceconnectionstatechange = function(event) {
-      if (pc1) {
-        ipcRenderer.send('log', Date.now()%1000 + ": " +"ICE state change event: ", event);
-      }
-    };
-    ipcRenderer.send('IceCandidate');
-
-    ipcRenderer.on('pc2Created', () => {
-      localStream.getTracks().forEach(
-        function(track) {
-          pc1.addTrack(
-            track,
-            localStream
-          );
-        }
-      );
-
-      ipcRenderer.send('log', Date.now()%1000 + ": " +"Added local stream to pc1");
-
-      ipcRenderer.send('log', Date.now()%1000 + ": " +"pc1 createOffer start");
-      let offerOptions = {
-        offerToReceiveAudio: 1,
-        offerToReceiveVideo: 1
-      };
-      pc1.createOffer(
-        offerOptions
-      ).then(
-        onCreateOfferSuccess,
-        onCreateSessionDescriptionError
-      );
-    });
-
-  function onCreateOfferSuccess(desc) {
-    ipcRenderer.send('log', Date.now()%1000 + ": " +"Offer from pc1\n" + desc.sdp);
-    ipcRenderer.send('log', Date.now()%1000 + ": " +"pc1 setLocalDescription start");
-    pc1.setLocalDescription(desc).then(
-      function() {
-        ipcRenderer.send('log', Date.now()%1000 + ": " +"pc1 setLocalDescription complete");
-      },
-      function(error) {
-        ipcRenderer.send('log', Date.now()%1000 + ": " +"Failed to set session description: " + error.toString());
-      }
-    );
-
-    ipcRenderer.send('setpc2Description', {type: desc.type, sdp: desc.sdp});
-  }
-
-  ipcRenderer.on('setpc1Description', (event, data) => {
-    let desc = new RTCSessionDescription(data);
-    ipcRenderer.send('log', Date.now()%1000 + ": " +'pc1 setRemoteDescription start');
-    pc1.setRemoteDescription(desc).then(
-      function() {
-        ipcRenderer.send('log', Date.now()%1000 + ": " +"pc1 setRemoteDescription complete");
-      },
-      function(error) {
-        ipcRenderer.send('log', Date.now()%1000 + ": " +'Failed to set session description: ' + error.toString());
-      }
-    );
-
-  });
-
-  function onCreateSessionDescriptionError(error) {
-    ipcRenderer.send('log', Date.now()%1000 + ": " +"Failed to create session description: " + error.toString());
-  }
-
-}
+/**
+ * The RTCPeerConnection to micro window.
+ */
+let peerConnectionMain;
 
 /**
  * Factory for dialogs.
@@ -181,7 +84,7 @@ const dialogFactory = new DialogFactory();
  */
 function onload() {
     let largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
-    connectToPeer(largeVideo.srcObject);
+    connectToMicroWindow(largeVideo.srcObject);
 
     setupScreenSharingForWindow(iframe.contentWindow);
     iframe.contentWindow.onunload = onunload;
@@ -202,4 +105,120 @@ function onunload() {
     channel.destroy();
     channel = null;
     remoteControl.dispose();
+}
+
+/**
+ * Connects main window's components to micro mode window.
+ * @param {object} stream - MediaStream object from the jitsi-meet conference
+ */
+function connectToMicroWindow(stream) {
+    ipcRenderer.send('log', "received local stream and sending");
+    localStream = stream;
+
+    setUpPeerConnection();
+
+    ipcRenderer.on('microWindowPeerCreated', () => {
+      localStream.getTracks().forEach(
+        function(track) {
+          peerConnectionMain.addTrack(
+            track,
+            localStream
+          );
+        }
+      );
+      ipcRenderer.send('log', "added local stream to peer connection");
+      createAndSendOffer();
+    });
+
+    ipcRenderer.on('microWindowLocalDescriptionSet', (event, data) => {
+      const desc = new RTCSessionDescription(data);
+      ipcRenderer.send('log', 'main window setRemoteDescription start');
+      peerConnectionMain.setRemoteDescription(desc).then(
+        function() {
+          ipcRenderer.send('log', "main window setRemoteDescription complete");
+        },
+        function(error) {
+          ipcRenderer.send('log', 'main window failed to set session description: '
+                                  + error.toString());
+        }
+      );
+    });
+}
+
+/**
+ * Creates RTCPeerConnection object and set ice candidate listneres.
+ */
+function setUpPeerConnection() {
+  peerConnectionMain = new RTCPeerConnection();
+  ipcRenderer.send('log', "created main window peer connection object");
+
+  ipcRenderer.on('microWindowIceCandidate', (event, candidate) => {
+    peerConnectionMain.addIceCandidate(candidate)
+    .then(
+      function() {
+        ipcRenderer.send('log', 'main window addIceCandidate success');
+      },
+      function(err) {
+        ipcRenderer.send('log', 'main window failed to add ICE Candidate: '
+                                + err.toString());
+      });
+  });
+
+  peerConnectionMain.onicecandidate = function(event) {
+    if(event.candidate !== null) {
+      let newIceCandidate = {
+        candidate: event.candidate.candidate,
+        sdpMLineIndex: event.candidate.sdpMLineIndex,
+        sdpMid: event.candidate.sdpMid
+      };
+      ipcRenderer.send('mainWindowIceCandidate', newIceCandidate);
+    }
+  };
+  peerConnectionMain.oniceconnectionstatechange = function(event) {
+    if (peerConnectionMain) {
+      ipcRenderer.send('log', "main window iceCandidateState change event: ", event);
+    }
+  };
+
+  ipcRenderer.send('mainWindowPeerCreated');
+}
+
+/**
+ * Creates peer connection offer to micro window.
+ */
+function createAndSendOffer() {
+  ipcRenderer.send('log', "main window createOffer start");
+
+  const offerOptions = {
+    offerToReceiveAudio: 1,
+    offerToReceiveVideo: 1
+  };
+  peerConnectionMain.createOffer(
+    offerOptions
+  ).then(
+    onCreateOfferSuccess,
+    onCreateSessionDescriptionError
+  );
+}
+function onCreateSessionDescriptionError(error) {
+  ipcRenderer.send('log', "failed to create session description: " + error.toString());
+}
+
+/**
+ * Send peer connection offer created to micro window.
+ */
+function onCreateOfferSuccess(desc) {
+  ipcRenderer.send('log', "offer from main window\n" + desc.sdp);
+  ipcRenderer.send('log', "main window setLocalDescription start");
+  peerConnectionMain.setLocalDescription(desc).then(
+    function() {
+      ipcRenderer.send('log', "main window setLocalDescription complete");
+    },
+    function(error) {
+      ipcRenderer.send('log', "failed to set session description: " + error.toString());
+    }
+  );
+
+  const data = {type: desc.type, sdp: desc.sdp};
+  ipcRenderer.send('mainWindowLocalDescriptionSet', data);
 }

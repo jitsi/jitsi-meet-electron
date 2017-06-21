@@ -3,6 +3,7 @@
 const electron = require("electron");
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const ipcMain = electron.ipcMain;
 
 const path = require("path");
 const url = require("url");
@@ -16,7 +17,10 @@ const indexURL = url.format({
     slashes: true
 });
 
-const testURL = url.format({
+/**
+ * URL for micro.html which will be the Micro mode's window.
+ */
+const microModeURL = url.format({
     pathname: path.join(__dirname, "windows", "jitsi-meet", "micro.html"),
     protocol: "file:",
     slashes: true
@@ -28,6 +32,7 @@ const testURL = url.format({
  * acidentally.
  */
 let jitsiMeetWindow = null;
+let microWindow = null;
 
 /**
  * Options used when creating the main Jitsi Meet window.
@@ -38,6 +43,16 @@ const jitsiMeetWindowOptions = {
     minWidth: 800,
     minHeight: 600,
     titleBarStyle: 'hidden'
+};
+
+/**
+ * Options used when creating the micro mode window.
+ */
+const microWindowOptions = {
+    width: 800,
+    height: 600,
+    titleBarStyle: 'hidden',
+    frame: true
 };
 
 /**
@@ -74,6 +89,8 @@ function setAPPListeners () {
 function createJitsiMeetWindow () {
   jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
   jitsiMeetWindow.loadURL(indexURL);
+  microWindow = new BrowserWindow(microWindowOptions);
+  microWindow.loadURL(microModeURL);
 
   jitsiMeetWindow.webContents.on('new-window', function(event, url) {
       event.preventDefault();
@@ -82,45 +99,42 @@ function createJitsiMeetWindow () {
 
   jitsiMeetWindow.on("closed", () => {
       jitsiMeetWindow = null;
+      microWindow = null;
   });
 
-  let {ipcMain} = require('electron');
+  setIPCListeners();
+}
 
-  let testWindow = new BrowserWindow({
-      width: 800,
-      height: 600,
-      titleBarStyle: 'hidden',
-      frame: true
-  });
-  testWindow.loadURL(testURL);
-
+/**
+ * Sets the ipc listeners for messages from renderer processes
+ */
+function setIPCListeners() {
   // ipcMain.on('log', (event, data) => {
-    // console.log(data);
+  //   console.log(data);
   // });
-
-  ipcMain.on('IceCandidate', () => {
-    // console.log("IceCandidate Message Delivering...");
-    testWindow.webContents.send('IceCandidate');
+  ipcMain.on('mainWindowPeerCreated', () => {
+    // console.log("mainWindowPeerCreated Message Delivering...");
+    microWindow.webContents.send('mainWindowPeerCreated');
   });
-  ipcMain.on('pc1IceCandidateCreated', (event, data) => {
-    // console.log(data);
-    testWindow.webContents.send('pc1IceCandidateCreated', data);
+  ipcMain.on('microWindowPeerCreated', () => {
+    // console.log("microWindowPeerCreated Message Delivering...");
+    jitsiMeetWindow.webContents.send('microWindowPeerCreated');
   });
-  ipcMain.on('pc2IceCandidateCreated', (event, data) => {
-    // console.log(data);
-    testWindow.webContents.send('pc2IceCandidateCreated', data);
+  ipcMain.on('mainWindowIceCandidate', (event, data) => {
+    // console.log('mainWindowIceCandidate: ' + data);
+    microWindow.webContents.send('mainWindowIceCandidate', data);
   });
-  ipcMain.on('pc2Created', () => {
-    // console.log("pc2Created Message Delivering...");
-    jitsiMeetWindow.webContents.send('pc2Created');
+  ipcMain.on('microWindowIceCandidate', (event, data) => {
+    // console.log('microWindowIceCandidate: ' + data);
+    jitsiMeetWindow.webContents.send('microWindowIceCandidate', data);
   });
-  ipcMain.on('setpc1Description', (event, desc) => {
-    // console.log("setpc1Description Message Delivering...");
-    jitsiMeetWindow.webContents.send('setpc1Description', desc);
+  ipcMain.on('mainWindowLocalDescriptionSet', (event, desc) => {
+    // console.log("mainWindowLocalDescriptionSet Message Delivering...");
+    microWindow.webContents.send('mainWindowLocalDescriptionSet', desc);
   });
-  ipcMain.on('setpc2Description', (event, desc) => {
-    // console.log("setpc2Description Message Delivering...");
-    testWindow.webContents.send('setpc2Description', desc);
+  ipcMain.on('microWindowLocalDescriptionSet', (event, desc) => {
+    // console.log("microWindowLocalDescriptionSet Message Delivering...");
+    jitsiMeetWindow.webContents.send('microWindowLocalDescriptionSet', desc);
   });
 }
 

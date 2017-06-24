@@ -72,22 +72,15 @@ const dialogFactory = new DialogFactory();
  * Initializes postis.
  * Initializes remote control.
  */
+let largeVideo;
 function onload() {
-    let largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
-    microModePeerConnection(largeVideo.srcObject);
-    // largeVideo.onchange = function() {
-    //   console.log("LARGEVIDEO CHANGED!!!!!!!!!!!!!!!!!!!");
-    //   console.log(largeVideo);
-    //   localStream = largeVideo.srcObject;
-    //   localStream.getTracks().forEach(
-    //       function(track) {
-    //           peerConnectionMain.addTrack(
-    //               track,
-    //               localStream
-    //           );
-    //       }
-    //   );
-    // }
+    largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
+    // iframe.setAttribute('style', 'width:50%; height:50%; border:0; border:none');
+
+    const canvas = copyVideo(largeVideo, 400, 300);
+    document.body.appendChild(canvas);
+    localStream = canvas.captureStream();
+    microModePeerConnection(localStream);
 
     setupScreenSharingForWindow(iframe.contentWindow);
     iframe.contentWindow.onunload = onunload;
@@ -99,6 +92,24 @@ function onload() {
         channel,
         dialogFactory,
         config.handleRemoteControlAuthorization);
+}
+
+/**
+ * Create a copy of HTMLvideo in HTMLcanvas form
+ * Get reference of the video, width and height as parameters
+ * Draw canvas every 33ms
+ * Return canvas object
+ */
+function copyVideo(largeVideo, width, height) {
+  let canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    let ctx = canvas.getContext('2d');
+    setInterval(function() {
+      ctx.drawImage(largeVideo, 0, 0, canvas.width, canvas.height);
+    }, 33);
+
+    return canvas;
 }
 
 /**

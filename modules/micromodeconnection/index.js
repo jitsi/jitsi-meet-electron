@@ -197,6 +197,9 @@ function setupMicroConnection() {
  * Attaches MediaStream object received from main window on remoteVideo.
  */
 function gotRemoteStream(event) {
+  console.log("STREAMS")
+  console.log(event.streams);
+  console.log(event.streams[0].getTracks());
     if (remoteVideo.srcObject !== event.streams[0]) {
         remoteVideo.srcObject = event.streams[0];
     }
@@ -252,4 +255,3 @@ function onCreateAnswerSuccess(desc) {
 function sendMessageToMainWindow(messageName, data) {
     ipcRenderer.send(messageName, data);
 }
-

@@ -42,7 +42,8 @@ const jitsiMeetWindowOptions = {
     height: 600,
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    webPreferences: { experimentalFeatures: true }
 };
 
 /**
@@ -52,7 +53,8 @@ const microWindowOptions = {
     width: 800,
     height: 600,
     titleBarStyle: 'hidden',
-    frame: true
+    frame: true,
+    webPreferences: { experimentalFeatures: true }
 };
 
 /**
@@ -109,9 +111,9 @@ function createJitsiMeetWindow () {
  * Sets the ipc listeners for messages from renderer processes
  */
 function setIPCListeners() {
-  // ipcMain.on('log', (event, data) => {
-  //   console.log(data);
-  // });
+  ipcMain.on('log', (event, data) => {
+    console.log(data);
+  });
   ipcMain.on('mainWindowPeerCreated', () => {
     // console.log("mainWindowPeerCreated Message Delivering...");
     microWindow.webContents.send('mainWindowPeerCreated');

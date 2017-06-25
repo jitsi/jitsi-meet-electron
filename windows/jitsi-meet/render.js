@@ -79,7 +79,7 @@ function onload() {
 
     const canvas = copyVideo(largeVideo, 400, 300);
     document.body.appendChild(canvas);
-    localStream = canvas.captureStream();
+    const localStream = canvas.captureStream();
     microModePeerConnection(localStream);
 
     setupScreenSharingForWindow(iframe.contentWindow);

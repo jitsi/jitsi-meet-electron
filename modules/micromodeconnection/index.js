@@ -132,8 +132,11 @@ function onCreateOfferSuccess(desc) {
 /**
  * Sends message from main window to mircro window.
  */
-function sendMessageToMicroWindow(messageName, data) {
-    ipcRenderer.send(messageName, data);
+function sendMessageToMicroWindow(message, data) {
+  args = [];
+  args[0] = message;
+  args[1] = data;
+    ipcRenderer.send('mainWindowEvent', args);
 }
 
 
@@ -197,9 +200,6 @@ function setupMicroConnection() {
  * Attaches MediaStream object received from main window on remoteVideo.
  */
 function gotRemoteStream(event) {
-  console.log("STREAMS")
-  console.log(event.streams);
-  console.log(event.streams[0].getTracks());
     if (remoteVideo.srcObject !== event.streams[0]) {
         remoteVideo.srcObject = event.streams[0];
     }
@@ -252,6 +252,9 @@ function onCreateAnswerSuccess(desc) {
 /**
  * Sends message from micro window to main window.
  */
-function sendMessageToMainWindow(messageName, data) {
-    ipcRenderer.send(messageName, data);
+function sendMessageToMainWindow(message, data) {
+    args = [];
+    args[0] = message;
+    args[1] = data;
+    ipcRenderer.send('microWindowEvent', args);
 }

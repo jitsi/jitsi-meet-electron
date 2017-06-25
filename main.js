@@ -111,33 +111,27 @@ function createJitsiMeetWindow () {
  * Sets the ipc listeners for messages from renderer processes
  */
 function setIPCListeners() {
-  ipcMain.on('log', (event, data) => {
-    console.log(data);
-  });
-  ipcMain.on('mainWindowPeerCreated', () => {
-    // console.log("mainWindowPeerCreated Message Delivering...");
-    microWindow.webContents.send('mainWindowPeerCreated');
-  });
-  ipcMain.on('microWindowPeerCreated', () => {
-    // console.log("microWindowPeerCreated Message Delivering...");
-    jitsiMeetWindow.webContents.send('microWindowPeerCreated');
-  });
-  ipcMain.on('mainWindowIceCandidate', (event, data) => {
-    // console.log('mainWindowIceCandidate: ' + data);
-    microWindow.webContents.send('mainWindowIceCandidate', data);
-  });
-  ipcMain.on('microWindowIceCandidate', (event, data) => {
-    // console.log('microWindowIceCandidate: ' + data);
-    jitsiMeetWindow.webContents.send('microWindowIceCandidate', data);
-  });
-  ipcMain.on('mainWindowLocalDescriptionSet', (event, desc) => {
-    // console.log("mainWindowLocalDescriptionSet Message Delivering...");
-    microWindow.webContents.send('mainWindowLocalDescriptionSet', desc);
-  });
-  ipcMain.on('microWindowLocalDescriptionSet', (event, desc) => {
-    // console.log("microWindowLocalDescriptionSet Message Delivering...");
-    jitsiMeetWindow.webContents.send('microWindowLocalDescriptionSet', desc);
-  });
+    ipcMain.on('log', (event, data) => {
+        console.log(data);
+    });
+    ipcMain.on('mainWindowEvent', (event, args) => {
+        const message = args[0];
+        const data = args[1];
+        if (data) {
+            microWindow.webContents.send(message, data);
+        } else {
+            microWindow.webContents.send(message);
+        }
+    });
+    ipcMain.on('microWindowEvent', (event, args) => {
+        const message = args[0];
+        const data = args[1];
+        if (data) {
+            jitsiMeetWindow.webContents.send(message, data);
+        } else {
+            jitsiMeetWindow.webContents.send(message);
+        }
+    });
 }
 
 //Start the application:

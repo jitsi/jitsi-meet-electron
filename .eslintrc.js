@@ -19,12 +19,12 @@ module.exports = {
         'sourceType': 'module'
     },
     'rules': {
-        'new-cap': [
-            'error',
-            {
-                'capIsNew': false // Behave like JSHint's newcap.
-            }
-        ],
+        // 'new-cap': [
+        //     'error',
+        //     {
+        //         'capIsNew': false // Behave like JSHint's newcap.
+        //     }
+        // ],
         // While it is considered a best practice to avoid using methods on
         // console in JavaScript that is designed to be executed in the browser
         // and ESLint includes the rule among its set of recommended rules, (1)
@@ -32,6 +32,7 @@ module.exports = {
         // production and (2) we prefer to utilize console in lib-jitsi-meet
         // (and jitsi-meet).
         'no-console': 'off',
-        'semi': 'error'
+        'semi': 'error',
+        'no-undef' : 'off'
     }
 };

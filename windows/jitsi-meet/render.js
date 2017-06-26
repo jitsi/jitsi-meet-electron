@@ -4,6 +4,7 @@ let postis = require("postis");
 const setupScreenSharingForWindow = require("../../modules/screensharing");
 const config = require("../../config.js");
 const {dialog} = require('electron').remote;
+const WindowPeerConnection = require("../../modules/micromodeconnection").WindowPeerConnection;
 
 /**
  * The postis channel.
@@ -71,7 +72,15 @@ const dialogFactory = new DialogFactory();
  * Initializes postis.
  * Initializes remote control.
  */
+let largeVideo;
 function onload() {
+    largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
+
+    const canvas = copyVideo(largeVideo, 400, 300, 30);
+    document.body.appendChild(canvas);
+    const localStream = canvas.captureStream();
+    setupMicroModePeerConnection(localStream);
+
     setupScreenSharingForWindow(iframe.contentWindow);
     iframe.contentWindow.onunload = onunload;
     channel = postis({
@@ -82,6 +91,29 @@ function onload() {
         channel,
         dialogFactory,
         config.handleRemoteControlAuthorization);
+}
+
+function setupMicroModePeerConnection (stream) {
+    let mainWindow = new WindowPeerConnection('jitsiMeetWindow');
+    mainWindow.attachStream(stream);
+    mainWindow.call('microWindow');
+}
+
+/**
+ * Create a copy of HTMLvideo in HTMLcanvas form
+ * Get reference of the video, width and height as parameters
+ * Return canvas object
+ */
+function copyVideo(largeVideo, width, height, frameRate) {
+  let canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    let ctx = canvas.getContext('2d');
+    setInterval(function() {
+      ctx.drawImage(largeVideo, 0, 0, canvas.width, canvas.height);
+    }, frameRate);
+
+    return canvas;
 }
 
 /**

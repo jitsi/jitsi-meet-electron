@@ -17,11 +17,21 @@ const indexURL = url.format({
 });
 
 /**
+ * URL for micro.html which will be the Micro mode's window.
+ */
+const microModeURL = url.format({
+    pathname: path.join(__dirname, "windows", "jitsi-meet", "micro.html"),
+    protocol: "file:",
+    slashes: true
+});
+
+/**
  * The window object that will load the iframe with Jitsi Meet.
  * IMPORTANT: Must be defined as global in order to not be garbage collected
  * acidentally.
  */
 let jitsiMeetWindow = null;
+let microWindow = null;
 
 /**
  * Options used when creating the main Jitsi Meet window.
@@ -31,7 +41,21 @@ const jitsiMeetWindowOptions = {
     height: 600,
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    webPreferences: { experimentalFeatures: true }
+};
+
+/**
+ * Options used when creating the micro mode window.
+ */
+const microWindowOptions = {
+    width: 320,
+    height: 240,
+    titleBarStyle: 'hidden',
+    frame: false,
+    alwaysOnTop: true,
+    x: 1570,
+    y: 50
 };
 
 /**
@@ -66,17 +90,32 @@ function setAPPListeners () {
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
 function createJitsiMeetWindow () {
-    jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
-    jitsiMeetWindow.loadURL(indexURL);
+  jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
+  jitsiMeetWindow.loadURL(indexURL);
+  microWindow = new BrowserWindow(microWindowOptions);
+  microWindow.loadURL(microModeURL);
 
-    jitsiMeetWindow.webContents.on('new-window', function(event, url) {
-        event.preventDefault();
-        electron.shell.openExternal(url);
-    });
+  jitsiMeetWindow.webContents.on('new-window', function(event, url) {
+      event.preventDefault();
+      electron.shell.openExternal(url);
+  });
 
-    jitsiMeetWindow.on("closed", () => {
-        jitsiMeetWindow = null;
-    });
+  jitsiMeetWindow.on("closed", () => {
+      jitsiMeetWindow = null;
+      microWindow = null;
+  });
+
+  setIPCListeners();
+}
+
+/**
+ * Sets the ipc listeners for messages from renderer processes
+ */
+function setIPCListeners() {
+    const p2pChannel = require("./modules/micromodeconnection").main;
+    p2pChannel.setChannel();
+    p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
+    p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
 }
 
 //Start the application:

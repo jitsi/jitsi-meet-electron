@@ -1,14 +1,12 @@
-const initPeerConnection = require("../../modules/micromodeconnection").micro;
+const WindowPeerConnection = require("../../modules/micromodeconnection").WindowPeerConnection;
 
 /**
  * The remote video from main window.
  */
-let largeVideo = document.createElement('video');
-largeVideo.setAttribute('id', 'remoteVideo');
-largeVideo.setAttribute('autoplay', true);
-largeVideo.setAttribute('width', '100%');
-largeVideo.setAttribute('height', '100%');
-document.body.appendChild(largeVideo);
+let largeVideo = document.querySelector("video");
 
 //Prepares micro mode once main window is ready.
-initPeerConnection(largeVideo);
+let microWindow = new WindowPeerConnection('microWindow');
+microWindow.onReceivedStream(function (stream) {
+    largeVideo.srcObject = stream;
+});

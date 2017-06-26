@@ -3,7 +3,6 @@
 const electron = require("electron");
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const ipcMain = electron.ipcMain;
 
 const path = require("path");
 const url = require("url");
@@ -50,11 +49,13 @@ const jitsiMeetWindowOptions = {
  * Options used when creating the micro mode window.
  */
 const microWindowOptions = {
-    width: 800,
-    height: 600,
+    width: 320,
+    height: 240,
     titleBarStyle: 'hidden',
-    frame: true,
-    webPreferences: { experimentalFeatures: true }
+    frame: false,
+    alwaysOnTop: true,
+    x: 1570,
+    y: 50
 };
 
 /**
@@ -111,27 +112,10 @@ function createJitsiMeetWindow () {
  * Sets the ipc listeners for messages from renderer processes
  */
 function setIPCListeners() {
-    ipcMain.on('log', (event, data) => {
-        console.log(data);
-    });
-    ipcMain.on('mainWindowEvent', (event, args) => {
-        const message = args[0];
-        const data = args[1];
-        if (data) {
-            microWindow.webContents.send(message, data);
-        } else {
-            microWindow.webContents.send(message);
-        }
-    });
-    ipcMain.on('microWindowEvent', (event, args) => {
-        const message = args[0];
-        const data = args[1];
-        if (data) {
-            jitsiMeetWindow.webContents.send(message, data);
-        } else {
-            jitsiMeetWindow.webContents.send(message);
-        }
-    });
+    const p2pChannel = require("./modules/micromodeconnection").main;
+    p2pChannel.setChannel();
+    p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
+    p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
 }
 
 //Start the application:

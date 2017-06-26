@@ -1,7 +1,38 @@
-const {ipcRenderer} = require('electron');
+const ipcRenderer = require('electron').ipcRenderer;
+const ipcMain = require('electron').ipcMain;
+const remote = require('electron').remote;
+const events = require('events');
 
-module.exports.main = connectToMicroWindow;
-module.exports.micro = initMicroConnection;
+/**
+  * The main process peer connection interface
+  */
+let main = {
+    /**
+      * Register a client to the peer connection channel.
+      * @param {string} client - client format: {name: "name", window: windowObj}
+      */
+    addClient: function (client) {
+        if (!global.clients) {
+            global.clients = [];
+        }
+        global.clients.push(client);
+    },
+
+    /**
+      * Sets the ipc listeners for messages from renderer processes
+      */
+    setChannel: function () {
+        // ipcMain.on('log', (event, data) => {
+        //     console.log(data);
+        // });
+        ipcMain.on('relay', (event, args) => {
+            const receiverName = args[1];
+            const message = args[2];
+            const targetWindow = global.clients.find( eachClient =>  eachClient.name === receiverName ).window;
+            targetWindow.webContents.send(message, args);
+        });
+    }
+};
 
 /**
  * Log in main process terminal
@@ -10,251 +41,173 @@ function log(message) {
     ipcRenderer.send('log', message);
 }
 
-/*-------------------------------Main Window----------------------------------*/
-let peerConnectionMain;
-let localStream;
-
 /**
- * Connects main window's components to micro mode window.
- * @param {object} stream - MediaStream object from the jitsi-meet conference
- */
-function connectToMicroWindow(stream) {
-    log("received local stream and sending");
-    localStream = stream;
+  * Wrapper class for RTCPeerConnection between Electron windows
+  * @param {string} windowName - name of the BrowserWindow containing the object
+  */
+function WindowPeerConnection (windowName) {
+    this.peerConnection = new webkitRTCPeerConnection(null);
+    this.windowName = windowName;
+    this.remoteStream = null;
+    let thisObj = this;
+    let clients = remote.getGlobal('clients');
+    events.EventEmitter.call(this);
+    log(thisObj.windowName + ": peer connection object");
 
-    setUpMainConnection();
-
-    ipcRenderer.on('microWindowPeerCreated', () => {
-        localStream.getTracks().forEach(
-            function(track) {
-                peerConnectionMain.addTrack(
-                    track,
-                    localStream
-                );
-            }
-        );
-        log("added local stream to peer connection");
-        createAndSendOffer();
+    /**
+      * RTCPeerConnection event handlers
+      */
+    ipcRenderer.on('offer', (event, args) => {
+        const senderName = args[0];
+        const data = args[3];
+        const offer = JSON.parse(data);
+        handleOffer(offer, senderName);
+    });
+    ipcRenderer.on('answer', (event, args) => {
+        const data = args[3];
+        const answer = JSON.parse(data);
+        handleAnswer(answer);
+    });
+    ipcRenderer.on('candidate', (event, args) => {
+        const data = args[3];
+        const candidate = JSON.parse(data);
+        handleCandidate(candidate);
+    });
+    ipcRenderer.on('end', () => {
+        handleLeave();
     });
 
-    ipcRenderer.on('microWindowLocalDescriptionSet', (event, data) => {
-        const desc = new RTCSessionDescription(data);
-        log('main window setRemoteDescription start');
-        peerConnectionMain.setRemoteDescription(desc).then(
-            function() {
-                log("main window setRemoteDescription complete");
-            },
-            function(err) {
-                log('main window failed to set session description: '+err.toString());
-            }
-        );
-    });
-}
+    /**
+    * Sends message from main window to mircro window.
+    */
+    function sendMessage(receiverName, message, data) {
+      let args = [];
+      args[0] = thisObj.windowName;
+      args[1] = receiverName;
+      args[2] = message;
+      args[3] = JSON.stringify(data);
+      ipcRenderer.send('relay', args);
+    }
 
-/**
- * Creates main window's RTCPeerConnection object and set ice candidate listneres.
- */
-function setUpMainConnection() {
-    peerConnectionMain = new RTCPeerConnection();
-    log("created main window peer connection object");
+    /**
+      * Attaches MediaStream object to send to peers.
+      */
+    this.attachStream = function (stream) {
+        thisObj.peerConnection.addStream(stream);
+    };
 
-    ipcRenderer.on('microWindowIceCandidate', (event, candidate) => {
-        peerConnectionMain.addIceCandidate(candidate)
-        .then(
-            function() {
-                log('main window addIceCandidate success');
-            },
-            function(err) {
-                log('main window failed to add ICE Candidate: '+err.toString());
-            }
-        );
-    });
+    /**
+      * On received remote MediaStream, dispatch an event.
+      */
+    this.peerConnection.onaddstream = function (event) {
+        thisObj.emit('receivedStream', event.stream);
+    };
 
-    peerConnectionMain.onicecandidate = function(event) {
+    /**
+      * Wrapper for receivedStream event.
+      */
+    this.onReceivedStream = function (callback) {
+        return thisObj.on('receivedStream', callback);
+    };
+
+    /**
+      * Once ice candidate created, sends to all clients registered.
+      */
+    this.peerConnection.onicecandidate = function(event) {
+        log(thisObj.windowName + ": iceCandidate created");
         if(event.candidate !== null) {
-            let newIceCandidate = {
-                candidate: event.candidate.candidate,
-                sdpMLineIndex: event.candidate.sdpMLineIndex,
-                sdpMid: event.candidate.sdpMid
-            };
-            ipcRenderer.send('mainWindowIceCandidate', newIceCandidate);
-        }
-    };
-    peerConnectionMain.oniceconnectionstatechange = function(event) {
-        if (peerConnectionMain) {
-            log("main window iceCandidateState change event: ", event);
+            const newIceCandidate = event.candidate;
+            clients.forEach(
+                function(client) {
+                    if ( client.name !== thisObj.windowName ) {
+                        sendMessage(client.name, 'candidate', newIceCandidate);
+                    }
+                }
+            );
         }
     };
 
-    sendMessageToMicroWindow('mainWindowPeerCreated', null);
-}
-
-/**
- * Creates peer connection offer to micro window.
- */
-function createAndSendOffer() {
-    log("main window createOffer start");
-
-    const offerOptions = {
-        offerToReceiveAudio: 1,
-        offerToReceiveVideo: 1
+    /**
+      * Ice candidate connection state change event.
+      */
+    this.peerConnection.oniceconnectionstatechange = function(event) {
+        if (thisObj.peerConnection) {
+            log(thisObj.windowName + ": iceCandidateState change event: " + event.type);
+        }
     };
-    peerConnectionMain.createOffer(
-        offerOptions
-    ).then(
-        onCreateOfferSuccess,
-        onCreateOfferError
-    );
-}
-function onCreateOfferError(error) {
-    log("main window failed to create session description: "+error.toString());
-}
 
-/**
- * Sends peer connection offer created to micro window.
- */
-function onCreateOfferSuccess(desc) {
-    log("offer from main window\n" + desc.sdp);
-    log("main window setLocalDescription start");
-    peerConnectionMain.setLocalDescription(desc).then(
-        function() {
-            log("main window setLocalDescription complete");
+    /**
+      * Sends the local MediaStream to a registered peer.
+      * @param {string} receiverName - name of the receiving BrowserWindow
+      */
+    this.call = function (receiverName) {
+        log(thisObj.windowName + ": createOffer start");
+
+        const offerOptions = {
+            offerToReceiveVideo: 1
+        };
+        thisObj.peerConnection.createOffer(function (offer) {
+            sendMessage(
+                receiverName,
+                'offer',
+                offer
+            );
+
+            thisObj.peerConnection.setLocalDescription(offer);
+        }, function(error) {
+            log(thisObj.windowName + ": Error when creating an offer " + error);
         },
-        function(error) {
-            log("failed to set session description: "+error.toString());
-        }
-    );
-
-    const data = {type: desc.type, sdp: desc.sdp};
-    sendMessageToMicroWindow('mainWindowLocalDescriptionSet', data);
-}
-
-/**
- * Sends message from main window to mircro window.
- */
-function sendMessageToMicroWindow(message, data) {
-  args = [];
-  args[0] = message;
-  args[1] = data;
-    ipcRenderer.send('mainWindowEvent', args);
-}
-
-
-/*------------------------------Micro Window----------------------------------*/
-let peerConnectionMicro;
-let remoteVideo;
-
-/**
- * Initiates ipc listners for messages from the main window.
- * @param {object} video - video object on the micro window.
- */
-function initMicroConnection(video) {
-    remoteVideo = video;
-    ipcRenderer.on('mainWindowPeerCreated', () => {
-        setupMicroConnection();
-    });
-    ipcRenderer.on('mainWindowLocalDescriptionSet', (event, desc) => {
-        createAnswer(desc);
-    });
-}
-
-/**
- * Creates micro window's RTCPeerConnection object and set ice candidate listneres.
- */
-function setupMicroConnection() {
-    peerConnectionMicro = new RTCPeerConnection();
-    log("created micro window peer connection object");
-
-    ipcRenderer.on('mainWindowIceCandidate', (event, candidate) => {
-        peerConnectionMicro.addIceCandidate(candidate)
-        .then(
-            function() {
-                log('micro window addIceCandidate success');
-            },
-            function(err) {
-                log('micro window failed to add ICE Candidate: '+err.toString());
-            });
-    });
-
-    peerConnectionMicro.onicecandidate = function(event) {
-        if(event.candidate !== null) {
-            const newIceCandidate = {
-                candidate: event.candidate.candidate,
-                sdpMLineIndex: event.candidate.sdpMLineIndex,
-                sdpMid: event.candidate.sdpMid
-            };
-            sendMessageToMainWindow('microWindowIceCandidate', newIceCandidate);
-        }
+            offerOptions
+        );
     };
-    peerConnectionMicro.oniceconnectionstatechange = function(event) {
-        if (peerConnectionMicro) {
-            log("micro window iceCandidateState change event: " + event);
-        }
-    };
-    peerConnectionMicro.ontrack = gotRemoteStream;
 
-    sendMessageToMainWindow('microWindowPeerCreated', null);
-}
+    /**
+      * Sends an offer to the target peer.
+      */
+    function handleOffer(offer, senderName) {
+        log(thisObj.windowName + ": Setting remoteDescription");
+        thisObj.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+        log(thisObj.windowName + ": remoteDescription set");
 
-/**
- * Attaches MediaStream object received from main window on remoteVideo.
- */
-function gotRemoteStream(event) {
-    if (remoteVideo.srcObject !== event.streams[0]) {
-        remoteVideo.srcObject = event.streams[0];
+        //create an answer to an offer
+        thisObj.peerConnection.createAnswer(function (answer) {
+            log(thisObj.windowName + ": Creating answer");
+            thisObj.peerConnection.setLocalDescription(answer);
+            sendMessage(
+                senderName,
+                'answer',
+                answer
+            );
+        }, function (error) {
+            alert(thisObj.windowName + ": Error when creating an answer " + error);
+        });
+    }
+
+    /**
+      * Sends an answer to the target peer.
+      */
+    function handleAnswer(answer) {
+        thisObj.peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    }
+
+    /**
+      * Adds ice candidate received to the RTCPeerConnection object.
+      */
+    function handleCandidate(candidate) {
+        thisObj.peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+
+    /**
+      * Close connection and nullify handlers.
+      */
+    function handleLeave() {
+        thisObj.peerConection.close();
+        thisObj.peerConnection.onicecandidate = null;
+        thisObj.peerConnection.onaddstream = null;
     }
 }
 
-/**
- * Creates peer connection answer to main window.
- */
-function createAnswer(data) {
-    log("micro window setRemoteDescription start");
-    let desc = new RTCSessionDescription(data);
-    peerConnectionMicro.setRemoteDescription(desc).then(
-      function() {
-        log("micro window setRemoteDescription complete");
-      },
-      function(error) {
-        log("micro window failed to set session description: "+error.toString());
-      }
-    );
+WindowPeerConnection.prototype.__proto__ = events.EventEmitter.prototype;
 
-    log('micro window createAnswer start');
-    peerConnectionMicro.createAnswer().then(
-      onCreateAnswerSuccess,
-      onCreateAnswerError
-    );
-}
-function onCreateAnswerError(error) {
-    log("micro window failed to create session description: "+error.toString());
-}
-
-/**
- * Sends peer connection answer to main window.
- */
-function onCreateAnswerSuccess(desc) {
-    log("answer from main window:\n" + desc.sdp);
-    log('micro window setLocalDescription start');
-    peerConnectionMicro.setLocalDescription(desc).then(
-      function() {
-        log("micro window setLocalDescription complete");
-      },
-      function(error) {
-        log("micro window failed to set session description: "+error.toString());
-      }
-    );
-
-    const data = {type: desc.type, sdp: desc.sdp};
-    sendMessageToMainWindow('microWindowLocalDescriptionSet', data);
-}
-
-/**
- * Sends message from micro window to main window.
- */
-function sendMessageToMainWindow(message, data) {
-    args = [];
-    args[0] = message;
-    args[1] = data;
-    ipcRenderer.send('microWindowEvent', args);
-}
+module.exports.main = main;
+module.exports.WindowPeerConnection = WindowPeerConnection;

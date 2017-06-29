@@ -10,6 +10,10 @@ from config.js
 ```bash
 npm install
 ```
+Since node_addons/sourceId2Coordinates add-on is local dependency, every code change requires increasing the version in its package.json. To rebuild the add-on if it is already installed execute:
+```bash
+npm update
+```
 
 ## Statring the application
 ```bash

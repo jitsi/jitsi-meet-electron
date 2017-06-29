@@ -1,0 +1,17 @@
+{
+  "name": "sourceId2Coordinates",
+  "version": "0.0.3",
+  "description": "Native addon that returns the coordinates of desktop using the passed source id",
+  "main": "index.js",
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "keywords": [
+    "Util",
+    "WebRTC"
+  ],
+  "gypfile": true,
+  "dependencies": {
+    "nan": "^2.2.1"
+  }
+}

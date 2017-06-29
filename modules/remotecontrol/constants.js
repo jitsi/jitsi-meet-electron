@@ -1,8 +1,8 @@
 module.exports = {
     /**
-     * Types of remote-control-event events.
+     * Types of remote-control events.
      */
-    EVENT_TYPES: {
+    EVENTS: {
         mousemove: "mousemove",
         mousedown: "mousedown",
         mouseup: "mouseup",
@@ -10,22 +10,19 @@ module.exports = {
         mousescroll: "mousescroll",
         keydown: "keydown",
         keyup: "keyup",
-        permissions: "permissions",
         stop: "stop",
         supported: "supported"
     },
 
     /**
-     * Actions for the remote control permission events.
+     * Types of remote-control requests.
      */
-    PERMISSIONS_ACTIONS: {
-        request: "request",
-        grant: "grant",
-        deny: "deny"
+    REQUESTS: {
+        start: "start"
     },
 
     /**
-     * The name of remote control events sent trough the API module.
+     * The name of remote control messages.
      */
-    REMOTE_CONTROL_EVENT_NAME: "remote-control-event"
+    REMOTE_CONTROL_MESSAGE_NAME: "remote-control"
 };

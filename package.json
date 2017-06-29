@@ -30,7 +30,8 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "robotjs": "hristoterezov/robotjs",
+    "sourceId2Coordinates": "file:./node_addons/sourceId2Coordinates",
+    "robotjs": "jitsi/robotjs#jitsi",
     "postis": "^2.2.0"
   },
   "devDependencies": {

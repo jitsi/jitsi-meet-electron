@@ -30,9 +30,7 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "sourceId2Coordinates": "file:./node_addons/sourceId2Coordinates",
-    "robotjs": "jitsi/robotjs#jitsi",
-    "postis": "^2.2.0"
+    "jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils"
   },
   "devDependencies": {
     "electron": "1.4.13",

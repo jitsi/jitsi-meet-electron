@@ -1,13 +1,10 @@
 /* global process */
-const RemoteControl = require("../../modules/remotecontrol");
-let postis = require("postis");
-const setupScreenSharingForWindow = require("../../modules/screensharing");
+const utils = require("jitsi-meet-electron-utils");
+const {
+    RemoteControl,
+    setupScreenSharingForWindow
+} = utils;
 const config = require("../../config.js");
-
-/**
- * The postis channel.
- */
-let channel;
 
 /**
  * The remote control instance.
@@ -32,18 +29,12 @@ document.body.appendChild(iframe);
 function onload() {
     setupScreenSharingForWindow(iframe.contentWindow);
     iframe.contentWindow.onunload = onunload;
-    channel = postis({
-        window: iframe.contentWindow,
-        windowForEventListening: window
-    });
-    remoteControl = new RemoteControl(channel);
+    remoteControl = new RemoteControl(iframe);
 }
 
 /**
  * Clears the postis objects and remoteControl.
  */
 function onunload() {
-    channel.destroy();
-    channel = null;
     remoteControl.dispose();
 }

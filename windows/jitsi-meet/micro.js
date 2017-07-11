@@ -1,3 +1,4 @@
+// const WindowPeerConnection = require("electron-peer-connection").WindowPeerConnection;
 const WindowPeerConnection = require("../../modules/micromodeconnection").WindowPeerConnection;
 
 /**

@@ -34,9 +34,9 @@
     "postis": "^2.2.0"
   },
   "devDependencies": {
-    "electron": "1.4.13",
+    "electron": "*",
     "electron-packager": "*",
-    "electron-rebuild": "^1.5.6",
+    "electron-rebuild": "*",
     "eslint": ">=3",
     "eslint-plugin-jsdoc": "*",
     "precommit-hook": "3.0.0"

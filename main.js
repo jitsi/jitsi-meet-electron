@@ -3,7 +3,8 @@
 const electron = require("electron");
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-
+const p2pChannel = require("./modules/micromodeconnection").main;
+// const p2pChannel = require("electron-peer-connection").main;
 const path = require("path");
 const url = require("url");
 
@@ -92,12 +93,38 @@ function setAPPListeners () {
 function createJitsiMeetWindow () {
   jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
   jitsiMeetWindow.loadURL(indexURL);
-  microWindow = new BrowserWindow(microWindowOptions);
-  microWindow.loadURL(microModeURL);
+
+  p2pChannel.initChannel();
+  p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
 
   jitsiMeetWindow.webContents.on('new-window', function(event, url) {
       event.preventDefault();
       electron.shell.openExternal(url);
+  });
+
+  /*
+  this event is supposed to be 'minimize' instead of 'blur',
+  but currently microWindow's video doesnt work when main window is minimized
+  TODO: Figure out how to keep main window's video active when minimized
+  */
+  jitsiMeetWindow.on('blur', function () {
+      if (microWindow) {
+          microWindow.show();
+      } else {
+          microWindow = new BrowserWindow(microWindowOptions);
+          microWindow.loadURL(microModeURL);
+          p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
+          microWindow.show();
+          microWindow.webContents.on('did-finish-load', function() {
+            jitsiMeetWindow.webContents.send('hide');
+          });
+      }
+  });
+
+  jitsiMeetWindow.on('focus', function () {
+      if (microWindow){
+          microWindow.hide();
+      }
   });
 
   jitsiMeetWindow.on("closed", () => {
@@ -105,18 +132,17 @@ function createJitsiMeetWindow () {
       microWindow = null;
   });
 
-  setIPCListeners();
+  // setIPCListeners();
 }
 
 /**
  * Sets the ipc listeners for messages from renderer processes
  */
-function setIPCListeners() {
-    const p2pChannel = require("./modules/micromodeconnection").main;
-    p2pChannel.setChannel();
-    p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
-    p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
-}
+// function setIPCListeners() {
+//     p2pChannel.initChannel();
+//     p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
+//     p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
+// }
 
 //Start the application:
 setAPPListeners();

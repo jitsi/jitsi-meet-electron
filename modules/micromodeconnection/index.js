@@ -1,3 +1,4 @@
+/* eslint-disable */
 const ipcRenderer = require('electron').ipcRenderer;
 const ipcMain = require('electron').ipcMain;
 const remote = require('electron').remote;
@@ -21,10 +22,10 @@ let main = {
     /**
       * Sets the ipc listeners for messages from renderer processes
       */
-    setChannel: function () {
-        // ipcMain.on('log', (event, data) => {
-        //     console.log(data);
-        // });
+    initChannel: function () {
+        ipcMain.on('log', (event, data) => {
+            console.log(data);
+        });
         ipcMain.on('relay', (event, args) => {
             const receiverName = args[1];
             const message = args[2];
@@ -93,7 +94,15 @@ function WindowPeerConnection (windowName) {
       * Attaches MediaStream object to send to peers.
       */
     this.attachStream = function (stream) {
+        thisObj.remoteStream = stream;
         thisObj.peerConnection.addStream(stream);
+    };
+
+    /**
+      * Removes MediaStream object attached previously.
+      */
+    this.removeStream = function () {
+        thisObj.peerConnection.removeStream(thisObj.remoteStream);
     };
 
     /**
@@ -140,7 +149,7 @@ function WindowPeerConnection (windowName) {
       * Sends the local MediaStream to a registered peer.
       * @param {string} receiverName - name of the receiving BrowserWindow
       */
-    this.call = function (receiverName) {
+    this.sendStream = function (receiverName) {
         log(thisObj.windowName + ": createOffer start");
 
         const offerOptions = {

@@ -4,7 +4,9 @@ let postis = require("postis");
 const setupScreenSharingForWindow = require("../../modules/screensharing");
 const config = require("../../config.js");
 const {dialog} = require('electron').remote;
+const ipcRenderer = require('electron').ipcRenderer;
 const WindowPeerConnection = require("../../modules/micromodeconnection").WindowPeerConnection;
+// const WindowPeerConnection = require("electron-peer-connection").WindowPeerConnection;
 
 /**
  * The postis channel.
@@ -75,11 +77,14 @@ const dialogFactory = new DialogFactory();
 let largeVideo;
 function onload() {
     largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
-
     const canvas = copyVideo(largeVideo, 400, 300, 30);
     document.body.appendChild(canvas);
     const localStream = canvas.captureStream();
-    setupMicroModePeerConnection(localStream);
+
+    ipcRenderer.on('hide', () => {
+      ipcRenderer.send('log', 'sending stream');
+      setupMicroModePeerConnection(localStream);
+    });
 
     setupScreenSharingForWindow(iframe.contentWindow);
     iframe.contentWindow.onunload = onunload;
@@ -96,7 +101,7 @@ function onload() {
 function setupMicroModePeerConnection (stream) {
     let mainWindow = new WindowPeerConnection('jitsiMeetWindow');
     mainWindow.attachStream(stream);
-    mainWindow.call('microWindow');
+    mainWindow.sendStream('microWindow');
 }
 
 /**
@@ -112,7 +117,6 @@ function copyVideo(largeVideo, width, height, frameRate) {
     setInterval(function() {
       ctx.drawImage(largeVideo, 0, 0, canvas.width, canvas.height);
     }, frameRate);
-
     return canvas;
 }
 

@@ -3,8 +3,7 @@ Jitsi Meet Electron
 Electron application for [Jitsi Meet](https://github.com/jitsi/jitsi-meet).
 
 ## Configuration
-You can change the Jitsi Meet deployment url with the jitsiMeetURL property
-from config.js
+You can change the Jitsi Meet deployment domain with the jitsiMeetDomain property from config.js
 
 ## Building the sources
 ```bash

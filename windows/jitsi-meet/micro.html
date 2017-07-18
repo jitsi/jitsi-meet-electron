@@ -16,11 +16,19 @@
                 transform: scale(-1, 1);
             }
         </style>
+        <link rel="stylesheet" type="text/css" href="../../css/_font.scss" media="screen" />
     </head>
     <body>
-      <video id="remoteVideo" autoplay />
-      <script>
-          require('./micro.js');
-      </script>
+        <div>
+            <video id="remoteVideo" autoplay />
+        </div>
+        <div align="center">
+            <a class = "button icon-microphone"></a>
+            <a class = "button icon-camera"></a>
+            <a class = "button icon-hangup"></a>
+        </div>
+        <script>
+            require('./micro.js');
+        </script>
     </body>
 </html>

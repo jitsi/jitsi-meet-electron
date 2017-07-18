@@ -55,6 +55,7 @@ const microWindowOptions = {
     titleBarStyle: 'hidden',
     frame: false,
     alwaysOnTop: true,
+    transparent: true,
     x: 1570,
     y: 50
 };
@@ -121,11 +122,11 @@ function createJitsiMeetWindow () {
       }
   });
 
-  jitsiMeetWindow.on('focus', function () {
-      if (microWindow){
-          microWindow.hide();
-      }
-  });
+  // jitsiMeetWindow.on('focus', function () {
+  //     if (microWindow){
+  //         microWindow.hide();
+  //     }
+  // });
 
   jitsiMeetWindow.on("closed", () => {
       jitsiMeetWindow = null;

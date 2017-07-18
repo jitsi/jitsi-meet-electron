@@ -5,7 +5,7 @@
   "main": "main.js",
   "productName": "Jitsi Meet",
   "scripts": {
-    "start": "electron .",
+    "start": "electron --enable-transparent-visuals --disable-gpu .",
     "clean": "rm -rf node_modules",
     "lint": "eslint .",
     "pack": "electron-packager .",

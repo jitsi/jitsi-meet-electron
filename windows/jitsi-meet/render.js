@@ -79,11 +79,12 @@ function onload() {
     largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
     const canvas = copyVideo(largeVideo, 400, 300, 30);
     document.body.appendChild(canvas);
-    const localStream = canvas.captureStream();
+    // const localStream = canvas.captureStream();
 
     ipcRenderer.on('hide', () => {
       ipcRenderer.send('log', 'sending stream');
-      setupMicroModePeerConnection(localStream);
+      // setupMicroModePeerConnection(localStream);
+      setupMicroModePeerConnection(largeVideo.srcObject);
     });
 
     setupScreenSharingForWindow(iframe.contentWindow);
@@ -115,7 +116,7 @@ function copyVideo(largeVideo, width, height, frameRate) {
     canvas.height = height;
     let ctx = canvas.getContext('2d');
     setInterval(function() {
-      ctx.drawImage(largeVideo, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     }, frameRate);
     return canvas;
 }

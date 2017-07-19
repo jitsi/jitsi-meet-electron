@@ -75,17 +75,19 @@ const dialogFactory = new DialogFactory();
  * Initializes remote control.
  */
 let largeVideo;
+let mainWindow;
 function onload() {
     largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
-    const canvas = copyVideo(largeVideo, 400, 300, 30);
-    document.body.appendChild(canvas);
-    // const localStream = canvas.captureStream();
 
     ipcRenderer.on('hide', () => {
-      ipcRenderer.send('log', 'sending stream');
-      // setupMicroModePeerConnection(localStream);
-      setupMicroModePeerConnection(largeVideo.srcObject);
+        setupMicroModePeerConnection(largeVideo.srcObject);
     });
+
+    largeVideo.ondurationchange = function() {
+        if (mainWindow) {
+            switchMicroVideo(largeVideo.srcObject);
+        }
+    };
 
     setupScreenSharingForWindow(iframe.contentWindow);
     iframe.contentWindow.onunload = onunload;
@@ -100,7 +102,13 @@ function onload() {
 }
 
 function setupMicroModePeerConnection (stream) {
-    let mainWindow = new WindowPeerConnection('jitsiMeetWindow');
+    mainWindow = new WindowPeerConnection('jitsiMeetWindow');
+    mainWindow.attachStream(stream);
+    mainWindow.sendStream('microWindow');
+}
+
+function switchMicroVideo (stream) {
+    mainWindow.removeStream();
     mainWindow.attachStream(stream);
     mainWindow.sendStream('microWindow');
 }
@@ -110,16 +118,16 @@ function setupMicroModePeerConnection (stream) {
  * Get reference of the video, width and height as parameters
  * Return canvas object
  */
-function copyVideo(largeVideo, width, height, frameRate) {
-  let canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    let ctx = canvas.getContext('2d');
-    setInterval(function() {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    }, frameRate);
-    return canvas;
-}
+// function copyVideo(video, width, height, frameRate) {
+//   let canvas = document.createElement('canvas');
+//     canvas.width = width;
+//     canvas.height = height;
+//     let ctx = canvas.getContext('2d');
+//     setInterval(function() {
+//       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+//     }, frameRate);
+//     return canvas;
+// }
 
 /**
  * Clears the postis objects and remoteControl.

@@ -56,6 +56,7 @@ const microWindowOptions = {
     frame: false,
     alwaysOnTop: true,
     transparent: true,
+    // resizable: false,
     x: 1570,
     y: 50
 };

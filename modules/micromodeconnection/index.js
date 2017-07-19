@@ -23,9 +23,9 @@ let main = {
       * Sets the ipc listeners for messages from renderer processes
       */
     initChannel: function () {
-        ipcMain.on('log', (event, data) => {
-            console.log(data);
-        });
+        // ipcMain.on('log', (event, data) => {
+        //     console.log(data);
+        // });
         ipcMain.on('relay', (event, args) => {
             const receiverName = args[1];
             const message = args[2];

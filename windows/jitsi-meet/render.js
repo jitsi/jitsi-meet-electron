@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* global process */
 const remoteControl = require("../../modules/remotecontrol");
 let postis = require("postis");
@@ -14,13 +15,18 @@ const WindowPeerConnection = require("../../modules/micromodeconnection").Window
 let channel;
 
 /**
- * Cteates the iframe that will load Jitsi Meet.
+ * Cteates the jitsimeetiframe that will load Jitsi Meet.
  */
-let iframe = document.createElement('iframe');
-iframe.src = process.env.JITSI_MEET_URL || config.jitsiMeetURL;
-iframe.allowFullscreen = true;
-iframe.onload = onload;
-document.body.appendChild(iframe);
+ var options = {
+     domain: config.jitsiMeetURL,
+     room: "testurl",
+     width: '100%',
+     height: '100%'
+ };
+let JitsiMeetAPI = new JitsiMeetExternalAPI(config.jitsiMeetURL, options);
+
+let jitsimeetiframe = document.querySelector('iframe');
+jitsimeetiframe.onload = onload;
 
 /**
  * Factory for dialogs.
@@ -69,15 +75,15 @@ class DialogFactory {
 const dialogFactory = new DialogFactory();
 
 /**
- * Handles loaded event for iframe:
- * Enables screen sharing functionality to the iframe webpage.
+ * Handles loaded event for jitsimeetiframe:
+ * Enables screen sharing functionality to the jitsimeetiframe webpage.
  * Initializes postis.
  * Initializes remote control.
  */
 let largeVideo;
 let mainWindow;
 function onload() {
-    largeVideo = iframe.contentWindow.document.getElementById("largeVideo");
+    largeVideo = jitsimeetiframe.contentWindow.document.getElementById("largeVideo");
 
     ipcRenderer.on('hide', () => {
         setupMicroModePeerConnection(largeVideo.srcObject);
@@ -89,10 +95,10 @@ function onload() {
         }
     };
 
-    setupScreenSharingForWindow(iframe.contentWindow);
-    iframe.contentWindow.onunload = onunload;
+    setupScreenSharingForWindow(jitsimeetiframe.contentWindow);
+    jitsimeetiframe.contentWindow.onunload = onunload;
     channel = postis({
-        window: iframe.contentWindow,
+        window: jitsimeetiframe.contentWindow,
         windowForEventListening: window
     });
     remoteControl.init(

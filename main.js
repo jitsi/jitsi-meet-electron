@@ -109,7 +109,7 @@ function createJitsiMeetWindow () {
   but currently microWindow's video doesnt work when main window is minimized
   TODO: Figure out how to keep main window's video active when minimized
   */
-  jitsiMeetWindow.on('blur', function () {
+  jitsiMeetWindow.on('minimize', function () {
       if (microWindow) {
           microWindow.show();
       } else {
@@ -123,28 +123,17 @@ function createJitsiMeetWindow () {
       }
   });
 
-  // jitsiMeetWindow.on('focus', function () {
-  //     if (microWindow){
-  //         microWindow.hide();
-  //     }
-  // });
+  jitsiMeetWindow.on('restore', function () {
+      if (microWindow){
+          microWindow.hide();
+      }
+  });
 
   jitsiMeetWindow.on("closed", () => {
       jitsiMeetWindow = null;
       microWindow = null;
   });
-
-  // setIPCListeners();
 }
-
-/**
- * Sets the ipc listeners for messages from renderer processes
- */
-// function setIPCListeners() {
-//     p2pChannel.initChannel();
-//     p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
-//     p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
-// }
 
 //Start the application:
 setAPPListeners();

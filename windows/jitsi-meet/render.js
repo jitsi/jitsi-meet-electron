@@ -17,13 +17,15 @@ let channel;
 /**
  * Cteates the jitsimeetiframe that will load Jitsi Meet.
  */
-var options = {
-    domain: config.jitsiMeetURL,
-    room: "testurl",
-    width: '100%',
-    height: '100%'
-};
-let JitsiMeetAPI = new JitsiMeetExternalAPI(config.jitsiMeetURL, options);
+let domain = config.jitsiMeetURL;
+let room = "testurl";
+let width = '100%';
+let height = '100%';
+let htmlElement = undefined;
+let configOverwrite = {};
+let interfaceConfigOverwrite = {};
+let JitsiMeetAPI = new JitsiMeetExternalAPI(domain, room, width, height,
+    htmlElement, configOverwrite, interfaceConfigOverwrite);
 
 let jitsimeetiframe = document.querySelector('iframe');
 jitsimeetiframe.onload = onload;

@@ -105,11 +105,6 @@ function createJitsiMeetWindow () {
       electron.shell.openExternal(url);
   });
 
-  /*
-  this event is supposed to be 'minimize' instead of 'blur',
-  but currently microWindow's video doesnt work when main window is minimized
-  TODO: Figure out how to keep main window's video active when minimized
-  */
   jitsiMeetWindow.on('minimize', function () {
       if (microWindow) {
           microWindow.show();
@@ -135,6 +130,9 @@ function createJitsiMeetWindow () {
       microWindow = null;
   });
 
+  ipcMain.on('microWindowClosed', () => {
+      microWindow = null;
+  });
 
   ipcMain.on('external_api', (event, message) => {
       jitsiMeetWindow.webContents.send('external_api', message);

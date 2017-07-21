@@ -1,6 +1,7 @@
 // const WindowPeerConnection = require("electron-peer-connection").WindowPeerConnection;
 const WindowPeerConnection = require("../../modules/micromodeconnection").WindowPeerConnection;
 const ipcRenderer = require('electron').ipcRenderer;
+const remote = require('electron').remote;
 
 /**
  * The remote video from main window.
@@ -34,4 +35,6 @@ function toggleVideo () {
 
 function hangup () {
     ipcRenderer.send('external_api', 'hangup');
+    ipcRenderer.send('microWindowClosed');
+    remote.getCurrentWindow().close();
 }

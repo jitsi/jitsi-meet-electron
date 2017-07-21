@@ -1,22 +1,12 @@
-/**
- * Round badge.
- */
-.badge-round {
-    background-color: $toolbarBadgeBackground;
-    border-radius: 50%;
-    box-sizing: border-box;
-    color: $toolbarBadgeColor;
-    // Do not inherit the font-family from the toolbar button, because it's an
-    // icon style.
-    font-family: $baseFontFamily;
-    font-size: 9px;
-    font-weight: 700;
-    line-height: 13px;
-    min-width: 13px;
-    overflow: hidden;
-    text-align: center;
-    text-overflow: ellipsis;
-    vertical-align: middle;
+@font-face {
+    font-family: 'jitsi';
+    src:url('../fonts/jitsi.eot?94d075');
+    src:url('../fonts/jitsi.eot?#iefix94d075') format('embedded-opentype'),
+        url('../fonts/jitsi.woff?94d075') format('woff'),
+        url('../fonts/jitsi.ttf?94d075') format('truetype'),
+        url('../fonts/jitsi.svg?94d075#jitsi') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
  /**
@@ -24,21 +14,43 @@
   */
 .button {
     color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
     cursor: pointer;
-    z-index: $zindex1;
-    display: inline-block;
-    font-size: $toolbarFontSize !important;
+    font-size: 1.5em;
     height: 50px;
-    line-height: 50px !important;
+    line-height: 50px;
     position: relative;
     text-align: center;
+    vertical-align: center;
     top:0px;
-    vertical-align: middle;
     width: 50px;
+    padding: 10px;
+
+}
+
+.button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.toggled {
+    background-color: #12499C !important;
+}
+
+.toggled.icon-microphone:before {
+    content: "\e912" !important;
+}
+
+.toggled.icon-camera:before {
+    content: "\e919" !important;
+}
+
+.button_hangup {
+    color:  #bf2117;
+}
 
     &_hangup {
-        color: $hangupColor;
-        font-size: $hangupFontSize !important;
+        color:  #bf2117;
     }
 
     &[disabled] {
@@ -85,7 +97,6 @@
             cursor: default;
         }
     }
-}
 
 .toolbar-container {
     display: block;

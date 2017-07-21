@@ -7,7 +7,7 @@
                 height: 100%;
                 overflow: hidden;
             }
-            body {
+            .video-container {
                 -webkit-app-region: drag
             }
             video {
@@ -18,17 +18,15 @@
         </style>
         <link rel="stylesheet" type="text/css" href="../../css/_font.scss" media="screen" />
         <link rel="stylesheet" type="text/css" href="../../css/_toolbars.scss" media="screen" />
-        <link rel="stylesheet" type="text/css" href="../../css/_variables.scss" media="screen" />
     </head>
     <body>
-        <div>
+        <div class="video-container">
             <video id="remoteVideo" autoplay />
         </div>
-        <div class="toolbar" align="center">
-            <a class = "button icon-microphone"></a>
-            <a class = "button icon-camera"></a>
-            <a class = "button icon-hangup button_hangup"></a>
-            <span class = "badge-round"></span>
+        <div class="toolbar" id="toolbar" align="center">
+            <a class="button icon-microphone" id="button-audioMute" onclick="toggleAudio()"></a>
+            <a class="button icon-camera" id="button-videoMute" onclick="toggleVideo()"></a>
+            <a class="button icon-hangup button_hangup" id="button-hangup" onclick="hangup()"></a>
         </div>
         <script>
             require('./micro.js');

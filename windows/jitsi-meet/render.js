@@ -17,12 +17,12 @@ let channel;
 /**
  * Cteates the jitsimeetiframe that will load Jitsi Meet.
  */
- var options = {
-     domain: config.jitsiMeetURL,
-     room: "testurl",
-     width: '100%',
-     height: '100%'
- };
+var options = {
+    domain: config.jitsiMeetURL,
+    room: "testurl",
+    width: '100%',
+    height: '100%'
+};
 let JitsiMeetAPI = new JitsiMeetExternalAPI(config.jitsiMeetURL, options);
 
 let jitsimeetiframe = document.querySelector('iframe');
@@ -94,6 +94,10 @@ function onload() {
             switchMicroVideo(largeVideo.srcObject);
         }
     };
+
+    ipcRenderer.on('external_api', (event, command) => {
+        JitsiMeetAPI.executeCommand(command);
+    });
 
     setupScreenSharingForWindow(jitsimeetiframe.contentWindow);
     jitsimeetiframe.contentWindow.onunload = onunload;

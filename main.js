@@ -7,6 +7,7 @@ const p2pChannel = require("./modules/micromodeconnection").main;
 // const p2pChannel = require("electron-peer-connection").main;
 const path = require("path");
 const url = require("url");
+const ipcMain = require('electron').ipcMain;
 
 /**
  * URL for index.html which will be our entry point.
@@ -132,6 +133,11 @@ function createJitsiMeetWindow () {
   jitsiMeetWindow.on("closed", () => {
       jitsiMeetWindow = null;
       microWindow = null;
+  });
+
+
+  ipcMain.on('external_api', (event, message) => {
+      jitsiMeetWindow.webContents.send('external_api', message);
   });
 }
 

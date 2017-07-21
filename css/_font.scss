@@ -9,7 +9,7 @@
     font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^='icon-'], [class*=" icon-"] {
     font-family: 'jitsi';
     speak: none;
     font-style: normal;
@@ -88,8 +88,11 @@
 .icon-mic-empty:before {
     content: "\e911";
 }
-.icon-mic-disabled:before {
-    content: "\e912";
+// .icon-mic-disabled:before {
+//     content: "\e912";
+// }
+.icon-microphone.toggled {
+    content: "\e912" !important;
 }
 .icon-ninja:before {
     content: "\e909";

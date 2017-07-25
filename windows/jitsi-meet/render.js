@@ -1,40 +1,35 @@
-/* global process */
-const utils = require("jitsi-meet-electron-utils");
+/* global process, JitsiMeetExternalAPI */
 const {
     RemoteControl,
     setupScreenSharingForWindow
-} = utils;
-const config = require("../../config.js");
+} = require("jitsi-meet-electron-utils");
+const { jitsiMeetDomain } = require("../../config.js");
 
 /**
- * The remote control instance.
+ * Loads a script from a specific source.
+ *
+ * @param src the source from the which the script is to be (down)loaded
+ * @param loadCallback on load callback function
+ * @param errorCallback callback to be called on error loading the script
  */
-let remoteControl;
+function loadScript(
+        src,
+        loadCallback = () => {},
+        errorCallback = console.error) {
+    const script = document.createElement('script');
 
-/**
- * Cteates the iframe that will load Jitsi Meet.
- */
-let iframe = document.createElement('iframe');
-iframe.src = process.env.JITSI_MEET_URL || config.jitsiMeetURL;
-iframe.allowFullscreen = true;
-iframe.onload = onload;
-document.body.appendChild(iframe);
+    script.async = true;
 
-/**
- * Handles loaded event for iframe:
- * Enables screen sharing functionality to the iframe webpage.
- * Initializes postis.
- * Initializes remote control.
- */
-function onload() {
-    setupScreenSharingForWindow(iframe.contentWindow);
-    iframe.contentWindow.onunload = onunload;
-    remoteControl = new RemoteControl(iframe);
+    script.onload = loadCallback;
+    script.onerror = errorCallback;
+    script.src = src;
+    document.head.appendChild(script);
 }
 
-/**
- * Clears the postis objects and remoteControl.
- */
-function onunload() {
-    remoteControl.dispose();
-}
+loadScript(`https://${jitsiMeetDomain}/external_api.js`, () => {
+    const api = new JitsiMeetExternalAPI(
+        process.env.JITSI_MEET_DOMAIN || jitsiMeetDomain);
+    const iframe = api.getIFrame();
+    setupScreenSharingForWindow(iframe);
+    new RemoteControl(iframe);
+});

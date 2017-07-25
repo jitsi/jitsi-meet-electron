@@ -7,7 +7,6 @@ const config = require("../../config.js");
 const {dialog} = require('electron').remote;
 const ipcRenderer = require('electron').ipcRenderer;
 const WindowPeerConnection = require("../../modules/micromodeconnection").WindowPeerConnection;
-// const WindowPeerConnection = require("electron-peer-connection").WindowPeerConnection;
 
 /**
  * The postis channel.
@@ -15,20 +14,20 @@ const WindowPeerConnection = require("../../modules/micromodeconnection").Window
 let channel;
 
 /**
- * Cteates the jitsimeetiframe that will load Jitsi Meet.
+ * Cteates the iframe that will load Jitsi Meet.
  */
-let domain = config.jitsiMeetURL;
-let room = "testurl";
-let width = '100%';
-let height = '100%';
-let htmlElement = undefined;
-let configOverwrite = {};
-let interfaceConfigOverwrite = {};
-let JitsiMeetAPI = new JitsiMeetExternalAPI(domain, room, width, height,
+const domain = config.jitsiMeetURL;
+const room = "testurl";
+const width = '100%';
+const height = '100%';
+const htmlElement = undefined;
+const configOverwrite = {};
+const interfaceConfigOverwrite = {};
+const jitsiMeetAPI = new JitsiMeetExternalAPI(domain, room, width, height,
     htmlElement, configOverwrite, interfaceConfigOverwrite);
 
-let jitsimeetiframe = document.querySelector('iframe');
-jitsimeetiframe.onload = onload;
+const jitsiMeetIframe = document.querySelector('iframe');
+jitsiMeetIframe.onload = onload;
 
 /**
  * Factory for dialogs.
@@ -77,34 +76,19 @@ class DialogFactory {
 const dialogFactory = new DialogFactory();
 
 /**
- * Handles loaded event for jitsimeetiframe:
- * Enables screen sharing functionality to the jitsimeetiframe webpage.
+ * Handles loaded event for iframe:
+ * Enables screen sharing functionality to the iframe webpage.
  * Initializes postis.
  * Initializes remote control.
  */
 let largeVideo;
 let mainWindow;
 function onload() {
-    largeVideo = jitsimeetiframe.contentWindow.document.getElementById("largeVideo");
-
-    ipcRenderer.on('hide', () => {
-        setupMicroModePeerConnection(largeVideo.srcObject);
-    });
-
-    largeVideo.ondurationchange = function() {
-        if (mainWindow) {
-            switchMicroVideo(largeVideo.srcObject);
-        }
-    };
-
-    ipcRenderer.on('external_api', (event, command) => {
-        JitsiMeetAPI.executeCommand(command);
-    });
-
-    setupScreenSharingForWindow(jitsimeetiframe.contentWindow);
-    jitsimeetiframe.contentWindow.onunload = onunload;
+    setupMicroWindow();
+    setupScreenSharingForWindow(jitsiMeetIframe.contentWindow);
+    jitsiMeetIframe.contentWindow.onunload = onunload;
     channel = postis({
-        window: jitsimeetiframe.contentWindow,
+        window: jitsiMeetIframe.contentWindow,
         windowForEventListening: window
     });
     remoteControl.init(
@@ -113,33 +97,70 @@ function onload() {
         config.handleRemoteControlAuthorization);
 }
 
+/**
+ * Initializes Micro Mode.
+ */
+function setupMicroWindow() {
+    largeVideo = jitsiMeetIframe.contentWindow.document.getElementById("largeVideo");
+
+    ipcRenderer.on('blurred', (event, microWindowStatus) => {
+        if (microWindowStatus === 'new') {
+            setupMicroModePeerConnection(largeVideo.srcObject);
+        }
+        if (microWindowStatus === 'exist') {
+            setMicroVideoStatus();
+        }
+    });
+
+    ipcRenderer.on('external_api', (event, command) => {
+      jitsiMeetAPI.executeCommand(command);
+    });
+
+    largeVideo.ondurationchange = function() {
+        if (mainWindow) {
+            switchMicroVideo(largeVideo.srcObject);
+        }
+    };
+}
+
+/**
+ * Creates Micro window.
+ */
 function setupMicroModePeerConnection (stream) {
     mainWindow = new WindowPeerConnection('jitsiMeetWindow');
     mainWindow.attachStream(stream);
     mainWindow.sendStream('microWindow');
+    setMicroVideoStatus();
 }
 
+/**
+ * Sets toolbar buttons status in Micro window.
+ */
+function setMicroVideoStatus () {
+    let jitsiMeetDocument = jitsiMeetIframe.contentWindow.document;
+    let muteButton = jitsiMeetDocument.querySelector('#toolbar_button_mute');
+    let videoButton = jitsiMeetDocument.querySelector('#toolbar_button_camera');
+    let videoStatus = {
+        audioMuted: false,
+        videoMuted: false
+    };
+    if (muteButton.className.includes('toggled')) {
+        videoStatus.audioMuted = true;
+    }
+    if (videoButton.className.includes('toggled')) {
+        videoStatus.videoMuted = true;
+    }
+    ipcRenderer.send('videoStatus', (event, videoStatus));
+}
+
+/**
+ * LargeVideo transition in micro window.
+ */
 function switchMicroVideo (stream) {
     mainWindow.removeStream();
     mainWindow.attachStream(stream);
     mainWindow.sendStream('microWindow');
 }
-
-/**
- * Create a copy of HTMLvideo in HTMLcanvas form
- * Get reference of the video, width and height as parameters
- * Return canvas object
- */
-// function copyVideo(video, width, height, frameRate) {
-//   let canvas = document.createElement('canvas');
-//     canvas.width = width;
-//     canvas.height = height;
-//     let ctx = canvas.getContext('2d');
-//     setInterval(function() {
-//       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-//     }, frameRate);
-//     return canvas;
-// }
 
 /**
  * Clears the postis objects and remoteControl.
@@ -148,4 +169,5 @@ function onunload() {
     channel.destroy();
     channel = null;
     remoteControl.dispose();
+    jitsiMeetAPI.dispose();
 }

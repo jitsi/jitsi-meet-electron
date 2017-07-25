@@ -3,7 +3,7 @@
 const electron = require("electron");
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const p2pChannel = require("./modules/micromodeconnection").main;
+let p2pChannel = require("./modules/micromodeconnection").main;
 // const p2pChannel = require("electron-peer-connection").main;
 const path = require("path");
 const url = require("url");
@@ -94,49 +94,56 @@ function setAPPListeners () {
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
 function createJitsiMeetWindow () {
-  jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
-  jitsiMeetWindow.loadURL(indexURL);
+    jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
+    jitsiMeetWindow.loadURL(indexURL);
 
-  p2pChannel.initChannel();
-  p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
+    p2pChannel.initChannel();
+    p2pChannel.addClient( { window: jitsiMeetWindow, name: 'jitsiMeetWindow' } );
 
-  jitsiMeetWindow.webContents.on('new-window', function(event, url) {
-      event.preventDefault();
-      electron.shell.openExternal(url);
-  });
+    jitsiMeetWindow.webContents.on('new-window', function(event, url) {
+        event.preventDefault();
+        electron.shell.openExternal(url);
+    });
 
-  jitsiMeetWindow.on('minimize', function () {
-      if (microWindow) {
-          microWindow.show();
-      } else {
-          microWindow = new BrowserWindow(microWindowOptions);
-          microWindow.loadURL(microModeURL);
-          p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
-          microWindow.show();
-          microWindow.webContents.on('did-finish-load', function() {
-            jitsiMeetWindow.webContents.send('hide');
-          });
-      }
-  });
+    jitsiMeetWindow.on('blur', function () {
+        if (microWindow) {
+            microWindow.show();
+            jitsiMeetWindow.webContents.send('blurred', 'exist');
+        } else {
+            microWindow = new BrowserWindow(microWindowOptions);
+            microWindow.loadURL(microModeURL);
+            p2pChannel.addClient( { window: microWindow, name: 'microWindow' } );
+            microWindow.show();
+            microWindow.webContents.on('did-finish-load', function() {
+                jitsiMeetWindow.webContents.send('blurred', 'new');
+            });
+        }
+    });
 
-  jitsiMeetWindow.on('restore', function () {
-      if (microWindow){
-          microWindow.hide();
-      }
-  });
+    jitsiMeetWindow.on('focus', function () {
+        if (microWindow){
+            microWindow.hide();
+        }
+    });
 
-  jitsiMeetWindow.on("closed", () => {
-      jitsiMeetWindow = null;
-      microWindow = null;
-  });
+    ipcMain.on('microWindowHangup', () => {
+        p2pChannel.dispose();
+        microWindow = null;
+    });
 
-  ipcMain.on('microWindowClosed', () => {
-      microWindow = null;
-  });
+    ipcMain.on('external_api', (event, message) => {
+        jitsiMeetWindow.webContents.send('external_api', message);
+    });
 
-  ipcMain.on('external_api', (event, message) => {
-      jitsiMeetWindow.webContents.send('external_api', message);
-  });
+    ipcMain.on('videoStatus', (event, status) => {
+        microWindow.webContents.send('videoStatus', status);
+    });
+
+    jitsiMeetWindow.on("closed", () => {
+        p2pChannel.dispose();
+        jitsiMeetWindow = null;
+        microWindow = null;
+    });
 }
 
 //Start the application:

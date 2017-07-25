@@ -20,20 +20,49 @@ let main = {
     },
 
     /**
+      * Remove a client from the peer connection channel.
+      * @param {string} clientName - name of the client window
+      */
+    removeClient: function (targetClientName) {
+        if (global.clients) {
+            global.clients = global.clients.filter(
+                client => client.name !== targetClientName
+            );
+        }
+    },
+
+    /**
       * Sets the ipc listeners for messages from renderer processes
       */
     initChannel: function () {
-        // ipcMain.on('log', (event, data) => {
-        //     console.log(data);
-        // });
-        ipcMain.on('relay', (event, args) => {
-            const receiverName = args[1];
-            const message = args[2];
-            const targetWindow = global.clients.find( eachClient =>  eachClient.name === receiverName ).window;
-            targetWindow.webContents.send(message, args);
-        });
+        ipcMain.on('log', logMessage);
+        ipcMain.on('relay', relayMessage);
+    },
+
+    /**
+      * Disposes message relay channel
+      */
+    dispose: function () {
+        ipcMain.removeListener('log', logMessage);
+        ipcMain.removeListener('relay', relayMessage);
+        global.clients = null;
     }
 };
+
+function logMessage(event, message) {
+    // console.log(message);
+}
+
+function relayMessage(event, args) {
+    const receiverName = args[1];
+    const message = args[2];
+    const targetClient = global.clients.find(eachClient => eachClient.name === receiverName);
+    if (targetClient) {
+        const targetWindow = targetClient.window;
+        targetWindow.webContents.send(message, args);
+    }
+}
+
 
 /**
  * Log in main process terminal

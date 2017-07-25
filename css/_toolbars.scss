@@ -9,12 +9,20 @@
     font-style: normal;
 }
 
+.video-container {
+    width: 480;
+    height: 280;
+    background-color: #000000;
+    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+    border-radius: 10px;
+}
+
  /**
   * Toolbar button styles.
   */
 .button {
     color: #FFFFFF;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 1.0);
     border-radius: 25px;
     cursor: pointer;
     font-size: 1.5em;
@@ -26,11 +34,11 @@
     top:0px;
     width: 50px;
     padding: 10px;
-
+    margin: 5px;
 }
 
 .button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #708090;
 }
 
 .toggled {

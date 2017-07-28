@@ -131,7 +131,9 @@ function WindowPeerConnection (windowName) {
       * Removes MediaStream object attached previously.
       */
     this.removeStream = function () {
-        thisObj.peerConnection.removeStream(thisObj.remoteStream);
+        if (thisObj.remoteStream) {
+            thisObj.peerConnection.removeStream(thisObj.remoteStream);
+        }
     };
 
     /**

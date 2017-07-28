@@ -4,9 +4,9 @@ const remoteControl = require("../../modules/remotecontrol");
 let postis = require("postis");
 const setupScreenSharingForWindow = require("../../modules/screensharing");
 const config = require("../../config.js");
-const {dialog} = require('electron').remote;
-const ipcRenderer = require('electron').ipcRenderer;
-const WindowPeerConnection = require("../../modules/micromodeconnection").WindowPeerConnection;
+const {dialog} = require("electron").remote;
+const ipcRenderer = require("electron").ipcRenderer;
+const microMode = require("../../modules/micromode").render;
 
 /**
  * The postis channel.
@@ -81,10 +81,8 @@ const dialogFactory = new DialogFactory();
  * Initializes postis.
  * Initializes remote control.
  */
-let largeVideo;
-let mainWindow;
 function onload() {
-    setupMicroWindow();
+    microMode.init(jitsiMeetAPI, jitsiMeetIframe);
     setupScreenSharingForWindow(jitsiMeetIframe.contentWindow);
     jitsiMeetIframe.contentWindow.onunload = onunload;
     channel = postis({
@@ -98,76 +96,13 @@ function onload() {
 }
 
 /**
- * Initializes Micro Mode.
- */
-function setupMicroWindow() {
-    largeVideo = jitsiMeetIframe.contentWindow.document.getElementById("largeVideo");
-
-    ipcRenderer.on('blurred', (event, microWindowStatus) => {
-        if (microWindowStatus === 'new') {
-            setupMicroModePeerConnection(largeVideo.srcObject);
-        }
-        if (microWindowStatus === 'exist') {
-            setMicroVideoStatus();
-        }
-    });
-
-    ipcRenderer.on('external_api', (event, command) => {
-      jitsiMeetAPI.executeCommand(command);
-    });
-
-    largeVideo.ondurationchange = function() {
-        if (mainWindow) {
-            switchMicroVideo(largeVideo.srcObject);
-        }
-    };
-}
-
-/**
- * Creates Micro window.
- */
-function setupMicroModePeerConnection (stream) {
-    mainWindow = new WindowPeerConnection('jitsiMeetWindow');
-    mainWindow.attachStream(stream);
-    mainWindow.sendStream('microWindow');
-    setMicroVideoStatus();
-}
-
-/**
- * Sets toolbar buttons status in Micro window.
- */
-function setMicroVideoStatus () {
-    let jitsiMeetDocument = jitsiMeetIframe.contentWindow.document;
-    let muteButton = jitsiMeetDocument.querySelector('#toolbar_button_mute');
-    let videoButton = jitsiMeetDocument.querySelector('#toolbar_button_camera');
-    let videoStatus = {
-        audioMuted: false,
-        videoMuted: false
-    };
-    if (muteButton.className.includes('toggled')) {
-        videoStatus.audioMuted = true;
-    }
-    if (videoButton.className.includes('toggled')) {
-        videoStatus.videoMuted = true;
-    }
-    ipcRenderer.send('videoStatus', (event, videoStatus));
-}
-
-/**
- * LargeVideo transition in micro window.
- */
-function switchMicroVideo (stream) {
-    mainWindow.removeStream();
-    mainWindow.attachStream(stream);
-    mainWindow.sendStream('microWindow');
-}
-
-/**
  * Clears the postis objects and remoteControl.
  */
 function onunload() {
     channel.destroy();
     channel = null;
     remoteControl.dispose();
+    microMode.dispose();
     jitsiMeetAPI.dispose();
+    jitsiMeetAPI = null;
 }

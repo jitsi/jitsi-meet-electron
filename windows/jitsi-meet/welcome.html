@@ -89,6 +89,20 @@
                  outline: none;
             }
         </style>
+        <script>
+            document.onkeydown = _onKeyDown;
+            
+            function onJoin () {
+                var room_name = document.getElementById("enter_room_field").value;
+                window.location = "https://meet.jit.si/"+room_name;
+            }
+
+            function _onKeyDown (event) {
+                if (event.keyCode === /* Enter */ 13) {
+                    onJoin();
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="welcome_page_main">
@@ -100,7 +114,7 @@
                 <input type="text" id="enter_room_field" autofocus="autofocus">
             </div> 
             <div id="button_container">
-                <button type="button" id="enter_room_button"> JOIN </button>
+                <button type="button" id="enter_room_button" onclick="onJoin();"> JOIN </button>
             </div>  
         </div>
     </body>

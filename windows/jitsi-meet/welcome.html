@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body, html {
+                margin: 0;
+                height: 100%;
+                overflow: hidden;
+            }
+            body {
+                -webkit-app-region: drag
+            }
+            #welcome_page_main {
+                background-image: url(../../images/pattern-body.png);
+                width: 100%;
+                height: 100%;
+            }
+             #background_logo {
+                position: absolute;
+                background-image: url(../../images/logo-blue.svg);
+                background-size: 100% 100%;
+                height: 100%;
+                width: 100%;
+            }
+            #enter_room {
+                display: block;
+                position: relative;
+                width: 100%;
+            }
+            #enter_room_text {
+                height: 100px;
+                width: 100%;
+                padding-top: 130px;
+                text-align: center;
+                text-shadow: 2px 2px rgba(0, 0, 0, 0.7);
+            }
+            #enter_room_text span {
+                position: relative;
+                display: block;
+                color: #FFFFFF;
+                font-size: 9vw;
+                font-weight: 900;
+                font-family: open_sanslight,"Helvetica Neue",Helvetica,Arial,sans-serif;
+            }
+            #enter_room_field {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                margin: 40px 0 0 -330px;
+                height: 100px; 
+                width: 660px;
+                text-align: center;
+                font-size: 50px;
+                color: #404040;
+                font-weight: 800;
+                font-family: open_sanslight,"Helvetica Neue",Helvetica,Arial,sans-serif;
+                border: none;
+                border-radius: 5px;
+            }
+            #enter_room_field:focus {
+                outline: none;
+            }
+            #button_container {
+                display: block;
+                position: relative;
+                text-align: center;
+                width: 100%;
+                padding-top: 30px;
+            }
+            #enter_room_button {
+                height: 80px;
+                width: 300px;
+                background: none;
+                border-width: 5px;
+                border-color: #FFFFFF;
+                border-style: solid;
+                border-radius: 5px;
+                color: #FFFFFF;
+                font-size: 5vw;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 300ms ease;
+            }
+            #enter_room_button:hover {
+                background-color: #FFFFFF;
+                color: #00ccff;
+            }
+            #enter_room_button:focus {
+                 outline: none;
+            }
+        </style>
+        <script>
+            document.onkeydown = _onKeyDown;
+            
+            function onJoin () {
+                var room_name = document.getElementById("enter_room_field").value;
+                window.location = "https://meet.jit.si/"+room_name;
+            }
+
+            function _onKeyDown (event) {
+                if (event.keyCode === /* Enter */ 13) {
+                    onJoin();
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="welcome_page_main">
+            <div id="background_logo"></div>
+            <div id="enter_room_text">
+                <span> ENTER ROOM NAME </span>
+            </div>
+            <div id="enter_room">
+                <input type="text" id="enter_room_field" autofocus="autofocus">
+            </div> 
+            <div id="button_container">
+                <button type="button" id="enter_room_button" onclick="onJoin();"> JOIN </button>
+            </div>  
+        </div>
+    </body>
+</html>

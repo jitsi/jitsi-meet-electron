@@ -4,6 +4,7 @@
 .sync-config.cson
 .electron-gyp
 .npmrc
+.vscode
 
 .DS_Store
 

@@ -15,23 +15,28 @@ let channel;
  */
 let iframe;
 
-document.onkeydown = _onKeyDown;
-function _onKeyDown (event) {
-    if (event.keyCode === /* Enter */ 13) {
-        onJoin();
+window.onload = function() {
+    document.onkeydown = _onKeyDown;
+    console.log(document.getElementById('enter_room_button'));
+    document.getElementById("enter_room_button").onclick = onJoin;
+    function _onKeyDown (event) {
+        if (event.keyCode === /* Enter */ 13) {
+            onJoin();
+        }
     }
-}
+};
 
 /**
  * Loads Jitsi-meet page in iframe with given room name.
  */
 function onJoin () {
-    document.onkeydown = null;
     const room_name = document.getElementById("enter_room_field").value;
-
+    document.onkeydown = null;
     document.getElementById("welcome_page_main").classList.add("animated");
     document.getElementById("welcome_page_main").classList.add("fadeOutUpBig");
-
+    setTimeout(function() {
+        document.getElementById("cs-loader-inner").classList.add("cs-loader-inner");
+    }, 1000);
     createJitsiIframe(room_name);
 }
 

@@ -21,11 +21,21 @@
         <link rel="stylesheet" href="../../css/animate.css">
         <script>
             require("./render.js");
-        </script>
+        </script> 
     </head>
     <body>
         <div id="background_pattern"></div>
         <div id="background_logo"></div>
+        <div id="cs-loader">  
+            <div id="cs-loader-inner">
+                <label>	●</label>
+                <label>	●</label>
+                <label>	●</label>
+                <label>	●</label>
+                <label>	●</label>
+                <label>	●</label>
+            </div>
+        </div>
         <div id="welcome_page_main">
             <div class="animated bounceInDown" id="enter_room_text">
                 <span> ENTER ROOM NAME </span>
@@ -34,7 +44,7 @@
                 <input type="text" id="enter_room_field" autofocus="autofocus">
             </div> 
             <div class="animated fadeIn" id="button_container">
-                <button type="button" id="enter_room_button" onclick="onJoin();"> JOIN </button>
+                <button type="button" id="enter_room_button"> JOIN </button>
             </div>  
         </div>
     </body>

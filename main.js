@@ -31,7 +31,8 @@ const jitsiMeetWindowOptions = {
     height: 600,
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    show: false
 };
 
 /**
@@ -68,6 +69,9 @@ function setAPPListeners () {
 function createJitsiMeetWindow () {
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
     jitsiMeetWindow.loadURL(indexURL);
+    jitsiMeetWindow.webContents.on('did-finish-load', function() {
+        jitsiMeetWindow.show();
+    });
 
     jitsiMeetWindow.webContents.on('new-window', function(event, url) {
         event.preventDefault();

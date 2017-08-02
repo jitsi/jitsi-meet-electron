@@ -11,7 +11,7 @@ const url = require("url");
  * URL for index.html which will be our entry point.
  */
 const indexURL = url.format({
-    pathname: path.join(__dirname, "windows", "jitsi-meet", "welcome.html"),
+    pathname: path.join(__dirname, "windows", "jitsi-meet", "index.html"),
     protocol: "file:",
     slashes: true
 });

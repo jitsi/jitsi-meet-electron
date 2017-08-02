@@ -11,13 +11,40 @@ const {dialog} = require('electron').remote;
 let channel;
 
 /**
+ * The jitsi-meet iframe.
+ */
+let iframe;
+
+document.onkeydown = _onKeyDown;
+function _onKeyDown (event) {
+    if (event.keyCode === /* Enter */ 13) {
+        onJoin();
+    }
+}
+
+/**
+ * Loads Jitsi-meet page in iframe with given room name.
+ */
+function onJoin () {
+    document.onkeydown = null;
+    const room_name = document.getElementById("enter_room_field").value;
+
+    document.getElementById("welcome_page_main").classList.add("animated");
+    document.getElementById("welcome_page_main").classList.add("fadeOutUpBig");
+
+    createJitsiIframe(room_name);
+}
+
+/**
  * Cteates the iframe that will load Jitsi Meet.
  */
-let iframe = document.createElement('iframe');
-iframe.src = process.env.JITSI_MEET_URL || config.jitsiMeetURL;
-iframe.allowFullscreen = true;
-iframe.onload = onload;
-document.body.appendChild(iframe);
+function createJitsiIframe(room_name) {
+    iframe = document.createElement('iframe');
+    iframe.src = (process.env.JITSI_MEET_URL || config.jitsiMeetURL) + room_name;
+    iframe.allowFullscreen = true;
+    iframe.onload = onload;
+    document.body.appendChild(iframe);
+}
 
 /**
  * Factory for dialogs.

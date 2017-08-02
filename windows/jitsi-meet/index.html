@@ -11,15 +11,31 @@
                 -webkit-app-region: drag
             }
             iframe {
+                position: relative;
                 width: 100%;
                 height: 100%;
                 border: 0 none;
             }
         </style>
+        <link rel="stylesheet" href="../../css/welcome.css">
+        <link rel="stylesheet" href="../../css/animate.css">
+        <script>
+            require("./render.js");
+        </script>
     </head>
     <body>
-        <script>
-            require('./render.js');
-        </script>
+        <div id="background_pattern"></div>
+        <div id="background_logo"></div>
+        <div id="welcome_page_main">
+            <div class="animated bounceInDown" id="enter_room_text">
+                <span> ENTER ROOM NAME </span>
+            </div>
+            <div class="animated fadeInUp" id="enter_room">
+                <input type="text" id="enter_room_field" autofocus="autofocus">
+            </div> 
+            <div class="animated fadeIn" id="button_container">
+                <button type="button" id="enter_room_button" onclick="onJoin();"> JOIN </button>
+            </div>  
+        </div>
     </body>
 </html> 

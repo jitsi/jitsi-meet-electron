@@ -33,7 +33,7 @@
     "jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils"
   },
   "devDependencies": {
-    "electron": "1.4.13",
+    "electron": "1.7.5",
     "electron-packager": "*",
     "electron-rebuild": "^1.5.6",
     "eslint": ">=3",

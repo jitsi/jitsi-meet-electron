@@ -4,6 +4,10 @@ const electron = require("electron");
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
+const {
+    setupAlwaysOnTopMain
+} = require("jitsi-meet-electron-utils");
+
 const path = require("path");
 const url = require("url");
 
@@ -31,7 +35,10 @@ const jitsiMeetWindowOptions = {
     height: 600,
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    webPreferences: {
+        nativeWindowOpen: true
+    }
 };
 
 /**
@@ -69,10 +76,14 @@ function createJitsiMeetWindow () {
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
     jitsiMeetWindow.loadURL(indexURL);
 
-    jitsiMeetWindow.webContents.on('new-window', function(event, url) {
-        event.preventDefault();
-        electron.shell.openExternal(url);
+    jitsiMeetWindow.webContents.on('new-window', (event, url, frameName) => {
+        if (frameName !== 'AlwaysOnTop') {
+            event.preventDefault();
+            electron.shell.openExternal(url);
+        }
     });
+
+    setupAlwaysOnTopMain(jitsiMeetWindow);
 
     jitsiMeetWindow.on("closed", () => {
         jitsiMeetWindow = null;

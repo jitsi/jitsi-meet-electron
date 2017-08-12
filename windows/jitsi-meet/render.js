@@ -1,7 +1,8 @@
 /* global process, JitsiMeetExternalAPI */
 const {
     RemoteControl,
-    setupScreenSharingForWindow
+    setupScreenSharingForWindow,
+    setupAlwaysOnTopRender
 } = require("jitsi-meet-electron-utils");
 const { jitsiMeetDomain } = require("../../config.js");
 
@@ -32,4 +33,5 @@ loadScript(`https://${jitsiMeetDomain}/external_api.js`, () => {
     const iframe = api.getIFrame();
     setupScreenSharingForWindow(iframe);
     new RemoteControl(iframe);
+    setupAlwaysOnTopRender(api);
 });

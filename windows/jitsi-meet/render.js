@@ -2,7 +2,8 @@
 const {
     RemoteControl,
     setupScreenSharingForWindow,
-    setupAlwaysOnTopRender
+    setupAlwaysOnTopRender,
+    setupWiFiStats
 } = require("jitsi-meet-electron-utils");
 const { jitsiMeetDomain } = require("../../config.js");
 
@@ -34,4 +35,5 @@ loadScript(`https://${jitsiMeetDomain}/external_api.js`, () => {
     setupScreenSharingForWindow(iframe);
     new RemoteControl(iframe);
     setupAlwaysOnTopRender(api);
+    setupWiFiStats(iframe);
 });

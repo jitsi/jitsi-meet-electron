@@ -5,9 +5,14 @@ Electron application for [Jitsi Meet](https://github.com/jitsi/jitsi-meet).
 ## Configuration
 You can change the Jitsi Meet deployment domain with the jitsiMeetDomain property from config.js
 
+## Dependencies (For linux)
+```bash
+apt-get install libpng-dev libxtst-dev libxkbfile-dev g++
+```
+
 ## Building the sources
 ```bash
-npm install
+npm install --unsafe-perm
 ```
 
 ## Working with the [jitsi-meet-electron-utils](https://github.com/jitsi/jitsi-meet-electron-utils) sources

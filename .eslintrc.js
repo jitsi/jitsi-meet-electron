@@ -4,7 +4,6 @@ module.exports = {
     ],
     'rules': {
         'no-new': 1,
-        'no-shadow': 1,
         'max-params': 1
     }
 };

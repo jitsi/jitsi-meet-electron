@@ -9,12 +9,12 @@ const {
 } = require('jitsi-meet-electron-utils');
 
 const path = require('path');
-const url = require('url');
+const URL = require('url');
 
 /**
  * URL for index.html which will be our entry point.
  */
-const indexURL = url.format({
+const indexURL = URL.format({
     pathname: path.join(__dirname, 'windows', 'jitsi-meet', 'index.html'),
     protocol: 'file:',
     slashes: true

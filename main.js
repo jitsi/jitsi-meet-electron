@@ -1,22 +1,22 @@
 /* global __dirname, process */
-//Electron includes
-const electron = require("electron");
+//  Electron includes
+const electron = require('electron');
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 const {
     setupAlwaysOnTopMain
-} = require("jitsi-meet-electron-utils");
+} = require('jitsi-meet-electron-utils');
 
-const path = require("path");
-const url = require("url");
+const path = require('path');
+const url = require('url');
 
 /**
  * URL for index.html which will be our entry point.
  */
 const indexURL = url.format({
-    pathname: path.join(__dirname, "windows", "jitsi-meet", "index.html"),
-    protocol: "file:",
+    pathname: path.join(__dirname, 'windows', 'jitsi-meet', 'index.html'),
+    protocol: 'file:',
     slashes: true
 });
 
@@ -44,15 +44,15 @@ const jitsiMeetWindowOptions = {
 /**
  * Sets the APP object listeners.
  */
-function setAPPListeners () {
-    APP.on("ready", createJitsiMeetWindow);
-    APP.on("window-all-closed", () => {
-        // Don"t quit the application for Mac OS
-        if (process.platform !== "darwin") {
+function setAPPListeners() {
+    APP.on('ready', createJitsiMeetWindow);
+    APP.on('window-all-closed', () => {
+        // Don't quit the application for Mac OS
+        if (process.platform !== 'darwin') {
             APP.quit();
         }
     });
-    APP.on("activate", () => {
+    APP.on('activate', () => {
         if (jitsiMeetWindow === null) {
             createJitsiMeetWindow();
         }
@@ -72,7 +72,7 @@ function setAPPListeners () {
 /**
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
-function createJitsiMeetWindow () {
+function createJitsiMeetWindow() {
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
     jitsiMeetWindow.loadURL(indexURL);
 
@@ -85,10 +85,10 @@ function createJitsiMeetWindow () {
 
     setupAlwaysOnTopMain(jitsiMeetWindow);
 
-    jitsiMeetWindow.on("closed", () => {
+    jitsiMeetWindow.on('closed', () => {
         jitsiMeetWindow = null;
     });
 }
 
-//Start the application:
+//  Start the application:
 setAPPListeners();

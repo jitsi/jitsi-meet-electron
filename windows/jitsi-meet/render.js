@@ -4,8 +4,8 @@ const {
     setupScreenSharingForWindow,
     setupAlwaysOnTopRender,
     setupWiFiStats
-} = require("jitsi-meet-electron-utils");
-const { jitsiMeetDomain } = require("../../config.js");
+} = require('jitsi-meet-electron-utils');
+const { jitsiMeetDomain } = require('../../config.js');
 
 /**
  * Loads a script from a specific source.
@@ -16,7 +16,7 @@ const { jitsiMeetDomain } = require("../../config.js");
  */
 function loadScript(
         src,
-        loadCallback = () => {},
+        loadCallback,
         errorCallback = console.error) {
     const script = document.createElement('script');
 
@@ -32,6 +32,7 @@ loadScript(`https://${jitsiMeetDomain}/external_api.js`, () => {
     const api = new JitsiMeetExternalAPI(
         process.env.JITSI_MEET_DOMAIN || jitsiMeetDomain);
     const iframe = api.getIFrame();
+
     setupScreenSharingForWindow(iframe);
     new RemoteControl(iframe);
     setupAlwaysOnTopRender(api);

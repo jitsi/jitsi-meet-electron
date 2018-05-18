@@ -5,7 +5,7 @@
   "main": "main.js",
   "productName": "Jitsi Meet",
   "scripts": {
-    "start": "electron .",
+    "start": "webpack --config ./webpack.config.js --progress && electron ./build/main.js",
     "clean": "rm -rf node_modules",
     "lint": "eslint .",
     "pack": "electron-packager .",
@@ -30,10 +30,16 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils"
+    "jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils",
+    "react": "16.3.2",
+    "react-dom": "16.3.2"
   },
   "devDependencies": {
+    "babel-core": "6.26.3",
     "babel-eslint": "8.2.3",
+    "babel-loader": "7.1.4",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-react": "6.24.1",
     "electron": "2.0.0",
     "electron-packager": "12.0.2",
     "electron-rebuild": "1.7.3",
@@ -42,6 +48,11 @@
     "eslint-plugin-flowtype": "2.46.3",
     "eslint-plugin-import": "2.11.0",
     "eslint-plugin-jsdoc": "3.2.0",
-    "precommit-hook": "3.0.0"
+    "eslint-plugin-react": "7.7.0",
+    "html-webpack-plugin": "3.2.0",
+    "node-loader": "0.6.0",
+    "precommit-hook": "3.0.0",
+    "webpack": "4.8.1",
+    "webpack-cli": "2.1.3"
   }
 }

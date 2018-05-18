@@ -1,6 +1,10 @@
 module.exports = {
     'extends': [
-        'eslint-config-jitsi'
+        'eslint-config-jitsi',
+        'plugin:react/recommended'
+    ],
+    'plugins': [
+        'react'
     ],
     'rules': {
         'no-new': 1,

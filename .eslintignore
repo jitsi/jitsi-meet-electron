@@ -5,3 +5,5 @@ Jitsi Meet*
 # not seem to be a reason why we will want to risk being inconsistent with our
 # remaining JavaScript source code.
 !.eslintrc.js
+
+build/

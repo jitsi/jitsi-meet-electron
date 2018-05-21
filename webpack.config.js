@@ -15,6 +15,15 @@ const commonConfig = {
             {
                 exclude: /(node_modules)/,
                 loader: 'babel-loader',
+                options: {
+                    presets: [
+                        [
+                            require.resolve('babel-preset-env'),
+                            { modules: false }
+                        ],
+                        require.resolve('babel-preset-react')
+                    ]
+                },
                 test: /\.js$/
             },
             {
@@ -41,11 +50,10 @@ module.exports = [
     commonConfig),
     Object.assign({
         target: 'electron-renderer',
-        entry: { renderer: './windows/jitsi-meet/src/index.js' },
+        entry: { renderer: './app/index.js' },
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'Jitsi Meet',
-                template: path.resolve('./templates/index.html')
+                template: './app/index.html'
             })
         ]
     },

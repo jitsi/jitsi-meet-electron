@@ -1,5 +1,4 @@
-import React from 'react';
-import { render } from 'react-dom';
+import { Component } from 'react';
 
 import {
     RemoteControl,
@@ -8,34 +7,34 @@ import {
     setupWiFiStats
 } from 'jitsi-meet-electron-utils';
 
-import { jitsiMeetDomain } from '../../../config.js';
+import config from '../../config';
 
 /**
  * Jitsi Meet Window Component
  */
-class JitsiMeetWindow extends React.Component {
-
-    /**
-     * Render function of component
-     * @return {ScriptElement}
-     */
-    render() {
-        return null;
-    }
-
+export default class Conference extends Component {
     /**
      * Attach the script
      */
     componentDidMount() {
-
         const script = document.createElement('script');
 
         script.async = true;
         script.onload = this._onScriptLoad;
         script.onerror = console.error;
-        script.src = `https://${jitsiMeetDomain}/external_api.js`;
+        script.src = `https://${config.defaultDomain}/external_api.js`;
 
         document.head.appendChild(script);
+    }
+
+
+    /**
+     * Render function of component.
+     *
+     * @return {ReactElement}
+     */
+    render() {
+        return null;
     }
 
     /**
@@ -44,7 +43,7 @@ class JitsiMeetWindow extends React.Component {
     _onScriptLoad() {
         const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
 
-        const api = new JitsiMeetExternalAPI(jitsiMeetDomain);
+        const api = new JitsiMeetExternalAPI(config.defaultDomain);
         const iframe = api.getIFrame();
 
         setupScreenSharingForWindow(iframe);
@@ -53,5 +52,3 @@ class JitsiMeetWindow extends React.Component {
         setupWiFiStats(iframe);
     }
 }
-
-render(<JitsiMeetWindow />, document.getElementById('app'));

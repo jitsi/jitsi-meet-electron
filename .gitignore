@@ -4,6 +4,7 @@
 .sync-config.cson
 .electron-gyp
 .npmrc
+.idea
 
 .DS_Store
 

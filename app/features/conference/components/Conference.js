@@ -52,7 +52,7 @@ export default class Conference extends Component<*> {
         const iframe = api.getIFrame();
 
         setupScreenSharingForWindow(iframe);
-        new RemoteControl(iframe);
+        new RemoteControl(iframe); // eslint-disable-line no-new
         setupAlwaysOnTopRender(api);
         setupWiFiStats(iframe);
     }

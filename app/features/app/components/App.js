@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 
 import { Conference } from '../../conference';
@@ -6,7 +8,7 @@ import config from '../../config';
 /**
  * Main component encapsulating the entire application.
  */
-export default class App extends Component {
+export default class App extends Component<{}> {
     /**
      * Initializes a new {@code App} instance.
      *

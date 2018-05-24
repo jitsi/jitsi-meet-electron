@@ -8,12 +8,14 @@
     "start": "webpack --config ./webpack.config.js --mode development && electron ./build/main.js",
     "clean": "rm -rf node_modules",
     "lint": "eslint .",
+    "flow": "flow",
     "pack": "webpack --config ./webpack.config.js --mode production && electron-packager .",
     "postinstall": "electron-rebuild",
     "validate": "npm ls"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "flow"
   ],
   "repository": {
     "type": "git",
@@ -50,6 +52,7 @@
     "eslint-plugin-import": "2.11.0",
     "eslint-plugin-jsdoc": "3.2.0",
     "eslint-plugin-react": "7.7.0",
+    "flow-bin": "0.72.0",
     "html-webpack-plugin": "3.2.0",
     "node-loader": "0.6.0",
     "precommit-hook": "3.0.0",

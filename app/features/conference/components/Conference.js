@@ -1,3 +1,5 @@
+// @flow
+
 import { Component } from 'react';
 
 import {
@@ -5,6 +7,8 @@ import {
     setupScreenSharingForWindow,
     setupAlwaysOnTopRender,
     setupWiFiStats
+
+    // $FlowFixMe
 } from 'jitsi-meet-electron-utils';
 
 import config from '../../config';
@@ -12,7 +16,7 @@ import config from '../../config';
 /**
  * Jitsi Meet Window Component
  */
-export default class Conference extends Component {
+export default class Conference extends Component<{}> {
     /**
      * Attach the script
      */
@@ -24,6 +28,7 @@ export default class Conference extends Component {
         script.onerror = console.error;
         script.src = `https://${config.defaultDomain}/external_api.js`;
 
+        // $FlowFixMe
         document.head.appendChild(script);
     }
 

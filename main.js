@@ -1,5 +1,5 @@
 /* global __dirname, process */
-//  Electron includes
+
 const electron = require('electron');
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -55,7 +55,7 @@ const jitsiMeetWindowOptions = {
 function setAPPListeners() {
     APP.on('ready', createJitsiMeetWindow);
     APP.on('window-all-closed', () => {
-        // Don't quit the application for Mac OS
+        // Don't quit the application for macOS.
         if (process.platform !== 'darwin') {
             APP.quit();
         }
@@ -66,6 +66,7 @@ function setAPPListeners() {
         }
     });
     APP.on('certificate-error',
+        // eslint-disable-next-line max-params
         (event, webContents, url, error, certificate, callback) => {
             if (url.startsWith('https://localhost')) {
                 event.preventDefault();

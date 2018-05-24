@@ -14,9 +14,9 @@ import {
 import config from '../../config';
 
 /**
- * Jitsi Meet Window Component
+ * Conference component.
  */
-export default class Conference extends Component<{}> {
+export default class Conference extends Component<*> {
     /**
      * Attach the script
      */

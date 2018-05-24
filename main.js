@@ -4,6 +4,8 @@ const electron = require('electron');
 const APP = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
+const isDev = require('electron-is-dev');
+
 const {
     setupAlwaysOnTopMain
 } = require('jitsi-meet-electron-utils');
@@ -11,11 +13,17 @@ const {
 const path = require('path');
 const URL = require('url');
 
+
+/**
+ * Path to root directory
+ */
+const basePath = isDev ? __dirname : electron.app.getAppPath();
+
 /**
  * URL for index.html which will be our entry point.
  */
 const indexURL = URL.format({
-    pathname: path.resolve(__dirname, './build/index.html'),
+    pathname: path.resolve(basePath, './build/index.html'),
     protocol: 'file:',
     slashes: true
 });

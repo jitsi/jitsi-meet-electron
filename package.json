@@ -2,13 +2,13 @@
   "name": "jitsi-meet-electron",
   "version": "0.0.0",
   "description": "Electron application for Jitsi Meet",
-  "main": "main.js",
+  "main": "build/main.js",
   "productName": "Jitsi Meet",
   "scripts": {
-    "start": "webpack --config ./webpack.config.js --progress && electron ./build/main.js",
+    "start": "webpack --config ./webpack.config.js --mode development && electron ./build/main.js",
     "clean": "rm -rf node_modules",
     "lint": "eslint .",
-    "pack": "electron-packager .",
+    "pack": "webpack --config ./webpack.config.js --mode production && electron-packager .",
     "postinstall": "electron-rebuild",
     "validate": "npm ls"
   },
@@ -30,6 +30,7 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
+    "electron-is-dev": "0.3.0",
     "jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils",
     "react": "16.3.2",
     "react-dom": "16.3.2"

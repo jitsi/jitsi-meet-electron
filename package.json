@@ -7,15 +7,13 @@
   "scripts": {
     "start": "webpack --config ./webpack.config.js --mode development && electron ./build/main.js",
     "clean": "rm -rf node_modules",
-    "lint": "eslint .",
-    "flow": "flow",
+    "lint": "eslint . && flow",
     "pack": "webpack --config ./webpack.config.js --mode production && electron-packager .",
     "postinstall": "electron-rebuild",
     "validate": "npm ls"
   },
   "pre-commit": [
-    "lint",
-    "flow"
+    "lint"
   ],
   "repository": {
     "type": "git",

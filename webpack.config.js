@@ -9,7 +9,6 @@ const commonConfig = {
     node: {
         __dirname: true
     },
-    mode: 'development',
     module: {
         rules: [
             {
@@ -50,7 +49,7 @@ module.exports = [
     commonConfig),
     Object.assign({
         target: 'electron-renderer',
-        entry: { renderer: './app/index.js' },
+        entry: { app: './app/index.js' },
         plugins: [
             new HtmlWebpackPlugin({
                 template: './app/index.html'

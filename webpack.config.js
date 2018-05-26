@@ -31,10 +31,6 @@ const commonConfig = {
                     { loader: 'css-loader' }
                 ],
                 test: /\.css$/
-            },
-            {
-                use: 'node-loader',
-                test: /\.node$/
             }
         ]
     },

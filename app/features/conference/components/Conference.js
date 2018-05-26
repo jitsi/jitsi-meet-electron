@@ -1,59 +1,120 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import {
     RemoteControl,
     setupScreenSharingForWindow,
     setupAlwaysOnTopRender,
     setupWiFiStats
-
-    // $FlowFixMe
 } from 'jitsi-meet-electron-utils';
 
 import config from '../../config';
 
+import { Wrapper } from '../styled';
+
+type Props = {
+
+    /**
+     * React Router history object.
+     * This contains implementations for managing session history.
+     */
+    history: Object;
+
+    /**
+     * React Router match object.
+     * This contains parameters passed through <Route /> component.
+     */
+    match: Object;
+};
+
 /**
  * Conference component.
  */
-export default class Conference extends Component<*> {
+export default class Conference extends Component<Props, *> {
     /**
-     * Attach the script
+     * Reference to the element of this component.
+     */
+    _ref: Object;
+
+    /**
+     * External API object.
+     */
+    _api: Object;
+
+    /**
+     * Initializes a new {@code Conference} instance.
+     *
+     * @inheritdoc
+     */
+    constructor() {
+        super();
+
+        this._ref = React.createRef();
+    }
+
+    /**
+     * Attach the script to this component.
      */
     componentDidMount() {
+        const parentNode = this._ref.current;
+        const room = this.props.match.params.room;
+        const domain = this.props.match.params.domain || config.defaultDomain;
+
         const script = document.createElement('script');
 
         script.async = true;
-        script.onload = this._onScriptLoad;
-        script.onerror = console.error;
-        script.src = `https://${config.defaultDomain}/external_api.js`;
+        script.onload = () => this._onScriptLoad(parentNode, room, domain);
+        script.onerror = () => this._navigateToHome();
+        script.src = `https://${domain}/external_api.js`;
 
-        // $FlowFixMe
-        document.head.appendChild(script);
+        this._ref.current.appendChild(script);
     }
 
+    /**
+     * Remove conference on unmounting.
+     */
+    componentWillUnmount() {
+        if (this._api) {
+            this._api.dispose();
+        }
+    }
 
     /**
-     * Render function of component.
+     * Implements React's {@link Component#render()}.
      *
-     * @return {ReactElement}
+     * @inheritdoc
+     * @returns {ReactElement}
      */
     render() {
-        return null;
+        return <Wrapper innerRef={this._ref} />;
     }
 
     /**
-     * When the script is loaded attach utils from jitsi-meet-electron-utils
+     * Navigates to home screen (Welcome).
      */
-    _onScriptLoad() {
+    _navigateToHome() {
+        this.props.history.push('/');
+    }
+
+    /**
+     * When the script is loaded create the iframe element in this component
+     * and attach utils from jitsi-meet-electron-utils.
+     */
+    _onScriptLoad(parentNode: Object, roomName: string, domain: string) {
         const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
 
-        const api = new JitsiMeetExternalAPI(config.defaultDomain);
-        const iframe = api.getIFrame();
+        this._api = new JitsiMeetExternalAPI(domain, {
+            parentNode,
+            roomName
+        });
+        const iframe = this._api.getIFrame();
 
         setupScreenSharingForWindow(iframe);
         new RemoteControl(iframe); // eslint-disable-line no-new
-        setupAlwaysOnTopRender(api);
+        setupAlwaysOnTopRender(this._api);
         setupWiFiStats(iframe);
+
+        this._api.on('readyToClose', () => this._navigateToHome());
     }
 }

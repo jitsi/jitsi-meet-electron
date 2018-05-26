@@ -26,6 +26,13 @@ const commonConfig = {
                 test: /\.js$/
             },
             {
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' }
+                ],
+                test: /\.css$/
+            },
+            {
                 use: 'node-loader',
                 test: /\.node$/
             }

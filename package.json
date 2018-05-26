@@ -30,10 +30,16 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
+    "@atlaskit/button": "7.2.5",
+    "@atlaskit/css-reset": "2.0.2",
+    "@atlaskit/field-text": "5.1.0",
+    "@atlaskit/theme": "3.2.2",
     "electron-is-dev": "0.3.0",
     "jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils",
     "react": "16.3.2",
-    "react-dom": "16.3.2"
+    "react-dom": "16.3.2",
+    "react-router-dom": "4.2.2",
+    "styled-components": "3.3.0"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
@@ -41,6 +47,7 @@
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
+    "css-loader": "0.28.11",
     "electron": "2.0.0",
     "electron-packager": "12.0.2",
     "electron-rebuild": "1.7.3",
@@ -54,6 +61,7 @@
     "html-webpack-plugin": "3.2.0",
     "node-loader": "0.6.0",
     "precommit-hook": "3.0.0",
+    "style-loader": "0.21.0",
     "webpack": "4.8.1",
     "webpack-cli": "2.1.3"
   }

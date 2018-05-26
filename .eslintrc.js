@@ -5,9 +5,5 @@ module.exports = {
     ],
     'plugins': [
         'react'
-    ],
-    'rules': {
-        'no-new': 1,
-        'max-params': 1
-    }
+    ]
 };

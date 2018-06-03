@@ -3,10 +3,12 @@
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router';
+import { ConnectedRouter as Router } from 'react-router-redux';
 
 import { Conference } from '../../conference';
 import config from '../../config';
+import { history } from '../../router';
 import { Welcome } from '../../welcome';
 
 /**
@@ -33,7 +35,7 @@ export default class App extends Component<*> {
     render() {
         return (
             <AtlasKitThemeProvider mode = 'dark'>
-                <Router>
+                <Router history = { history }>
                     <Switch>
                         <Route
                             exact

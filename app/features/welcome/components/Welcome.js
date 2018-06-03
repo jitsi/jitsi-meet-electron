@@ -5,6 +5,9 @@ import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
 
 import React, { Component } from 'react';
+import type { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import URL from 'url';
 
 import { WelcomeWrapper as Wrapper, Content, Form } from '../styled';
@@ -13,10 +16,9 @@ import { WelcomeWrapper as Wrapper, Content, Form } from '../styled';
 type Props = {
 
     /**
-     * React Router history object.
-     * This contains implementations for managing session history.
+     * Redux dispatch.
      */
-    history: Object;
+    dispatch: Dispatch<*>;
 };
 
 type State = {
@@ -31,7 +33,7 @@ type State = {
 /**
  * Welcome Component.
  */
-export default class Welcome extends Component<Props, State> {
+class Welcome extends Component<Props, State> {
     /**
      * Initializes a new {@code Welcome} instance.
      *
@@ -64,15 +66,15 @@ export default class Welcome extends Component<Props, State> {
                             <FieldTextStateless
                                 autoFocus = { true }
                                 isLabelHidden = { true }
-                                shouldFitContainer = { true }
                                 onChange = { this._onURLChange }
+                                shouldFitContainer = { true }
                                 type = 'text'
                                 value = { this.state.url } />
                         </Form>
                         <Button
                             appearance = 'primary'
-                            type = 'button'
-                            onClick = { this._onJoin }>
+                            onClick = { this._onJoin }
+                            type = 'button'>
                             GO
                         </Button>
                     </Content>
@@ -103,11 +105,11 @@ export default class Welcome extends Component<Props, State> {
         if (url.host && url.path) {
 
             // This will be triggered when the full url is present.
-            this.props.history.push(url.host + url.path);
+            this.props.dispatch(push(url.host + url.path));
         } else {
 
             // Directly to the the path.
-            this.props.history.push(url.path);
+            this.props.dispatch(push(url.path));
         }
     }
 
@@ -122,3 +124,5 @@ export default class Welcome extends Component<Props, State> {
         });
     }
 }
+
+export default connect()(Welcome);

@@ -1,6 +1,9 @@
 // @flow
 
 import React, { Component } from 'react';
+import type { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import {
     RemoteControl,
@@ -16,22 +19,21 @@ import { Wrapper } from '../styled';
 type Props = {
 
     /**
-     * React Router history object.
-     * This contains implementations for managing session history.
-     */
-    history: Object;
-
-    /**
      * React Router match object.
      * This contains parameters passed through <Route /> component.
      */
     match: Object;
+
+    /**
+     * Redux dispatch.
+     */
+    dispatch: Dispatch<*>;
 };
 
 /**
  * Conference component.
  */
-export default class Conference extends Component<Props, *> {
+class Conference extends Component<Props, *> {
     /**
      * Reference to the element of this component.
      */
@@ -94,7 +96,7 @@ export default class Conference extends Component<Props, *> {
      * Navigates to home screen (Welcome).
      */
     _navigateToHome() {
-        this.props.history.push('/');
+        this.props.dispatch(push('/'));
     }
 
     /**
@@ -118,3 +120,5 @@ export default class Conference extends Component<Props, *> {
         this._api.on('readyToClose', () => this._navigateToHome());
     }
 }
+
+export default connect()(Conference);

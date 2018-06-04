@@ -7,7 +7,8 @@ const BrowserWindow = electron.BrowserWindow;
 const isDev = require('electron-is-dev');
 
 const {
-    setupAlwaysOnTopMain
+    setupAlwaysOnTopMain,
+    setupGoogleApiMain
 } = require('jitsi-meet-electron-utils');
 
 const path = require('path');
@@ -93,6 +94,7 @@ function createJitsiMeetWindow() {
     });
 
     setupAlwaysOnTopMain(jitsiMeetWindow);
+    setupGoogleApiMain();
 
     jitsiMeetWindow.on('closed', () => {
         jitsiMeetWindow = null;

@@ -1,6 +1,5 @@
 // @flow
 
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
 
@@ -10,6 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import URL from 'url';
 
+import { setTheme } from '../../app';
 import { WelcomeWrapper as Wrapper, Content, Form } from '../styled';
 
 
@@ -50,6 +50,16 @@ class Welcome extends Component<Props, State> {
         this._onURLChange = this._onURLChange.bind(this);
         this._onFormSubmit = this._onFormSubmit.bind(this);
         this._onJoin = this._onJoin.bind(this);
+
+        // Set light theme for Welcome Page.
+        this.props.dispatch(setTheme('light'));
+    }
+
+    /**
+     * Set dark them when leaving Welcome Page.
+     */
+    componentWillUnmount() {
+        this.props.dispatch(setTheme('dark'));
     }
 
     /**
@@ -59,27 +69,25 @@ class Welcome extends Component<Props, State> {
      */
     render() {
         return (
-            <AtlasKitThemeProvider mode = 'light'>
-                <Wrapper>
-                    <Content>
-                        <Form onSubmit = { this._onFormSubmit }>
-                            <FieldTextStateless
-                                autoFocus = { true }
-                                isLabelHidden = { true }
-                                onChange = { this._onURLChange }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.state.url } />
-                        </Form>
-                        <Button
-                            appearance = 'primary'
-                            onClick = { this._onJoin }
-                            type = 'button'>
-                            GO
-                        </Button>
-                    </Content>
-                </Wrapper>
-            </AtlasKitThemeProvider>
+            <Wrapper>
+                <Content>
+                    <Form onSubmit = { this._onFormSubmit }>
+                        <FieldTextStateless
+                            autoFocus = { true }
+                            isLabelHidden = { true }
+                            onChange = { this._onURLChange }
+                            shouldFitContainer = { true }
+                            type = 'text'
+                            value = { this.state.url } />
+                    </Form>
+                    <Button
+                        appearance = 'primary'
+                        onClick = { this._onJoin }
+                        type = 'button'>
+                        GO
+                    </Button>
+                </Content>
+            </Wrapper>
         );
     }
 

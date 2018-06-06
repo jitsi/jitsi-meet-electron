@@ -3,6 +3,7 @@
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter as Router } from 'react-router-redux';
 
@@ -11,10 +12,19 @@ import config from '../../config';
 import { history } from '../../router';
 import { Welcome } from '../../welcome';
 
+type Props = {
+
+    /**
+     * Theme that has to be used in AtlaskitThemeProvider
+     * This could be 'dark' or 'light'
+     */
+    _theme: string;
+};
+
 /**
  * Main component encapsulating the entire application.
  */
-export default class App extends Component<*> {
+class App extends Component<Props, *> {
     /**
      * Initializes a new {@code App} instance.
      *
@@ -34,7 +44,7 @@ export default class App extends Component<*> {
      */
     render() {
         return (
-            <AtlasKitThemeProvider mode = 'dark'>
+            <AtlasKitThemeProvider mode = { this.props._theme }>
                 <Router history = { history }>
                     <Switch>
                         <Route
@@ -50,3 +60,14 @@ export default class App extends Component<*> {
         );
     }
 }
+
+/**
+ * Maps (parts of) the redux state to the React props.
+ */
+function _mapStateToProps(state: Object) {
+    return {
+        _theme: state.app.theme
+    };
+}
+
+export default connect(_mapStateToProps)(App);

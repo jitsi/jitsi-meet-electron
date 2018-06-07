@@ -58,7 +58,7 @@ class Welcome extends Component<Props, State> {
     /**
      * Render function of component.
      *
-     * @return {ReactElement}
+     * @returns {ReactElement}
      */
     render() {
         return (
@@ -92,6 +92,9 @@ class Welcome extends Component<Props, State> {
 
     /**
      * Prevents submission of the form and delegates the join logic.
+     *
+     * @param {Event} event - Event by which this function is called.
+     * @returns {void}
      */
     _onFormSubmit(event: Event) {
         event.preventDefault();
@@ -102,6 +105,8 @@ class Welcome extends Component<Props, State> {
 
     /**
      * Redirect and join conference.
+     *
+     * @returns {void}
      */
     _onJoin() {
         const url = URL.parse(this.state.url);
@@ -122,6 +127,10 @@ class Welcome extends Component<Props, State> {
 
     /**
      * Keeps URL input value and URL in state in sync.
+     *
+     * @param {SyntheticInputEvent<HTMLInputElement>} event - Event by which
+     * this function is called.
+     * @returns {void}
      */
     _onURLChange(event: SyntheticInputEvent<HTMLInputElement>) {
         this.setState({

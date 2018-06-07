@@ -57,6 +57,8 @@ class Conference extends Component<Props, *> {
 
     /**
      * Attach the script to this component.
+     *
+     * @returns {void}
      */
     componentDidMount() {
         const parentNode = this._ref.current;
@@ -75,6 +77,8 @@ class Conference extends Component<Props, *> {
 
     /**
      * Remove conference on unmounting.
+     *
+     * @returns {void}
      */
     componentWillUnmount() {
         if (this._api) {
@@ -85,15 +89,16 @@ class Conference extends Component<Props, *> {
     /**
      * Implements React's {@link Component#render()}.
      *
-     * @inheritdoc
      * @returns {ReactElement}
      */
     render() {
-        return <Wrapper innerRef={this._ref} />;
+        return <Wrapper innerRef = { this._ref } />;
     }
 
     /**
      * Navigates to home screen (Welcome).
+     *
+     * @returns {void}
      */
     _navigateToHome() {
         this.props.dispatch(push('/'));
@@ -102,6 +107,11 @@ class Conference extends Component<Props, *> {
     /**
      * When the script is loaded create the iframe element in this component
      * and attach utils from jitsi-meet-electron-utils.
+     *
+     * @param {Object} parentNode - Node to which iframe has to be attached.
+     * @param {string} roomName - Conference room name to be joined.
+     * @param {string} domain - Jitsi Meet server domain.
+     * @returns {void}
      */
     _onScriptLoad(parentNode: Object, roomName: string, domain: string) {
         const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;

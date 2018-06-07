@@ -32,66 +32,74 @@ class HelpAction extends Component< *, State> {
             droplistOpen: false
         };
 
-        this._droplistToggle = this._droplistToggle.bind(this);
-        this._openPrivacyPage = this._openPrivacyPage.bind(this);
-        this._openTermsPage = this._openTermsPage.bind(this);
-        this._sendFeedback = this._sendFeedback.bind(this);
+        this._onIconClick = this._onIconClick.bind(this);
+        this._onPrivacyOptionClick = this._onPrivacyOptionClick.bind(this);
+        this._onTermsOptionClick = this._onTermsOptionClick.bind(this);
+        this._onSendFeedback = this._onSendFeedback.bind(this);
     }
 
-    _droplistToggle: (*) => void;
+    _onIconClick: (*) => void;
 
     /**
      * Toggles the droplist.
+     *
+     * @returns {void}
      */
-    _droplistToggle() {
+    _onIconClick() {
         this.setState({
             droplistOpen: !this.state.droplistOpen
         });
     }
 
-    _openPrivacyPage: (*) => void;
+    _onPrivacyOptionClick: (*) => void;
 
     /**
      * Opens Privacy Policy Page in default browser.
+     *
+     * @returns {void}
      */
-    _openPrivacyPage() {
+    _onPrivacyOptionClick() {
         openExternalLink(config.privacyPolicyURL);
     }
 
-    _openTermsPage: (*) => void;
+    _onTermsOptionClick: (*) => void;
 
     /**
      * Opens Terms and Conditions Page in default browser.
+     *
+     * @returns {void}
      */
-    _openTermsPage() {
+    _onTermsOptionClick() {
         openExternalLink(config.termsAndConditionsURL);
     }
 
-    _sendFeedback: (*) => void;
+    _onSendFeedback: (*) => void;
 
     /**
      * Opens Support/Feedback Email.
+     *
+     * @returns {void}
      */
-    _sendFeedback() {
+    _onSendFeedback() {
         openExternalLink(config.feedbackURL);
     }
 
     /**
      * Render function of component.
      *
-     * @return {ReactElement}
+     * @returns {ReactElement}
      */
     render() {
         return (
             <Droplist
                 isOpen = { this.state.droplistOpen }
-                onClick = { () => this._droplistToggle() }
-                onOpenChange = { () => this._droplistToggle() }
+                onClick = { this._onIconClick }
+                onOpenChange = { this._onIconClick }
                 position = 'right bottom'
                 trigger = { <HelpIcon /> }>
-                <Item onActivate = { this._openTermsPage }>Terms</Item>
-                <Item onActivate = { this._openPrivacyPage }>Privacy</Item>
-                <Item onActivate = { this._sendFeedback } >Send Feedback</Item>
+                <Item onActivate = { this._onTermsOptionClick }>Terms</Item>
+                <Item onActivate = { this._onPrivacyOptionClick }>Privacy</Item>
+                <Item onActivate = { this._onSendFeedback }>Send Feedback</Item>
             </Droplist>
         );
     }

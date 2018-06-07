@@ -15,10 +15,12 @@ import HelpAction from './HelpAction';
 class Navbar extends Component<*> {
     /**
      * Get the array of Secondary actions of Global Navigation.
+     *
+     * @returns {ReactElement[]}
      */
     _getSecondaryActions() {
         return [
-            <AkGlobalItem key={0}>
+            <AkGlobalItem key = { 0 }>
                 <HelpAction />
             </AkGlobalItem>
         ];
@@ -27,7 +29,7 @@ class Navbar extends Component<*> {
     /**
      * Render function of component.
      *
-     * @return {ReactElement}
+     * @returns {ReactElement}
      */
     render() {
         return (

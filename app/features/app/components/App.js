@@ -38,8 +38,8 @@ export default class App extends Component<*> {
                 <Router history = { history }>
                     <Switch>
                         <Route
-                            exact
                             component = { Welcome }
+                            exact = { true }
                             path = '/' />
                         <Route
                             component = { Conference }

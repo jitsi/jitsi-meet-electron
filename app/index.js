@@ -18,6 +18,8 @@ import { store } from './features/redux';
 class Root extends Component<*> {
     /**
      * Implements React's {@link Component#render()}.
+     *
+     * @returns {ReactElement}
      */
     render() {
         return (

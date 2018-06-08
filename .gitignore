@@ -5,6 +5,8 @@
 .electron-gyp
 .npmrc
 .idea
+.jshintignore
+.jshintrc
 
 .DS_Store
 

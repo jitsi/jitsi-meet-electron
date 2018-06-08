@@ -1,14 +1,17 @@
 // @flow
 
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
+import Page from '@atlaskit/page';
+import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
 import React, { Component } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import URL from 'url';
+
+import { Navbar } from '../../navbar';
 
 import { WelcomeWrapper as Wrapper, Content, Form } from '../styled';
 
@@ -59,27 +62,29 @@ class Welcome extends Component<Props, State> {
      */
     render() {
         return (
-            <AtlasKitThemeProvider mode = 'light'>
-                <Wrapper>
-                    <Content>
-                        <Form onSubmit = { this._onFormSubmit }>
-                            <FieldTextStateless
-                                autoFocus = { true }
-                                isLabelHidden = { true }
-                                onChange = { this._onURLChange }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.state.url } />
-                        </Form>
-                        <Button
-                            appearance = 'primary'
-                            onClick = { this._onJoin }
-                            type = 'button'>
-                            GO
-                        </Button>
-                    </Content>
-                </Wrapper>
-            </AtlasKitThemeProvider>
+            <Page navigation = { <Navbar /> }>
+                <AtlasKitThemeProvider mode = 'light'>
+                    <Wrapper>
+                        <Content>
+                            <Form onSubmit = { this._onFormSubmit }>
+                                <FieldTextStateless
+                                    autoFocus = { true }
+                                    isLabelHidden = { true }
+                                    onChange = { this._onURLChange }
+                                    shouldFitContainer = { true }
+                                    type = 'text'
+                                    value = { this.state.url } />
+                            </Form>
+                            <Button
+                                appearance = 'primary'
+                                onClick = { this._onJoin }
+                                type = 'button'>
+                                GO
+                            </Button>
+                        </Content>
+                    </Wrapper>
+                </AtlasKitThemeProvider>
+            </Page>
         );
     }
 

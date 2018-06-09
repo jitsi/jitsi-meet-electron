@@ -30,6 +30,7 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
+    "@atlaskit/avatar": "11.0.1",
     "@atlaskit/button": "7.2.5",
     "@atlaskit/css-reset": "2.0.2",
     "@atlaskit/droplist": "6.0.1",
@@ -43,12 +44,15 @@
     "electron-window-state": "4.1.1",
     "history": "4.7.2",
     "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#1972c3bf0884ace68eb496894dabae593d6dbf49",
+    "js-md5": "0.7.3",
     "react": "16.3.2",
     "react-dom": "16.3.2",
     "react-redux": "5.0.7",
     "react-router-redux": "5.0.0-alpha.9",
     "redux": "4.0.0",
     "redux-logger": "3.0.6",
+    "redux-persist": "5.10.0",
+    "redux-persist-electron-storage": "1.1.2",
     "styled-components": "3.3.0"
   },
   "devDependencies": {

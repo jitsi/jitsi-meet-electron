@@ -2,8 +2,12 @@
 
 import { combineReducers } from 'redux';
 
+import { reducer as navbarReducer } from '../navbar';
 import { reducer as routerReducer } from '../router';
+import { reducer as settingsReducer } from '../settings';
 
 export default combineReducers({
-    router: routerReducer
+    navbar: navbarReducer,
+    router: routerReducer,
+    settings: settingsReducer
 });

@@ -8,7 +8,8 @@ const isDev = require('electron-is-dev');
 
 const {
     setupAlwaysOnTopMain,
-    setupGoogleApiMain
+    setupGoogleApiMain,
+    teardown: teardownUtils
 } = require('jitsi-meet-electron-utils');
 
 const path = require('path');
@@ -97,6 +98,7 @@ function createJitsiMeetWindow() {
     setupGoogleApiMain();
 
     jitsiMeetWindow.on('closed', () => {
+        teardownUtils();
         jitsiMeetWindow = null;
     });
 }

@@ -9,6 +9,7 @@ import {
     RemoteControl,
     setupScreenSharingForWindow,
     setupAlwaysOnTopRender,
+    initPopupsConfigurationRender,
     setupWiFiStats
 } from 'jitsi-meet-electron-utils';
 
@@ -120,6 +121,8 @@ class Conference extends Component<Props, *> {
             parentNode,
             roomName
         });
+        initPopupsConfigurationRender(this._api);
+
         const iframe = this._api.getIFrame();
 
         setupScreenSharingForWindow(iframe);

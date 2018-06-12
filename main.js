@@ -7,7 +7,9 @@ const BrowserWindow = electron.BrowserWindow;
 const isDev = require('electron-is-dev');
 
 const {
-    setupAlwaysOnTopMain
+    setupAlwaysOnTopMain,
+    initPopupsConfigurationMain,
+    getPopupTarget
 } = require('jitsi-meet-electron-utils');
 
 const path = require('path');
@@ -84,9 +86,12 @@ function setAPPListeners() {
 function createJitsiMeetWindow() {
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
     jitsiMeetWindow.loadURL(indexURL);
+    initPopupsConfigurationMain(jitsiMeetWindow);
 
     jitsiMeetWindow.webContents.on('new-window', (event, url, frameName) => {
-        if (frameName !== 'AlwaysOnTop') {
+        const target = getPopupTarget(url, frameName);
+
+        if (!target || target === 'browser') {
             event.preventDefault();
             electron.shell.openExternal(url);
         }

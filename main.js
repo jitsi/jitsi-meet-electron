@@ -10,7 +10,7 @@ const {
 const path = require('path');
 const URL = require('url');
 
-const { app: APP, BrowserWindow } = electron;
+const { app: APP, BrowserWindow, Menu } = electron;
 
 
 /**
@@ -81,6 +81,8 @@ function setAPPListeners() {
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
 function createJitsiMeetWindow() {
+    Menu.setApplicationMenu(null);
+
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
     jitsiMeetWindow.loadURL(indexURL);
     initPopupsConfigurationMain(jitsiMeetWindow);

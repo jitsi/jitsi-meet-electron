@@ -36,7 +36,8 @@ const commonConfig = {
         ]
     },
     externals: [ {
-        'jitsi-meet-electron-utils': 'require(\'jitsi-meet-electron-utils\')'
+        'jitsi-meet-electron-utils': 'require(\'jitsi-meet-electron-utils\')',
+        'electron-debug': 'require(\'electron-debug\')'
     } ],
     resolve: {
         modules: [

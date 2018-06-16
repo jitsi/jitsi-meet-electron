@@ -22,6 +22,9 @@ const commonConfig = {
                         ],
                         require.resolve('babel-preset-react'),
                         require.resolve('babel-preset-stage-1')
+                    ],
+                    plugins: [
+                        require.resolve('babel-plugin-inline-react-svg')
                     ]
                 },
                 test: /\.js$/
@@ -32,6 +35,10 @@ const commonConfig = {
                     { loader: 'css-loader' }
                 ],
                 test: /\.css$/
+            },
+            {
+                loader: 'svg-inline-loader',
+                test: /\.svg$/
             }
         ]
     },

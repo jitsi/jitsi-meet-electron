@@ -1,25 +1,22 @@
 /* global __dirname, process */
 
 const electron = require('electron');
-const APP = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-
 const isDev = require('electron-is-dev');
-
 const {
     setupAlwaysOnTopMain,
     initPopupsConfigurationMain,
     getPopupTarget
 } = require('jitsi-meet-electron-utils');
-
 const path = require('path');
 const URL = require('url');
+
+const { app: APP, BrowserWindow } = electron;
 
 
 /**
  * Path to root directory
  */
-const basePath = isDev ? __dirname : electron.app.getAppPath();
+const basePath = isDev ? __dirname : APP.getAppPath();
 
 /**
  * URL for index.html which will be our entry point.

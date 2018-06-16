@@ -59,6 +59,7 @@
     "babel-preset-stage-1": "6.24.1",
     "css-loader": "0.28.11",
     "electron": "2.0.0",
+    "electron-debug": "2.0.0",
     "electron-packager": "12.0.2",
     "electron-rebuild": "1.7.3",
     "eslint": "4.12.1",

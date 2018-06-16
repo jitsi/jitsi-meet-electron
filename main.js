@@ -12,6 +12,10 @@ const URL = require('url');
 
 const { app: APP, BrowserWindow, Menu } = electron;
 
+/**
+ * Load debug utilities (don't open the DevTools window by default though).
+ */
+require('electron-debug')({ showDevTools: false });
 
 /**
  * Path to root directory

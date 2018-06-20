@@ -1,6 +1,11 @@
 /* global __dirname, process */
 
-const electron = require('electron');
+const {
+    app: APP,
+    BrowserWindow,
+    Menu,
+    shell
+} = require('electron');
 const isDev = require('electron-is-dev');
 const windowStateKeeper = require('electron-window-state');
 const {
@@ -10,8 +15,6 @@ const {
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
-
-const { app: APP, BrowserWindow, Menu } = electron;
 
 /**
  * Load debug utilities (don't open the DevTools window by default though).
@@ -104,7 +107,7 @@ function createJitsiMeetWindow() {
 
         if (!target || target === 'browser') {
             event.preventDefault();
-            electron.shell.openExternal(url);
+            shell.openExternal(url);
         }
     });
 

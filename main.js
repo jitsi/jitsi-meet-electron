@@ -2,6 +2,7 @@
 
 const electron = require('electron');
 const isDev = require('electron-is-dev');
+const windowStateKeeper = require('electron-window-state');
 const {
     setupAlwaysOnTopMain,
     initPopupsConfigurationMain,
@@ -39,20 +40,6 @@ const indexURL = URL.format({
 let jitsiMeetWindow = null;
 
 /**
- * Options used when creating the main Jitsi Meet window.
- */
-const jitsiMeetWindowOptions = {
-    width: 800,
-    height: 600,
-    minWidth: 800,
-    minHeight: 600,
-    titleBarStyle: 'hidden',
-    webPreferences: {
-        nativeWindowOpen: true
-    }
-};
-
-/**
  * Sets the APP object listeners.
  */
 function setAPPListeners() {
@@ -87,7 +74,28 @@ function setAPPListeners() {
 function createJitsiMeetWindow() {
     Menu.setApplicationMenu(null);
 
+    // Load the previous state with fallback to defaults
+    const jitsiMeetWindowState = windowStateKeeper({
+        defaultWidth: 800,
+        defaultHeight: 600
+    });
+
+    // Options used when creating the main Jitsi Meet window.
+    const jitsiMeetWindowOptions = {
+        x: jitsiMeetWindowState.x,
+        y: jitsiMeetWindowState.y,
+        width: jitsiMeetWindowState.width,
+        height: jitsiMeetWindowState.height,
+        minWidth: 800,
+        minHeight: 600,
+        titleBarStyle: 'hidden',
+        webPreferences: {
+            nativeWindowOpen: true
+        }
+    };
+
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
+    jitsiMeetWindowState.manage(jitsiMeetWindow);
     jitsiMeetWindow.loadURL(indexURL);
     initPopupsConfigurationMain(jitsiMeetWindow);
 

@@ -1,7 +1,13 @@
 /* global __dirname, process */
 
-const electron = require('electron');
+const {
+    app: APP,
+    BrowserWindow,
+    Menu,
+    shell
+} = require('electron');
 const isDev = require('electron-is-dev');
+const windowStateKeeper = require('electron-window-state');
 const {
     setupAlwaysOnTopMain,
     initPopupsConfigurationMain,
@@ -9,8 +15,6 @@ const {
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
-
-const { app: APP, BrowserWindow, Menu } = electron;
 
 /**
  * Load debug utilities (don't open the DevTools window by default though).
@@ -37,20 +41,6 @@ const indexURL = URL.format({
  * acidentally.
  */
 let jitsiMeetWindow = null;
-
-/**
- * Options used when creating the main Jitsi Meet window.
- */
-const jitsiMeetWindowOptions = {
-    width: 800,
-    height: 600,
-    minWidth: 800,
-    minHeight: 600,
-    titleBarStyle: 'hidden',
-    webPreferences: {
-        nativeWindowOpen: true
-    }
-};
 
 /**
  * Sets the APP object listeners.
@@ -87,7 +77,28 @@ function setAPPListeners() {
 function createJitsiMeetWindow() {
     Menu.setApplicationMenu(null);
 
+    // Load the previous state with fallback to defaults
+    const jitsiMeetWindowState = windowStateKeeper({
+        defaultWidth: 800,
+        defaultHeight: 600
+    });
+
+    // Options used when creating the main Jitsi Meet window.
+    const jitsiMeetWindowOptions = {
+        x: jitsiMeetWindowState.x,
+        y: jitsiMeetWindowState.y,
+        width: jitsiMeetWindowState.width,
+        height: jitsiMeetWindowState.height,
+        minWidth: 800,
+        minHeight: 600,
+        titleBarStyle: 'hidden',
+        webPreferences: {
+            nativeWindowOpen: true
+        }
+    };
+
     jitsiMeetWindow = new BrowserWindow(jitsiMeetWindowOptions);
+    jitsiMeetWindowState.manage(jitsiMeetWindow);
     jitsiMeetWindow.loadURL(indexURL);
     initPopupsConfigurationMain(jitsiMeetWindow);
 
@@ -96,7 +107,7 @@ function createJitsiMeetWindow() {
 
         if (!target || target === 'browser') {
             event.preventDefault();
-            electron.shell.openExternal(url);
+            shell.openExternal(url);
         }
     });
 

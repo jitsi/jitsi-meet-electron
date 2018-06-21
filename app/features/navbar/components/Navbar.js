@@ -6,10 +6,10 @@ import Navigation, { AkGlobalItem } from '@atlaskit/navigation';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { SettingsAction, SettingsDrawer } from '../../settings';
+import { SettingsButton, SettingsDrawer } from '../../settings';
 import { isElectronMac } from '../../utils';
 
-import HelpAction from './HelpAction';
+import HelpButton from './HelpButton';
 import Logo from './Logo';
 
 /**
@@ -24,7 +24,7 @@ class Navbar extends Component<*> {
     _getPrimaryActions() {
         return [
             <AkGlobalItem key = { 0 }>
-                <SettingsAction />
+                <SettingsButton />
             </AkGlobalItem>
         ];
     }
@@ -37,7 +37,7 @@ class Navbar extends Component<*> {
     _getSecondaryActions() {
         return [
             <AkGlobalItem key = { 0 }>
-                <HelpAction />
+                <HelpButton />
             </AkGlobalItem>
         ];
     }

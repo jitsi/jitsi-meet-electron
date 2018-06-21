@@ -17,9 +17,9 @@ type State = {
 };
 
 /**
- * Help Action for Navigation Bar.
+ * Help button for Navigation Bar.
  */
-class HelpAction extends Component< *, State> {
+export default class HelpButton extends Component< *, State> {
     /**
      * Initializes a new {@code HelpAction} instance.
      *
@@ -104,5 +104,3 @@ class HelpAction extends Component< *, State> {
         );
     }
 }
-
-export default HelpAction;

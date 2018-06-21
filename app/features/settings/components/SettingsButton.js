@@ -19,11 +19,11 @@ type Props = {
 };
 
 /**
- * Setttings Action for Navigation Bar.
+ * Setttings button for Navigation Bar.
  */
-class SettingsAction extends Component<Props, *> {
+class SettingButton extends Component<Props, *> {
     /**
-     * Initializes a new {@code SettingsAction} instance.
+     * Initializes a new {@code SettingButton} instance.
      *
      * @inheritdoc
      */
@@ -48,7 +48,7 @@ class SettingsAction extends Component<Props, *> {
     _onIconClick: (*) => void;
 
     /**
-     * Open Settings drawer when SettingsAction is clicked.
+     * Open Settings drawer when SettingButton is clicked.
      *
      * @returns {void}
      */
@@ -57,4 +57,4 @@ class SettingsAction extends Component<Props, *> {
     }
 }
 
-export default connect()(SettingsAction);
+export default connect()(SettingButton);

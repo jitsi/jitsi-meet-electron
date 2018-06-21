@@ -17,15 +17,6 @@ import Logo from './Logo';
  */
 class Navbar extends Component<*> {
     /**
-     * Get the primary icon of Global Navigation.
-     *
-     * @returns {ReactElement}
-     */
-    _getPrimaryIcon() {
-        return <Logo />;
-    }
-
-    /**
      * Get the array of Primary actions of Global Navigation.
      *
      * @returns {ReactElement[]}
@@ -65,7 +56,7 @@ class Navbar extends Component<*> {
                         key = { 0 } />
                 ] }
                 globalPrimaryActions = { this._getPrimaryActions() }
-                globalPrimaryIcon = { this._getPrimaryIcon() }
+                globalPrimaryIcon = { <Logo /> }
                 globalSecondaryActions = { this._getSecondaryActions() }
                 isElectronMac = { isElectronMac() }
                 isOpen = { false }

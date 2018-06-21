@@ -168,7 +168,6 @@ class Conference extends Component<Props, *> {
         setupWiFiStats(iframe);
 
         this._api.on('readyToClose', () => this._navigateToHome());
-
         this._api.on('videoConferenceJoined',
             (conferenceInfo: Object) =>
                 this._onVideoConferenceJoined(conferenceInfo));
@@ -208,6 +207,7 @@ class Conference extends Component<Props, *> {
      * @returns {void}
      */
     _onVideoConferenceJoined(conferenceInfo: Object) {
+        setupDragAreas(this._api.getIFrame());
 
         this._setAvatarURL(this.props._avatarURL);
         this._setEmail(this.props._email);
@@ -251,6 +251,25 @@ class Conference extends Component<Props, *> {
         this._api.executeCommand('displayName', name);
     }
 
+}
+
+/**
+ * Inject some style into the iframe so everything except the filmstrip, chat,
+ * buttons or any input is draggable.
+ *
+ * @param {Object} iframe - reference to the iframe where the drag areas will
+ * be set.
+ * @returns {void}
+ */
+function setupDragAreas(iframe) {
+    const injectStyle = document.createElement('style');
+
+    injectStyle.type = 'text/css';
+    injectStyle.textContent
+        = 'body { -webkit-app-region: drag; }'
+        + 'button, input { -webkit-app-region: no-drag }'
+        + '#chatconversation, .filmstrip { -webkit-app-region: no-drag; }';
+    iframe.contentDocument.head.appendChild(injectStyle);
 }
 
 /**

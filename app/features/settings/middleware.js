@@ -1,6 +1,6 @@
 // @flow
 
-import { getAvatarURL } from '../utils';
+import { getAvatarURL } from 'js-utils';
 import { SET_EMAIL, SET_NAME } from './actionTypes';
 import { setAvatarURL } from './actions';
 

@@ -2,7 +2,7 @@
 
 import os from 'os';
 
-import { getAvatarURL } from '../utils';
+import { getAvatarURL } from 'js-utils';
 
 import {
     SET_AVATAR_URL,

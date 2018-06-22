@@ -12,7 +12,7 @@ const commonConfig = {
     module: {
         rules: [
             {
-                exclude: /(node_modules)/,
+                exclude: /node_modules(?!\/js-utils)/,
                 loader: 'babel-loader',
                 options: {
                     presets: [

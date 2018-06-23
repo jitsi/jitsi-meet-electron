@@ -46,6 +46,10 @@ type Props = {
      */
     _name: string;
 
+    /**
+     * Default Jitsi Server URL.
+     */
+    _serverURL: string;
 };
 
 /**
@@ -82,6 +86,7 @@ class Conference extends Component<Props, *> {
         const parentNode = this._ref.current;
         const room = this.props.location.state.room;
         const serverURL = this.props.location.state.serverURL
+            || this.props._serverURL
             || config.defaultServerURL;
 
         const script = document.createElement('script');
@@ -263,14 +268,16 @@ class Conference extends Component<Props, *> {
  * @returns {{
  *     _avatarURL: string,
  *     _email: string,
- *     _name: string
+ *     _name: string,
+ *     _serverURL: string
  * }}
  */
 function _mapStateToProps(state: Object) {
     return {
         _avatarURL: state.settings.avatarURL,
         _email: state.settings.email,
-        _name: state.settings.name
+        _name: state.settings.name,
+        _serverURL: state.settings.serverURL
     };
 }
 

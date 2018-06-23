@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { Navbar } from '../../navbar';
+import { normalizeServerURL } from '../../utils';
 
 import { WelcomeWrapper as Wrapper, Content, Form } from '../styled';
 
@@ -123,11 +124,8 @@ class Welcome extends Component<Props, State> {
             // Take the substring before last slash to be the Server URL.
             serverURL = inputURL.substring(0, lastIndexOfSlash);
 
-            // If no protocol is specified in the input we assume and append
-            // the HTTPS protocol scheme.
-            if (serverURL.indexOf('://') === -1) {
-                serverURL = `https://${serverURL}`;
-            }
+            // Normalize the server URL.
+            serverURL = normalizeServerURL(serverURL);
         }
 
         // Don't navigate if no room was specified.

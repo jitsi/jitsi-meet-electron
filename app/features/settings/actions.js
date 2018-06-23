@@ -1,6 +1,13 @@
 // @flow
 
-import { SET_AVATAR_URL, SET_EMAIL, SET_NAME } from './actionTypes';
+import {
+    SET_AVATAR_URL,
+    SET_EMAIL,
+    SET_NAME,
+    SET_SERVER_URL
+} from './actionTypes';
+
+import { normalizeServerURL } from '../utils';
 
 /**
  * Set Avatar URL.
@@ -49,3 +56,21 @@ export function setName(name: string) {
         name
     };
 }
+
+/**
+ * Set Server URL.
+ *
+ * @param {string} serverURL - Server URL.
+ * @returns {{
+ *     type: SET_SERVER_URL,
+ *     serverURL: ?string
+ * }}
+ */
+export function setServerURL(serverURL: string) {
+    return {
+        type: SET_SERVER_URL,
+        serverURL: normalizeServerURL(serverURL)
+    };
+}
+
+

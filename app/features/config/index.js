@@ -8,7 +8,7 @@ export default {
     /**
      * The default server URL of Jitsi Meet Deployment that will be used.
      */
-    defaultServerURL: 'https://meet.jit.si/',
+    defaultServerURL: 'https://meet.jit.si',
 
     /**
      * URL to send feedback.

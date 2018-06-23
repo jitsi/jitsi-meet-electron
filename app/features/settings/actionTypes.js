@@ -28,3 +28,12 @@ export const SET_EMAIL = Symbol('SET_EMAIL');
  */
 export const SET_NAME = Symbol('SET_NAME');
 
+/**
+ * The type of (redux) action that sets the Server URL.
+ *
+ * {
+ *     type: SET_SERVER_URL,
+ *     serverURL: string
+ * }
+ */
+export const SET_SERVER_URL = Symbol('SET_SERVER_URL');

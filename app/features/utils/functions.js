@@ -6,6 +6,32 @@ import { shell } from 'electron';
 import md5 from 'js-md5';
 
 /**
+ * Return true if Electron app is running on Mac system.
+ *
+ * @returns {boolean}
+ */
+export function isElectronMac() {
+    return process.platform === 'darwin';
+}
+
+/**
+ * Normalizes the given server URL so it has the proper scheme.
+ *
+ * @param {string} url - URL with or without scheme.
+ * @returns {string}
+ */
+export function normalizeServerURL(url: string) {
+    // eslint-disable-next-line no-param-reassign
+    url = url.trim();
+
+    if (url && url.indexOf('://') === -1) {
+        return `https://${url}`;
+    }
+
+    return url;
+}
+
+/**
  * Opens the provided link in default broswer.
  *
  * @param {string} link - Link to open outside the desktop app.
@@ -13,15 +39,6 @@ import md5 from 'js-md5';
  */
 export function openExternalLink(link: string) {
     shell.openExternal(link);
-}
-
-/**
- * Return true if Electron app is running on Mac system.
- *
- * @returns {boolean}
- */
-export function isElectronMac() {
-    return process.platform === 'darwin';
 }
 
 /**

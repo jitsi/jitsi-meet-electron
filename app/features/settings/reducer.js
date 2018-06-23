@@ -4,12 +4,18 @@ import os from 'os';
 
 import { getAvatarURL } from '../utils';
 
-import { SET_AVATAR_URL, SET_EMAIL, SET_NAME } from './actionTypes';
+import {
+    SET_AVATAR_URL,
+    SET_EMAIL,
+    SET_NAME,
+    SET_SERVER_URL
+} from './actionTypes';
 
 type State = {
     avatarURL: string,
     email: string,
-    name: string
+    name: string,
+    serverURL: ?string
 };
 
 const username = os.userInfo().username;
@@ -17,7 +23,8 @@ const username = os.userInfo().username;
 const DEFAULT_STATE = {
     avatarURL: getAvatarURL({ id: username }),
     email: '',
-    name: username
+    name: username,
+    serverURL: undefined
 };
 
 /**
@@ -45,6 +52,12 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         return {
             ...state,
             name: action.name
+        };
+
+    case SET_SERVER_URL:
+        return {
+            ...state,
+            serverURL: action.serverURL
         };
 
     default:

@@ -32,14 +32,17 @@ export default class HelpButton extends Component< *, State> {
             droplistOpen: false
         };
 
-        this._onAbout = openExternalLink.bind(undefined, config.aboutURL);
+        this._onAboutClick = openExternalLink.bind(undefined, config.aboutURL);
         this._onIconClick = this._onIconClick.bind(this);
-        this._onPrivacyOptionClick = this._onPrivacyOptionClick.bind(this);
-        this._onTermsOptionClick = this._onTermsOptionClick.bind(this);
-        this._onSendFeedback = this._onSendFeedback.bind(this);
+        this._onPrivacyClick
+            = openExternalLink.bind(undefined, config.privacyPolicyURL);
+        this._onTermsClick
+            = openExternalLink.bind(undefined, config.termsAndConditionsURL);
+        this._onSendFeedbackClick
+            = openExternalLink.bind(undefined, config.feedbackURL);
     }
 
-    _onAbout: (*) => void;
+    _onAboutClick: (*) => void;
 
     _onIconClick: (*) => void;
 
@@ -54,38 +57,11 @@ export default class HelpButton extends Component< *, State> {
         });
     }
 
-    _onPrivacyOptionClick: (*) => void;
+    _onPrivacyClick: (*) => void;
 
-    /**
-     * Opens Privacy Policy Page in default browser.
-     *
-     * @returns {void}
-     */
-    _onPrivacyOptionClick() {
-        openExternalLink(config.privacyPolicyURL);
-    }
+    _onTermsClick: (*) => void;
 
-    _onTermsOptionClick: (*) => void;
-
-    /**
-     * Opens Terms and Conditions Page in default browser.
-     *
-     * @returns {void}
-     */
-    _onTermsOptionClick() {
-        openExternalLink(config.termsAndConditionsURL);
-    }
-
-    _onSendFeedback: (*) => void;
-
-    /**
-     * Opens Support/Feedback Email.
-     *
-     * @returns {void}
-     */
-    _onSendFeedback() {
-        openExternalLink(config.feedbackURL);
-    }
+    _onSendFeedbackClick: (*) => void;
 
     /**
      * Render function of component.
@@ -101,16 +77,16 @@ export default class HelpButton extends Component< *, State> {
                 position = 'right bottom'
                 trigger = { <HelpIcon /> }>
                 <Group heading = 'Help'>
-                    <Item onActivate = { this._onTermsOptionClick }>
+                    <Item onActivate = { this._onTermsClick }>
                         Terms
                     </Item>
-                    <Item onActivate = { this._onPrivacyOptionClick }>
+                    <Item onActivate = { this._onPrivacyClick }>
                         Privacy
                     </Item>
-                    <Item onActivate = { this._onSendFeedback }>
+                    <Item onActivate = { this._onSendFeedbackClick }>
                         Send Feedback
                     </Item>
-                    <Item onActivate = { this._onAbout }>
+                    <Item onActivate = { this._onAboutClick }>
                         About
                     </Item>
                 </Group>

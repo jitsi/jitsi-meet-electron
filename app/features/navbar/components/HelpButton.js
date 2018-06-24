@@ -1,6 +1,6 @@
 // @flow
 
-import Droplist, { Item } from '@atlaskit/droplist';
+import Droplist, { Item, Group } from '@atlaskit/droplist';
 import HelpIcon from '@atlaskit/icon/glyph/question-circle';
 
 import React, { Component } from 'react';
@@ -97,9 +97,17 @@ export default class HelpButton extends Component< *, State> {
                 onOpenChange = { this._onIconClick }
                 position = 'right bottom'
                 trigger = { <HelpIcon /> }>
-                <Item onActivate = { this._onTermsOptionClick }>Terms</Item>
-                <Item onActivate = { this._onPrivacyOptionClick }>Privacy</Item>
-                <Item onActivate = { this._onSendFeedback }>Send Feedback</Item>
+                <Group heading = 'Help'>
+                    <Item onActivate = { this._onTermsOptionClick }>
+                        Terms
+                    </Item>
+                    <Item onActivate = { this._onPrivacyOptionClick }>
+                        Privacy
+                    </Item>
+                    <Item onActivate = { this._onSendFeedback }>
+                        Send Feedback
+                    </Item>
+                </Group>
             </Droplist>
         );
     }

@@ -3,6 +3,8 @@
 import SettingsIcon from '@atlaskit/icon/glyph/settings';
 
 import * as Mousetrap from 'mousetrap';
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
@@ -45,7 +47,7 @@ class SettingButton extends Component<Props, *> {
      * @returns {void}
      */
     componentDidMount() {
-        Mousetrap.bind(drawerShortcut, this._onIconClick);
+        Mousetrap.bindGlobal(drawerShortcut, this._onIconClick);
     }
 
     /**

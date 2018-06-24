@@ -2,6 +2,9 @@
 
 import SettingsIcon from '@atlaskit/icon/glyph/settings';
 
+import * as Mousetrap from 'mousetrap';
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
@@ -19,6 +22,11 @@ type Props = {
 };
 
 /**
+ * Shortcut keys by which the drawer will open.
+ */
+const drawerShortcut = [ 'command+,', 'ctrl+shift+s' ];
+
+/**
  * Setttings button for Navigation Bar.
  */
 class SettingButton extends Component<Props, *> {
@@ -31,6 +39,24 @@ class SettingButton extends Component<Props, *> {
         super();
 
         this._onIconClick = this._onIconClick.bind(this);
+    }
+
+    /**
+     * Bind shortcut when the component did mount.
+     *
+     * @returns {void}
+     */
+    componentDidMount() {
+        Mousetrap.bindGlobal(drawerShortcut, this._onIconClick);
+    }
+
+    /**
+     * Bind shortcut when the component before unmount.
+     *
+     * @returns {void}
+     */
+    componentWillUnmount() {
+        Mousetrap.unbind(drawerShortcut);
     }
 
     /**

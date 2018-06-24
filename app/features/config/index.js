@@ -1,6 +1,11 @@
 
 export default {
     /**
+     * The URL with extra information about the app / service.
+     */
+    aboutURL: 'https://jitsi.org/what-is-jitsi/',
+
+    /**
      * Application name.
      */
     appName: 'Jitsi Meet',
@@ -16,12 +21,12 @@ export default {
     feedbackURL: 'mailto:support@jitsi.org',
 
     /**
-     * The url of Privacy Policy Page.
+     * The URL of Privacy Policy Page.
      */
     privacyPolicyURL: 'https://jitsi.org/meet/privacy',
 
     /**
-     * The url of Terms and Conditions Page.
+     * The URL of Terms and Conditions Page.
      */
     termsAndConditionsURL: 'https://jitsi.org/meet/terms'
 };

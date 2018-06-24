@@ -32,11 +32,14 @@ export default class HelpButton extends Component< *, State> {
             droplistOpen: false
         };
 
+        this._onAbout = openExternalLink.bind(undefined, config.aboutURL);
         this._onIconClick = this._onIconClick.bind(this);
         this._onPrivacyOptionClick = this._onPrivacyOptionClick.bind(this);
         this._onTermsOptionClick = this._onTermsOptionClick.bind(this);
         this._onSendFeedback = this._onSendFeedback.bind(this);
     }
+
+    _onAbout: (*) => void;
 
     _onIconClick: (*) => void;
 
@@ -106,6 +109,9 @@ export default class HelpButton extends Component< *, State> {
                     </Item>
                     <Item onActivate = { this._onSendFeedback }>
                         Send Feedback
+                    </Item>
+                    <Item onActivate = { this._onAbout }>
+                        About
                     </Item>
                 </Group>
             </Droplist>

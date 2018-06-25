@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import URL from 'url';
 
 import {
     RemoteControl,
@@ -26,10 +27,9 @@ type Props = {
     dispatch: Dispatch<*>;
 
     /**
-     * React Router match object.
-     * This contains parameters passed through <Route /> component.
+     * React Router location object.
      */
-    match: Object;
+    location: Object;
 
     /**
      * Avatar URL.
@@ -80,15 +80,16 @@ class Conference extends Component<Props, *> {
      */
     componentDidMount() {
         const parentNode = this._ref.current;
-        const room = this.props.match.params.room;
-        const domain = this.props.match.params.domain || config.defaultDomain;
+        const room = this.props.location.state.room;
+        const serverURL = this.props.location.state.serverURL
+            || config.defaultServerURL;
 
         const script = document.createElement('script');
 
         script.async = true;
-        script.onload = () => this._onScriptLoad(parentNode, room, domain);
+        script.onload = () => this._onScriptLoad(parentNode, room, serverURL);
         script.onerror = () => this._navigateToHome();
-        script.src = `https://${domain}/external_api.js`;
+        script.src = `${serverURL}/external_api.js`;
 
         this._ref.current.appendChild(script);
     }
@@ -148,13 +149,15 @@ class Conference extends Component<Props, *> {
      *
      * @param {Object} parentNode - Node to which iframe has to be attached.
      * @param {string} roomName - Conference room name to be joined.
-     * @param {string} domain - Jitsi Meet server domain.
+     * @param {string} serverURL - Jitsi Meet server url.
      * @returns {void}
      */
-    _onScriptLoad(parentNode: Object, roomName: string, domain: string) {
+    _onScriptLoad(parentNode: Object, roomName: string, serverURL: string) {
         const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
 
-        this._api = new JitsiMeetExternalAPI(domain, {
+        const { host } = URL.parse(serverURL);
+
+        this._api = new JitsiMeetExternalAPI(host, {
             parentNode,
             roomName
         });

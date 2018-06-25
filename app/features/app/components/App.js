@@ -43,7 +43,7 @@ export default class App extends Component<*> {
                             path = '/' />
                         <Route
                             component = { Conference }
-                            path = '/:domain?/:room' />
+                            path = '/conference' />
                     </Switch>
                 </Router>
             </AtlasKitThemeProvider>

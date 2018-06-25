@@ -9,7 +9,6 @@ import React, { Component } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import URL from 'url';
 
 import { Navbar } from '../../navbar';
 
@@ -109,18 +108,37 @@ class Welcome extends Component<Props, State> {
      * @returns {void}
      */
     _onJoin() {
-        const url = URL.parse(this.state.url);
+        const inputURL = this.state.url;
+        const lastIndexOfSlash = inputURL.lastIndexOf('/');
+        let room;
+        let serverURL;
 
-        // Check if the parsed url is a full url or just room name.
-        if (url.host && url.path) {
-
-            // This will be triggered when the full url is present.
-            this.props.dispatch(push(url.host + url.path));
+        if (lastIndexOfSlash === -1) {
+            // This must be only the room name.
+            room = inputURL;
         } else {
+            // Take the substring after last slash to be the room name.
+            room = inputURL.substring(lastIndexOfSlash + 1);
 
-            // Directly to the the path.
-            this.props.dispatch(push(url.path));
+            // Take the substring before last slash to be the Server URL.
+            serverURL = inputURL.substring(0, lastIndexOfSlash);
+
+            // If no protocol is specified in the input we assume and append
+            // the HTTPS protocol scheme.
+            if (serverURL.indexOf('://') === -1) {
+                serverURL = `https://${serverURL}`;
+            }
         }
+
+        // Don't navigate if no room was specified.
+        if (!room) {
+            return;
+        }
+
+        this.props.dispatch(push('/conference', {
+            room,
+            serverURL
+        }));
     }
 
     _onURLChange: (*) => void;

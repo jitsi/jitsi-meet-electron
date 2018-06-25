@@ -6,9 +6,9 @@ export default {
     appName: 'Jitsi Meet',
 
     /**
-     * The domain of the Jitsi Meet deployment that will be used.
+     * The default server URL of Jitsi Meet Deployment that will be used.
      */
-    defaultDomain: 'meet.jit.si',
+    defaultServerURL: 'https://meet.jit.si/',
 
     /**
      * URL to send feedback.

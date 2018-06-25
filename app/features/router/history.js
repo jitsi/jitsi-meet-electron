@@ -1,5 +1,5 @@
 // @flow
 
-import { createHashHistory } from 'history';
+import { createMemoryHistory as createHistory } from 'history';
 
-export default createHashHistory();
+export default createHistory();

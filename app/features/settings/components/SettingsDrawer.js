@@ -9,10 +9,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
-import config from '../../config';
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
 import { AvatarContainer, SettingsContainer } from '../styled';
-import { setEmail, setName, setServerURL } from '../actions';
+import { setEmail, setName } from '../actions';
+
+import ServerURLField from './ServerURLField';
 
 type Props = {
 
@@ -40,11 +41,6 @@ type Props = {
      * Name of the user.
      */
     _name: string;
-
-    /**
-     * Default Jitsi Server URL.
-     */
-    _serverURL: string;
 };
 
 /**
@@ -64,8 +60,6 @@ class SettingsDrawer extends Component<Props, *> {
         this._onEmailFormSubmit = this._onEmailFormSubmit.bind(this);
         this._onNameBlur = this._onNameBlur.bind(this);
         this._onNameFormSubmit = this._onNameFormSubmit.bind(this);
-        this._onServerURLBlur = this._onServerURLBlur.bind(this);
-        this._onServerURLFormSubmit = this._onServerURLFormSubmit.bind(this);
     }
 
     /**
@@ -103,15 +97,7 @@ class SettingsDrawer extends Component<Props, *> {
                                 type = 'text'
                                 value = { this.props._email } />
                         </form>
-                        <form onSubmit = { this._onServerURLFormSubmit }>
-                            <FieldText
-                                label = 'Server URL'
-                                onBlur = { this._onServerURLBlur }
-                                placeholder = { config.defaultServerURL }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.props._serverURL } />
-                        </form>
+                        <ServerURLField />
                     </SettingsContainer>
                 </DrawerContainer>
             </AkCustomDrawer>
@@ -187,37 +173,6 @@ class SettingsDrawer extends Component<Props, *> {
         // $FlowFixMe
         this.props.dispatch(setName(event.currentTarget.elements[0].value));
     }
-
-    _onServerURLBlur: (*) => void;
-
-    /**
-     * Updates Server URL in (redux) state when it is updated.
-     *
-     * @param {SyntheticInputEvent<HTMLInputElement>} event - Event by which
-     * this function is called.
-     * @returns {void}
-     */
-    _onServerURLBlur(event: SyntheticInputEvent<HTMLInputElement>) {
-        this.props.dispatch(setServerURL(event.currentTarget.value));
-    }
-
-    _onServerURLFormSubmit: (*) => void;
-
-    /**
-     * Prevents submission of the form and updates Server URL.
-     *
-     * @param {SyntheticEvent<HTMLFormElement>} event - Event by which
-     * this function is called.
-     * @returns {void}
-     */
-    _onServerURLFormSubmit(event: SyntheticEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        // $FlowFixMe
-        const serverURL = event.currentTarget.elements[0].value;
-
-        this.props.dispatch(setServerURL(serverURL));
-    }
 }
 
 /**
@@ -227,16 +182,14 @@ class SettingsDrawer extends Component<Props, *> {
  * @returns {{
  *     _avatarURL: string,
  *     _email: string,
- *     _name: string,
- *     _serverURL: string
+ *     _name: string
  * }}
  */
 function _mapStateToProps(state: Object) {
     return {
         _avatarURL: state.settings.avatarURL,
         _email: state.settings.email,
-        _name: state.settings.name,
-        _serverURL: state.settings.serverURL
+        _name: state.settings.name
     };
 }
 

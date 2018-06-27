@@ -1,5 +1,7 @@
 // @flow
 
+import Spinner from '@atlaskit/spinner';
+
 import React, { Component } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
@@ -17,7 +19,7 @@ import {
 import config from '../../config';
 import { setEmail, setName } from '../../settings';
 
-import { Wrapper } from '../styled';
+import { LoadingIndicator, Wrapper } from '../styled';
 
 type Props = {
 
@@ -52,10 +54,18 @@ type Props = {
     _serverURL: string;
 };
 
+type State = {
+
+    /**
+     * If the conference is loading or not.
+     */
+    isLoading: boolean;
+};
+
 /**
  * Conference component.
  */
-class Conference extends Component<Props, *> {
+class Conference extends Component<Props, State> {
     /**
      * Reference to the element of this component.
      */
@@ -74,7 +84,13 @@ class Conference extends Component<Props, *> {
     constructor() {
         super();
 
+        this.state = {
+            isLoading: true
+        };
+
         this._ref = React.createRef();
+
+        this._onIframeLoad = this._onIframeLoad.bind(this);
     }
 
     /**
@@ -136,7 +152,26 @@ class Conference extends Component<Props, *> {
      * @returns {ReactElement}
      */
     render() {
-        return <Wrapper innerRef = { this._ref } />;
+        return (
+            <Wrapper innerRef = { this._ref }>
+                { this._maybeRenderLoadingIndicator() }
+            </Wrapper>
+        );
+    }
+
+    /**
+     * It renders a loading indicator, if appropriate.
+     *
+     * @returns {?ReactElement}
+     */
+    _maybeRenderLoadingIndicator() {
+        if (this.state.isLoading) {
+            return (
+                <LoadingIndicator>
+                    <Spinner size = 'large' />
+                </LoadingIndicator>
+            );
+        }
     }
 
     /**
@@ -163,6 +198,7 @@ class Conference extends Component<Props, *> {
         const { host } = URL.parse(serverURL);
 
         this._api = new JitsiMeetExternalAPI(host, {
+            onload: this._onIframeLoad,
             parentNode,
             roomName
         });
@@ -206,6 +242,19 @@ class Conference extends Component<Props, *> {
         if (params.id === id) {
             this.props.dispatch(setEmail(params.email));
         }
+    }
+
+    _onIframeLoad: (*) => void;
+
+    /**
+     * Sets state of loading to false when iframe has completely loaded.
+     *
+     * @returns {void}
+     */
+    _onIframeLoad() {
+        this.setState({
+            isLoading: false
+        });
     }
 
     /**

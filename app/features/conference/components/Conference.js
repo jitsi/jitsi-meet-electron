@@ -20,6 +20,7 @@ import config from '../../config';
 import { setEmail, setName } from '../../settings';
 
 import { LoadingIndicator, Wrapper } from '../styled';
+import { getExternalApiURL } from '../../utils';
 
 type Props = {
 
@@ -110,7 +111,7 @@ class Conference extends Component<Props, State> {
         script.async = true;
         script.onload = () => this._onScriptLoad(parentNode, room, serverURL);
         script.onerror = () => this._navigateToHome();
-        script.src = `${serverURL}/external_api.js`;
+        script.src = getExternalApiURL(serverURL);
 
         this._ref.current.appendChild(script);
     }

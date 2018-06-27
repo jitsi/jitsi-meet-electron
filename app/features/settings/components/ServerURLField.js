@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
 import config from '../../config';
+import { getExternalApiURL } from '../../utils';
+
 import { setServerURL } from '../actions';
 
 type Props = {
@@ -17,12 +19,17 @@ type Props = {
     dispatch: Dispatch<*>;
 
     /**
-     * Default Jitsi Meet Server URL in (redux) state.
+     * Default Jitsi Meet Server URL in (redux) store.
      */
     _serverURL: string;
 };
 
 type State = {
+
+     /**
+     * Whether the url of the Jitsi Meet Server valid.
+     */
+    isValid: boolean;
 
     /**
      * Default Jitsi Meet Server URL in (local) state.
@@ -31,7 +38,7 @@ type State = {
 };
 
 /**
- * Default Server URL field text placed in Settings Drawer.
+ * Default Server URL field text placed in the Settings drawer.
  */
 class ServerURLField extends Component<Props, State> {
     /**
@@ -43,6 +50,7 @@ class ServerURLField extends Component<Props, State> {
         super(props);
 
         this.state = {
+            isValid: true,
             serverURL: ''
         };
 
@@ -52,7 +60,7 @@ class ServerURLField extends Component<Props, State> {
 
     /**
      * This updates the Server URL in (local) state when there is a change
-     * in redux state.
+     * in redux store.
      *
      * @param {Props} props - New props of the component.
      * @returns {State} - New state of the component.
@@ -72,6 +80,9 @@ class ServerURLField extends Component<Props, State> {
         return (
             <form onSubmit = { this._onServerURLSubmit }>
                 <FieldTextStateless
+                    invalidMessage = { 'Invalid Server URL' }
+                    isInvalid = { !this.state.isValid }
+                    isValidationHidden = { this.state.isValid }
                     label = 'Server URL'
                     onBlur = { this._onServerURLSubmit }
                     onChange = { this._onServerURLChange }
@@ -95,25 +106,49 @@ class ServerURLField extends Component<Props, State> {
     _onServerURLChange(event: SyntheticInputEvent<HTMLInputElement>) {
         this.setState({
             serverURL: event.currentTarget.value
-        });
+        }, this._validateServerURL);
     }
 
     _onServerURLSubmit: (*) => void;
 
     /**
-     * Updates Server URL in (redux) state when it is updated.
+     * Updates Server URL in (redux) store when it is updated.
      *
      * @param {Event} event - Event by which this function is called.
      * @returns {void}
      */
     _onServerURLSubmit(event: Event) {
         event.preventDefault();
-        this.props.dispatch(setServerURL(this.state.serverURL));
+        if (this.state.isValid) {
+            this.props.dispatch(setServerURL(this.state.serverURL));
+        }
+    }
+
+    /**
+     * Validates the Server URL by fetching external_api.js using the HEAD
+     * method.
+     *
+     * @returns {void}
+     */
+    _validateServerURL() {
+        fetch(getExternalApiURL(this.state.serverURL), {
+            method: 'HEAD'
+        })
+        .then((response: Object) => {
+            this.setState({
+                isValid: response.ok
+            });
+        })
+        .catch(() => {
+            this.setState({
+                isValid: false
+            });
+        });
     }
 }
 
 /**
- * Maps (parts of) the redux state to the React props.
+ * Maps (parts of) the redux store to the React props.
  *
  * @param {Object} state - The redux state.
  * @returns {{

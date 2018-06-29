@@ -21,7 +21,7 @@ type State = {
  */
 export default class HelpButton extends Component< *, State> {
     /**
-     * Initializes a new {@code HelpAction} instance.
+     * Initializes a new {@code HelpButton} instance.
      *
      * @inheritdoc
      */

@@ -318,7 +318,7 @@ class Conference extends Component<Props, State> {
  * Inject some style into the iframe so everything except the filmstrip, chat,
  * buttons or any input is draggable.
  *
- * @param {Object} iframe - reference to the iframe where the drag areas will
+ * @param {Object} iframe - Reference to the iframe where the drag areas will
  * be set.
  * @returns {void}
  */

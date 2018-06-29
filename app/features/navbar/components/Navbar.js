@@ -12,10 +12,18 @@ import { isElectronMac } from '../../utils';
 import HelpButton from './HelpButton';
 import Logo from './Logo';
 
+type Props = {
+
+    /**
+     * Whether Settings Drawer is open or not.
+     */
+    _isSettingsDrawerOpen: boolean;
+};
+
 /**
  * Navigation Bar component.
  */
-class Navbar extends Component<*> {
+class Navbar extends Component<Props, *> {
     /**
      * Get the array of Primary actions of Global Navigation.
      *

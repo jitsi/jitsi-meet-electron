@@ -14,6 +14,7 @@ import { AvatarContainer, SettingsContainer } from '../styled';
 import { setEmail, setName } from '../actions';
 
 import ServerURLField from './ServerURLField';
+import StartMutedToggles from './StartMutedToggles';
 
 type Props = {
 
@@ -98,6 +99,7 @@ class SettingsDrawer extends Component<Props, *> {
                                 value = { this.props._email } />
                         </form>
                         <ServerURLField />
+                        <StartMutedToggles />
                     </SettingsContainer>
                 </DrawerContainer>
             </AkCustomDrawer>

@@ -5,17 +5,21 @@ import os from 'os';
 import { getAvatarURL } from 'js-utils';
 
 import {
+    SET_AUDIO_MUTED,
     SET_AVATAR_URL,
     SET_EMAIL,
     SET_NAME,
-    SET_SERVER_URL
+    SET_SERVER_URL,
+    SET_VIDEO_MUTED
 } from './actionTypes';
 
 type State = {
     avatarURL: string,
     email: string,
     name: string,
-    serverURL: ?string
+    serverURL: ?string,
+    startWithAudioMuted: boolean,
+    startWithVideoMuted: boolean
 };
 
 const username = os.userInfo().username;
@@ -24,7 +28,9 @@ const DEFAULT_STATE = {
     avatarURL: getAvatarURL({ id: username }),
     email: '',
     name: username,
-    serverURL: undefined
+    serverURL: undefined,
+    startWithAudioMuted: false,
+    startWithVideoMuted: false
 };
 
 /**
@@ -36,6 +42,12 @@ const DEFAULT_STATE = {
  */
 export default (state: State = DEFAULT_STATE, action: Object) => {
     switch (action.type) {
+    case SET_AUDIO_MUTED:
+        return {
+            ...state,
+            startWithAudioMuted: action.startWithAudioMuted
+        };
+
     case SET_AVATAR_URL:
         return {
             ...state,
@@ -58,6 +70,12 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         return {
             ...state,
             serverURL: action.serverURL
+        };
+
+    case SET_VIDEO_MUTED:
+        return {
+            ...state,
+            startWithVideoMuted: action.startWithVideoMuted
         };
 
     default:

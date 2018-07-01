@@ -1,4 +1,14 @@
 /**
+ * The type of (redux) action that sets Start with Audio Muted.
+ *
+ * {
+ *     type: SET_AUDIO_MUTED,
+ *     startWithAudioMuted: boolean
+ * }
+ */
+export const SET_AUDIO_MUTED = Symbol('SET_AUDIO_MUTED');
+
+/**
  * The type of (redux) action that sets the Avatar URL.
  *
  * {
@@ -37,3 +47,13 @@ export const SET_NAME = Symbol('SET_NAME');
  * }
  */
 export const SET_SERVER_URL = Symbol('SET_SERVER_URL');
+
+/**
+ * The type of (redux) action that sets Start with Video Muted.
+ *
+ * {
+ *     type: SET_VIDEO_MUTED,
+ *     startWithVideoMuted: boolean
+ * }
+ */
+export const SET_VIDEO_MUTED = Symbol('SET_VIDEO_MUTED');

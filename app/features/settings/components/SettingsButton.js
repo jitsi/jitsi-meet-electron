@@ -29,9 +29,9 @@ const drawerShortcut = [ 'command+,', 'ctrl+shift+s' ];
 /**
  * Setttings button for Navigation Bar.
  */
-class SettingButton extends Component<Props, *> {
+class SettingsButton extends Component<Props, *> {
     /**
-     * Initializes a new {@code SettingButton} instance.
+     * Initializes a new {@code SettingsButton} instance.
      *
      * @inheritdoc
      */
@@ -74,7 +74,7 @@ class SettingButton extends Component<Props, *> {
     _onIconClick: (*) => void;
 
     /**
-     * Open Settings drawer when SettingButton is clicked.
+     * Open Settings drawer when SettingsButton is clicked.
      *
      * @returns {void}
      */
@@ -83,4 +83,4 @@ class SettingButton extends Component<Props, *> {
     }
 }
 
-export default connect()(SettingButton);
+export default connect()(SettingsButton);

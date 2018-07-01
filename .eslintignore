@@ -7,3 +7,4 @@ Jitsi Meet*
 !.eslintrc.js
 
 build/
+dist/

@@ -40,6 +40,7 @@
     "@atlaskit/page": "7.0.1",
     "@atlaskit/spinner": "8.0.0",
     "@atlaskit/theme": "3.2.2",
+    "@atlaskit/toggle": "4.0.3",
     "electron-debug": "2.0.0",
     "electron-is-dev": "0.3.0",
     "electron-window-state": "4.1.1",

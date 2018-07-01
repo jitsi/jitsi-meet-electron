@@ -1,10 +1,12 @@
 // @flow
 
 import {
+    SET_AUDIO_MUTED,
     SET_AVATAR_URL,
     SET_EMAIL,
     SET_NAME,
-    SET_SERVER_URL
+    SET_SERVER_URL,
+    SET_VIDEO_MUTED
 } from './actionTypes';
 
 import { normalizeServerURL } from '../utils';
@@ -70,6 +72,38 @@ export function setServerURL(serverURL: string) {
     return {
         type: SET_SERVER_URL,
         serverURL: normalizeServerURL(serverURL)
+    };
+}
+
+/**
+ * Set start with audio muted.
+ *
+ * @param {boolean} startWithAudioMuted - Whether to start with audio muted.
+ * @returns {{
+ *     type: SET_AUDIO_MUTED,
+ *     startWithAudioMuted: boolean
+ * }}
+ */
+export function setStartWithAudioMuted(startWithAudioMuted: boolean) {
+    return {
+        type: SET_AUDIO_MUTED,
+        startWithAudioMuted
+    };
+}
+
+/**
+ * Set start with video muted.
+ *
+ * @param {boolean} startWithVideoMuted - Whether to start with video muted.
+ * @returns {{
+ *     type: SET_VIDEO_MUTED,
+ *     startWithVideoMuted: boolean
+ * }}
+ */
+export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
+    return {
+        type: SET_VIDEO_MUTED,
+        startWithVideoMuted
     };
 }
 

@@ -53,6 +53,16 @@ type Props = {
      * Default Jitsi Server URL.
      */
     _serverURL: string;
+
+    /**
+     * Start with Audio Muted.
+     */
+    _startWithAudioMuted: boolean;
+
+    /**
+     * Start with Video Muted.
+     */
+    _startWithVideoMuted: boolean;
 };
 
 type State = {
@@ -201,7 +211,13 @@ class Conference extends Component<Props, State> {
 
         const { host } = URL.parse(serverURL);
 
+        const configOverwrite = {
+            startWithAudioMuted: this.props._startWithAudioMuted,
+            startWithVideoMuted: this.props._startWithVideoMuted
+        };
+
         this._api = new JitsiMeetExternalAPI(host, {
+            configOverwrite,
             onload: this._onIframeLoad,
             parentNode,
             roomName
@@ -341,7 +357,9 @@ function setupDragAreas(iframe) {
  *     _avatarURL: string,
  *     _email: string,
  *     _name: string,
- *     _serverURL: string
+ *     _serverURL: string,
+ *     _startWithAudioMuted: boolean,
+ *     _startWithVideoMuted: boolean
  * }}
  */
 function _mapStateToProps(state: Object) {
@@ -349,7 +367,9 @@ function _mapStateToProps(state: Object) {
         _avatarURL: state.settings.avatarURL,
         _email: state.settings.email,
         _name: state.settings.name,
-        _serverURL: state.settings.serverURL
+        _serverURL: state.settings.serverURL,
+        _startWithAudioMuted: state.settings.startWithAudioMuted,
+        _startWithVideoMuted: state.settings.startWithVideoMuted
     };
 }
 

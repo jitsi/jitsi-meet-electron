@@ -2,6 +2,7 @@
 .*.tmp
 .remote-sync.json
 .sync-config.cson
+.electron
 .electron-gyp
 .npmrc
 .idea
@@ -15,6 +16,5 @@
 node_modules/
 npm-debug.log
 
-Jitsi Meet*
-
 build/
+dist/

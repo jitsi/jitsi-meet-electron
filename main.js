@@ -89,6 +89,7 @@ function createJitsiMeetWindow() {
         y: jitsiMeetWindowState.y,
         width: jitsiMeetWindowState.width,
         height: jitsiMeetWindowState.height,
+        icon: path.resolve(basePath, './resources/icons/icon_512x512.png'),
         minWidth: 800,
         minHeight: 600,
         show: false,

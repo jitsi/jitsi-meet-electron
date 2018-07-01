@@ -1,7 +1,7 @@
 [ignore]
-.*/node_modules/@atlaskit/.*/*.js.flow
-.*/build/.*
-.*/node_modules/electron-packager/test/fixtures/infer-malformed-json/.*
+<PROJECT_ROOT>/node_modules/@atlaskit/.*/*.js.flow
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/dist/.*
 
 [include]
 

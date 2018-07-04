@@ -91,6 +91,7 @@ function createJitsiMeetWindow() {
         height: jitsiMeetWindowState.height,
         minWidth: 800,
         minHeight: 600,
+        show: false,
         titleBarStyle: 'hidden',
         webPreferences: {
             nativeWindowOpen: true
@@ -115,6 +116,9 @@ function createJitsiMeetWindow() {
 
     jitsiMeetWindow.on('closed', () => {
         jitsiMeetWindow = null;
+    });
+    jitsiMeetWindow.once('ready-to-show', () => {
+        jitsiMeetWindow.show();
     });
 }
 

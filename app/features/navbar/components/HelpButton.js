@@ -34,6 +34,7 @@ export default class HelpButton extends Component< *, State> {
 
         this._onAboutClick = openExternalLink.bind(undefined, config.aboutURL);
         this._onIconClick = this._onIconClick.bind(this);
+        this._onOpenChange = this._onOpenChange.bind(this);
         this._onPrivacyClick
             = openExternalLink.bind(undefined, config.privacyPolicyURL);
         this._onTermsClick
@@ -57,6 +58,19 @@ export default class HelpButton extends Component< *, State> {
         });
     }
 
+    _onOpenChange: (*) => void;
+
+    /**
+     * Closes droplist when clicked outside.
+     *
+     * @returns {void}
+     */
+    _onOpenChange() {
+        this.setState({
+            droplistOpen: false
+        });
+    }
+
     _onPrivacyClick: (*) => void;
 
     _onTermsClick: (*) => void;
@@ -73,7 +87,7 @@ export default class HelpButton extends Component< *, State> {
             <Droplist
                 isOpen = { this.state.droplistOpen }
                 onClick = { this._onIconClick }
-                onOpenChange = { this._onIconClick }
+                onOpenChange = { this._onOpenChange }
                 position = 'right bottom'
                 trigger = { <HelpIcon /> }>
                 <Group heading = 'Help'>

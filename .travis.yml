@@ -1,0 +1,30 @@
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.3
+      language: node_js
+      node_js: '8'
+
+    - os: linux
+      language: node_js
+      node_js: '8'
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - libx11-dev
+            - zlib1g-dev
+            - libpng12-dev
+            - libxtst-dev
+            - g++-4.8
+            - gcc-4.8
+
+cache:
+  directories:
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+
+script:
+  - npm run dist

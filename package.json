@@ -24,31 +24,33 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "artifactName": "jitsi-meet-${version}.${ext}",
       "category": "public.app-category.video",
       "target": "dmg"
     },
     "linux": {
-      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "artifactName": "jitsi-meet-${version}-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",
       "executableName": "jitsi-meet",
-      "target": "AppImage"
+      "target": [
+        {
+          "arch": "x64",
+          "target": "AppImage"
+        }
+      ]
     },
     "win": {
+      "artifactName": "jitsi-meet-${version}-${arch}.${ext}",
       "target": [
         {
           "arch": [
-            "x64",
-            "ia32"
+            "ia32",
+            "x64"
           ],
           "target": "nsis"
         }
       ]
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "oneClick": false
     },
     "directories": {
       "buildResources": "resources"

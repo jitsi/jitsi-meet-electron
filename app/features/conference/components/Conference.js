@@ -101,7 +101,6 @@ class Conference extends Component<Props, State> {
 
         this._ref = React.createRef();
 
-        this._navigateToHome = this._navigateToHome.bind(this);
         this._onIframeLoad = this._onIframeLoad.bind(this);
     }
 
@@ -121,7 +120,8 @@ class Conference extends Component<Props, State> {
 
         script.async = true;
         script.onload = () => this._onScriptLoad(parentNode, room, serverURL);
-        script.onerror = this._navigateToHome;
+        script.onerror = (event: Event) =>
+            this._navigateToHome(event, room, serverURL);
         script.src = getExternalApiURL(serverURL);
 
         this._ref.current.appendChild(script);
@@ -186,15 +186,20 @@ class Conference extends Component<Props, State> {
         }
     }
 
-    _navigateToHome: (*) => void;
-
     /**
      * Navigates to home screen (Welcome).
      *
+     * @param {Event} event - Event by which the function is called.
+     * @param {string} room - Room name.
+     * @param {string} serverURL - Server URL.
      * @returns {void}
      */
-    _navigateToHome() {
-        this.props.dispatch(push('/'));
+    _navigateToHome(event: Event, room: ?string, serverURL: ?string) {
+        this.props.dispatch(push('/', {
+            error: event.type === 'error',
+            room,
+            serverURL
+        }));
     }
 
     /**
@@ -231,7 +236,8 @@ class Conference extends Component<Props, State> {
         setupAlwaysOnTopRender(this._api);
         setupWiFiStats(iframe);
 
-        this._api.on('readyToClose', this._navigateToHome);
+        this._api.on('readyToClose', (event: Event) =>
+            this._navigateToHome(event));
         this._api.on('videoConferenceJoined',
             (conferenceInfo: Object) =>
                 this._onVideoConferenceJoined(conferenceInfo));

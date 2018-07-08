@@ -22,6 +22,11 @@ type Props = {
      * Redux dispatch.
      */
     dispatch: Dispatch<*>;
+
+    /**
+     * React Router location object.
+     */
+    location: Object;
 };
 
 type State = {
@@ -56,11 +61,35 @@ class Welcome extends Component<Props, State> {
     }
 
     /**
+     * Initialize url value in state if passed using location state object.
+     *
+     * @param {Props} props - New props of the component.
+     * @returns {State} - New state of the component.
+     */
+    static getDerivedStateFromProps(props) {
+        let url = '';
+
+        // Check and parse url if exists in location state.
+        if (props.location.state) {
+            const { room, serverURL } = props.location.state;
+
+            if (room && serverURL) {
+                url = `${serverURL}/${room}`;
+            }
+        }
+
+        // Return local state object having input url.
+        return { url };
+    }
+
+    /**
      * Render function of component.
      *
      * @returns {ReactElement}
      */
     render() {
+        const { state } = this.props.location;
+
         return (
             <Page navigation = { <Navbar /> }>
                 <AtlasKitThemeProvider mode = 'light'>
@@ -69,6 +98,7 @@ class Welcome extends Component<Props, State> {
                             <Form onSubmit = { this._onFormSubmit }>
                                 <FieldTextStateless
                                     autoFocus = { true }
+                                    isInvalid = { state && state.error }
                                     isLabelHidden = { true }
                                     onChange = { this._onURLChange }
                                     shouldFitContainer = { true }

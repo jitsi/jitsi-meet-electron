@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -60,7 +60,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jitsi/jitsi-meet-electron"
+    "url": "git://github.com/akshitkrnagpal/jitsi-meet-electron"
   },
   "keywords": [
     "jingle",

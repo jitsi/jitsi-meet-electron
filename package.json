@@ -24,7 +24,7 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet-${version}-${arch}.${ext}",
+      "artifactName": "jitsi-meet-${version}.${ext}",
       "category": "public.app-category.video",
       "target": "dmg"
     },
@@ -40,16 +40,12 @@
       "target": [
         {
           "arch": [
-            "x64",
-            "ia32"
+            "ia32",
+            "x64"
           ],
           "target": "nsis"
         }
       ]
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "oneClick": false
     },
     "directories": {
       "buildResources": "resources"

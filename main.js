@@ -43,6 +43,30 @@ const indexURL = URL.format({
 let jitsiMeetWindow = null;
 
 /**
+ * Force Single Instance Application
+ */
+const isSecondInstance = APP.makeSingleInstance(() => {
+    /**
+     * If someone creates second instance of the application, set focus on
+     * existing window.
+     */
+    if (jitsiMeetWindow) {
+        if (jitsiMeetWindow.isMinimized()) {
+            jitsiMeetWindow.restore();
+        }
+        jitsiMeetWindow.focus();
+    }
+});
+
+/**
+ * We should quit the second instance.
+ */
+if (isSecondInstance) {
+    APP.quit();
+    process.exit(0);
+}
+
+/**
  * Sets the APP object listeners.
  */
 function setAPPListeners() {

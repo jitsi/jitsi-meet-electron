@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const ELECTRON_VERSION = require('./package.json').devDependencies.electron;
+
 const commonConfig = {
     output: {
         path: path.resolve('./build'),
@@ -18,7 +20,12 @@ const commonConfig = {
                     presets: [
                         [
                             require.resolve('babel-preset-env'),
-                            { modules: false }
+                            {
+                                modules: false,
+                                targets: {
+                                    electron: ELECTRON_VERSION
+                                }
+                            }
                         ],
                         require.resolve('babel-preset-react'),
                         require.resolve('babel-preset-stage-1')

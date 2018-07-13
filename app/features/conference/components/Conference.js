@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import URL from 'url';
 
 import {
     RemoteControl,
@@ -218,7 +217,7 @@ class Conference extends Component<Props, State> {
     _onScriptLoad(parentNode: Object, roomName: string, serverURL: string) {
         const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
 
-        const { host } = URL.parse(serverURL);
+        const host = serverURL.replace(/https?:\/\//, '');
 
         const configOverwrite = {
             startWithAudioMuted: this.props._startWithAudioMuted,

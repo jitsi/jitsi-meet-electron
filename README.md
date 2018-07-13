@@ -1,5 +1,5 @@
-Jitsi Meet Electron
-====
+# Jitsi Meet Electron
+
 Electron application for [Jitsi Meet](https://github.com/jitsi/jitsi-meet).
 
 ## Configuration

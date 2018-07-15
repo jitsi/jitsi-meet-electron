@@ -7,6 +7,7 @@ const {
     shell
 } = require('electron');
 const isDev = require('electron-is-dev');
+const { autoUpdater } = require('electron-updater');
 const windowStateKeeper = require('electron-window-state');
 const {
     setupAlwaysOnTopMain,
@@ -15,6 +16,9 @@ const {
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
+
+autoUpdater.logger = require('electron-log');
+autoUpdater.logger.transports.file.level = 'info';
 
 /**
  * Load debug utilities (don't open the DevTools window by default though).
@@ -154,6 +158,9 @@ function createJitsiMeetWindow() {
     } else {
         Menu.setApplicationMenu(null);
     }
+
+    // Check for Updates.
+    autoUpdater.checkForUpdatesAndNotify();
 
     // Load the previous state with fallback to defaults
     const jitsiMeetWindowState = windowStateKeeper({

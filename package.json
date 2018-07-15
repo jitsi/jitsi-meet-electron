@@ -17,6 +17,7 @@
   "build": {
     "appId": "org.jitsi.jitsi-meet",
     "productName": "Jitsi Meet",
+    "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
       "resources",
@@ -25,8 +26,7 @@
     ],
     "mac": {
       "artifactName": "jitsi-meet-${version}.${ext}",
-      "category": "public.app-category.video",
-      "target": "dmg"
+      "category": "public.app-category.video"
     },
     "linux": {
       "artifactName": "jitsi-meet-${version}-${arch}.${ext}",
@@ -87,6 +87,8 @@
     "@atlaskit/toggle": "4.0.3",
     "electron-debug": "2.0.0",
     "electron-is-dev": "0.3.0",
+    "electron-log": "2.2.16",
+    "electron-updater": "3.0.1",
     "electron-window-state": "4.1.1",
     "history": "4.7.2",
     "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#1972c3bf0884ace68eb496894dabae593d6dbf49",

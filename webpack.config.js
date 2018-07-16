@@ -17,6 +17,7 @@ const commonConfig = {
                 exclude: /node_modules(?!(\/|\\)js-utils)/,
                 loader: 'babel-loader',
                 options: {
+                    babelrc: false,
                     presets: [
                         [
                             require.resolve('babel-preset-env'),

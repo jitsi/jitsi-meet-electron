@@ -96,10 +96,64 @@ function setAPPListeners() {
 }
 
 /**
+ * Template for Application menu (MacOS)
+ */
+const template = [ {
+    label: APP.getName(),
+    submenu: [ {
+        label: 'Quit',
+        accelerator: 'Command+Q',
+        click() {
+            APP.quit();
+        }
+    } ]
+}, {
+    label: 'Edit',
+    submenu: [ {
+        label: 'Undo',
+        accelerator: 'CmdOrCtrl+Z',
+        selector: 'undo:'
+    },
+    {
+        label: 'Redo',
+        accelerator: 'Shift+CmdOrCtrl+Z',
+        selector: 'redo:'
+    },
+    {
+        type: 'separator'
+    },
+    {
+        label: 'Cut',
+        accelerator: 'CmdOrCtrl+X',
+        selector: 'cut:'
+    },
+    {
+        label: 'Copy',
+        accelerator: 'CmdOrCtrl+C',
+        selector: 'copy:'
+    },
+    {
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        selector: 'paste:'
+    },
+    {
+        label: 'Select All',
+        accelerator: 'CmdOrCtrl+A',
+        selector: 'selectAll:'
+    }
+    ]
+} ];
+
+/**
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
 function createJitsiMeetWindow() {
-    Menu.setApplicationMenu(null);
+    if (process.platform === 'darwin') {
+        Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    } else {
+        Menu.setApplicationMenu(null);
+    }
 
     // Load the previous state with fallback to defaults
     const jitsiMeetWindowState = windowStateKeeper({

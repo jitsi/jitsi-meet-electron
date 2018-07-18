@@ -25,11 +25,11 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet-${version}.${ext}",
+      "artifactName": "jitsi-meet.${ext}",
       "category": "public.app-category.video"
     },
     "linux": {
-      "artifactName": "jitsi-meet-${version}-${arch}.${ext}",
+      "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",
       "executableName": "jitsi-meet",
@@ -41,7 +41,7 @@
       ]
     },
     "win": {
-      "artifactName": "jitsi-meet-${version}-${arch}.${ext}",
+      "artifactName": "jitsi-meet.${ext}",
       "target": [
         {
           "arch": [

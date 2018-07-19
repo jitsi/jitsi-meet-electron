@@ -50,23 +50,7 @@ class Welcome extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
-        this.state = {
-            url: ''
-        };
-
-        // Bind event handlers.
-        this._onURLChange = this._onURLChange.bind(this);
-        this._onFormSubmit = this._onFormSubmit.bind(this);
-        this._onJoin = this._onJoin.bind(this);
-    }
-
-    /**
-     * Initialize url value in state if passed using location state object.
-     *
-     * @param {Props} props - New props of the component.
-     * @returns {State} - New state of the component.
-     */
-    static getDerivedStateFromProps(props) {
+        // Initialize url value in state if passed using location state object.
         let url = '';
 
         // Check and parse url if exists in location state.
@@ -78,8 +62,12 @@ class Welcome extends Component<Props, State> {
             }
         }
 
-        // Return local state object having input url.
-        return { url };
+        this.state = { url };
+
+        // Bind event handlers.
+        this._onURLChange = this._onURLChange.bind(this);
+        this._onFormSubmit = this._onFormSubmit.bind(this);
+        this._onJoin = this._onJoin.bind(this);
     }
 
     /**

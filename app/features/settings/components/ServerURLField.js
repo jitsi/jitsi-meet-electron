@@ -51,24 +51,11 @@ class ServerURLField extends Component<Props, State> {
 
         this.state = {
             isValid: true,
-            serverURL: ''
+            serverURL: props._serverURL
         };
 
         this._onServerURLChange = this._onServerURLChange.bind(this);
         this._onServerURLSubmit = this._onServerURLSubmit.bind(this);
-    }
-
-    /**
-     * This updates the Server URL in (local) state when there is a change
-     * in redux store.
-     *
-     * @param {Props} props - New props of the component.
-     * @returns {State} - New state of the component.
-     */
-    static getDerivedStateFromProps(props) {
-        return {
-            serverURL: props._serverURL
-        };
     }
 
     /**

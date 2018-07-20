@@ -79,6 +79,7 @@
     "@atlaskit/css-reset": "3.0.0",
     "@atlaskit/droplist": "7.0.2",
     "@atlaskit/field-text": "7.0.1",
+    "@atlaskit/flag": "9.0.1",
     "@atlaskit/icon": "13.2.0",
     "@atlaskit/navigation": "33.0.2",
     "@atlaskit/page": "8.0.0",
@@ -102,7 +103,8 @@
     "redux-logger": "3.0.6",
     "redux-persist": "5.10.0",
     "redux-persist-electron-storage": "1.1.2",
-    "styled-components": "3.3.3"
+    "styled-components": "3.3.3",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
     "babel-core": "6.26.3",

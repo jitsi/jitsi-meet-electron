@@ -2,6 +2,7 @@
 
 import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
+import LayerManager from '@atlaskit/layer-manager';
 import Page from '@atlaskit/page';
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
@@ -11,6 +12,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { Navbar } from '../../navbar';
+import { NotificationsContainer } from '../../notifications';
 import { normalizeServerURL } from '../../utils';
 
 import { WelcomeWrapper as Wrapper, Content, Form } from '../styled';
@@ -79,30 +81,33 @@ class Welcome extends Component<Props, State> {
         const { state } = this.props.location;
 
         return (
-            <Page navigation = { <Navbar /> }>
-                <AtlasKitThemeProvider mode = 'light'>
-                    <Wrapper>
-                        <Content>
-                            <Form onSubmit = { this._onFormSubmit }>
-                                <FieldTextStateless
-                                    autoFocus = { true }
-                                    isInvalid = { state && state.error }
-                                    isLabelHidden = { true }
-                                    onChange = { this._onURLChange }
-                                    shouldFitContainer = { true }
-                                    type = 'text'
-                                    value = { this.state.url } />
-                            </Form>
-                            <Button
-                                appearance = 'primary'
-                                onClick = { this._onJoin }
-                                type = 'button'>
-                                GO
-                            </Button>
-                        </Content>
-                    </Wrapper>
-                </AtlasKitThemeProvider>
-            </Page>
+            <LayerManager>
+                <Page navigation = { <Navbar /> }>
+                    <AtlasKitThemeProvider mode = 'light'>
+                        <Wrapper>
+                            <Content>
+                                <Form onSubmit = { this._onFormSubmit }>
+                                    <FieldTextStateless
+                                        autoFocus = { true }
+                                        isInvalid = { state && state.error }
+                                        isLabelHidden = { true }
+                                        onChange = { this._onURLChange }
+                                        shouldFitContainer = { true }
+                                        type = 'text'
+                                        value = { this.state.url } />
+                                </Form>
+                                <Button
+                                    appearance = 'primary'
+                                    onClick = { this._onJoin }
+                                    type = 'button'>
+                                    GO
+                                </Button>
+                            </Content>
+                            <NotificationsContainer />
+                        </Wrapper>
+                    </AtlasKitThemeProvider>
+                </Page>
+            </LayerManager>
         );
     }
 

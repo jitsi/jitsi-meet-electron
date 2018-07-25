@@ -3,7 +3,8 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    background: linear-gradient(#165ecc,#44A5FF);
+    align-items: center;
     display: flex;
-    height: 100vh;
+    margin: 0 auto;
+    padding: 8em;
 `;

@@ -3,8 +3,8 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    align-items: center;
+    background: #1D69D4;
     display: flex;
-    margin: 0 auto;
-    padding: 30px;
+    flex-direction: column;
+    height: 100vh;
 `;

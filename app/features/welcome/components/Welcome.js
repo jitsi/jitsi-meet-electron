@@ -11,9 +11,10 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { Navbar } from '../../navbar';
+import { RecentList } from '../../recent-list';
 import { normalizeServerURL } from '../../utils';
 
-import { WelcomeWrapper as Wrapper, Content, Form } from '../styled';
+import { Body, Form, Header, Wrapper } from '../styled';
 
 
 type Props = {
@@ -82,7 +83,7 @@ class Welcome extends Component<Props, State> {
             <Page navigation = { <Navbar /> }>
                 <AtlasKitThemeProvider mode = 'light'>
                     <Wrapper>
-                        <Content>
+                        <Header>
                             <Form onSubmit = { this._onFormSubmit }>
                                 <FieldTextStateless
                                     autoFocus = { true }
@@ -99,7 +100,10 @@ class Welcome extends Component<Props, State> {
                                 type = 'button'>
                                 GO
                             </Button>
-                        </Content>
+                        </Header>
+                        <Body>
+                            <RecentList />
+                        </Body>
                     </Wrapper>
                 </AtlasKitThemeProvider>
             </Page>

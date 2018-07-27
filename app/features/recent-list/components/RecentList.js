@@ -76,7 +76,10 @@ class RecentList extends Component<Props, *> {
                     { this._renderServerURL(conference.serverURL) }
                 </TruncatedText>
                 <TruncatedText>
-                    { this._renderTimeAndDuration(conference) }
+                    { this._renderStartTime(conference) }
+                </TruncatedText>
+                <TruncatedText>
+                    { this._renderDuration(conference) }
                 </TruncatedText>
             </ConferenceCard>
         );
@@ -95,18 +98,29 @@ class RecentList extends Component<Props, *> {
     }
 
     /**
-     * Returns Date/Time and Duration of the conference in string format.
+     * Returns the duration of the conference in string format.
      *
      * @param {RecentListItem} conference - Conference Details.
      * @returns {string} - Date/Time and Duration.
      */
-    _renderTimeAndDuration(conference: RecentListItem) {
+    _renderDuration(conference: RecentListItem) {
         const { startTime, endTime } = conference;
         const start = moment(startTime);
-        const end = moment(endTime);
-        const duration = moment.duration(end.diff(start)).humanize();
+        const end = moment(endTime || Date.now());
 
-        return `${start.calendar()}, ${duration}`;
+        return moment.duration(end.diff(start)).humanize();
+    }
+
+    /**
+     * Returns the Date/Time of the conference in string format.
+     *
+     * @param {RecentListItem} conference - Conference Details.
+     * @returns {string} - Date/Time and Duration.
+     */
+    _renderStartTime(conference: RecentListItem) {
+        const { startTime } = conference;
+
+        return moment(startTime).calendar();
     }
 }
 

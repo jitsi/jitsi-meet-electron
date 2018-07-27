@@ -6,7 +6,12 @@ import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 import { push } from 'react-router-redux';
 
-import { ConferenceCard, RecentListContainer, TruncatedText } from '../styled';
+import {
+    ConferenceCard,
+    ConferenceTitle,
+    RecentListContainer,
+    TruncatedText
+} from '../styled';
 import type { RecentListItem } from '../types';
 
 type Props = {
@@ -64,9 +69,9 @@ class RecentList extends Component<Props, *> {
             <ConferenceCard
                 key = { conference.startTime }
                 onClick = { this._onNavigateToConference(conference) }>
-                <TruncatedText>
+                <ConferenceTitle>
                     { conference.room }
-                </TruncatedText>
+                </ConferenceTitle>
                 <TruncatedText>
                     { this._renderServerURL(conference.serverURL) }
                 </TruncatedText>

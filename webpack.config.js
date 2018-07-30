@@ -45,6 +45,10 @@ const commonConfig = {
                 test: /\.css$/
             },
             {
+                use: 'file-loader',
+                test: /\.png$/
+            },
+            {
                 loader: 'svg-inline-loader',
                 test: /\.svg$/
             }

@@ -2,6 +2,7 @@
 
 import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
+import { SpotlightTarget } from '@atlaskit/onboarding';
 import Page from '@atlaskit/page';
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
@@ -11,6 +12,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { Navbar } from '../../navbar';
+import { Onboarding, startOnboarding } from '../../onboarding';
 import { RecentList } from '../../recent-list';
 import { normalizeServerURL } from '../../utils';
 
@@ -72,6 +74,17 @@ class Welcome extends Component<Props, State> {
     }
 
     /**
+     * Start Onboarding once component is mounted.
+     *
+     * NOTE: It autonatically checks if the onboarding is shown or not.
+     *
+     * @returns {void}
+     */
+    componentDidMount() {
+        this.props.dispatch(startOnboarding('welcome-page'));
+    }
+
+    /**
      * Render function of component.
      *
      * @returns {ReactElement}
@@ -84,16 +97,18 @@ class Welcome extends Component<Props, State> {
                 <AtlasKitThemeProvider mode = 'light'>
                     <Wrapper>
                         <Header>
-                            <Form onSubmit = { this._onFormSubmit }>
-                                <FieldTextStateless
-                                    autoFocus = { true }
-                                    isInvalid = { state && state.error }
-                                    isLabelHidden = { true }
-                                    onChange = { this._onURLChange }
-                                    shouldFitContainer = { true }
-                                    type = 'text'
-                                    value = { this.state.url } />
-                            </Form>
+                            <SpotlightTarget name = 'conference-url'>
+                                <Form onSubmit = { this._onFormSubmit }>
+                                    <FieldTextStateless
+                                        autoFocus = { true }
+                                        isInvalid = { state && state.error }
+                                        isLabelHidden = { true }
+                                        onChange = { this._onURLChange }
+                                        shouldFitContainer = { true }
+                                        type = 'text'
+                                        value = { this.state.url } />
+                                </Form>
+                            </SpotlightTarget>
                             <Button
                                 appearance = 'primary'
                                 onClick = { this._onJoin }
@@ -104,6 +119,7 @@ class Welcome extends Component<Props, State> {
                         <Body>
                             <RecentList />
                         </Body>
+                        <Onboarding section = 'welcome-page' />
                     </Wrapper>
                 </AtlasKitThemeProvider>
             </Page>

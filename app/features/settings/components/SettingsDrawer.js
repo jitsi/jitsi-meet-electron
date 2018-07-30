@@ -4,12 +4,14 @@ import Avatar from '@atlaskit/avatar';
 import FieldText from '@atlaskit/field-text';
 import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
 import { AkCustomDrawer } from '@atlaskit/navigation';
+import { SpotlightTarget } from '@atlaskit/onboarding';
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
+import { Onboarding, startOnboarding } from '../../onboarding';
 import { AvatarContainer, SettingsContainer } from '../styled';
 import { setEmail, setName } from '../actions';
 
@@ -64,6 +66,25 @@ class SettingsDrawer extends Component<Props, *> {
     }
 
     /**
+     * Start Onboarding once component is mounted.
+     *
+     * NOTE: It automatically checks if the onboarding is shown or not.
+     *
+     * @param {Props} prevProps - Props before component updated.
+     * @returns {void}
+     */
+    componentDidUpdate(prevProps: Props) {
+        if (!prevProps.isOpen && this.props.isOpen) {
+
+            // TODO - Find a better way for this.
+            // Delay for 300ms to let drawer open.
+            setTimeout(() => {
+                this.props.dispatch(startOnboarding('settings-drawer'));
+            }, 300);
+        }
+    }
+
+    /**
      * Render function of component.
      *
      * @returns {ReactElement}
@@ -82,24 +103,37 @@ class SettingsDrawer extends Component<Props, *> {
                                 size = 'xlarge'
                                 src = { this.props._avatarURL } />
                         </AvatarContainer>
-                        <form onSubmit = { this._onNameFormSubmit }>
-                            <FieldText
-                                label = 'Name'
-                                onBlur = { this._onNameBlur }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.props._name } />
-                        </form>
-                        <form onSubmit = { this._onEmailFormSubmit }>
-                            <FieldText
-                                label = 'Email'
-                                onBlur = { this._onEmailBlur }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.props._email } />
-                        </form>
-                        <ServerURLField />
-                        <StartMutedToggles />
+                        <SpotlightTarget
+                            name = 'name-setting'>
+                            <form onSubmit = { this._onNameFormSubmit }>
+                                <FieldText
+                                    label = 'Name'
+                                    onBlur = { this._onNameBlur }
+                                    shouldFitContainer = { true }
+                                    type = 'text'
+                                    value = { this.props._name } />
+                            </form>
+                        </SpotlightTarget>
+                        <SpotlightTarget
+                            name = 'email-setting'>
+                            <form onSubmit = { this._onEmailFormSubmit }>
+                                <FieldText
+                                    label = 'Email'
+                                    onBlur = { this._onEmailBlur }
+                                    shouldFitContainer = { true }
+                                    type = 'text'
+                                    value = { this.props._email } />
+                            </form>
+                        </SpotlightTarget>
+                        <SpotlightTarget
+                            name = 'server-setting'>
+                            <ServerURLField />
+                        </SpotlightTarget>
+                        <SpotlightTarget
+                            name = 'start-muted-toggles'>
+                            <StartMutedToggles />
+                        </SpotlightTarget>
+                        <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>
             </AkCustomDrawer>

@@ -2,6 +2,8 @@
 
 Desktop application for [Jitsi Meet] built with [Electron].
 
+![](screenshot.png)
+
 ## Features
 
 - Works with any Jitsi Meet deployment
@@ -15,7 +17,9 @@ Desktop application for [Jitsi Meet] built with [Electron].
 Grab the [latest release] and you're off to the races! The supported platforms
 are macOS, Windows (both 32 and 64bits) and GNU/Linux (64bits only).
 
-NOTE: On old GNU/Linux distributions you might get the following error:
+<details><summary>NOTE for old GNU/Linux distributions</summary>
+
+You might get the following error:
 
 ```
 FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
@@ -29,11 +33,15 @@ If you do, please install NSS (example for Debian / Ubuntu):
 sudo apt-get install libnss3
 ```
 
+</details>
+
 ## Development
 
 If you want to hack on this project, here is how you do it.
 
-#### Building the sources
+<details><summary>Expand</summary>
+
+#### Installing dependencies
 
 ```bash
 npm install
@@ -80,6 +88,8 @@ npm install jitsi-meet-electron-utils --force
 
 NOTE: Also check the [jitsi-meet-electron-utils README] to see how to configure
 your environment.
+
+</details>
 
 ## License
 

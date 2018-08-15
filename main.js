@@ -159,20 +159,9 @@ function createJitsiMeetWindow() {
 /**
  * Force Single Instance Application.
  */
-const isSecondInstance = app.makeSingleInstance(() => {
-    /**
-     * If someone creates second instance of the application, set focus on
-     * existing window.
-     */
-    if (mainWindow) {
-        if (mainWindow.isMinimized()) {
-            mainWindow.restore();
-        }
-        mainWindow.focus();
-    }
-});
+const gotInstanceLock = app.requestSingleInstanceLock();
 
-if (isSecondInstance) {
+if (!gotInstanceLock) {
     app.quit();
     process.exit(0);
 }
@@ -180,11 +169,13 @@ if (isSecondInstance) {
 /**
  * Run the application.
  */
+
 app.on('activate', () => {
     if (mainWindow === null) {
         createJitsiMeetWindow();
     }
 });
+
 app.on('certificate-error',
     // eslint-disable-next-line max-params
     (event, webContents, url, error, certificate, callback) => {
@@ -196,9 +187,22 @@ app.on('certificate-error',
         }
     }
 );
+
 app.on('ready', createJitsiMeetWindow);
+
+app.on('second-instance', () => {
+    /**
+     * If someone creates second instance of the application, set focus on
+     * existing window.
+     */
+    if (mainWindow) {
+        mainWindow.isMinimized() && mainWindow.restore();
+        mainWindow.focus();
+    }
+});
+
 app.on('window-all-closed', () => {
-    // Don't quit the application for macOS.
+    // Don't quit the application on macOS.
     if (process.platform !== 'darwin') {
         app.quit();
     }

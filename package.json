@@ -5,14 +5,15 @@
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
   "scripts": {
-    "start": "webpack --config ./webpack.config.js --mode development && electron ./build/main.js",
+    "start": "webpack --config ./webpack.main.js --mode development && concurrently 'npm:watch' 'electron ./build/main.js'",
     "clean": "rm -rf node_modules build dist",
     "lint": "eslint . && flow",
-    "build": "webpack --config ./webpack.config.js --mode production",
+    "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "postinstall": "electron-builder install-app-deps",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
@@ -89,6 +90,7 @@
     "electron-debug": "2.0.0",
     "electron-is-dev": "0.3.0",
     "electron-log": "2.2.16",
+    "electron-reload": "1.2.5",
     "electron-updater": "3.1.1",
     "electron-window-state": "4.1.1",
     "history": "4.7.2",
@@ -114,6 +116,7 @@
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-1": "6.24.1",
+    "concurrently": "3.6.1",
     "css-loader": "1.0.0",
     "devtron": "1.4.0",
     "electron": "3.0.0-beta.5",

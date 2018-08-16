@@ -3,7 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ELECTRON_VERSION = require('./package.json').devDependencies.electron;
 
-const commonConfig = {
+module.exports = {
+    target: 'electron-renderer',
+    entry: { app: './app/index.js' },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './app/index.html'
+        })
+    ],
     output: {
         path: path.resolve('./build'),
         filename: '[name].js'
@@ -55,8 +62,7 @@ const commonConfig = {
         ]
     },
     externals: [ {
-        'jitsi-meet-electron-utils': 'require(\'jitsi-meet-electron-utils\')',
-        'electron-debug': 'require(\'electron-debug\')'
+        'jitsi-meet-electron-utils': 'require(\'jitsi-meet-electron-utils\')'
     } ],
     resolve: {
         modules: [
@@ -65,20 +71,3 @@ const commonConfig = {
     }
 };
 
-module.exports = [
-    Object.assign({
-        target: 'electron-main',
-        entry: { main: './main.js' }
-    },
-    commonConfig),
-    Object.assign({
-        target: 'electron-renderer',
-        entry: { app: './app/index.js' },
-        plugins: [
-            new HtmlWebpackPlugin({
-                template: './app/index.html'
-            })
-        ]
-    },
-    commonConfig)
-];

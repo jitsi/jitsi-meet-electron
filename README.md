@@ -39,7 +39,7 @@ sudo apt-get install libnss3
 
 If you want to hack on this project, here is how you do it.
 
-<details><summary>Expand</summary>
+<details><summary>Show building instructions</summary>
 
 #### Installing dependencies
 

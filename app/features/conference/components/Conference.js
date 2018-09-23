@@ -109,8 +109,6 @@ class Conference extends Component<Props, State> {
         };
 
         this._ref = React.createRef();
-
-        this._onIframeLoad = this._onIframeLoad.bind(this);
     }
 
     /**
@@ -235,7 +233,6 @@ class Conference extends Component<Props, State> {
 
         this._api = new JitsiMeetExternalAPI(host, {
             configOverwrite,
-            onload: this._onIframeLoad,
             parentNode,
             roomName: this._conference.room
         });
@@ -286,19 +283,6 @@ class Conference extends Component<Props, State> {
         }
     }
 
-    _onIframeLoad: (*) => void;
-
-    /**
-     * Sets state of loading to false when iframe has completely loaded.
-     *
-     * @returns {void}
-     */
-    _onIframeLoad() {
-        this.setState({
-            isLoading: false
-        });
-    }
-
     /**
      * Saves conference info on joining it.
      *
@@ -307,6 +291,10 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     _onVideoConferenceJoined(conferenceInfo: Object) {
+        this.setState({
+            isLoading: false
+        });
+
         setupDragAreas(this._api.getIFrame());
 
         this._setAvatarURL(this.props._avatarURL);

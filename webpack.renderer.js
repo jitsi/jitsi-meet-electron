@@ -27,7 +27,7 @@ module.exports = {
                     babelrc: false,
                     presets: [
                         [
-                            require.resolve('babel-preset-env'),
+                            require.resolve('@babel/preset-env'),
                             {
                                 modules: false,
                                 targets: {
@@ -35,10 +35,15 @@ module.exports = {
                                 }
                             }
                         ],
-                        require.resolve('babel-preset-react'),
-                        require.resolve('babel-preset-stage-1')
+                        require.resolve('@babel/preset-flow'),
+                        require.resolve('@babel/preset-react')
                     ],
                     plugins: [
+                        /* eslint-disable max-len */
+                        require.resolve('@babel/plugin-transform-flow-strip-types'),
+                        require.resolve('@babel/plugin-proposal-class-properties'),
+                        require.resolve('@babel/plugin-proposal-export-namespace-from'),
+                        /* eslint-enable max-len */
                         require.resolve('babel-plugin-inline-react-svg')
                     ]
                 },

@@ -35,6 +35,20 @@ sudo apt-get install libnss3
 
 </details>
 
+### Using it with your own Jitsi Meet installation
+
+In order to use this application with your own Jitsi Meet installation it's
+necessary to enable the External API. Your server must serve a `external_api.js`
+file at the root of the installation.
+
+Here is an example using nginx:
+
+```
+location /external_api.js {
+    alias /usr/share/jitsi-meet/libs/external_api.min.js;
+}
+```
+
 ## Development
 
 If you want to hack on this project, here is how you do it.

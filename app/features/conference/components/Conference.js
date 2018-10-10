@@ -110,6 +110,8 @@ class Conference extends Component<Props, State> {
         };
 
         this._ref = React.createRef();
+
+        this._onIframeLoad = this._onIframeLoad.bind(this);
     }
 
     /**
@@ -139,7 +141,8 @@ class Conference extends Component<Props, State> {
 
         this._ref.current.appendChild(script);
 
-        // Set a timer for 10s, if we haven't joined by then, give up.
+        // Set a timer for 10s, if we haven't loaded the iframe by then,
+        // give up.
         this._loadTimer = setTimeout(() => {
             this._navigateToHome(
 
@@ -250,6 +253,7 @@ class Conference extends Component<Props, State> {
 
         this._api = new JitsiMeetExternalAPI(host, {
             configOverwrite,
+            onload: this._onIframeLoad,
             parentNode,
             roomName: this._conference.room
         });
@@ -300,14 +304,14 @@ class Conference extends Component<Props, State> {
         }
     }
 
+    _onIframeLoad: (*) => void;
+
     /**
-     * Saves conference info on joining it.
+     * Sets state of loading to false when iframe has completely loaded.
      *
-     * @param {Object} conferenceInfo - Contains information about the current
-     * conference.
      * @returns {void}
      */
-    _onVideoConferenceJoined(conferenceInfo: Object) {
+    _onIframeLoad() {
         if (this._loadTimer) {
             clearTimeout(this._loadTimer);
             this._loadTimer = null;
@@ -316,7 +320,16 @@ class Conference extends Component<Props, State> {
         this.setState({
             isLoading: false
         });
+    }
 
+    /**
+     * Saves conference info on joining it.
+     *
+     * @param {Object} conferenceInfo - Contains information about the current
+     * conference.
+     * @returns {void}
+     */
+    _onVideoConferenceJoined(conferenceInfo: Object) {
         setupDragAreas(this._api.getIFrame());
 
         this._setAvatarURL(this.props._avatarURL);

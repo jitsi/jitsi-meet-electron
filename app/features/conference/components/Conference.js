@@ -105,10 +105,6 @@ class Conference extends Component<Props, State> {
     constructor() {
         super();
 
-        // External API will load an instance of babel-polyfill. Hence we
-        // should remove existing babel-polyfill instance.
-        delete global._babelPolyfill;
-
         this.state = {
             isLoading: true
         };

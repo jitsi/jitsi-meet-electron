@@ -14,7 +14,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 
 ## Installation
 
-Grab the [latest release] and you're off to the races! The supported platforms
+[Download our latest release] and you're off to the races! The supported platforms
 are macOS, Windows (both 32 and 64bits) and GNU/Linux (64bits only).
 
 <details><summary>NOTE for old GNU/Linux distributions</summary>

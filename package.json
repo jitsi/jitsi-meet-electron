@@ -27,7 +27,8 @@
     ],
     "mac": {
       "artifactName": "jitsi-meet.${ext}",
-      "category": "public.app-category.video"
+      "category": "public.app-category.video",
+      "darkModeSupport": true
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",

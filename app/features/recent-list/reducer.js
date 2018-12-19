@@ -55,7 +55,7 @@ function _insertConference(
     newConference.startTime = Date.now();
 
     // Remove same conference.
-    const newRecentList = recentList.filter(
+    const newRecentList: Array<RecentListItem> = recentList.filter(
         (conference: RecentListItem) => conference.room !== newConference.room
             || conference.serverURL !== newConference.serverURL);
 

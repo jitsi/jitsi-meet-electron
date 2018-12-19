@@ -132,7 +132,6 @@ function createJitsiMeetWindow() {
         minWidth: 800,
         minHeight: 600,
         show: false,
-        titleBarStyle: 'hidden',
         webPreferences: {
             nativeWindowOpen: true
         }

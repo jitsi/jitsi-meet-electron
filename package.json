@@ -125,7 +125,7 @@
     "concurrently": "4.1.0",
     "css-loader": "2.0.1",
     "devtron": "1.4.0",
-    "electron": "3.0.13",
+    "electron": "4.1.5",
     "electron-builder": "20.38.3",
     "electron-react-devtools": "0.5.3",
     "eslint": "5.10.0",

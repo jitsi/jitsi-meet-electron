@@ -6,7 +6,8 @@ import {
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
-    SET_VIDEO_MUTED
+    SET_VIDEO_MUTED,
+    SET_WINDOW_ALWAYS_ON_TOP
 } from './actionTypes';
 
 import { normalizeServerURL } from '../utils';
@@ -108,3 +109,18 @@ export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
 }
 
 
+/**
+ * Set start with video muted.
+ *
+ * @param {boolean} windowAlwaysOnTop - Whether to make window always on top.
+ * @returns {{
+ *     type: SET_WINDOW_ALWAYS_ON_TOP,
+ *     windowAlwaysOnTop: boolean
+ * }}
+ */
+export function setWindowAlwaysOnTop(windowAlwaysOnTop: boolean) {
+    return {
+        type: SET_WINDOW_ALWAYS_ON_TOP,
+        windowAlwaysOnTop
+    };
+}

@@ -10,7 +10,8 @@ import {
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
-    SET_VIDEO_MUTED
+    SET_VIDEO_MUTED,
+    SET_WINDOW_ALWAYS_ON_TOP
 } from './actionTypes';
 
 type State = {
@@ -19,7 +20,8 @@ type State = {
     name: string,
     serverURL: ?string,
     startWithAudioMuted: boolean,
-    startWithVideoMuted: boolean
+    startWithVideoMuted: boolean,
+    windowAlwaysOnTop: boolean,
 };
 
 const username = os.userInfo().username;
@@ -30,7 +32,8 @@ const DEFAULT_STATE = {
     name: username,
     serverURL: undefined,
     startWithAudioMuted: false,
-    startWithVideoMuted: false
+    startWithVideoMuted: false,
+    windowAlwaysOnTop: true
 };
 
 /**
@@ -76,6 +79,11 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         return {
             ...state,
             startWithVideoMuted: action.startWithVideoMuted
+        };
+    case SET_WINDOW_ALWAYS_ON_TOP:
+        return {
+            ...state,
+            windowAlwaysOnTop: action.windowAlwaysOnTop
         };
 
     default:

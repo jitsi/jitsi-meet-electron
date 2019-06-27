@@ -4,7 +4,8 @@ const {
     BrowserWindow,
     Menu,
     app,
-    shell
+    shell,
+    ipcMain
 } = require('electron');
 const isDev = require('electron-is-dev');
 const { autoUpdater } = require('electron-updater');
@@ -16,6 +17,7 @@ const {
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
+const Store = require('electron-store');
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
@@ -36,6 +38,28 @@ if (isDev) {
  * acidentally.
  */
 let mainWindow = null;
+
+/**
+ * Add protocol data
+ */
+const PROTOCOL_PREFIX = 'jitsi'; // this could be configurable later
+const PROTOCOL_SURPLUS = `${PROTOCOL_PREFIX}://`;
+let canSendProtocolDataToRenderer = false;
+let protocolDataForFrontApp = null;
+
+/**
+ * Save always on top to store
+ */
+const ALWAYS_ON_TOP_PROP_NAME = 'alwaysOnTop';
+const schema = {
+    [ALWAYS_ON_TOP_PROP_NAME]: {
+        type: 'number',
+        maximum: 1,
+        minimum: 0,
+        default: 1
+    }
+};
+const store = new Store({ schema });
 
 /**
  * Sets the application menu. It is hidden on all platforms except macOS because
@@ -141,23 +165,74 @@ function createJitsiMeetWindow() {
     windowState.manage(mainWindow);
     mainWindow.loadURL(indexURL);
 
-    initPopupsConfigurationMain(mainWindow);
-    setupAlwaysOnTopMain(mainWindow);
+    const isWindowAlwaysOnTop = store.get(ALWAYS_ON_TOP_PROP_NAME) === 1;
+
+    if (isWindowAlwaysOnTop) {
+        initPopupsConfigurationMain(mainWindow);
+        setupAlwaysOnTopMain(mainWindow);
+    }
 
     mainWindow.webContents.on('new-window', (event, url, frameName) => {
+        event.preventDefault();
         const target = getPopupTarget(url, frameName);
 
         if (!target || target === 'browser') {
-            event.preventDefault();
-            shell.openExternal(url);
+            // ignore open if don't want window
+            if (isWindowAlwaysOnTop) {
+                shell.openExternal(url);
+            }
         }
     });
+
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
     });
+
+    /**
+     * This is for windows [win32]
+     * so when someone tries to enter something like jitsi://test
+     *  while app is closed
+     * it will trigger this event below
+     */
+    handleProtocolCall(process.argv[2]);
+}
+
+/**
+ * Handler when protocol call us
+ * if there is second argument and it starts
+ * with PROTOCOL_PREFIX+ "://" its what we need
+ *
+ * create conference object and send it to front app
+ */
+function handleProtocolCall(fullProtocolCall) {
+    // don't touch when something is bad
+    if (
+        !fullProtocolCall
+        || fullProtocolCall.trim() === ''
+        || fullProtocolCall.indexOf(PROTOCOL_SURPLUS) !== 0
+    ) {
+        return;
+    }
+    const args = fullProtocolCall.replace(PROTOCOL_SURPLUS, '').split('/');
+
+    if (args.length === 0 || !args[0]) {
+        return;
+    }
+
+    const data = {
+        room: args[0],
+        serverUrl: args[1]
+    };
+
+    protocolDataForFrontApp = data;
+    if (canSendProtocolDataToRenderer) {
+        mainWindow
+            .webContents
+            .send('protocol-data-msg', protocolDataForFrontApp);
+    }
 }
 
 /**
@@ -210,4 +285,67 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
+});
+
+// remove so we can register each time as we run the app.
+app.removeAsDefaultProtocolClient(PROTOCOL_PREFIX);
+
+// If we are running a non-packaged version of the app && on windows
+if (process.env.NODE_ENV === 'development' && process.platform === 'win32') {
+    // Set the path of electron.exe and your app.
+    // These two additional parameters are only available on windows.
+    app.setAsDefaultProtocolClient(
+        PROTOCOL_PREFIX,
+        process.execPath,
+        [ path.resolve(process.argv[1]) ]
+    );
+} else {
+    app.setAsDefaultProtocolClient(PROTOCOL_PREFIX);
+}
+
+/**
+ * This is for mac [darwin]
+ * so when someone tries to enter something like jitsi://test
+ * it will trigger this event below
+ */
+app.on('open-url', (event, data) => {
+    event.preventDefault();
+    handleProtocolCall(data);
+});
+
+/**
+ * This is for windows [win32]
+ * so when someone tries to enter something like jitsi://test
+ *  while app is opened
+ * it will trigger this event below
+ */
+app.on('second-instance', (event, commandLine) => {
+    if (mainWindow) {
+        handleProtocolCall(commandLine[2]);
+    }
+});
+
+/**
+ * This is our own event
+ * to notify main.js [this]
+ * that front app is ready to receive
+ * conference room and change to it
+ */
+ipcMain.on('renderer-ready', () => {
+    canSendProtocolDataToRenderer = true;
+    if (protocolDataForFrontApp) {
+        mainWindow
+            .webContents
+            .send('protocol-data-msg', protocolDataForFrontApp);
+    }
+});
+
+/**
+ * NOTE:
+ * Currently there is no sync between
+ * store and frontend
+ * that is on todo
+ */
+ipcMain.on('always-on-top-event', (event, args) => {
+    store.set(ALWAYS_ON_TOP_PROP_NAME, args === true ? 1 : 0);
 });

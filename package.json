@@ -5,7 +5,7 @@
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
   "scripts": {
-    "start": "webpack --config ./webpack.main.js --mode development && concurrently 'npm:watch' 'electron ./build/main.js'",
+    "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
     "lint": "eslint . && flow",
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
@@ -56,6 +56,12 @@
     },
     "directories": {
       "buildResources": "resources"
+    },
+    "protocols": {
+      "name": "jitsi-protocol",
+      "schemes": [
+        "jitsi"
+      ]
     }
   },
   "pre-commit": [
@@ -92,7 +98,7 @@
     "electron-is-dev": "1.0.1",
     "electron-log": "2.2.17",
     "electron-reload": "1.4.0",
-    "electron-store": "2.0.0",
+    "electron-store": "^2.0.0",
     "electron-updater": "4.0.6",
     "electron-window-state": "5.0.3",
     "history": "4.7.2",

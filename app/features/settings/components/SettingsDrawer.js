@@ -17,6 +17,7 @@ import { setEmail, setName } from '../actions';
 
 import ServerURLField from './ServerURLField';
 import StartMutedToggles from './StartMutedToggles';
+import WindowAlwaysOnTopToggle from './WindowAlwaysOnTopToggle';
 
 type Props = {
 
@@ -132,6 +133,11 @@ class SettingsDrawer extends Component<Props, *> {
                         <SpotlightTarget
                             name = 'start-muted-toggles'>
                             <StartMutedToggles />
+                        </SpotlightTarget>
+
+                        <SpotlightTarget
+                            name = 'window-always-on-top'>
+                            <WindowAlwaysOnTopToggle />
                         </SpotlightTarget>
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>

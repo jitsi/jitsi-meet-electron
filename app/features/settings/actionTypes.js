@@ -57,3 +57,13 @@ export const SET_SERVER_URL = Symbol('SET_SERVER_URL');
  * }
  */
 export const SET_VIDEO_MUTED = Symbol('SET_VIDEO_MUTED');
+
+/**
+ * The type of (redux) action that sets Start with Video Muted.
+ *
+ * {
+ *     type: SET_WINDOW_ALWAYS_ON_TOP,
+ *     windowAlwaysOnTop: boolean
+ * }
+ */
+export const SET_WINDOW_ALWAYS_ON_TOP = Symbol('SET_WINDOW_ALWAYS_ON_TOP');

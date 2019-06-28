@@ -5,7 +5,7 @@
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
   "scripts": {
-    "start": "webpack --config ./webpack.main.js --mode development && concurrently 'npm:watch' 'electron ./build/main.js'",
+    "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"", 
     "clean": "rm -rf node_modules build dist",
     "lint": "eslint . && flow",
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",

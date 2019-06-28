@@ -18,6 +18,8 @@ const {
 const path = require('path');
 const URL = require('url');
 const Store = require('electron-store');
+const STORE_KEY_PREFIX = require('redux-persist').KEY_PREFIX;
+const appConfig = require('./app/features/config/index').default;
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
@@ -49,17 +51,11 @@ let protocolDataForFrontApp = null;
 
 /**
  * Save always on top to store
+ * Note:
+ *  this is reading from same store as before
+ *  but now we are using persist store to stay in sync :)
  */
-const ALWAYS_ON_TOP_PROP_NAME = 'alwaysOnTop';
-const schema = {
-    [ALWAYS_ON_TOP_PROP_NAME]: {
-        type: 'number',
-        maximum: 1,
-        minimum: 0,
-        default: 1
-    }
-};
-const store = new Store({ schema });
+const store = new Store();
 
 /**
  * Sets the application menu. It is hidden on all platforms except macOS because
@@ -165,7 +161,7 @@ function createJitsiMeetWindow() {
     windowState.manage(mainWindow);
     mainWindow.loadURL(indexURL);
 
-    const isWindowAlwaysOnTop = store.get(ALWAYS_ON_TOP_PROP_NAME) === 1;
+    const isWindowAlwaysOnTop = getWindowAlwaysOnTopFromStore();
 
     if (isWindowAlwaysOnTop) {
         initPopupsConfigurationMain(mainWindow);
@@ -216,7 +212,8 @@ function handleProtocolCall(fullProtocolCall) {
     ) {
         return;
     }
-    const args = fullProtocolCall.replace(PROTOCOL_SURPLUS, '').split('/');
+    const bigArgs = fullProtocolCall.replace(PROTOCOL_SURPLUS, '').split('/');
+    const args = [ bigArgs[0], bigArgs.slice(1).join('/') ];
 
     if (args.length === 0 || !args[0]) {
         return;
@@ -224,7 +221,7 @@ function handleProtocolCall(fullProtocolCall) {
 
     const data = {
         room: args[0],
-        serverUrl: args[1]
+        serverURL: args[1]
     };
 
     protocolDataForFrontApp = data;
@@ -233,6 +230,36 @@ function handleProtocolCall(fullProtocolCall) {
             .webContents
             .send('protocol-data-msg', protocolDataForFrontApp);
     }
+}
+
+/**
+ * One place and logic how to get WindowAllwaysOnTop from local store
+ *
+ * There is currently limitation
+ * persist data is typeof string
+ * so we cannot just do `store.get('a.b.c');
+ */
+function getWindowAlwaysOnTopFromStore() {
+    const storeConfig = appConfig.storage;
+    const persistStore = store.get(`${STORE_KEY_PREFIX}${storeConfig.rootKey}`);
+    const defaultValue = appConfig.defaults.windowAlwaysOnTop;
+
+    try {
+        const parsedStore = JSON.parse(persistStore) || {};
+        const settings = parsedStore[storeConfig.settingsKey]
+            ? JSON.parse(parsedStore[storeConfig.settingsKey])
+            : {};
+        const value = settings[storeConfig.windowAlwaysOnTopKey];
+
+        return value === undefined ? defaultValue : value;
+    } catch (e) {
+        // track if error occurred
+        if (!isDev) {
+            autoUpdater.logger.error(e.message);
+        }
+    }
+
+    return defaultValue;
 }
 
 /**
@@ -291,7 +318,7 @@ app.on('window-all-closed', () => {
 app.removeAsDefaultProtocolClient(PROTOCOL_PREFIX);
 
 // If we are running a non-packaged version of the app && on windows
-if (process.env.NODE_ENV === 'development' && process.platform === 'win32') {
+if (isDev && process.platform === 'win32') {
     // Set the path of electron.exe and your app.
     // These two additional parameters are only available on windows.
     app.setAsDefaultProtocolClient(
@@ -338,14 +365,4 @@ ipcMain.on('renderer-ready', () => {
             .webContents
             .send('protocol-data-msg', protocolDataForFrontApp);
     }
-});
-
-/**
- * NOTE:
- * Currently there is no sync between
- * store and frontend
- * that is on todo
- */
-ipcMain.on('always-on-top-event', (event, args) => {
-    store.set(ALWAYS_ON_TOP_PROP_NAME, args === true ? 1 : 0);
 });

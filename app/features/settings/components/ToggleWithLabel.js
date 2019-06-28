@@ -29,7 +29,7 @@ class ToggleWithLabel extends Component<Props, *> {
                 <Toggle
                     size = 'large'
                     { ...this.props } />
-                <Label>{this.props.label}</Label>
+                <Label>{ this.props.label }</Label>
             </ToggleContainer>
         );
     }

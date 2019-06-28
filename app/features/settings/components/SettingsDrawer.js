@@ -134,7 +134,6 @@ class SettingsDrawer extends Component<Props, *> {
                             name = 'start-muted-toggles'>
                             <StartMutedToggles />
                         </SpotlightTarget>
-
                         <SpotlightTarget
                             name = 'window-always-on-top'>
                             <WindowAlwaysOnTopToggle />

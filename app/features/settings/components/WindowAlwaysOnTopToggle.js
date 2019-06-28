@@ -1,12 +1,10 @@
 // @flow
 
-import { ipcRenderer } from 'electron';
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
-import { NoteLabel, TogglesContainer } from '../styled';
+import { HelpText, TogglesContainer } from '../styled';
 import {
     setWindowAlwaysOnTop
 } from '../actions';
@@ -80,10 +78,10 @@ class WindowAlwaysOnTopToggle extends Component<Props, State> {
                     label = 'Start with Window always on top'
                     onChange = { this._onWindowAlwaysOnTopToggleChange }
                     value = { this.state.windowAlwaysOnTop } />
-                <NoteLabel
+                <HelpText
                     appearance = 'inline-edit'>
                     (Reload is needed to be applied)
-                </NoteLabel>
+                </HelpText>
             </TogglesContainer>
         );
     }
@@ -100,7 +98,6 @@ class WindowAlwaysOnTopToggle extends Component<Props, State> {
         const newState = !windowAlwaysOnTop;
 
         this.props.dispatch(setWindowAlwaysOnTop(newState));
-        ipcRenderer.send('always-on-top-event', newState);
     }
 }
 

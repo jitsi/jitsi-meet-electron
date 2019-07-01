@@ -26,6 +26,9 @@ class App extends Component<*> {
         super(props);
 
         document.title = config.appName;
+
+        this._listenOnProtocolMessages
+            = this._listenOnProtocolMessages.bind(this);
     }
 
     /**
@@ -54,6 +57,8 @@ class App extends Component<*> {
         );
     }
 
+    _listenOnProtocolMessages: (*) => void;
+
     /**
      * Handler when main proccess contact us.
      *
@@ -62,11 +67,10 @@ class App extends Component<*> {
      *
      * @returns {void}
      */
-    _listenOnProtocolMessages = (event, arg) => {
+    _listenOnProtocolMessages(event, arg) {
         // change route when we are notified
-        // eslint-disable-next-line no-invalid-this
         this.props.dispatch(push('/conference', arg));
-    };
+    }
 
     /**
      * Implements React's {@link Component#render()}.

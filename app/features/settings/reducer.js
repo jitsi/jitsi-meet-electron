@@ -34,7 +34,8 @@ const DEFAULT_STATE = {
     serverURL: undefined,
     startWithAudioMuted: false,
     startWithVideoMuted: false,
-    [config.storage.windowAlwaysOnTopKey]: config.defaults.windowAlwaysOnTop
+    [config.storage.windowAlwaysOnTopKey]:
+        config.defaults.alwaysOnTopWindowEnabled
 };
 
 /**

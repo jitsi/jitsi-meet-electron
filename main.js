@@ -46,7 +46,7 @@ let mainWindow = null;
  */
 const PROTOCOL_PREFIX = 'jitsi'; // this could be configurable later
 const PROTOCOL_SURPLUS = `${PROTOCOL_PREFIX}://`;
-let canSendProtocolDataToRenderer = false;
+let rendererReady = false;
 let protocolDataForFrontApp = null;
 
 /**
@@ -163,8 +163,15 @@ function createJitsiMeetWindow() {
 
     const isWindowAlwaysOnTop = getWindowAlwaysOnTopFromStore();
 
+    //
+    // This is required for some features
+    // Google Sign In - Start Youtube Live Stream, Settings -> Calendar
+    // Microsoft Sign In - Settings -> Calendar
+    // Dropbox Sign In - Start Recording Feature.
+    //
+    initPopupsConfigurationMain(mainWindow);
+
     if (isWindowAlwaysOnTop) {
-        initPopupsConfigurationMain(mainWindow);
         setupAlwaysOnTopMain(mainWindow);
     }
 
@@ -225,7 +232,7 @@ function handleProtocolCall(fullProtocolCall) {
     };
 
     protocolDataForFrontApp = data;
-    if (canSendProtocolDataToRenderer) {
+    if (rendererReady) {
         mainWindow
             .webContents
             .send('protocol-data-msg', protocolDataForFrontApp);
@@ -233,33 +240,65 @@ function handleProtocolCall(fullProtocolCall) {
 }
 
 /**
- * One place and logic how to get WindowAllwaysOnTop from local store
+ *
+ * Get data from store, and parse what is needed
+ * So other functions can access data as objects
  *
  * There is currently limitation
  * persist data is typeof string
  * so we cannot just do `store.get('a.b.c');
  */
-function getWindowAlwaysOnTopFromStore() {
+function parsePersistStore() {
     const storeConfig = appConfig.storage;
     const persistStore = store.get(`${STORE_KEY_PREFIX}${storeConfig.rootKey}`);
-    const defaultValue = appConfig.defaults.windowAlwaysOnTop;
 
     try {
+        // NOTE:
+        // we don't need invalid data
+        // it can only make more bugs if we have half parsed store
+        //
         const parsedStore = JSON.parse(persistStore) || {};
-        const settings = parsedStore[storeConfig.settingsKey]
+
+        const parsedSettings
+        = typeof parsedStore[storeConfig.settingsKey] === 'string'
             ? JSON.parse(parsedStore[storeConfig.settingsKey])
             : {};
-        const value = settings[storeConfig.windowAlwaysOnTopKey];
 
-        return value === undefined ? defaultValue : value;
+        parsedStore[storeConfig.settingsKey] = parsedSettings;
+
+        return parsedStore;
     } catch (e) {
-        // track if error occurred
-        if (!isDev) {
-            autoUpdater.logger.error(e.message);
-        }
+        // track error if occurred
+        console.error(e);
     }
 
-    return defaultValue;
+    return null;
+}
+
+/**
+ * One place and logic how to get WindowAllwaysOnTop from local store
+ *
+ * Right now, we are using function to parse our store
+ * and this function will get what is needed for it
+ */
+function getWindowAlwaysOnTopFromStore() {
+    const storeData = parsePersistStore();
+    const storeConfig = appConfig.storage;
+    const defaultValue = appConfig.defaults.alwaysOnTopWindowEnabled;
+
+    if (storeData === null) {
+        return defaultValue;
+    }
+
+    const settings = storeData[storeConfig.settingsKey] || {};
+
+    if (settings === null || typeof settings !== 'object') {
+        return defaultValue;
+    }
+
+    const value = settings[storeConfig.windowAlwaysOnTopKey];
+
+    return value === undefined ? defaultValue : value;
 }
 
 /**
@@ -359,7 +398,7 @@ app.on('second-instance', (event, commandLine) => {
  * conference room and change to it
  */
 ipcMain.on('renderer-ready', () => {
-    canSendProtocolDataToRenderer = true;
+    rendererReady = true;
     if (protocolDataForFrontApp) {
         mainWindow
             .webContents

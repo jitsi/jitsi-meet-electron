@@ -34,7 +34,7 @@ export default {
      * Some of default values for application.
      */
     defaults: {
-        windowAlwaysOnTop: true
+        alwaysOnTopWindowEnabled: true
     },
 
     /**

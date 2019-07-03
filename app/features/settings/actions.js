@@ -7,7 +7,7 @@ import {
     SET_NAME,
     SET_SERVER_URL,
     SET_VIDEO_MUTED,
-    SET_WINDOW_ALWAYS_ON_TOP
+    SET_ALWAYS_ON_TOP_WINDOW_ENABLED
 } from './actionTypes';
 
 import { normalizeServerURL } from '../utils';
@@ -110,17 +110,17 @@ export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
 
 
 /**
- * Set start with video muted.
+ * Set window always on top.
  *
  * @param {boolean} windowAlwaysOnTop - Whether to make window always on top.
  * @returns {{
- *     type: SET_WINDOW_ALWAYS_ON_TOP,
+ *     type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
  *     windowAlwaysOnTop: boolean
  * }}
  */
 export function setWindowAlwaysOnTop(windowAlwaysOnTop: boolean) {
     return {
-        type: SET_WINDOW_ALWAYS_ON_TOP,
+        type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
         windowAlwaysOnTop
     };
 }

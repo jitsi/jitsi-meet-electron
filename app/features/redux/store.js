@@ -7,15 +7,13 @@ import createElectronStorage from 'redux-persist-electron-storage';
 import middleware from './middleware';
 import reducers from './reducers';
 
-import config from '../config';
-
 const persistConfig = {
-    key: config.storage.rootKey,
+    key: 'root',
     storage: createElectronStorage(),
     whitelist: [
         'onboarding',
         'recentList',
-        config.storage.settingsKey
+        'settings'
     ]
 };
 

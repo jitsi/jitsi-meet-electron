@@ -3,7 +3,6 @@
 import os from 'os';
 
 import { getAvatarURL } from 'js-utils';
-import config from '../config';
 
 import {
     SET_AUDIO_MUTED,
@@ -12,7 +11,7 @@ import {
     SET_NAME,
     SET_SERVER_URL,
     SET_VIDEO_MUTED,
-    SET_WINDOW_ALWAYS_ON_TOP
+    SET_ALWAYS_ON_TOP_WINDOW_ENABLED
 } from './actionTypes';
 
 type State = {
@@ -22,7 +21,7 @@ type State = {
     serverURL: ?string,
     startWithAudioMuted: boolean,
     startWithVideoMuted: boolean,
-    [windowAlwaysOnTop: string]: boolean,
+    windowAlwaysOnTop: boolean,
 };
 
 const username = os.userInfo().username;
@@ -34,8 +33,7 @@ const DEFAULT_STATE = {
     serverURL: undefined,
     startWithAudioMuted: false,
     startWithVideoMuted: false,
-    [config.storage.windowAlwaysOnTopKey]:
-        config.defaults.alwaysOnTopWindowEnabled
+    windowAlwaysOnTop: true
 };
 
 /**
@@ -82,10 +80,10 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
             ...state,
             startWithVideoMuted: action.startWithVideoMuted
         };
-    case SET_WINDOW_ALWAYS_ON_TOP:
+    case SET_ALWAYS_ON_TOP_WINDOW_ENABLED:
         return {
             ...state,
-            [config.storage.windowAlwaysOnTopKey]: action.windowAlwaysOnTop
+            windowAlwaysOnTop: action.windowAlwaysOnTop
         };
 
     default:

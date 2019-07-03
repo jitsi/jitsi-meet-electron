@@ -17,9 +17,6 @@ const {
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
-const Store = require('electron-store');
-const STORE_KEY_PREFIX = require('redux-persist').KEY_PREFIX;
-const appConfig = require('./app/features/config/index').default;
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
@@ -49,13 +46,6 @@ const PROTOCOL_SURPLUS = `${PROTOCOL_PREFIX}://`;
 let rendererReady = false;
 let protocolDataForFrontApp = null;
 
-/**
- * Save always on top to store
- * Note:
- *  this is reading from same store as before
- *  but now we are using persist store to stay in sync :)
- */
-const store = new Store();
 
 /**
  * Sets the application menu. It is hidden on all platforms except macOS because
@@ -161,32 +151,17 @@ function createJitsiMeetWindow() {
     windowState.manage(mainWindow);
     mainWindow.loadURL(indexURL);
 
-    const isWindowAlwaysOnTop = getWindowAlwaysOnTopFromStore();
-
-    //
-    // This is required for some features
-    // Google Sign In - Start Youtube Live Stream, Settings -> Calendar
-    // Microsoft Sign In - Settings -> Calendar
-    // Dropbox Sign In - Start Recording Feature.
-    //
     initPopupsConfigurationMain(mainWindow);
-
-    if (isWindowAlwaysOnTop) {
-        setupAlwaysOnTopMain(mainWindow);
-    }
+    setupAlwaysOnTopMain(mainWindow);
 
     mainWindow.webContents.on('new-window', (event, url, frameName) => {
-        event.preventDefault();
         const target = getPopupTarget(url, frameName);
 
         if (!target || target === 'browser') {
-            // ignore open if don't want window
-            if (isWindowAlwaysOnTop) {
-                shell.openExternal(url);
-            }
+            event.preventDefault();
+            shell.openExternal(url);
         }
     });
-
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
@@ -219,86 +194,15 @@ function handleProtocolCall(fullProtocolCall) {
     ) {
         return;
     }
-    const bigArgs = fullProtocolCall.replace(PROTOCOL_SURPLUS, '').split('/');
-    const args = [ bigArgs[0], bigArgs.slice(1).join('/') ];
 
-    if (args.length === 0 || !args[0]) {
-        return;
-    }
+    const inputURL = fullProtocolCall.replace(PROTOCOL_SURPLUS, '');
 
-    const data = {
-        room: args[0],
-        serverURL: args[1]
-    };
-
-    protocolDataForFrontApp = data;
+    protocolDataForFrontApp = inputURL;
     if (rendererReady) {
         mainWindow
             .webContents
             .send('protocol-data-msg', protocolDataForFrontApp);
     }
-}
-
-/**
- *
- * Get data from store, and parse what is needed
- * So other functions can access data as objects
- *
- * There is currently limitation
- * persist data is typeof string
- * so we cannot just do `store.get('a.b.c');
- */
-function parsePersistStore() {
-    const storeConfig = appConfig.storage;
-    const persistStore = store.get(`${STORE_KEY_PREFIX}${storeConfig.rootKey}`);
-
-    try {
-        // NOTE:
-        // we don't need invalid data
-        // it can only make more bugs if we have half parsed store
-        //
-        const parsedStore = JSON.parse(persistStore) || {};
-
-        const parsedSettings
-        = typeof parsedStore[storeConfig.settingsKey] === 'string'
-            ? JSON.parse(parsedStore[storeConfig.settingsKey])
-            : {};
-
-        parsedStore[storeConfig.settingsKey] = parsedSettings;
-
-        return parsedStore;
-    } catch (e) {
-        // track error if occurred
-        console.error(e);
-    }
-
-    return null;
-}
-
-/**
- * One place and logic how to get WindowAllwaysOnTop from local store
- *
- * Right now, we are using function to parse our store
- * and this function will get what is needed for it
- */
-function getWindowAlwaysOnTopFromStore() {
-    const storeData = parsePersistStore();
-    const storeConfig = appConfig.storage;
-    const defaultValue = appConfig.defaults.alwaysOnTopWindowEnabled;
-
-    if (storeData === null) {
-        return defaultValue;
-    }
-
-    const settings = storeData[storeConfig.settingsKey] || {};
-
-    if (settings === null || typeof settings !== 'object') {
-        return defaultValue;
-    }
-
-    const value = settings[storeConfig.windowAlwaysOnTopKey];
-
-    return value === undefined ? defaultValue : value;
 }
 
 /**

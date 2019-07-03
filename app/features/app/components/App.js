@@ -12,6 +12,7 @@ import { Conference } from '../../conference';
 import config from '../../config';
 import { history } from '../../router';
 import { Welcome } from '../../welcome';
+import { createConferenceObjectFromURL } from '../../utils';
 
 /**
  * Main component encapsulating the entire application.
@@ -63,13 +64,20 @@ class App extends Component<*> {
      * Handler when main proccess contact us.
      *
      * @param {Object} event - Message event triggered by .
-     * @param {Object} arg - Object with two props same as Conference object.
+     * @param {Object} arg - String with room and optionally server url.
      *
      * @returns {void}
      */
     _listenOnProtocolMessages(event, arg) {
+        const conference = createConferenceObjectFromURL(arg);
+
+        // Don't navigate if conference couldn't be created
+        if (!conference) {
+            return;
+        }
+
         // change route when we are notified
-        this.props.dispatch(push('/conference', arg));
+        this.props.dispatch(push('/conference', conference));
     }
 
     /**

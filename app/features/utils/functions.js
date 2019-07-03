@@ -55,3 +55,48 @@ export function normalizeServerURL(url: string) {
 export function openExternalLink(link: string) {
     shell.openExternal(link);
 }
+
+
+/**
+ * Get url and creat Conference object.
+ *
+ * @param {string} inputURL - Combined server url with room separated by /.
+ * @returns {Object}
+ */
+export function createConferenceObjectFromURL(inputURL: string) {
+    const lastIndexOfSlash = inputURL.lastIndexOf('/');
+    let room;
+    let serverURL;
+
+    if (lastIndexOfSlash === -1) {
+        // This must be only the room name.
+        room = inputURL;
+    } else {
+        // Take the substring before last slash to be the Server URL.
+        const leftSide = inputURL.substring(0, lastIndexOfSlash);
+
+        // Take the substring after last slash to be the room name.
+        const rightSide = inputURL.substring(lastIndexOfSlash + 1);
+
+        // if we don't have anything after slash, but we got it
+        // that means that we had string with only room and trailing / (slash)
+        if (!rightSide && leftSide) {
+            room = leftSide;
+        } else {
+            room = rightSide;
+
+            // Normalize the server URL.
+            serverURL = normalizeServerURL(leftSide);
+        }
+    }
+
+    // Don't navigate if no room was specified.
+    if (!room) {
+        return;
+    }
+
+    return {
+        room,
+        serverURL
+    };
+}

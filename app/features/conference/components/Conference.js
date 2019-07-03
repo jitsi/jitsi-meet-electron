@@ -63,6 +63,11 @@ type Props = {
      * Start with Video Muted.
      */
     _startWithVideoMuted: boolean;
+
+    /**
+     * Enable window on top.
+     */
+    _windowAlwaysOnTop: boolean;
 };
 
 type State = {
@@ -263,7 +268,12 @@ class Conference extends Component<Props, State> {
 
         setupScreenSharingForWindow(iframe);
         new RemoteControl(iframe); // eslint-disable-line no-new
-        setupAlwaysOnTopRender(this._api);
+
+        // Allow window to be on top if enabled in settings
+        if (this.props._windowAlwaysOnTop) {
+            setupAlwaysOnTopRender(this._api);
+        }
+
         setupWiFiStats(iframe);
 
         this._api.on('readyToClose', (event: Event) => {
@@ -394,7 +404,8 @@ function _mapStateToProps(state: Object) {
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted
+        _startWithVideoMuted: state.settings.startWithVideoMuted,
+        _windowAlwaysOnTop: state.settings.windowAlwaysOnTop
     };
 }
 

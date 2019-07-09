@@ -12,7 +12,8 @@ const windowStateKeeper = require('electron-window-state');
 const {
     initPopupsConfigurationMain,
     getPopupTarget,
-    setupAlwaysOnTopMain
+    setupAlwaysOnTopMain,
+    setupPowerMonitorMain
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
@@ -143,6 +144,7 @@ function createJitsiMeetWindow() {
 
     initPopupsConfigurationMain(mainWindow);
     setupAlwaysOnTopMain(mainWindow);
+    setupPowerMonitorMain(mainWindow);
 
     mainWindow.webContents.on('new-window', (event, url, frameName) => {
         const target = getPopupTarget(url, frameName);

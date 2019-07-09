@@ -12,7 +12,8 @@ import {
     setupScreenSharingForWindow,
     setupAlwaysOnTopRender,
     initPopupsConfigurationRender,
-    setupWiFiStats
+    setupWiFiStats,
+    setupPowerMonitorRender
 } from 'jitsi-meet-electron-utils';
 
 import config from '../../config';
@@ -265,10 +266,13 @@ class Conference extends Component<Props, State> {
         new RemoteControl(iframe); // eslint-disable-line no-new
         setupAlwaysOnTopRender(this._api);
         setupWiFiStats(iframe);
+        setupPowerMonitorRender(iframe);
 
+        this._api.on('suspendDetected', (event: Event) => {
+            this._onVideoConferenceEnded(event);
+        });
         this._api.on('readyToClose', (event: Event) => {
-            this.props.dispatch(conferenceEnded(this._conference));
-            this._navigateToHome(event);
+            this._onVideoConferenceEnded(event);
         });
         this._api.on('videoConferenceJoined',
             (conferenceInfo: Object) => {
@@ -276,6 +280,18 @@ class Conference extends Component<Props, State> {
                 this._onVideoConferenceJoined(conferenceInfo);
             }
         );
+    }
+
+    /**
+     * Dispatches conference ended and navigates to home screen.
+     *
+     * @param {Event} event - Event by which the function is called.
+     * @returns {void}
+     * @private
+     */
+    _onVideoConferenceEnded(event: Event) {
+        this.props.dispatch(conferenceEnded(this._conference));
+        this._navigateToHome(event);
     }
 
     /**

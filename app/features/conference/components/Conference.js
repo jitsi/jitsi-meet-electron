@@ -267,7 +267,7 @@ class Conference extends Component<Props, State> {
         new RemoteControl(iframe); // eslint-disable-line no-new
         setupAlwaysOnTopRender(this._api);
         setupWiFiStats(iframe);
-        setupPowerMonitorRender(iframe);
+        setupPowerMonitorRender(this._api);
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);

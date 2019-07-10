@@ -113,6 +113,7 @@ class Conference extends Component<Props, State> {
         this._ref = React.createRef();
 
         this._onIframeLoad = this._onIframeLoad.bind(this);
+        this._onVideoConferenceEnded = this._onVideoConferenceEnded.bind(this);
     }
 
     /**
@@ -268,12 +269,8 @@ class Conference extends Component<Props, State> {
         setupWiFiStats(iframe);
         setupPowerMonitorRender(iframe);
 
-        this._api.on('suspendDetected', (event: Event) => {
-            this._onVideoConferenceEnded(event);
-        });
-        this._api.on('readyToClose', (event: Event) => {
-            this._onVideoConferenceEnded(event);
-        });
+        this._api.on('suspendDetected', this._onVideoConferenceEnded);
+        this._api.on('readyToClose', this._onVideoConferenceEnded);
         this._api.on('videoConferenceJoined',
             (conferenceInfo: Object) => {
                 this.props.dispatch(conferenceJoined(this._conference));
@@ -281,6 +278,8 @@ class Conference extends Component<Props, State> {
             }
         );
     }
+
+    _onVideoConferenceEnded: (*) => void;
 
     /**
      * Dispatches conference ended and navigates to home screen.

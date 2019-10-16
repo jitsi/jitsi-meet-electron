@@ -41,6 +41,7 @@ class Root extends Component<*> {
 
 /**
  * Render the main / root application.
- * $FlowFixMe
+ *
+ * $FlowFixMe.
  */
 render(<Root />, document.getElementById('app'));

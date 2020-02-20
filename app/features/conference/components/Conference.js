@@ -9,7 +9,7 @@ import { push } from 'react-router-redux';
 
 import {
     RemoteControl,
-    setupScreenSharingForWindow,
+    setupScreenSharingRender,
     setupAlwaysOnTopRender,
     initPopupsConfigurationRender,
     setupWiFiStats,
@@ -263,7 +263,7 @@ class Conference extends Component<Props, State> {
 
         const iframe = this._api.getIFrame();
 
-        setupScreenSharingForWindow(iframe);
+        setupScreenSharingRender(this._api);
         new RemoteControl(iframe); // eslint-disable-line no-new
         setupAlwaysOnTopRender(this._api);
         setupWiFiStats(iframe);

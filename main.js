@@ -13,7 +13,8 @@ const {
     initPopupsConfigurationMain,
     getPopupTarget,
     setupAlwaysOnTopMain,
-    setupPowerMonitorMain
+    setupPowerMonitorMain,
+    setupScreenSharingMain
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
@@ -149,6 +150,7 @@ function createJitsiMeetWindow() {
     initPopupsConfigurationMain(mainWindow);
     setupAlwaysOnTopMain(mainWindow);
     setupPowerMonitorMain(mainWindow);
+    setupScreenSharingMain(mainWindow, 'Jitsi Meet');
 
     mainWindow.webContents.on('new-window', (event, url, frameName) => {
         const target = getPopupTarget(url, frameName);

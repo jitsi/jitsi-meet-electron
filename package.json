@@ -126,7 +126,7 @@
     "css-loader": "2.0.1",
     "devtron": "1.4.0",
     "electron": "7.1.7",
-    "electron-builder": "20.38.3",
+    "electron-builder": "22.3.2",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

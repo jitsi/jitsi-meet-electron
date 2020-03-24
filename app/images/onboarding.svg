@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="192" viewBox="0 0 600 192">
+  <defs>
+    <polygon id="onboarding-a" points="0 .398 59.249 .398 59.249 18.701 0 18.701"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <rect width="600" height="192" fill="#0057E4"/>
+    <g transform="translate(237 56)">
+      <g>
+        <mask id="onboarding-b" fill="#fff">
+          <use xlink:href="#onboarding-a"/>
+        </mask>
+        <polygon fill="#CCD1D9" points="0 .398 8.552 18.701 49.083 18.701 59.249 .398" mask="url(#onboarding-b)"/>
+      </g>
+      <polygon fill="#CCD1D9" points="69.633 .398 34.358 62.018 43.979 80.778 81.544 18.701 117.276 18.701 126.898 .398"/>
+    </g>
+  </g>
+</svg>

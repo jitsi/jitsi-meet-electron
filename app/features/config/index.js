@@ -8,7 +8,7 @@ export default {
     /**
      * Application name.
      */
-    appName: 'Jitsi Meet',
+    appName: 'Tocca Virtual Event',
 
     /**
      * The default server URL of Jitsi Meet Deployment that will be used.

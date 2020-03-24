@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
-import OnboardingModalImage from '../../../images/onboarding.png';
+import OnboardingModalImage from '../../../images/onboarding.svg';
 
 import config from '../../config';
 

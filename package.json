@@ -1,9 +1,9 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "1.1.1",
-  "description": "Electron application for Jitsi Meet",
+  "version": "1.1.2",
+  "description": "Electron application for Tocca Virtual Event",
   "main": "./build/main.js",
-  "productName": "Jitsi Meet",
+  "productName": "Tocca Virtual Event",
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
@@ -16,8 +16,8 @@
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "build": {
-    "appId": "org.jitsi.jitsi-meet",
-    "productName": "Jitsi Meet",
+    "appId": "io.tocca.virtual-event",
+    "productName": "Tocca Virtual Event",
     "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
@@ -26,15 +26,15 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "tocca-ved.${ext}",
       "category": "public.app-category.video",
       "darkModeSupport": true
     },
     "linux": {
-      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "artifactName": "tocca-ved-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Jitsi Meet Desktop App",
-      "executableName": "jitsi-meet",
+      "description": "Tocca Virtual Event Desktop App",
+      "executableName": "tocca-ved",
       "target": [
         {
           "arch": "x64",
@@ -43,7 +43,7 @@
       ]
     },
     "win": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "tocca-ved.${ext}",
       "target": [
         {
           "arch": [
@@ -63,16 +63,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jitsi/jitsi-meet-electron"
+    "url": "git://github.com/spaquet/jitsi-meet-electron"
   },
   "keywords": [
     "jingle",
     "webrtc",
     "xmpp",
     "electron",
-    "jitsi-meet"
+    "tocca-ved"
   ],
-  "author": "Jitsi Team <support@jitsi.org>",
+  "author": "Tocca Inc. <support@tocca.io>",
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {

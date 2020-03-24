@@ -22,6 +22,7 @@ const config = require('./app/features/config');
 
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
+app.allowRendererProcessReuse = false; // (change to true in Electron 9)
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
@@ -50,7 +51,7 @@ let mainWindow = null;
 function setApplicationMenu() {
     if (process.platform === 'darwin') {
         const template = [ {
-            label: app.getName(),
+            label: app.name,
             submenu: [ {
                 label: 'Quit',
                 accelerator: 'Command+Q',

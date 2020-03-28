@@ -20,6 +20,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - name: Install robotjs dependencies for ubuntu
+      run: sudo apt install libxtst-dev libpng++-dev
+      if: startsWith(matrix.os, 'ubuntu')
     - name: Build/release Electron app
       uses: samuelmeuli/action-electron-builder@v1
       with:

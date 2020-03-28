@@ -121,3 +121,4 @@ please join [community forum].
 [jitsi-meet-electron-utils README]: https://github.com/jitsi/jitsi-meet-electron-utils/blob/master/README.md
 [community forum]: https://community.jitsi.org/
 [LICENSE]: LICENSE
+

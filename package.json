@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "1.0.4335",
+  "version": "1.2.0",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",

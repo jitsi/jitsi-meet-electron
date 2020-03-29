@@ -4,7 +4,9 @@
 name: Electron
 
 on:
-  push
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:

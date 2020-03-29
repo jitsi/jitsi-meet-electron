@@ -19,6 +19,7 @@
     "appId": "org.jitsi.jitsi-meet",
     "productName": "Jitsi Meet",
     "generateUpdatesFilesForAllChannels": true,
+    "afterSign": "electron-builder-notarize",
     "files": [
       "**/*",
       "resources",
@@ -28,7 +29,8 @@
     "mac": {
       "artifactName": "jitsi-meet.${ext}",
       "category": "public.app-category.video",
-      "darkModeSupport": true
+      "darkModeSupport": true,
+      "hardenedRuntime": true
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
@@ -127,6 +129,7 @@
     "devtron": "1.4.0",
     "electron": "8.2.0",
     "electron-builder": "22.4.1",
+    "electron-builder-notarize": "^1.1.2",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

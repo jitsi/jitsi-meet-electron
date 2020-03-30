@@ -50,7 +50,7 @@ let mainWindow = null;
 function setApplicationMenu() {
     if (process.platform === 'darwin') {
         const template = [ {
-            label: app.getName(),
+            label: app.name(),
             submenu: [ {
                 label: 'Quit',
                 accelerator: 'Command+Q',

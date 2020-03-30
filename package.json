@@ -33,8 +33,8 @@
     "linux": {
       "artifactName": "ffmuc-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Tocca Virtual Event Desktop App",
-      "executableName": "tocca-meet",
+      "description": "Freifunk Meet App",
+      "executableName": "ffmuc-meet",
       "target": [
         {
           "arch": "x64",
@@ -63,7 +63,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/spaquet/jitsi-meet-electron"
+    "url": "git://github.com/FreifunkMUC/jitsi-meet-electron"
   },
   "keywords": [
     "conference",

@@ -1,23 +1,23 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "1.1.1",
-  "description": "Electron application for Jitsi Meet",
+  "version": "1.1.2",
+  "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
-  "productName": "Jitsi Meet",
+  "productName": "Freifunk Meet",
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
     "lint": "eslint . && flow",
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "pack": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder -w --x64",
     "postinstall": "electron-builder install-app-deps",
     "validate": "npm ls",
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "build": {
-    "appId": "org.jitsi.jitsi-meet",
-    "productName": "Jitsi Meet",
+    "appId": "net.ffmuc",
+    "productName": "Freifunk Meet",
     "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
@@ -26,15 +26,15 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "ffmuc-meet.${ext}",
       "category": "public.app-category.video",
       "darkModeSupport": true
     },
     "linux": {
-      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "artifactName": "ffmuc-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Jitsi Meet Desktop App",
-      "executableName": "jitsi-meet",
+      "description": "Tocca Virtual Event Desktop App",
+      "executableName": "tocca-meet",
       "target": [
         {
           "arch": "x64",
@@ -43,7 +43,7 @@
       ]
     },
     "win": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "ffmuc-meet.${ext}",
       "target": [
         {
           "arch": [
@@ -63,16 +63,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jitsi/jitsi-meet-electron"
+    "url": "git://github.com/spaquet/jitsi-meet-electron"
   },
   "keywords": [
-    "jingle",
-    "webrtc",
-    "xmpp",
+    "conference",
+    "events",
+    "multimedia events",
     "electron",
-    "jitsi-meet"
+    "freifunk-meet"
   ],
-  "author": "Jitsi Team <support@jitsi.org>",
+  "author": "Freifunk Muenchen <hilfe@ffmuc.bayern>",
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
@@ -88,20 +88,20 @@
     "@atlaskit/spinner": "9.0.13",
     "@atlaskit/theme": "7.0.1",
     "@atlaskit/toggle": "5.0.14",
-    "electron-debug": "2.0.0",
-    "electron-is-dev": "1.0.1",
-    "electron-log": "2.2.17",
+    "electron-debug": "3.0.1",
+    "electron-is-dev": "1.1.0",
+    "electron-log": "4.1.0",
     "electron-reload": "1.5.0",
-    "electron-store": "2.0.0",
-    "electron-updater": "4.0.6",
+    "electron-store": "5.1.1",
+    "electron-updater": "4.2.5",
     "electron-window-state": "5.0.3",
-    "history": "4.7.2",
+    "history": "4.10.1",
     "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.1",
     "js-utils": "github:jitsi/js-utils#0c53500a5120be2aa3fc590f0f932a0d4771920f",
-    "moment": "2.23.0",
-    "mousetrap": "1.6.2",
-    "react": "16.6.3",
-    "react-dom": "16.6.3",
+    "moment": "2.24.0",
+    "mousetrap": "1.6.5",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "react-redux": "5.1.1",
     "react-router-redux": "5.0.0-alpha.9",
     "redux": "4.0.1",
@@ -125,8 +125,8 @@
     "concurrently": "4.1.0",
     "css-loader": "2.0.1",
     "devtron": "1.4.0",
-    "electron": "7.1.7",
-    "electron-builder": "20.38.3",
+    "electron": "8.1.1",
+    "electron-builder": "22.4.1",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",
@@ -139,8 +139,8 @@
     "html-webpack-plugin": "3.2.0",
     "precommit-hook": "3.0.0",
     "style-loader": "0.23.1",
-    "svg-inline-loader": "0.8.0",
-    "webpack": "4.27.1",
-    "webpack-cli": "3.1.2"
+    "svg-inline-loader": "0.8.2",
+    "webpack": "4.42.0",
+    "webpack-cli": "3.3.11"
   }
 }

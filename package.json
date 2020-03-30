@@ -10,7 +10,7 @@
     "lint": "eslint . && flow",
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "pack": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder -w --x64",
+    "dist": "npm run build && electron-builder",
     "postinstall": "electron-builder install-app-deps",
     "validate": "npm ls",
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"

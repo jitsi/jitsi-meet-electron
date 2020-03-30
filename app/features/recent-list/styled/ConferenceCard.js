@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    background: #1754A9;
+    background: #dc0067;
     border-radius: 0.5em;
     color: white;
     display: flex;
@@ -11,7 +11,7 @@ export default styled.div`
     font-size: 0.9em;
     margin: 0.5em;
     padding: 1em;
-    
+
     &:hover {
         cursor: pointer;
     }

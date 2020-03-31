@@ -3,11 +3,11 @@ matrix:
     - os: osx
       osx_image: xcode9.3
       language: node_js
-      node_js: '8'
+      node_js: '12'
 
     - os: linux
       language: node_js
-      node_js: '8'
+      node_js: '12'
       addons:
         apt:
           sources:

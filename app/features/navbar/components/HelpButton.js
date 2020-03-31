@@ -102,7 +102,7 @@ export default class HelpButton extends Component< *, State> {
                         Send Feedback
                     </Item>
                     <Item onActivate = { this._onAboutClick }>
-                        About
+                        FAQ
                     </Item>
                     <Item>
                         Version: { version }

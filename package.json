@@ -38,12 +38,11 @@
       "target": [
         {
           "arch": "x64",
-          "target": [
-            "AppImage",
-            "deb",
-            "rpm",
-            "tar.gz"
-          ]
+          "target": "AppImage"
+        },
+        {
+          "arch": "x64",
+          "target": "deb"
         }
       ]
     },

@@ -8,7 +8,7 @@ export default {
     /**
      * Application name.
      */
-    appName: 'FFMUC Meet',
+    appName: 'Freifunk Meet',
 
     /**
      * The default server URL of Jitsi Meet Deployment that will be used.

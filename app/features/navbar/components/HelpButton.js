@@ -2,6 +2,7 @@
 
 import Droplist, { Item, Group } from '@atlaskit/droplist';
 import HelpIcon from '@atlaskit/icon/glyph/question-circle';
+import {version} from '../../../../package.json';
 
 import React, { Component } from 'react';
 
@@ -102,6 +103,9 @@ export default class HelpButton extends Component< *, State> {
                     </Item>
                     <Item onActivate = { this._onAboutClick }>
                         About
+                    </Item>
+                    <Item>
+                        Version: { version }
                     </Item>
                 </Group>
             </Droplist>

@@ -2,6 +2,10 @@
 
 Desktop application for [Jitsi Meet] built with [Electron].
 
+## Download
+
+[Linux (AppImage)](https://github.com/csett86/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) | [Mac (dmg)](https://github.com/csett86/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Windows (exe)](https://github.com/csett86/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe)
+
 ![](screenshot.png)
 
 ## Features

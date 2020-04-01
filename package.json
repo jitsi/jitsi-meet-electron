@@ -3,7 +3,7 @@
   "version": "2.0.3",
   "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
-  "productName": "Freifunk Meet",
+  "productName": "FreifunkMeet",
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
@@ -16,8 +16,8 @@
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "build": {
-    "appId": "net.ffmuc",
-    "productName": "Freifunk Meet",
+    "appId": "meet.ffmuc.net",
+    "productName": "FreifunkMeet",
     "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
@@ -33,7 +33,7 @@
     "linux": {
       "artifactName": "ffmuc-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Freifunk Meet App",
+      "description": "FreifunkMeetApp",
       "executableName": "ffmuc-meet",
       "target": [
         {
@@ -129,7 +129,7 @@
     "concurrently": "4.1.0",
     "css-loader": "2.0.1",
     "devtron": "1.4.0",
-    "electron": "8.1.1",
+    "electron": "8.2.0",
     "electron-builder": "22.4.1",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",

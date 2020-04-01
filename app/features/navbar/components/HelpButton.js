@@ -2,7 +2,7 @@
 
 import Droplist, { Item, Group } from '@atlaskit/droplist';
 import HelpIcon from '@atlaskit/icon/glyph/question-circle';
-import {version} from '../../../../package.json';
+import { version } from '../../../../package.json';
 
 import React, { Component } from 'react';
 

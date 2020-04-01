@@ -253,10 +253,6 @@ class Conference extends Component<Props, State> {
             startWithVideoMuted: this.props._startWithVideoMuted
         };
 
-        const {
-            RemoteControl
-        } = require("jitsi-meet-electron-utils");
-
         this._api = new JitsiMeetExternalAPI(host, {
             configOverwrite,
             onload: this._onIframeLoad,

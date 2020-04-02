@@ -116,7 +116,7 @@ please join [community forum].
 
 [FreifunkMeet]: https://github.com/FreifunkMUC/jitsi-meet
 [Electron]: https://electronjs.org/
-[latest release]: https://github.com/jitsi/jitsi-meet-electron/releases/latest
+[latest release]: https://github.com/FreifunkMUC/jitsi-meet-electron/releases/latest
 [jitsi-meet-electron-utils]: https://github.com/jitsi/jitsi-meet-electron-utils
 [jitsi-meet-electron-utils README]: https://github.com/FreifunkMUC/jitsi-meet-electron-utils/blob/master/README.md
 [community forum]: https://community.jitsi.org/

@@ -1,9 +1,9 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2.0.4",
-  "description": "Electron application for Freifunk Meet",
+  "version": "1.1.2",
+  "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
-  "productName": "FreifunkMeet",
+  "productName": "Jitsi Meet",
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
@@ -16,8 +16,8 @@
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "build": {
-    "appId": "meet.ffmuc.net",
-    "productName": "FreifunkMeet",
+    "appId": "org.jitsi.jitsi-meet",
+    "productName": "Jitsi Meet",
     "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
@@ -26,15 +26,15 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "ffmuc-meet.${ext}",
+      "artifactName": "jitsi-meet.${ext}",
       "category": "public.app-category.video",
       "darkModeSupport": true
     },
     "linux": {
-      "artifactName": "ffmuc-meet-${arch}.${ext}",
+      "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "FreifunkMeetApp",
-      "executableName": "ffmuc-meet",
+      "description": "Jitsi Meet Desktop App",
+      "executableName": "jitsi-meet",
       "target": [
         {
           "arch": "x64",
@@ -47,7 +47,7 @@
       ]
     },
     "win": {
-      "artifactName": "ffmuc-meet.${ext}",
+      "artifactName": "jitsi-meet.${ext}",
       "target": [
         {
           "arch": [
@@ -67,16 +67,19 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/FreifunkMUC/jitsi-meet-electron"
+    "url": "git://github.com/jitsi/jitsi-meet-electron"
   },
   "keywords": [
+    "jingle",
+    "webrtc",
+    "xmpp",
     "conference",
     "events",
     "multimedia events",
     "electron",
-    "freifunk-meet"
+    "jitsi-meet"
   ],
-  "author": "Freifunk Muenchen <hilfe@ffmuc.bayern>",
+  "author": "Jitsi Team <support@jitsi.org>",
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {

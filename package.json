@@ -39,6 +39,10 @@
         {
           "arch": "x64",
           "target": "AppImage"
+        },
+        {
+          "arch": "x64",
+          "target": "deb"
         }
       ]
     },
@@ -70,7 +74,10 @@
     "webrtc",
     "xmpp",
     "electron",
-    "jitsi-meet"
+    "jitsi-meet",
+    "conference",
+    "events",
+    "multimedia events"
   ],
   "author": "Jitsi Team <support@jitsi.org>",
   "readmeFilename": "README.md",

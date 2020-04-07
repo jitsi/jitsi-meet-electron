@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 
 import config from '../../config';
 import { openExternalLink } from '../../utils';
+import { version } from '../../../../package.json';
 
 type State = {
 
@@ -103,6 +104,9 @@ export default class HelpButton extends Component< *, State> {
                     </Item>
                     <Item onActivate = { this._onAboutClick }>
                         FAQ
+                    </Item>
+                    <Item>
+                        Version: { version }
                     </Item>
                     <Item>
                         Version: { version }

@@ -1,7 +1,5 @@
 // @flow
 
-import os from 'os';
-
 import { getAvatarURL } from 'js-utils';
 
 import {
@@ -22,7 +20,7 @@ type State = {
     startWithVideoMuted: boolean
 };
 
-const username = os.userInfo().username;
+const username = window.jitsiNodeAPI.osUserInfo().username;
 
 const DEFAULT_STATE = {
     avatarURL: getAvatarURL({ id: username }),

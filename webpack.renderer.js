@@ -4,7 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ELECTRON_VERSION = require('./package.json').devDependencies.electron;
 
 module.exports = {
-    target: 'electron-renderer',
+    // The renderer code rus in BrowserWindow without node support so we must
+    // target a web platform.
+    target: 'web',
     entry: { app: './app/index.js' },
     plugins: [
         new HtmlWebpackPlugin({

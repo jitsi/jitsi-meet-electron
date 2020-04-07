@@ -2,7 +2,6 @@
 
 // @flow
 
-import { shell } from 'electron';
 import config from '../config';
 
 /**
@@ -53,5 +52,5 @@ export function normalizeServerURL(url: string) {
  * @returns {void}
  */
 export function openExternalLink(link: string) {
-    shell.openExternal(link);
+    window.jitsiNodeAPI.shellOpenExternal(link);
 }

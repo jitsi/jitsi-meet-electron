@@ -129,6 +129,9 @@ function createJitsiMeetWindow() {
     });
 
     // Options used when creating the main Jitsi Meet window.
+    // Use a preload script in order to provide node specific functionality
+    // to a isolated BrowserWindow in accordance with electron security
+    // guideline.
     const options = {
         x: windowState.x,
         y: windowState.y,
@@ -140,7 +143,8 @@ function createJitsiMeetWindow() {
         show: false,
         webPreferences: {
             nativeWindowOpen: true,
-            nodeIntegration: true
+            nodeIntegration: false,
+            preload: path.resolve(basePath, './build/preload.js')
         }
     };
 
@@ -192,7 +196,7 @@ app.on('activate', () => {
 app.on('certificate-error',
     // eslint-disable-next-line max-params
     (event, webContents, url, error, certificate, callback) => {
-        if (url.startsWith('https://localhost')) {
+        if (isDev) {
             event.preventDefault();
             callback(true);
         } else {

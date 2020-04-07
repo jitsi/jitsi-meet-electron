@@ -7,15 +7,6 @@ import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import {
-    RemoteControl,
-    setupScreenSharingRender,
-    setupAlwaysOnTopRender,
-    initPopupsConfigurationRender,
-    setupWiFiStats,
-    setupPowerMonitorRender
-} from 'jitsi-meet-electron-utils';
-
 import config from '../../config';
 import { setEmail, setName } from '../../settings';
 
@@ -259,6 +250,15 @@ class Conference extends Component<Props, State> {
             parentNode,
             roomName: this._conference.room
         });
+
+        const { RemoteControl,
+            setupScreenSharingRender,
+            setupAlwaysOnTopRender,
+            initPopupsConfigurationRender,
+            setupWiFiStats,
+            setupPowerMonitorRender
+        } = window.jitsiNodeAPI.jitsiMeetElectronUtils;
+
         initPopupsConfigurationRender(this._api);
 
         const iframe = this._api.getIFrame();

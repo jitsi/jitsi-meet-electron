@@ -127,7 +127,7 @@
     "concurrently": "4.1.0",
     "css-loader": "2.0.1",
     "devtron": "1.4.0",
-    "electron": "^8.2.0",
+    "electron": "^8.2.1",
     "electron-builder": "^22.4.1",
     "electron-builder-notarize": "^1.1.2",
     "electron-react-devtools": "0.5.3",

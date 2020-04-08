@@ -24,6 +24,7 @@ before_script:
         echo "Fixing chrome-sandbox permissions..."
         sudo chown root ./node_modules/electron/dist/chrome-sandbox
         sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox
+        ls -lh ./node_modules/electron/dist/chrome-sandbox
       fi
 script:
   - npm run dist

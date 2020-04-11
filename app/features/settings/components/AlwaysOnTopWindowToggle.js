@@ -19,23 +19,23 @@ type Props = {
     /**
      * Window Always on Top value in (redux) state.
      */
-    _windowAlwaysOnTop: boolean;
+    _alwaysOnTopWindowEnabled: boolean;
 };
 
 /**
  * Window always open on top placed in Settings Drawer.
  */
-class WindowAlwaysOnTopToggle extends Component<Props> {
+class AlwaysOnTopWindowToggle extends Component<Props> {
     /**
-     * Initializes a new {@code WindowAlwaysOnTopToggle} instance.
+     * Initializes a new {@code AlwaysOnTopWindowToggle} instance.
      *
      * @inheritdoc
      */
     constructor(props) {
         super(props);
 
-        this._onWindowAlwaysOnTopToggleChange
-            = this._onWindowAlwaysOnTopToggleChange.bind(this);
+        this._onAlwaysOnTopWindowToggleChange
+            = this._onAlwaysOnTopWindowToggleChange.bind(this);
     }
 
     /**
@@ -47,24 +47,24 @@ class WindowAlwaysOnTopToggle extends Component<Props> {
         return (
             <TogglesContainer>
                 <ToggleWithLabel
-                    isDefaultChecked = { this.props._windowAlwaysOnTop }
+                    isDefaultChecked = { this.props._alwaysOnTopWindowEnabled }
                     label = 'Always on Top Window'
-                    onChange = { this._onWindowAlwaysOnTopToggleChange }
-                    value = { this.props._windowAlwaysOnTop } />
+                    onChange = { this._onAlwaysOnTopWindowToggleChange }
+                    value = { this.props._alwaysOnTopWindowEnabled } />
             </TogglesContainer>
         );
     }
 
-    _onWindowAlwaysOnTopToggleChange: (*) => void;
+    _onAlwaysOnTopWindowToggleChange: (*) => void;
 
     /**
-     * Toggles windowAlwaysOnTop.
+     * Toggles alwaysOnTopWindowEnabled.
      *
      * @returns {void}
      */
-    _onWindowAlwaysOnTopToggleChange() {
-        const { _windowAlwaysOnTop } = this.props;
-        const newState = !_windowAlwaysOnTop;
+    _onAlwaysOnTopWindowToggleChange() {
+        const { _alwaysOnTopWindowEnabled } = this.props;
+        const newState = !_alwaysOnTopWindowEnabled;
 
         this.props.dispatch(setWindowAlwaysOnTop(newState));
     }
@@ -75,13 +75,13 @@ class WindowAlwaysOnTopToggle extends Component<Props> {
  *
  * @param {Object} state - The redux state.
  * @returns {{
- *     _windowAlwaysOnTop: boolean,
+ *     _alwaysOnTopWindowEnabled: boolean,
  * }}
  */
 function _mapStateToProps(state: Object) {
     return {
-        _windowAlwaysOnTop: state.settings.windowAlwaysOnTop
+        _alwaysOnTopWindowEnabled: state.settings.alwaysOnTopWindowEnabled
     };
 }
 
-export default connect(_mapStateToProps)(WindowAlwaysOnTopToggle);
+export default connect(_mapStateToProps)(AlwaysOnTopWindowToggle);

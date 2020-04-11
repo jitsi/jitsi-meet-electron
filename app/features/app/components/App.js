@@ -4,14 +4,14 @@ import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
-import { ConnectedRouter as Router, push } from 'react-router-redux';
 import { connect } from 'react-redux';
+import { ConnectedRouter as Router, push } from 'react-router-redux';
 
 import { Conference } from '../../conference';
 import config from '../../config';
 import { history } from '../../router';
-import { Welcome } from '../../welcome';
 import { createConferenceObjectFromURL } from '../../utils';
+import { Welcome } from '../../welcome';
 
 /**
  * Main component encapsulating the entire application.

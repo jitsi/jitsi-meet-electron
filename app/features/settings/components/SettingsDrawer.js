@@ -15,9 +15,9 @@ import { Onboarding, startOnboarding } from '../../onboarding';
 import { AvatarContainer, SettingsContainer } from '../styled';
 import { setEmail, setName } from '../actions';
 
+import AlwaysOnTopWindowToggle from './AlwaysOnTopWindowToggle';
 import ServerURLField from './ServerURLField';
 import StartMutedToggles from './StartMutedToggles';
-import WindowAlwaysOnTopToggle from './WindowAlwaysOnTopToggle';
 
 type Props = {
 
@@ -136,7 +136,7 @@ class SettingsDrawer extends Component<Props, *> {
                         </SpotlightTarget>
                         <SpotlightTarget
                             name = 'window-always-on-top'>
-                            <WindowAlwaysOnTopToggle />
+                            <AlwaysOnTopWindowToggle />
                         </SpotlightTarget>
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>

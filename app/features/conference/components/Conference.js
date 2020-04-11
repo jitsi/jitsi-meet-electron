@@ -27,6 +27,11 @@ type Props = {
     location: Object;
 
     /**
+     * AlwaysOnTop Window Enabled.
+     */
+    _alwaysOnTopWindowEnabled: boolean;
+
+    /**
      * Avatar URL.
      */
     _avatarURL: string;
@@ -55,11 +60,6 @@ type Props = {
      * Start with Video Muted.
      */
     _startWithVideoMuted: boolean;
-
-    /**
-     * Enable window on top.
-     */
-    _windowAlwaysOnTop: boolean;
 };
 
 type State = {
@@ -272,7 +272,7 @@ class Conference extends Component<Props, State> {
         new RemoteControl(iframe); // eslint-disable-line no-new
 
         // Allow window to be on top if enabled in settings
-        if (this.props._windowAlwaysOnTop) {
+        if (this.props._alwaysOnTopWindowEnabled) {
             setupAlwaysOnTopRender(this._api);
         }
 
@@ -420,7 +420,7 @@ function _mapStateToProps(state: Object) {
         _serverURL: state.settings.serverURL,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
         _startWithVideoMuted: state.settings.startWithVideoMuted,
-        _windowAlwaysOnTop: state.settings.windowAlwaysOnTop
+        _alwaysOnTopWindowEnabled: state.settings.alwaysOnTopWindowEnabled
     };
 }
 

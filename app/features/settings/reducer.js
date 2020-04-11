@@ -3,13 +3,13 @@
 import { getAvatarURL } from 'js-utils';
 
 import {
+    SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
     SET_AVATAR_URL,
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
-    SET_VIDEO_MUTED,
-    SET_ALWAYS_ON_TOP_WINDOW_ENABLED
+    SET_VIDEO_MUTED
 } from './actionTypes';
 
 type State = {
@@ -19,7 +19,7 @@ type State = {
     serverURL: ?string,
     startWithAudioMuted: boolean,
     startWithVideoMuted: boolean,
-    windowAlwaysOnTop: boolean,
+    alwaysOnTopWindowEnabled: boolean,
 };
 
 const username = window.jitsiNodeAPI.osUserInfo().username;
@@ -31,7 +31,7 @@ const DEFAULT_STATE = {
     serverURL: undefined,
     startWithAudioMuted: false,
     startWithVideoMuted: false,
-    windowAlwaysOnTop: true
+    alwaysOnTopWindowEnabled: true
 };
 
 /**
@@ -43,6 +43,12 @@ const DEFAULT_STATE = {
  */
 export default (state: State = DEFAULT_STATE, action: Object) => {
     switch (action.type) {
+    case SET_ALWAYS_ON_TOP_WINDOW_ENABLED:
+        return {
+            ...state,
+            alwaysOnTopWindowEnabled: action.alwaysOnTopWindowEnabled
+        };
+
     case SET_AUDIO_MUTED:
         return {
             ...state,
@@ -77,11 +83,6 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         return {
             ...state,
             startWithVideoMuted: action.startWithVideoMuted
-        };
-    case SET_ALWAYS_ON_TOP_WINDOW_ENABLED:
-        return {
-            ...state,
-            windowAlwaysOnTop: action.windowAlwaysOnTop
         };
 
     default:

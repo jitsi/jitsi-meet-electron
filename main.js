@@ -4,8 +4,8 @@ const {
     BrowserWindow,
     Menu,
     app,
-    shell,
-    ipcMain
+    ipcMain,
+    shell
 } = require('electron');
 const isDev = require('electron-is-dev');
 const { autoUpdater } = require('electron-updater');
@@ -191,11 +191,7 @@ function createJitsiMeetWindow() {
 }
 
 /**
- * Handler when protocol call us
- * if there is second argument and it starts
- * with config.default.appProtocolPrefix + "://" its what we need
- *
- * create conference object and send it to front app
+ * Handler for application protocol links to initiate a conference.
  */
 function handleProtocolCall(fullProtocolCall) {
     // don't touch when something is bad
@@ -214,10 +210,11 @@ function handleProtocolCall(fullProtocolCall) {
     }
 
     protocolDataForFrontApp = inputURL;
+
     if (rendererReady) {
         mainWindow
             .webContents
-            .send('protocol-data-msg', protocolDataForFrontApp);
+            .send('protocol-data-msg', inputURL);
     }
 }
 
@@ -255,7 +252,7 @@ app.on('certificate-error',
 
 app.on('ready', createJitsiMeetWindow);
 
-app.on('second-instance', () => {
+app.on('second-instance', (event, commandLine) => {
     /**
      * If someone creates second instance of the application, set focus on
      * existing window.
@@ -263,6 +260,13 @@ app.on('second-instance', () => {
     if (mainWindow) {
         mainWindow.isMinimized() && mainWindow.restore();
         mainWindow.focus();
+
+        /**
+         * This is for windows [win32]
+         * so when someone tries to enter something like jitsi://test
+         * while app is opened it will trigger protocol handler.
+         */
+        handleProtocolCall(commandLine[2]);
     }
 });
 
@@ -300,22 +304,7 @@ app.on('open-url', (event, data) => {
 });
 
 /**
- * This is for windows [win32]
- * so when someone tries to enter something like jitsi://test
- *  while app is opened
- * it will trigger this event below
- */
-app.on('second-instance', (event, commandLine) => {
-    if (mainWindow) {
-        handleProtocolCall(commandLine[2]);
-    }
-});
-
-/**
- * This is our own event
- * to notify main.js [this]
- * that front app is ready to receive
- * conference room and change to it
+ * This is to notify main.js [this] that front app is ready to receive messages.
  */
 ipcMain.on('renderer-ready', () => {
     rendererReady = true;

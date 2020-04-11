@@ -1,6 +1,5 @@
 // @flow
 
-import { ipcRenderer } from 'electron';
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
 import React, { Component } from 'react';
@@ -39,10 +38,10 @@ class App extends Component<*> {
      */
     componentDidMount() {
         // start listening on this events
-        ipcRenderer.on('protocol-data-msg', this._listenOnProtocolMessages);
+        window.jitsiNodeAPI.ipcRenderer.on('protocol-data-msg', this._listenOnProtocolMessages);
 
         // send notification to main process
-        ipcRenderer.send('renderer-ready');
+        window.jitsiNodeAPI.ipcRenderer.send('renderer-ready');
     }
 
     /**
@@ -52,7 +51,7 @@ class App extends Component<*> {
      */
     componentWillUnmount() {
         // remove listening for this events
-        ipcRenderer.removeListener(
+        window.jitsiNodeAPI.ipcRenderer.removeListener(
             'protocol-data-msg',
             this._listenOnProtocolMessages
         );

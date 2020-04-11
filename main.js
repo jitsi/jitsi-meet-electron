@@ -13,10 +13,16 @@ const windowStateKeeper = require('electron-window-state');
 const {
     initPopupsConfigurationMain,
     getPopupTarget,
-    setupAlwaysOnTopMain
+    setupAlwaysOnTopMain,
+    setupPowerMonitorMain,
+    setupScreenSharingMain
 } = require('jitsi-meet-electron-utils');
 const path = require('path');
 const URL = require('url');
+const config = require('./app/features/config');
+
+// We need this because of https://github.com/electron/electron/issues/18214
+app.commandLine.appendSwitch('disable-site-isolation-trials');
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
@@ -41,8 +47,7 @@ let mainWindow = null;
 /**
  * Add protocol data
  */
-const PROTOCOL_PREFIX = 'jitsi'; // this could be configurable later
-const PROTOCOL_SURPLUS = `${PROTOCOL_PREFIX}://`;
+const appProtocolSurplus = `${config.default.appProtocolPrefix}://`;
 let rendererReady = false;
 let protocolDataForFrontApp = null;
 
@@ -54,7 +59,7 @@ let protocolDataForFrontApp = null;
 function setApplicationMenu() {
     if (process.platform === 'darwin') {
         const template = [ {
-            label: app.getName(),
+            label: app.name,
             submenu: [ {
                 label: 'Quit',
                 accelerator: 'Command+Q',
@@ -133,6 +138,9 @@ function createJitsiMeetWindow() {
     });
 
     // Options used when creating the main Jitsi Meet window.
+    // Use a preload script in order to provide node specific functionality
+    // to a isolated BrowserWindow in accordance with electron security
+    // guideline.
     const options = {
         x: windowState.x,
         y: windowState.y,
@@ -143,7 +151,9 @@ function createJitsiMeetWindow() {
         minHeight: 600,
         show: false,
         webPreferences: {
-            nativeWindowOpen: true
+            nativeWindowOpen: true,
+            nodeIntegration: false,
+            preload: path.resolve(basePath, './build/preload.js')
         }
     };
 
@@ -153,6 +163,8 @@ function createJitsiMeetWindow() {
 
     initPopupsConfigurationMain(mainWindow);
     setupAlwaysOnTopMain(mainWindow);
+    setupPowerMonitorMain(mainWindow);
+    setupScreenSharingMain(mainWindow, config.default.appName);
 
     mainWindow.webContents.on('new-window', (event, url, frameName) => {
         const target = getPopupTarget(url, frameName);
@@ -181,7 +193,7 @@ function createJitsiMeetWindow() {
 /**
  * Handler when protocol call us
  * if there is second argument and it starts
- * with PROTOCOL_PREFIX+ "://" its what we need
+ * with config.default.appProtocolPrefix + "://" its what we need
  *
  * create conference object and send it to front app
  */
@@ -190,12 +202,16 @@ function handleProtocolCall(fullProtocolCall) {
     if (
         !fullProtocolCall
         || fullProtocolCall.trim() === ''
-        || fullProtocolCall.indexOf(PROTOCOL_SURPLUS) !== 0
+        || fullProtocolCall.indexOf(appProtocolSurplus) !== 0
     ) {
         return;
     }
 
-    const inputURL = fullProtocolCall.replace(PROTOCOL_SURPLUS, '');
+    const inputURL = fullProtocolCall.replace(appProtocolSurplus, '');
+
+    if (app.isReady() && mainWindow === null) {
+        createJitsiMeetWindow();
+    }
 
     protocolDataForFrontApp = inputURL;
     if (rendererReady) {
@@ -228,7 +244,7 @@ app.on('activate', () => {
 app.on('certificate-error',
     // eslint-disable-next-line max-params
     (event, webContents, url, error, certificate, callback) => {
-        if (url.startsWith('https://localhost')) {
+        if (isDev) {
             event.preventDefault();
             callback(true);
         } else {
@@ -258,19 +274,19 @@ app.on('window-all-closed', () => {
 });
 
 // remove so we can register each time as we run the app.
-app.removeAsDefaultProtocolClient(PROTOCOL_PREFIX);
+app.removeAsDefaultProtocolClient(config.default.appProtocolPrefix);
 
 // If we are running a non-packaged version of the app && on windows
 if (isDev && process.platform === 'win32') {
     // Set the path of electron.exe and your app.
     // These two additional parameters are only available on windows.
     app.setAsDefaultProtocolClient(
-        PROTOCOL_PREFIX,
+        config.default.appProtocolPrefix,
         process.execPath,
         [ path.resolve(process.argv[1]) ]
     );
 } else {
-    app.setAsDefaultProtocolClient(PROTOCOL_PREFIX);
+    app.setAsDefaultProtocolClient(config.default.appProtocolPrefix);
 }
 
 /**

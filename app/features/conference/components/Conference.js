@@ -7,14 +7,6 @@ import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import {
-    RemoteControl,
-    setupScreenSharingForWindow,
-    setupAlwaysOnTopRender,
-    initPopupsConfigurationRender,
-    setupWiFiStats
-} from 'jitsi-meet-electron-utils';
-
 import config from '../../config';
 import { setEmail, setName } from '../../settings';
 
@@ -117,6 +109,7 @@ class Conference extends Component<Props, State> {
         this._ref = React.createRef();
 
         this._onIframeLoad = this._onIframeLoad.bind(this);
+        this._onVideoConferenceEnded = this._onVideoConferenceEnded.bind(this);
     }
 
     /**
@@ -262,11 +255,20 @@ class Conference extends Component<Props, State> {
             parentNode,
             roomName: this._conference.room
         });
+
+        const { RemoteControl,
+            setupScreenSharingRender,
+            setupAlwaysOnTopRender,
+            initPopupsConfigurationRender,
+            setupWiFiStats,
+            setupPowerMonitorRender
+        } = window.jitsiNodeAPI.jitsiMeetElectronUtils;
+
         initPopupsConfigurationRender(this._api);
 
         const iframe = this._api.getIFrame();
 
-        setupScreenSharingForWindow(iframe);
+        setupScreenSharingRender(this._api);
         new RemoteControl(iframe); // eslint-disable-line no-new
 
         // Allow window to be on top if enabled in settings
@@ -275,17 +277,30 @@ class Conference extends Component<Props, State> {
         }
 
         setupWiFiStats(iframe);
+        setupPowerMonitorRender(this._api);
 
-        this._api.on('readyToClose', (event: Event) => {
-            this.props.dispatch(conferenceEnded(this._conference));
-            this._navigateToHome(event);
-        });
+        this._api.on('suspendDetected', this._onVideoConferenceEnded);
+        this._api.on('readyToClose', this._onVideoConferenceEnded);
         this._api.on('videoConferenceJoined',
             (conferenceInfo: Object) => {
                 this.props.dispatch(conferenceJoined(this._conference));
                 this._onVideoConferenceJoined(conferenceInfo);
             }
         );
+    }
+
+    _onVideoConferenceEnded: (*) => void;
+
+    /**
+     * Dispatches conference ended and navigates to home screen.
+     *
+     * @param {Event} event - Event by which the function is called.
+     * @returns {void}
+     * @private
+     */
+    _onVideoConferenceEnded(event: Event) {
+        this.props.dispatch(conferenceEnded(this._conference));
+        this._navigateToHome(event);
     }
 
     /**

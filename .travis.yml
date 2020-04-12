@@ -6,25 +6,24 @@ matrix:
       node_js: '12'
 
     - os: linux
+      dist: bionic
+      sudo: true
       language: node_js
       node_js: '12'
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
           packages:
             - libx11-dev
             - zlib1g-dev
-            - libpng12-dev
+            - libpng-dev
             - libxtst-dev
-            - g++-4.8
-            - gcc-4.8
 
-cache:
-  directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
-
+before_script:
+  - | # Fix chrome-sandbox: https://github.com/electron/electron/issues/17972
+      if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+        echo "Fixing chrome-sandbox permissions..."
+        sudo chown root ./node_modules/electron/dist/chrome-sandbox
+        sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox
+      fi
 script:
   - npm run dist

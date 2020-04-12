@@ -8,7 +8,7 @@ export default {
     /**
      * Application name.
      */
-    appName: 'Pohle Conference Server',
+    appName: 'POHLE Conference',
 
     /**
      * The default server URL of Jitsi Meet Deployment that will be used.
@@ -23,10 +23,10 @@ export default {
     /**
      * The URL of Privacy Policy Page.
      */
-    privacyPolicyURL: 'https://support.pohle.net/display/HC/Conference+Server',
+    privacyPolicyURL: 'https://support.pohle.net/display/HC/Conference+Server/Datenschutz',
 
     /**
      * The URL of Terms and Conditions Page.
      */
-    termsAndConditionsURL: 'https://support.pohle.net/display/HC/Conference+Server'
+    termsAndConditionsURL: 'https://support.pohle.net/display/HC/Conference+Server/Preisliste'
 };

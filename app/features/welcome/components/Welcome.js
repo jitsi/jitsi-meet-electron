@@ -224,11 +224,6 @@ class Welcome extends Component<Props, State> {
             serverURL = normalizeServerURL(serverURL);
         }
 
-        // Don't navigate if no room was specified.
-        if (!room) {
-            return;
-        }
-
         this.props.dispatch(push('/conference', {
             room,
             serverURL

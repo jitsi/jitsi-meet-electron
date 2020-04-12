@@ -1,5 +1,5 @@
 const createElectronStorage = require('redux-persist-electron-storage');
-const { shell } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const os = require('os');
 const url = require('url');
 
@@ -33,5 +33,7 @@ window.jitsiNodeAPI = {
     createElectronStorage,
     osUserInfo: os.userInfo,
     openExternalLink,
-    jitsiMeetElectronUtils
+    jitsiMeetElectronUtils,
+    shellOpenExternal: shell.openExternal,
+    ipcRenderer
 };

@@ -1,6 +1,7 @@
 // @flow
 
 import {
+    SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
     SET_AVATAR_URL,
     SET_EMAIL,
@@ -108,3 +109,18 @@ export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
 }
 
 
+/**
+ * Set window always on top.
+ *
+ * @param {boolean} alwaysOnTopWindowEnabled - Whether to set AlwaysOnTop Window Enabled.
+ * @returns {{
+ *     type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
+ *     alwaysOnTopWindowEnabled: boolean
+ * }}
+ */
+export function setWindowAlwaysOnTop(alwaysOnTopWindowEnabled: boolean) {
+    return {
+        type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
+        alwaysOnTopWindowEnabled
+    };
+}

@@ -56,7 +56,16 @@
     },
     "directories": {
       "buildResources": "resources"
-    }
+    },
+    "protocols": [
+      {
+        "name": "jitsi-protocol",
+        "role": "Viewer",
+        "schemes": [
+          "jitsi"
+        ]
+      }
+    ]
   },
   "pre-commit": [
     "lint"

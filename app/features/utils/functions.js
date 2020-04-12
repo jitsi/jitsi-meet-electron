@@ -54,3 +54,36 @@ export function normalizeServerURL(url: string) {
 export function openExternalLink(link: string) {
     window.jitsiNodeAPI.shellOpenExternal(link);
 }
+
+
+/**
+ * Get URL, extract room name from it and create a Conference object.
+ *
+ * @param {string} inputURL - Combined server url with room separated by /.
+ * @returns {Object}
+ */
+export function createConferenceObjectFromURL(inputURL: string) {
+    let room;
+
+    // Remove trailing slash if exists.
+    if (inputURL.substr(-1) === '/') {
+        inputURL = inputURL.substr(0, inputURL.length - 1); // eslint-disable-line no-param-reassign
+    }
+
+    // If we have more then a room name here,
+    // we assume that the last one is a room name.
+    if (inputURL.includes('/')) {
+        room = inputURL.split('/').pop();
+    } else {
+        room = inputURL;
+    }
+
+    // Don't navigate if no room was specified.
+    if (!room) {
+        return;
+    }
+
+    return {
+        room
+    };
+}

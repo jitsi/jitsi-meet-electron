@@ -27,6 +27,11 @@ type Props = {
     location: Object;
 
     /**
+     * AlwaysOnTop Window Enabled.
+     */
+    _alwaysOnTopWindowEnabled: boolean;
+
+    /**
      * Avatar URL.
      */
     _avatarURL: string;
@@ -265,7 +270,12 @@ class Conference extends Component<Props, State> {
 
         setupScreenSharingRender(this._api);
         new RemoteControl(iframe); // eslint-disable-line no-new
-        setupAlwaysOnTopRender(this._api);
+
+        // Allow window to be on top if enabled in settings
+        if (this.props._alwaysOnTopWindowEnabled) {
+            setupAlwaysOnTopRender(this._api);
+        }
+
         setupWiFiStats(iframe);
         setupPowerMonitorRender(this._api);
 
@@ -409,7 +419,8 @@ function _mapStateToProps(state: Object) {
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted
+        _startWithVideoMuted: state.settings.startWithVideoMuted,
+        _alwaysOnTopWindowEnabled: state.settings.alwaysOnTopWindowEnabled
     };
 }
 

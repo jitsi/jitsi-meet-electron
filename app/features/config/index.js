@@ -8,7 +8,7 @@ export default {
     /**
      * The URL to the source code repository.
      */
-    sourceURL: 'https://github.com/jitsi/jitsi-meet-electron',
+    sourceURL: 'https://github.com/freifunkMUC/jitsi-meet-electron',
 
     /**
      * Application name.

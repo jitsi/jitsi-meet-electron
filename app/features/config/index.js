@@ -6,6 +6,11 @@ export default {
     aboutURL: 'https://ffmuc.net/wiki/doku.php?id=knb:meet',
 
     /**
+     * The URL to the source code repository.
+     */
+    sourceURL: 'https://github.com/jitsi/jitsi-meet-electron',
+
+    /**
      * Application name.
      */
     appName: 'FreifunkMeet',

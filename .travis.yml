@@ -18,10 +18,5 @@ matrix:
             - libpng-dev
             - libxtst-dev
 
-before_script:
-  - | # Disable sandbox: https://github.com/electron/electron/issues/17972
-      if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-        patch -p1 -i patches/app-builder-lib+22.3.6.patch
-      fi
 script:
   - npm run dist

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import config from '../../config';
-import { setEmail, setName } from '../../settings';
+import { getSetting, setEmail, setName } from '../../settings';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
 import { LoadingIndicator, Wrapper } from '../styled';
@@ -407,7 +407,8 @@ class Conference extends Component<Props, State> {
  */
 function _mapStateToProps(state: Object) {
     return {
-        _alwaysOnTopWindowEnabled: state.settings.alwaysOnTopWindowEnabled,
+        _alwaysOnTopWindowEnabled:
+            getSetting(state, 'alwaysOnTopWindowEnabled', true),
         _avatarURL: state.settings.avatarURL,
         _email: state.settings.email,
         _name: state.settings.name,

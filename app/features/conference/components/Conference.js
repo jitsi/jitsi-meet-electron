@@ -403,24 +403,17 @@ class Conference extends Component<Props, State> {
  * Maps (parts of) the redux state to the React props.
  *
  * @param {Object} state - The redux state.
- * @returns {{
- *     _avatarURL: string,
- *     _email: string,
- *     _name: string,
- *     _serverURL: string,
- *     _startWithAudioMuted: boolean,
- *     _startWithVideoMuted: boolean
- * }}
+ * @returns {Props}
  */
 function _mapStateToProps(state: Object) {
     return {
+        _alwaysOnTopWindowEnabled: state.settings.alwaysOnTopWindowEnabled,
         _avatarURL: state.settings.avatarURL,
         _email: state.settings.email,
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted,
-        _alwaysOnTopWindowEnabled: state.settings.alwaysOnTopWindowEnabled
+        _startWithVideoMuted: state.settings.startWithVideoMuted
     };
 }
 

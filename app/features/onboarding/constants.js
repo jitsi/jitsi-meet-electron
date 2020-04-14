@@ -7,7 +7,8 @@ import {
     NameSettingSpotlight,
     EmailSettingSpotlight,
     ServerSettingSpotlight,
-    StartMutedTogglesSpotlight
+    StartMutedTogglesSpotlight,
+    AlwaysOnTopWindowSpotlight
 } from './components';
 
 export const onboardingSteps = {
@@ -20,7 +21,8 @@ export const onboardingSteps = {
         'name-setting',
         'email-setting',
         'server-setting',
-        'start-muted-toggles'
+        'start-muted-toggles',
+        'always-on-top-window'
     ]
 };
 
@@ -31,5 +33,6 @@ export const onboardingComponents = {
     'name-setting': NameSettingSpotlight,
     'email-setting': EmailSettingSpotlight,
     'server-setting': ServerSettingSpotlight,
-    'start-muted-toggles': StartMutedTogglesSpotlight
+    'start-muted-toggles': StartMutedTogglesSpotlight,
+    'always-on-top-window': AlwaysOnTopWindowSpotlight
 };

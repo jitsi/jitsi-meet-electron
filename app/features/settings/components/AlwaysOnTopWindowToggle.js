@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
-import { TogglesContainer } from '../styled';
 import { setWindowAlwaysOnTop } from '../actions';
 
 import ToggleWithLabel from './ToggleWithLabel';
@@ -45,13 +44,11 @@ class AlwaysOnTopWindowToggle extends Component<Props> {
      */
     render() {
         return (
-            <TogglesContainer>
-                <ToggleWithLabel
-                    isDefaultChecked = { this.props._alwaysOnTopWindowEnabled }
-                    label = 'Always on Top Window'
-                    onChange = { this._onAlwaysOnTopWindowToggleChange }
-                    value = { this.props._alwaysOnTopWindowEnabled } />
-            </TogglesContainer>
+            <ToggleWithLabel
+                isDefaultChecked = { this.props._alwaysOnTopWindowEnabled }
+                label = 'Always on Top Window'
+                onChange = { this._onAlwaysOnTopWindowToggleChange }
+                value = { this.props._alwaysOnTopWindowEnabled } />
         );
     }
 

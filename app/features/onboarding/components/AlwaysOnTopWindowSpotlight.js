@@ -49,7 +49,7 @@ class AlwaysOnTopWindowSpotlight extends Component<Props, *> {
                 ] }
                 dialogPlacement = 'left top'
                 target = { 'always-on-top-window' } >
-                You can toggle if you want to eenable the "always-on-top" window
+                You can toggle whether you want to enable the "always-on-top" window,
                 which is displayed when the main window loses focus.
                 This will be applied to all conferences.
             </Spotlight>

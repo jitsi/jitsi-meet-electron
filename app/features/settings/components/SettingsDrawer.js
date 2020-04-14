@@ -12,9 +12,10 @@ import type { Dispatch } from 'redux';
 
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
 import { Onboarding, startOnboarding } from '../../onboarding';
-import { AvatarContainer, SettingsContainer } from '../styled';
+import { AvatarContainer, SettingsContainer, TogglesContainer } from '../styled';
 import { setEmail, setName } from '../actions';
 
+import AlwaysOnTopWindowToggle from './AlwaysOnTopWindowToggle';
 import ServerURLField from './ServerURLField';
 import StartMutedToggles from './StartMutedToggles';
 
@@ -129,10 +130,16 @@ class SettingsDrawer extends Component<Props, *> {
                             name = 'server-setting'>
                             <ServerURLField />
                         </SpotlightTarget>
-                        <SpotlightTarget
-                            name = 'start-muted-toggles'>
-                            <StartMutedToggles />
-                        </SpotlightTarget>
+                        <TogglesContainer>
+                            <SpotlightTarget
+                                name = 'start-muted-toggles'>
+                                <StartMutedToggles />
+                            </SpotlightTarget>
+                            <SpotlightTarget
+                                name = 'always-on-top-window'>
+                                <AlwaysOnTopWindowToggle />
+                            </SpotlightTarget>
+                        </TogglesContainer>
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>

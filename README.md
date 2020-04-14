@@ -39,6 +39,14 @@ sudo apt-get install libnss3
 
 </details>
 
+### Homebrew
+
+For *MacOS* user, you can install the application using the following command:
+
+```
+brew cask install jitsi-meet
+```
+
 ### Using it with your own Jitsi Meet installation
 
 In order to use this application with your own Jitsi Meet installation it's
@@ -51,6 +59,13 @@ Here is an example using nginx:
 location /external_api.js {
     alias /usr/share/jitsi-meet/libs/external_api.min.js;
 }
+```
+
+The following additional HTTP header are known not work with the Electron App:
+
+```
+Content-Security-Policy "frame-ancestors 'none'";
+X-Frame-Options "DENY";
 ```
 
 ## Development

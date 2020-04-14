@@ -1,4 +1,15 @@
 /**
+ * The type of (redux) action that sets Window always on top.
+ *
+ * @type {
+ *     type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
+ *     alwaysOnTopWindowEnabled: boolean
+ * }
+ */
+export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED
+    = Symbol('SET_ALWAYS_ON_TOP_WINDOW_ENABLED');
+
+/**
  * The type of (redux) action that sets Start with Audio Muted.
  *
  * @type {

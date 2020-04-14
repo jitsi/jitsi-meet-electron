@@ -3,6 +3,7 @@
 import { getAvatarURL } from 'js-utils';
 
 import {
+    SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
     SET_AVATAR_URL,
     SET_EMAIL,
@@ -17,12 +18,14 @@ type State = {
     name: string,
     serverURL: ?string,
     startWithAudioMuted: boolean,
-    startWithVideoMuted: boolean
+    startWithVideoMuted: boolean,
+    alwaysOnTopWindowEnabled: boolean,
 };
 
 const username = window.jitsiNodeAPI.osUserInfo().username;
 
 const DEFAULT_STATE = {
+    alwaysOnTopWindowEnabled: true,
     avatarURL: getAvatarURL({ id: username }),
     email: '',
     name: username,
@@ -40,6 +43,12 @@ const DEFAULT_STATE = {
  */
 export default (state: State = DEFAULT_STATE, action: Object) => {
     switch (action.type) {
+    case SET_ALWAYS_ON_TOP_WINDOW_ENABLED:
+        return {
+            ...state,
+            alwaysOnTopWindowEnabled: action.alwaysOnTopWindowEnabled
+        };
+
     case SET_AUDIO_MUTED:
         return {
             ...state,

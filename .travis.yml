@@ -18,12 +18,5 @@ matrix:
             - libpng-dev
             - libxtst-dev
 
-before_script:
-  - | # Fix chrome-sandbox: https://github.com/electron/electron/issues/17972
-      if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-        echo "Fixing chrome-sandbox permissions..."
-        sudo chown root ./node_modules/electron/dist/chrome-sandbox
-        sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox
-      fi
 script:
   - npm run dist

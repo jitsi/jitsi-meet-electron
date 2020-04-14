@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
+import { closeDrawer } from '../../navbar';
+
 import { continueOnboarding } from '../actions';
 
 type Props = {
@@ -17,9 +19,9 @@ type Props = {
 };
 
 /**
- * Start Muted Toggles Spotlight Component.
+ * Always on Top Windows Spotlight Component.
  */
-class StartMutedTogglesSpotlight extends Component<Props, *> {
+class AlwaysOnTopWindowSpotlight extends Component<Props, *> {
     /**
      * Initializes a new {@code StartMutedTogglesSpotlight} instance.
      *
@@ -46,9 +48,10 @@ class StartMutedTogglesSpotlight extends Component<Props, *> {
                     }
                 ] }
                 dialogPlacement = 'left top'
-                target = { 'start-muted-toggles' } >
-                You can toggle if you want to start with your audio or video
-                muted here. This will be applied to all conferences.
+                target = { 'always-on-top-window' } >
+                You can toggle whether you want to enable the "always-on-top" window,
+                which is displayed when the main window loses focus.
+                This will be applied to all conferences.
             </Spotlight>
         );
     }
@@ -61,9 +64,15 @@ class StartMutedTogglesSpotlight extends Component<Props, *> {
      * @returns {void}
      */
     _next() {
-        this.props.dispatch(continueOnboarding());
+        const { dispatch } = this.props;
+
+        dispatch(continueOnboarding());
+
+        // FIXME: find a better way to do this.
+        setTimeout(() => {
+            dispatch(closeDrawer());
+        }, 300);
     }
 }
 
-export default connect()(StartMutedTogglesSpotlight);
-
+export default connect()(AlwaysOnTopWindowSpotlight);

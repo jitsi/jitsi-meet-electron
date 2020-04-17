@@ -63,19 +63,22 @@ export function openExternalLink(link: string) {
  * @returns {Object}
  */
 export function createConferenceObjectFromURL(inputURL: string) {
+    const lastIndexOfSlash = inputURL.lastIndexOf('/');
     let room;
+    let serverURL;
 
-    // Remove trailing slash if exists.
-    if (inputURL.substr(-1) === '/') {
-        inputURL = inputURL.substr(0, inputURL.length - 1); // eslint-disable-line no-param-reassign
-    }
-
-    // If we have more then a room name here,
-    // we assume that the last one is a room name.
-    if (inputURL.includes('/')) {
-        room = inputURL.split('/').pop();
-    } else {
+    if (lastIndexOfSlash === -1) {
+        // This must be only the room name.
         room = inputURL;
+    } else {
+        // Take the substring after last slash to be the room name.
+        room = inputURL.substring(lastIndexOfSlash + 1);
+
+        // Take the substring before last slash to be the Server URL.
+        serverURL = inputURL.substring(0, lastIndexOfSlash);
+
+        // Normalize the server URL.
+        serverURL = normalizeServerURL(serverURL);
     }
 
     // Don't navigate if no room was specified.
@@ -84,6 +87,7 @@ export function createConferenceObjectFromURL(inputURL: string) {
     }
 
     return {
-        room
+        room,
+        serverURL
     };
 }

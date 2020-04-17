@@ -38,10 +38,10 @@ class App extends Component<*> {
      */
     componentDidMount() {
         // start listening on this events
-        window.jitsiNodeAPI.ipcRenderer.on('protocol-data-msg', this._listenOnProtocolMessages);
+        window.jitsiNodeAPI.ipc.on('protocol-data-msg', this._listenOnProtocolMessages);
 
         // send notification to main process
-        window.jitsiNodeAPI.ipcRenderer.send('renderer-ready');
+        window.jitsiNodeAPI.ipc.send('renderer-ready');
     }
 
     /**
@@ -51,7 +51,7 @@ class App extends Component<*> {
      */
     componentWillUnmount() {
         // remove listening for this events
-        window.jitsiNodeAPI.ipcRenderer.removeListener(
+        window.jitsiNodeAPI.ipc.on(
             'protocol-data-msg',
             this._listenOnProtocolMessages
         );

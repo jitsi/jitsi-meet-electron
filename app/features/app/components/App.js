@@ -38,10 +38,10 @@ class App extends Component<*> {
      */
     componentDidMount() {
         // start listening on this events
-        window.jitsiNodeAPI.ipcRenderer.on('protocol-data-msg', this._listenOnProtocolMessages);
+        window.jitsiNodeAPI.ipc.on('protocol-data-msg', this._listenOnProtocolMessages);
 
         // send notification to main process
-        window.jitsiNodeAPI.ipcRenderer.send('renderer-ready');
+        window.jitsiNodeAPI.ipc.send('renderer-ready');
     }
 
     /**
@@ -51,7 +51,7 @@ class App extends Component<*> {
      */
     componentWillUnmount() {
         // remove listening for this events
-        window.jitsiNodeAPI.ipcRenderer.removeListener(
+        window.jitsiNodeAPI.ipc.on(
             'protocol-data-msg',
             this._listenOnProtocolMessages
         );
@@ -62,13 +62,28 @@ class App extends Component<*> {
     /**
      * Handler when main proccess contact us.
      *
-     * @param {Object} event - Message event triggered by .
-     * @param {Object} arg - String with room and optionally server url.
+     * @param {Object} event - Message event.
+     * @param {string} inputURL - String with room name.
      *
      * @returns {void}
      */
-    _listenOnProtocolMessages(event, arg) {
-        const conference = createConferenceObjectFromURL(arg);
+    _listenOnProtocolMessages(event, inputURL: string) {
+        let room;
+
+        // Remove trailing slash if one exists.
+        if (inputURL.substr(-1) === '/') {
+            inputURL = inputURL.substr(0, inputURL.length - 1); // eslint-disable-line no-param-reassign
+        }
+
+        // To avoid potential phishing attacks, we allow only room to
+        // be sent from the app link and use server from app settings.
+        if (inputURL.includes('/')) {
+            room = inputURL.split('/').pop();
+        } else {
+            room = inputURL;
+        }
+
+        const conference = createConferenceObjectFromURL(room);
 
         // Don't navigate if conference couldn't be created
         if (!conference) {

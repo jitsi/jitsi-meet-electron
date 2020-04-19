@@ -51,7 +51,7 @@ class App extends Component<*> {
      */
     componentWillUnmount() {
         // remove listening for this events
-        window.jitsiNodeAPI.ipc.on(
+        window.jitsiNodeAPI.ipc.removeListener(
             'protocol-data-msg',
             this._listenOnProtocolMessages
         );

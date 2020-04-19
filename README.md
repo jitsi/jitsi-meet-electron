@@ -57,6 +57,13 @@ location /external_api.js {
 }
 ```
 
+The following additional HTTP header are known not work with the Electron App:
+
+```
+Content-Security-Policy "frame-ancestors 'none'";
+X-Frame-Options "DENY";
+```
+
 ## Development
 
 If you want to hack on this project, here is how you do it.

@@ -25,6 +25,7 @@ type State = {
 const username = window.jitsiNodeAPI.osUserInfo().username;
 
 const DEFAULT_STATE = {
+    alwaysOnTopWindowEnabled: true,
     avatarURL: getAvatarURL({ id: username }),
     email: '',
     name: username,

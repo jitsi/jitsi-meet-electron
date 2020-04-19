@@ -8,3 +8,6 @@ export { default as SettingsDrawerSpotlight } from './SettingsDrawerSpotlight';
 export {
     default as StartMutedTogglesSpotlight
 } from './StartMutedTogglesSpotlight';
+export {
+    default as AlwaysOnTopWindowSpotlight
+} from './AlwaysOnTopWindowSpotlight';

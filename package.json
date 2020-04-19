@@ -11,7 +11,7 @@
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "patch-package && electron-builder install-app-deps",
     "validate": "npm ls",
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
@@ -150,6 +150,7 @@
     "file-loader": "6.0.0",
     "flow-bin": "0.109.0",
     "html-webpack-plugin": "4.0.4",
+    "patch-package": "6.2.2",
     "precommit-hook": "3.0.0",
     "style-loader": "1.1.3",
     "svg-inline-loader": "0.8.2",

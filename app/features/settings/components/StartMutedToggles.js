@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
-import { TogglesContainer } from '../styled';
 import {
     setStartWithAudioMuted,
     setStartWithVideoMuted
@@ -85,7 +84,7 @@ class StartMutedToggles extends Component<Props, State> {
      */
     render() {
         return (
-            <TogglesContainer>
+            <>
                 <ToggleWithLabel
                     isDefaultChecked = { this.props._startWithAudioMuted }
                     label = 'Start with Audio muted'
@@ -96,7 +95,7 @@ class StartMutedToggles extends Component<Props, State> {
                     label = 'Start with Video muted'
                     onChange = { this._onVideoToggleChange }
                     value = { this.state.startWithVideoMuted } />
-            </TogglesContainer>
+            </>
         );
     }
 

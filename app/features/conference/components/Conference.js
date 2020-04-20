@@ -241,19 +241,27 @@ class Conference extends Component<Props, State> {
      */
     _onScriptLoad(parentNode: Object) {
         const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
-
+        const url = new URL(this._conference.room, this._conference.serverURL);
+        const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
+        const searchParameters = Object.fromEntries(url.searchParams);
+        const urlParameters = Object.keys(searchParameters).length ? searchParameters : {};
 
         const configOverwrite = {
             startWithAudioMuted: this.props._startWithAudioMuted,
             startWithVideoMuted: this.props._startWithVideoMuted
         };
 
-        this._api = new JitsiMeetExternalAPI(host, {
+        const options = {
             configOverwrite,
             onload: this._onIframeLoad,
             parentNode,
-            roomName: this._conference.room
+            roomName
+        };
+
+        this._api = new JitsiMeetExternalAPI(host, {
+            ...options,
+            ...urlParameters
         });
 
         const { RemoteControl,

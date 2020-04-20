@@ -82,6 +82,8 @@ npm install
 npm start
 ```
 
+The debugger tools are available when running in dev mode and can be activated with keyboard shortcuts as defined here https://github.com/sindresorhus/electron-debug#features.
+
 #### Building the production distribution
 
 ```bash

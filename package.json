@@ -28,7 +28,12 @@
     "mac": {
       "artifactName": "jitsi-meet.${ext}",
       "category": "public.app-category.video",
-      "darkModeSupport": true
+      "darkModeSupport": true,
+      "hardenedRuntime": false,
+      "extendInfo": {
+        "NSCameUsageDescription": "jitsi meet requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "jitsi meet requires access to your microphone in order to make calls (audio/video)."
+      }
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",

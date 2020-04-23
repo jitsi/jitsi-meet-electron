@@ -7,6 +7,7 @@ import {
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
+    SET_SERVER_TIMEOUT,
     SET_VIDEO_MUTED
 } from './actionTypes';
 
@@ -73,6 +74,22 @@ export function setServerURL(serverURL: string) {
     return {
         type: SET_SERVER_URL,
         serverURL: normalizeServerURL(serverURL)
+    };
+}
+
+/**
+ * Set Server Timeout.
+ *
+ * @param {string} serverTimeout - Server Timeout.
+ * @returns {{
+ *     type: SET_SERVER_TIMEOUT,
+ *     serverTimeout: ?number
+ * }}
+ */
+export function setServerTimeout(serverTimeout: number) {
+    return {
+        type: SET_SERVER_TIMEOUT,
+        serverTimeout
     };
 }
 

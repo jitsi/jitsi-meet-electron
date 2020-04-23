@@ -21,6 +21,11 @@ export default {
     defaultServerURL: 'https://meet.jit.si',
 
     /**
+     * The default server Timeout in seconds.
+     */
+    defaultServerTimeout: 10,
+
+    /**
      * URL to send feedback.
      */
     feedbackURL: 'mailto:support@jitsi.org',

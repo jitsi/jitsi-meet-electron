@@ -17,6 +17,7 @@ import { setEmail, setName } from '../actions';
 
 import AlwaysOnTopWindowToggle from './AlwaysOnTopWindowToggle';
 import ServerURLField from './ServerURLField';
+import ServerTimeoutField from './ServerTimeoutField';
 import StartMutedToggles from './StartMutedToggles';
 
 type Props = {
@@ -129,6 +130,7 @@ class SettingsDrawer extends Component<Props, *> {
                         <SpotlightTarget
                             name = 'server-setting'>
                             <ServerURLField />
+                            <ServerTimeoutField />
                         </SpotlightTarget>
                         <TogglesContainer>
                             <SpotlightTarget

@@ -51,13 +51,18 @@ function setApplicationMenu() {
     if (process.platform === 'darwin') {
         const template = [ {
             label: app.name,
-            submenu: [ {
-                label: 'Quit',
-                accelerator: 'Command+Q',
-                click() {
-                    app.quit();
-                }
-            } ]
+            submenu: [
+                {
+                    role: 'services',
+                    submenu: []
+                },
+                { type: 'separator' },
+                { role: 'hide' },
+                { role: 'hideothers' },
+                { role: 'unhide' },
+                { type: 'separator' },
+                { role: 'quit' }
+            ]
         }, {
             label: 'Edit',
             submenu: [ {
@@ -92,7 +97,13 @@ function setApplicationMenu() {
                 label: 'Select All',
                 accelerator: 'CmdOrCtrl+A',
                 selector: 'selectAll:'
-            }
+            } ]
+        }, {
+            label: '&Window',
+            role: 'window',
+            submenu: [
+                { role: 'minimize' },
+                { role: 'close' }
             ]
         } ];
 

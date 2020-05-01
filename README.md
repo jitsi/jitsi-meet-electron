@@ -57,7 +57,7 @@ location /external_api.js {
 }
 ```
 
-The following additional HTTP header are known not work with the Electron App:
+The following additional HTTP headers are known not to work with the Electron App:
 
 ```
 Content-Security-Policy "frame-ancestors 'none'";
@@ -81,6 +81,8 @@ npm install
 ```bash
 npm start
 ```
+
+The debugger tools are available when running in dev mode and can be activated with keyboard shortcuts as defined here https://github.com/sindresorhus/electron-debug#features.
 
 #### Building the production distribution
 

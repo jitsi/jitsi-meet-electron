@@ -28,7 +28,12 @@
     "mac": {
       "artifactName": "ffmuc-meet.${ext}",
       "category": "public.app-category.video",
-      "darkModeSupport": true
+      "darkModeSupport": true,
+      "hardenedRuntime": false,
+      "extendInfo": {
+        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+      }
     },
     "linux": {
       "artifactName": "ffmuc-meet-${arch}.${ext}",
@@ -109,7 +114,7 @@
     "electron-updater": "4.2.5",
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
-    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.4",
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.6",
     "js-utils": "github:jitsi/js-utils#0c53500a5120be2aa3fc590f0f932a0d4771920f",
     "moment": "2.23.0",
     "mousetrap": "1.6.2",

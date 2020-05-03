@@ -69,7 +69,7 @@
         "name": "jitsi-protocol",
         "role": "Viewer",
         "schemes": [
-          "jitsi"
+          "jitsi-meet"
         ]
       }
     ]

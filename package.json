@@ -29,7 +29,7 @@
       "artifactName": "ffmuc-meet.${ext}",
       "category": "public.app-category.video",
       "darkModeSupport": true,
-      "hardenedRuntime": false,
+      "hardenedRuntime": true,
       "extendInfo": {
         "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
         "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."

@@ -52,6 +52,11 @@ type Props = {
     _serverURL: string;
 
     /**
+     * Default Jitsi Server Timeout.
+     */
+    _serverTimeout: number;
+
+    /**
      * Start with Audio Muted.
      */
     _startWithAudioMuted: boolean;
@@ -120,6 +125,7 @@ class Conference extends Component<Props, State> {
     componentDidMount() {
         const parentNode = this._ref.current;
         const room = this.props.location.state.room;
+        const serverTimeout = this.props._serverTimeout || config.defaultServerTimeout;
         const serverURL = this.props.location.state.serverURL
             || this.props._serverURL
             || config.defaultServerURL;
@@ -139,7 +145,7 @@ class Conference extends Component<Props, State> {
 
         this._ref.current.appendChild(script);
 
-        // Set a timer for 10s, if we haven't loaded the iframe by then,
+        // Set a timer for a timeout duration, if we haven't loaded the iframe by then,
         // give up.
         this._loadTimer = setTimeout(() => {
             this._navigateToHome(
@@ -151,7 +157,7 @@ class Conference extends Component<Props, State> {
                 },
                 room,
                 serverURL);
-        }, 10000);
+        }, serverTimeout * 1000);
     }
 
     /**
@@ -421,6 +427,7 @@ function _mapStateToProps(state: Object) {
         _email: state.settings.email,
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,
+        _serverTimeout: state.settings.serverTimeout,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
         _startWithVideoMuted: state.settings.startWithVideoMuted
     };

@@ -5,6 +5,7 @@ import FieldText from '@atlaskit/field-text';
 import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
 import { AkCustomDrawer } from '@atlaskit/navigation';
 import { SpotlightTarget } from '@atlaskit/onboarding';
+import Panel from '@atlaskit/panel';
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -17,6 +18,7 @@ import { setEmail, setName } from '../actions';
 
 import AlwaysOnTopWindowToggle from './AlwaysOnTopWindowToggle';
 import ServerURLField from './ServerURLField';
+import ServerTimeoutField from './ServerTimeoutField';
 import StartMutedToggles from './StartMutedToggles';
 
 type Props = {
@@ -140,6 +142,9 @@ class SettingsDrawer extends Component<Props, *> {
                                 <AlwaysOnTopWindowToggle />
                             </SpotlightTarget>
                         </TogglesContainer>
+                        <Panel header = 'Advanced Settings'>
+                            <ServerTimeoutField />
+                        </Panel>
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>

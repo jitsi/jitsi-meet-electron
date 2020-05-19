@@ -1,7 +1,5 @@
 // @flow
 
-import { getAvatarURL } from 'js-utils';
-
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
@@ -12,6 +10,7 @@ import {
     SET_SERVER_TIMEOUT,
     SET_VIDEO_MUTED
 } from './actionTypes';
+import { getAvatarURL } from './functions';
 
 type State = {
     avatarURL: string,
@@ -28,7 +27,7 @@ const username = window.jitsiNodeAPI.osUserInfo().username;
 
 const DEFAULT_STATE = {
     alwaysOnTopWindowEnabled: true,
-    avatarURL: getAvatarURL({ id: username }),
+    avatarURL: getAvatarURL({ settings: { name: username } }),
     email: '',
     name: username,
     serverURL: undefined,

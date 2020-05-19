@@ -1,8 +1,8 @@
 // @flow
 
-import { getAvatarURL } from 'js-utils';
 import { SET_EMAIL, SET_NAME } from './actionTypes';
 import { setAvatarURL } from './actions';
+import { getAvatarURL } from './functions';
 
 export default (store: Object) => (next: Function) => (action: Object) => {
     const result = next(action);
@@ -10,14 +10,9 @@ export default (store: Object) => (next: Function) => (action: Object) => {
 
     switch (action.type) {
     case SET_EMAIL:
-    case SET_NAME: {
-        const avatarURL = getAvatarURL({
-            email: state.settings.email,
-            id: state.settings.name
-        });
+    case SET_NAME:
+        store.dispatch(setAvatarURL(getAvatarURL(state)));
 
-        store.dispatch(setAvatarURL(avatarURL));
-    }
     }
 
     return result;

@@ -143,6 +143,7 @@
     "file-loader": "6.0.0",
     "flow-bin": "0.109.0",
     "html-webpack-plugin": "4.0.4",
+    "js-md5": "0.7.3",
     "patch-package": "6.2.2",
     "precommit-hook": "3.0.0",
     "style-loader": "1.1.3",

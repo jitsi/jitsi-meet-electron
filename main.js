@@ -24,6 +24,9 @@ const config = require('./app/features/config');
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
+// Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
+app.allowRendererProcessReuse = false;
+
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
 
@@ -162,6 +165,7 @@ function createJitsiMeetWindow() {
         minHeight: 600,
         show: false,
         webPreferences: {
+            experimentalFeatures: true, // Insertable streams, for E2EE.
             nativeWindowOpen: true,
             nodeIntegration: false,
             preload: path.resolve(basePath, './build/preload.js')

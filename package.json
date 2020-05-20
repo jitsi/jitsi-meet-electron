@@ -115,7 +115,7 @@
     "electron-updater": "4.2.5",
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
-    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.6",
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#57fed63bf495b698785edd741364d420898b288e",
     "js-utils": "github:jitsi/js-utils#cf11996bd866fdb47326c59a5d3bc24be17282d4",
     "moment": "2.23.0",
     "mousetrap": "1.6.2",

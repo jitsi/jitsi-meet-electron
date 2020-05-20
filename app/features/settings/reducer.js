@@ -1,7 +1,5 @@
 // @flow
 
-import { getAvatarURL } from 'js-utils';
-
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
@@ -9,14 +7,17 @@ import {
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
+    SET_SERVER_TIMEOUT,
     SET_VIDEO_MUTED
 } from './actionTypes';
+import { getAvatarURL } from './functions';
 
 type State = {
     avatarURL: string,
     email: string,
     name: string,
     serverURL: ?string,
+    serverTimeout: ?number,
     startWithAudioMuted: boolean,
     startWithVideoMuted: boolean,
     alwaysOnTopWindowEnabled: boolean,
@@ -26,10 +27,11 @@ const username = window.jitsiNodeAPI.osUserInfo().username;
 
 const DEFAULT_STATE = {
     alwaysOnTopWindowEnabled: true,
-    avatarURL: getAvatarURL({ id: username }),
+    avatarURL: getAvatarURL({ settings: { name: username } }),
     email: '',
     name: username,
     serverURL: undefined,
+    serverTimeout: undefined,
     startWithAudioMuted: false,
     startWithVideoMuted: false
 };
@@ -77,6 +79,12 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         return {
             ...state,
             serverURL: action.serverURL
+        };
+
+    case SET_SERVER_TIMEOUT:
+        return {
+            ...state,
+            serverTimeout: action.serverTimeout
         };
 
     case SET_VIDEO_MUTED:

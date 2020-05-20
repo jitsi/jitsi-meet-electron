@@ -30,7 +30,11 @@
       "artifactName": "jitsi-meet.${ext}",
       "category": "public.app-category.video",
       "darkModeSupport": true,
-      "hardenedRuntime": true
+      "hardenedRuntime": false,
+      "extendInfo": {
+        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+      }
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
@@ -87,6 +91,7 @@
     "@atlaskit/navigation": "33.3.8",
     "@atlaskit/onboarding": "6.1.14",
     "@atlaskit/page": "8.0.12",
+    "@atlaskit/panel": "0.3.5",
     "@atlaskit/spinner": "9.0.13",
     "@atlaskit/theme": "7.0.1",
     "@atlaskit/toggle": "5.0.14",
@@ -98,8 +103,8 @@
     "electron-updater": "4.2.5",
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
-    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.4",
-    "js-utils": "github:jitsi/js-utils#91c5e53ca5fa42907c88d56bc78254e6e56e058d",
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.7",
+    "js-utils": "github:jitsi/js-utils#cf11996bd866fdb47326c59a5d3bc24be17282d4",
     "moment": "2.23.0",
     "mousetrap": "1.6.2",
     "react": "16.6.3",
@@ -127,7 +132,7 @@
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
     "devtron": "1.4.0",
-    "electron": "8.3.0",
+    "electron": "9.0.0",
     "electron-builder": "22.3.6",
     "electron-builder-notarize": "1.1.2",
     "electron-react-devtools": "0.5.3",
@@ -140,6 +145,7 @@
     "file-loader": "6.0.0",
     "flow-bin": "0.109.0",
     "html-webpack-plugin": "4.0.4",
+    "js-md5": "0.7.3",
     "patch-package": "6.2.2",
     "precommit-hook": "3.0.0",
     "style-loader": "1.1.3",

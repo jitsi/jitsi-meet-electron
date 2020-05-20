@@ -60,6 +60,16 @@ export const SET_NAME = Symbol('SET_NAME');
 export const SET_SERVER_URL = Symbol('SET_SERVER_URL');
 
 /**
+ * The type of (redux) action that sets the Server Timeout.
+ *
+ * @type {
+ *     type: SET_SERVER_TIMEOUT,
+ *     serverTimeout: number
+ * }
+ */
+export const SET_SERVER_TIMEOUT = Symbol('SET_SERVER_TIMEOUT');
+
+/**
  * The type of (redux) action that sets Start with Video Muted.
  *
  * @type {

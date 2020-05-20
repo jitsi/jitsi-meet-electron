@@ -44,7 +44,7 @@ class AlwaysOnTopWindowToggle extends Component<Props> {
      */
     render() {
         return (
-           <ToggleWithLabel
+            <ToggleWithLabel
                 isDefaultChecked = { this.props._alwaysOnTopWindowEnabled }
                 label = 'Always on Top Window'
                 onChange = { this._onAlwaysOnTopWindowToggleChange }

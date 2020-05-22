@@ -30,9 +30,11 @@
       "category": "public.app-category.video",
       "darkModeSupport": true,
       "hardenedRuntime": true,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
       "extendInfo": {
-        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+        "NSCameraUsageDescription": "FreifunkMeet requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "FreifunkMeet requires access to your microphone in order to make calls (audio/video)."
       }
     },
     "linux": {

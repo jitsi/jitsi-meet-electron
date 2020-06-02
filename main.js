@@ -6,6 +6,7 @@ const {
     app,
     shell
 } = require('electron');
+const debug = require('electron-debug');
 const isDev = require('electron-is-dev');
 const { autoUpdater } = require('electron-updater');
 const windowStateKeeper = require('electron-window-state');
@@ -33,13 +34,18 @@ app.allowRendererProcessReuse = false;
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
 
+// Enable DevTools also on release builds to help troubleshoot issues. Don't
+// show them automatically though.
+debug({
+    isEnabled: true,
+    showDevTools: false
+});
+
 /**
  * When in development mode:
- * - Load debug utilities (don't open the DevTools window by default though)
  * - Enable automatic reloads
  */
 if (isDev) {
-    require('electron-debug')({ showDevTools: false });
     require('electron-reload')(path.join(__dirname, 'build'));
 }
 

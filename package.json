@@ -133,7 +133,7 @@
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
     "devtron": "1.4.0",
-    "electron": "9.0.0",
+    "electron": "9.0.1",
     "electron-builder": "22.3.6",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",

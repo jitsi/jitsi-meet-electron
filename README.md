@@ -91,6 +91,8 @@ It can also be displayed automatically from the `SHOW_DEV_TOOLS` environment var
 SHOW_DEV_TOOLS=true npm start
 ```
 
+or from the application `--show-dev-tools` command line flag.
+
 #### Building the production distribution
 
 ```bash

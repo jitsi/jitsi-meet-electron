@@ -69,6 +69,12 @@ npm start
 
 The debugger tools are available when running in dev mode and can be activated with keyboard shortcuts as defined here https://github.com/sindresorhus/electron-debug#features.
 
+It can also be displayed automatically from the `SHOW_DEV_TOOLS` environment variable such as:
+
+```bash
+SHOW_DEV_TOOLS=true npm start
+```
+
 #### Building the production distribution
 
 ```bash

@@ -21,6 +21,8 @@ const path = require('path');
 const URL = require('url');
 const config = require('./app/features/config');
 
+const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS);
+
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
@@ -38,7 +40,7 @@ autoUpdater.logger.transports.file.level = 'info';
 // show them automatically though.
 debug({
     isEnabled: true,
-    showDevTools: false
+    showDevTools
 });
 
 /**

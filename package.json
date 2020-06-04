@@ -83,7 +83,6 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "@atlaskit/avatar": "14.1.7",
     "@atlaskit/button": "10.1.1",
     "@atlaskit/css-reset": "3.0.5",
     "@atlaskit/droplist": "7.0.17",
@@ -146,7 +145,6 @@
     "file-loader": "6.0.0",
     "flow-bin": "0.109.0",
     "html-webpack-plugin": "4.0.4",
-    "js-md5": "0.7.3",
     "patch-package": "6.2.2",
     "precommit-hook": "3.0.0",
     "style-loader": "1.1.3",

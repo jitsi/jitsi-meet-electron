@@ -6,6 +6,11 @@ export default {
     aboutURL: 'https://jitsi.org/what-is-jitsi/',
 
     /**
+     * The URL to the source code repository.
+     */
+    sourceURL: 'https://github.com/jitsi/jitsi-meet-electron',
+
+    /**
      * Application name.
      */
     appName: 'Jitsi Meet',
@@ -20,6 +25,11 @@ export default {
      * The default server URL of Jitsi Meet Deployment that will be used.
      */
     defaultServerURL: 'https://meet.jit.si',
+
+    /**
+     * The default server Timeout in seconds.
+     */
+    defaultServerTimeout: 10,
 
     /**
      * URL to send feedback.

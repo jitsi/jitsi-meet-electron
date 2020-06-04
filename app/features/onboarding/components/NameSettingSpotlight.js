@@ -45,7 +45,7 @@ class NameSettingSpotlight extends Component<Props, *> {
                         text: 'Next'
                     }
                 ] }
-                dialogPlacement = 'left top'
+                dialogPlacement = 'top right'
                 target = { 'name-setting' } >
                 This will be your display name, others will see you with this
                 name.

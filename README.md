@@ -6,6 +6,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 
 ## Features
 
+- [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
 - Local settings
 - Builtin auto-updates
@@ -35,6 +36,14 @@ sudo apt-get install libnss3
 
 </details>
 
+### Homebrew
+
+For *MacOS* user, you can install the application using the following command:
+
+```
+brew cask install jitsi-meet
+```
+
 ### Using it with your own Jitsi Meet installation
 
 In order to use this application with your own Jitsi Meet installation it's
@@ -47,6 +56,13 @@ Here is an example using nginx:
 location /external_api.js {
     alias /usr/share/jitsi-meet/libs/external_api.min.js;
 }
+```
+
+:warning: The following additional HTTP headers are known to break the Electron App:
+
+```
+Content-Security-Policy "frame-ancestors [looks like any value is bad]";
+X-Frame-Options "DENY";
 ```
 
 ## Development
@@ -66,6 +82,8 @@ npm install
 ```bash
 npm start
 ```
+
+The debugger tools are available when running in dev mode and can be activated with keyboard shortcuts as defined here https://github.com/sindresorhus/electron-debug#features.
 
 #### Building the production distribution
 

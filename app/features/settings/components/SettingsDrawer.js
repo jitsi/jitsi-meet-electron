@@ -1,21 +1,23 @@
 // @flow
 
-import Avatar from '@atlaskit/avatar';
 import FieldText from '@atlaskit/field-text';
 import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
 import { AkCustomDrawer } from '@atlaskit/navigation';
 import { SpotlightTarget } from '@atlaskit/onboarding';
+import Panel from '@atlaskit/panel';
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
-import { Onboarding, startOnboarding } from '../../onboarding';
-import { AvatarContainer, SettingsContainer } from '../styled';
+import { Onboarding, advenaceSettingsSteps, startOnboarding } from '../../onboarding';
+import { Form, SettingsContainer, TogglesContainer } from '../styled';
 import { setEmail, setName } from '../actions';
 
+import AlwaysOnTopWindowToggle from './AlwaysOnTopWindowToggle';
 import ServerURLField from './ServerURLField';
+import ServerTimeoutField from './ServerTimeoutField';
 import StartMutedToggles from './StartMutedToggles';
 
 type Props = {
@@ -31,14 +33,14 @@ type Props = {
     isOpen: boolean;
 
     /**
-     * Avatar URL.
-     */
-    _avatarURL: string;
-
-    /**
      * Email of the user.
      */
     _email: string;
+
+    /**
+     * Whether onboarding is active or not.
+     */
+    _isOnboardingAdvancedSettings: boolean,
 
     /**
      * Name of the user.
@@ -98,41 +100,50 @@ class SettingsDrawer extends Component<Props, *> {
                 primaryIcon = { <Logo /> } >
                 <DrawerContainer>
                     <SettingsContainer>
-                        <AvatarContainer>
-                            <Avatar
-                                size = 'xlarge'
-                                src = { this.props._avatarURL } />
-                        </AvatarContainer>
                         <SpotlightTarget
                             name = 'name-setting'>
-                            <form onSubmit = { this._onNameFormSubmit }>
+                            <Form onSubmit = { this._onNameFormSubmit }>
                                 <FieldText
                                     label = 'Name'
                                     onBlur = { this._onNameBlur }
                                     shouldFitContainer = { true }
                                     type = 'text'
                                     value = { this.props._name } />
-                            </form>
+                            </Form>
                         </SpotlightTarget>
                         <SpotlightTarget
                             name = 'email-setting'>
-                            <form onSubmit = { this._onEmailFormSubmit }>
+                            <Form onSubmit = { this._onEmailFormSubmit }>
                                 <FieldText
                                     label = 'Email'
                                     onBlur = { this._onEmailBlur }
                                     shouldFitContainer = { true }
                                     type = 'text'
                                     value = { this.props._email } />
-                            </form>
+                            </Form>
                         </SpotlightTarget>
-                        <SpotlightTarget
-                            name = 'server-setting'>
-                            <ServerURLField />
-                        </SpotlightTarget>
-                        <SpotlightTarget
-                            name = 'start-muted-toggles'>
-                            <StartMutedToggles />
-                        </SpotlightTarget>
+                        <TogglesContainer>
+                            <SpotlightTarget
+                                name = 'start-muted-toggles'>
+                                <StartMutedToggles />
+                            </SpotlightTarget>
+                        </TogglesContainer>
+                        <Panel
+                            header = 'Advanced Settings'
+                            isDefaultExpanded = { this.props._isOnboardingAdvancedSettings }>
+                            <SpotlightTarget name = 'server-setting'>
+                                <ServerURLField />
+                            </SpotlightTarget>
+                            <SpotlightTarget name = 'server-timeout'>
+                                <ServerTimeoutField />
+                            </SpotlightTarget>
+                            <TogglesContainer>
+                                <SpotlightTarget
+                                    name = 'always-on-top-window'>
+                                    <AlwaysOnTopWindowToggle />
+                                </SpotlightTarget>
+                            </TogglesContainer>
+                        </Panel>
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>
@@ -155,7 +166,7 @@ class SettingsDrawer extends Component<Props, *> {
     _onEmailBlur: (*) => void;
 
     /**
-     * Updates Avatar URL in (redux) state when email is updated.
+     * Updates email in (redux) state when email is updated.
      *
      * @param {SyntheticInputEvent<HTMLInputElement>} event - Event by which
      * this function is called.
@@ -184,7 +195,7 @@ class SettingsDrawer extends Component<Props, *> {
     _onNameBlur: (*) => void;
 
     /**
-     * Updates Avatar URL in (redux) state when name is updated.
+     * Updates name in (redux) state when name is updated.
      *
      * @param {SyntheticInputEvent<HTMLInputElement>} event - Event by which
      * this function is called.
@@ -215,16 +226,12 @@ class SettingsDrawer extends Component<Props, *> {
  * Maps (parts of) the redux state to the React props.
  *
  * @param {Object} state - The redux state.
- * @returns {{
- *     _avatarURL: string,
- *     _email: string,
- *     _name: string
- * }}
+ * @returns {Props}
  */
 function _mapStateToProps(state: Object) {
     return {
-        _avatarURL: state.settings.avatarURL,
         _email: state.settings.email,
+        _isOnboardingAdvancedSettings: !advenaceSettingsSteps.every(i => state.onboarding.onboardingShown.includes(i)),
         _name: state.settings.name
     };
 }

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import config from '../../config';
-import { setEmail, setName } from '../../settings';
+import { getSetting, setEmail, setName } from '../../settings';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
 import { LoadingIndicator, Wrapper } from '../styled';
@@ -27,9 +27,9 @@ type Props = {
     location: Object;
 
     /**
-     * Avatar URL.
+     * AlwaysOnTop Window Enabled.
      */
-    _avatarURL: string;
+    _alwaysOnTopWindowEnabled: boolean;
 
     /**
      * Email of user.
@@ -45,6 +45,11 @@ type Props = {
      * Default Jitsi Server URL.
      */
     _serverURL: string;
+
+    /**
+     * Default Jitsi Server Timeout.
+     */
+    _serverTimeout: number;
 
     /**
      * Start with Audio Muted.
@@ -115,6 +120,7 @@ class Conference extends Component<Props, State> {
     componentDidMount() {
         const parentNode = this._ref.current;
         const room = this.props.location.state.room;
+        const serverTimeout = this.props._serverTimeout || config.defaultServerTimeout;
         const serverURL = this.props.location.state.serverURL
             || this.props._serverURL
             || config.defaultServerURL;
@@ -134,7 +140,7 @@ class Conference extends Component<Props, State> {
 
         this._ref.current.appendChild(script);
 
-        // Set a timer for 10s, if we haven't loaded the iframe by then,
+        // Set a timer for a timeout duration, if we haven't loaded the iframe by then,
         // give up.
         this._loadTimer = setTimeout(() => {
             this._navigateToHome(
@@ -146,7 +152,7 @@ class Conference extends Component<Props, State> {
                 },
                 room,
                 serverURL);
-        }, 10000);
+        }, serverTimeout * 1000);
     }
 
     /**
@@ -158,9 +164,6 @@ class Conference extends Component<Props, State> {
     componentDidUpdate(prevProps) {
         const { props } = this;
 
-        if (props._avatarURL !== prevProps._avatarURL) {
-            this._setAvatarURL(props._avatarURL);
-        }
         if (props._email !== prevProps._email) {
             this._setEmail(props._email);
         }
@@ -236,20 +239,38 @@ class Conference extends Component<Props, State> {
      */
     _onScriptLoad(parentNode: Object) {
         const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
-
+        const url = new URL(this._conference.room, this._conference.serverURL);
+        const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
+        const searchParameters = Object.fromEntries(url.searchParams);
+        const urlParameters = Object.keys(searchParameters).length ? searchParameters : {};
 
         const configOverwrite = {
             startWithAudioMuted: this.props._startWithAudioMuted,
             startWithVideoMuted: this.props._startWithVideoMuted
         };
 
-        this._api = new JitsiMeetExternalAPI(host, {
+        const options = {
             configOverwrite,
             onload: this._onIframeLoad,
             parentNode,
-            roomName: this._conference.room
+            roomName
+        };
+
+        this._api = new JitsiMeetExternalAPI(host, {
+            ...options,
+            ...urlParameters
         });
+
+
+        this._api.on('suspendDetected', this._onVideoConferenceEnded);
+        this._api.on('readyToClose', this._onVideoConferenceEnded);
+        this._api.on('videoConferenceJoined',
+            (conferenceInfo: Object) => {
+                this.props.dispatch(conferenceJoined(this._conference));
+                this._onVideoConferenceJoined(conferenceInfo);
+            }
+        );
 
         const { RemoteControl,
             setupScreenSharingRender,
@@ -265,18 +286,14 @@ class Conference extends Component<Props, State> {
 
         setupScreenSharingRender(this._api);
         new RemoteControl(iframe); // eslint-disable-line no-new
-        setupAlwaysOnTopRender(this._api);
+
+        // Allow window to be on top if enabled in settings
+        if (this.props._alwaysOnTopWindowEnabled) {
+            setupAlwaysOnTopRender(this._api);
+        }
+
         setupWiFiStats(iframe);
         setupPowerMonitorRender(this._api);
-
-        this._api.on('suspendDetected', this._onVideoConferenceEnded);
-        this._api.on('readyToClose', this._onVideoConferenceEnded);
-        this._api.on('videoConferenceJoined',
-            (conferenceInfo: Object) => {
-                this.props.dispatch(conferenceJoined(this._conference));
-                this._onVideoConferenceJoined(conferenceInfo);
-            }
-        );
     }
 
     _onVideoConferenceEnded: (*) => void;
@@ -345,7 +362,6 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     _onVideoConferenceJoined(conferenceInfo: Object) {
-        this._setAvatarURL(this.props._avatarURL);
         this._setEmail(this.props._email);
         this._setName(this.props._name);
 
@@ -355,16 +371,6 @@ class Conference extends Component<Props, State> {
             (params: Object) => this._onDisplayNameChange(params, id));
         this._api.on('emailChange',
             (params: Object) => this._onEmailChange(params, id));
-    }
-
-    /**
-     * Set Avatar URL from settings to conference.
-     *
-     * @param {string} avatarURL - Avatar URL.
-     * @returns {void}
-     */
-    _setAvatarURL(avatarURL: string) {
-        this._api.executeCommand('avatarUrl', avatarURL);
     }
 
     /**
@@ -393,21 +399,15 @@ class Conference extends Component<Props, State> {
  * Maps (parts of) the redux state to the React props.
  *
  * @param {Object} state - The redux state.
- * @returns {{
- *     _avatarURL: string,
- *     _email: string,
- *     _name: string,
- *     _serverURL: string,
- *     _startWithAudioMuted: boolean,
- *     _startWithVideoMuted: boolean
- * }}
+ * @returns {Props}
  */
 function _mapStateToProps(state: Object) {
     return {
-        _avatarURL: state.settings.avatarURL,
+        _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
         _email: state.settings.email,
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,
+        _serverTimeout: state.settings.serverTimeout,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
         _startWithVideoMuted: state.settings.startWithVideoMuted
     };

@@ -7,6 +7,7 @@ const {
     ipcMain,
     shell
 } = require('electron');
+const contextMenu = require('electron-context-menu');
 const debug = require('electron-debug');
 const isDev = require('electron-is-dev');
 const { autoUpdater } = require('electron-updater');
@@ -34,6 +35,18 @@ app.allowRendererProcessReuse = false;
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
+
+// Enable context menu so things like copy and paste work in input fields.
+contextMenu({
+    showLookUpSelection: false,
+    showSearchWithGoogle: false,
+    showCopyImage: false,
+    showCopyImageAddress: false,
+    showSaveImage: false,
+    showSaveImageAs: false,
+    showInspectElement: true,
+    showServices: false
+});
 
 // Enable DevTools also on release builds to help troubleshoot issues. Don't
 // show them automatically though.

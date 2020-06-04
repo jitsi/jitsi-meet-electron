@@ -270,6 +270,16 @@ class Conference extends Component<Props, State> {
             ...urlParameters
         });
 
+
+        this._api.on('suspendDetected', this._onVideoConferenceEnded);
+        this._api.on('readyToClose', this._onVideoConferenceEnded);
+        this._api.on('videoConferenceJoined',
+            (conferenceInfo: Object) => {
+                this.props.dispatch(conferenceJoined(this._conference));
+                this._onVideoConferenceJoined(conferenceInfo);
+            }
+        );
+
         const { RemoteControl,
             setupScreenSharingRender,
             setupAlwaysOnTopRender,
@@ -292,15 +302,6 @@ class Conference extends Component<Props, State> {
 
         setupWiFiStats(iframe);
         setupPowerMonitorRender(this._api);
-
-        this._api.on('suspendDetected', this._onVideoConferenceEnded);
-        this._api.on('readyToClose', this._onVideoConferenceEnded);
-        this._api.on('videoConferenceJoined',
-            (conferenceInfo: Object) => {
-                this.props.dispatch(conferenceJoined(this._conference));
-                this._onVideoConferenceJoined(conferenceInfo);
-            }
-        );
     }
 
     _onVideoConferenceEnded: (*) => void;

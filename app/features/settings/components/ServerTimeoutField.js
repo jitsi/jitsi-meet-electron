@@ -9,6 +9,7 @@ import type { Dispatch } from 'redux';
 import config from '../../config';
 
 import { setServerTimeout } from '../actions';
+import { Form } from '../styled';
 
 type Props = {
 
@@ -64,7 +65,7 @@ class ServerTimeoutField extends Component<Props, State> {
      */
     render() {
         return (
-            <form onSubmit = { this._onServerTimeoutSubmit }>
+            <Form onSubmit = { this._onServerTimeoutSubmit }>
                 <FieldTextStateless
                     invalidMessage
                         = { 'Invalid Timeout' }
@@ -77,7 +78,7 @@ class ServerTimeoutField extends Component<Props, State> {
                     shouldFitContainer = { true }
                     type = 'number'
                     value = { this.state.serverTimeout } />
-            </form>
+            </Form>
         );
     }
 

@@ -10,6 +10,7 @@ import config from '../../config';
 import { getExternalApiURL } from '../../utils';
 
 import { setServerURL } from '../actions';
+import { Form } from '../styled';
 
 type Props = {
 
@@ -65,7 +66,7 @@ class ServerURLField extends Component<Props, State> {
      */
     render() {
         return (
-            <form onSubmit = { this._onServerURLSubmit }>
+            <Form onSubmit = { this._onServerURLSubmit }>
                 <FieldTextStateless
                     invalidMessage
                         = { 'Invalid Server URL or external API not enabled' }
@@ -78,7 +79,7 @@ class ServerURLField extends Component<Props, State> {
                     shouldFitContainer = { true }
                     type = 'text'
                     value = { this.state.serverURL } />
-            </form>
+            </Form>
         );
     }
 

@@ -32,11 +32,6 @@ type Props = {
     _alwaysOnTopWindowEnabled: boolean;
 
     /**
-     * Avatar URL.
-     */
-    _avatarURL: string;
-
-    /**
      * Email of user.
      */
     _email: string;
@@ -169,9 +164,6 @@ class Conference extends Component<Props, State> {
     componentDidUpdate(prevProps) {
         const { props } = this;
 
-        if (props._avatarURL !== prevProps._avatarURL) {
-            this._setAvatarURL(props._avatarURL);
-        }
         if (props._email !== prevProps._email) {
             this._setEmail(props._email);
         }
@@ -370,7 +362,6 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     _onVideoConferenceJoined(conferenceInfo: Object) {
-        this._setAvatarURL(this.props._avatarURL);
         this._setEmail(this.props._email);
         this._setName(this.props._name);
 
@@ -380,16 +371,6 @@ class Conference extends Component<Props, State> {
             (params: Object) => this._onDisplayNameChange(params, id));
         this._api.on('emailChange',
             (params: Object) => this._onEmailChange(params, id));
-    }
-
-    /**
-     * Set Avatar URL from settings to conference.
-     *
-     * @param {string} avatarURL - Avatar URL.
-     * @returns {void}
-     */
-    _setAvatarURL(avatarURL: string) {
-        this._api.executeCommand('avatarUrl', avatarURL);
     }
 
     /**
@@ -422,9 +403,7 @@ class Conference extends Component<Props, State> {
  */
 function _mapStateToProps(state: Object) {
     return {
-        _alwaysOnTopWindowEnabled:
-            getSetting(state, 'alwaysOnTopWindowEnabled', true),
-        _avatarURL: state.settings.avatarURL,
+        _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
         _email: state.settings.email,
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,

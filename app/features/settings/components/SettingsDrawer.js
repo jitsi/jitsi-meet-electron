@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
-import { Onboarding, startOnboarding } from '../../onboarding';
+import { Onboarding, advenaceSettingsSteps, startOnboarding } from '../../onboarding';
 import { Form, SettingsContainer, TogglesContainer } from '../styled';
 import { setEmail, setName } from '../actions';
 
@@ -36,6 +36,11 @@ type Props = {
      * Email of the user.
      */
     _email: string;
+
+    /**
+     * Whether onboarding is active or not.
+     */
+    _isOnboardingAdvancedSettings: boolean,
 
     /**
      * Name of the user.
@@ -117,22 +122,27 @@ class SettingsDrawer extends Component<Props, *> {
                                     value = { this.props._email } />
                             </Form>
                         </SpotlightTarget>
-                        <SpotlightTarget
-                            name = 'server-setting'>
-                            <ServerURLField />
-                        </SpotlightTarget>
                         <TogglesContainer>
                             <SpotlightTarget
                                 name = 'start-muted-toggles'>
                                 <StartMutedToggles />
                             </SpotlightTarget>
-                            <SpotlightTarget
-                                name = 'always-on-top-window'>
-                                <AlwaysOnTopWindowToggle />
-                            </SpotlightTarget>
                         </TogglesContainer>
-                        <Panel header = 'Advanced Settings'>
-                            <ServerTimeoutField />
+                        <Panel
+                            header = 'Advanced Settings'
+                            isDefaultExpanded = { this.props._isOnboardingAdvancedSettings }>
+                            <SpotlightTarget name = 'server-setting'>
+                                <ServerURLField />
+                            </SpotlightTarget>
+                            <SpotlightTarget name = 'server-timeout'>
+                                <ServerTimeoutField />
+                            </SpotlightTarget>
+                            <TogglesContainer>
+                                <SpotlightTarget
+                                    name = 'always-on-top-window'>
+                                    <AlwaysOnTopWindowToggle />
+                                </SpotlightTarget>
+                            </TogglesContainer>
                         </Panel>
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
@@ -221,6 +231,7 @@ class SettingsDrawer extends Component<Props, *> {
 function _mapStateToProps(state: Object) {
     return {
         _email: state.settings.email,
+        _isOnboardingAdvancedSettings: !advenaceSettingsSteps.every(i => state.onboarding.onboardingShown.includes(i)),
         _name: state.settings.name
     };
 }

@@ -17,11 +17,11 @@ type Props = {
 };
 
 /**
- * Start Muted Toggles Spotlight Component.
+ * Server Setting Spotlight Component.
  */
-class StartMutedTogglesSpotlight extends Component<Props, *> {
+class ServerTimeoutSpotlight extends Component<Props, *> {
     /**
-     * Initializes a new {@code StartMutedTogglesSpotlight} instance.
+     * Initializes a new {@code ServerSettingSpotlight} instance.
      *
      * @inheritdoc
      */
@@ -45,10 +45,9 @@ class StartMutedTogglesSpotlight extends Component<Props, *> {
                         text: 'Next'
                     }
                 ] }
-                dialogPlacement = 'top right'
-                target = { 'start-muted-toggles' } >
-                You can toggle if you want to start with your audio or video
-                muted here. This will be applied to all conferences.
+                dialogPlacement = 'right top'
+                target = { 'server-timeout' } >
+                Timeout to join a meeting, if the meeting hasn't been joined before the timeout hits, it's cancelled.
             </Spotlight>
         );
     }
@@ -65,5 +64,4 @@ class StartMutedTogglesSpotlight extends Component<Props, *> {
     }
 }
 
-export default connect()(StartMutedTogglesSpotlight);
-
+export default connect()(ServerTimeoutSpotlight);

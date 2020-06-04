@@ -96,6 +96,7 @@
     "@atlaskit/spinner": "9.0.13",
     "@atlaskit/theme": "7.0.1",
     "@atlaskit/toggle": "5.0.14",
+    "electron-context-menu": "2.0.1",
     "electron-debug": "3.0.1",
     "electron-is-dev": "1.2.0",
     "electron-log": "4.1.1",

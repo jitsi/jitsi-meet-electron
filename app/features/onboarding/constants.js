@@ -6,10 +6,17 @@ import {
     SettingsDrawerSpotlight,
     NameSettingSpotlight,
     EmailSettingSpotlight,
-    ServerSettingSpotlight,
     StartMutedTogglesSpotlight,
+    ServerSettingSpotlight,
+    ServerTimeoutSpotlight,
     AlwaysOnTopWindowSpotlight
 } from './components';
+
+export const advenaceSettingsSteps = [
+    'server-setting',
+    'server-timeout',
+    'always-on-top-window'
+];
 
 export const onboardingSteps = {
     'welcome-page': [
@@ -20,9 +27,8 @@ export const onboardingSteps = {
     'settings-drawer': [
         'name-setting',
         'email-setting',
-        'server-setting',
         'start-muted-toggles',
-        'always-on-top-window'
+        ...advenaceSettingsSteps
     ]
 };
 
@@ -32,7 +38,8 @@ export const onboardingComponents = {
     'settings-drawer-button': SettingsDrawerSpotlight,
     'name-setting': NameSettingSpotlight,
     'email-setting': EmailSettingSpotlight,
-    'server-setting': ServerSettingSpotlight,
     'start-muted-toggles': StartMutedTogglesSpotlight,
+    'server-setting': ServerSettingSpotlight,
+    'server-timeout': ServerTimeoutSpotlight,
     'always-on-top-window': AlwaysOnTopWindowSpotlight
 };

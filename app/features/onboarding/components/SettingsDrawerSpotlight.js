@@ -42,7 +42,7 @@ class SettingsDrawerSpotlight extends Component<Props, *> {
     render() {
         return (
             <Spotlight
-                dialogPlacement = 'right top'
+                dialogPlacement = 'top right'
                 target = { 'settings-drawer-button' }
                 targetOnClick = { this._next }>
                 Click here to open the settings drawer.

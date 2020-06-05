@@ -20,16 +20,6 @@ export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED
 export const SET_AUDIO_MUTED = Symbol('SET_AUDIO_MUTED');
 
 /**
- * The type of (redux) action that sets the Avatar URL.
- *
- * @type {
- *     type: SET_AVATAR_URL,
- *     avatarURL: string
- * }
- */
-export const SET_AVATAR_URL = Symbol('SET_AVATAR_URL');
-
-/**
  * The type of (redux) action that sets the email of the user.
  *
  * @type {

@@ -6,6 +6,8 @@ const {
     app,
     shell
 } = require('electron');
+const contextMenu = require('electron-context-menu');
+const debug = require('electron-debug');
 const isDev = require('electron-is-dev');
 const { autoUpdater } = require('electron-updater');
 const windowStateKeeper = require('electron-window-state');
@@ -23,19 +25,40 @@ const config = require('./app/features/config');
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1086373
+app.commandLine.appendSwitch('disable-webrtc-hw-encoding');
+app.commandLine.appendSwitch('disable-webrtc-hw-decoding');
+
 // Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
 app.allowRendererProcessReuse = false;
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
 
+// Enable context menu so things like copy and paste work in input fields.
+contextMenu({
+    showLookUpSelection: false,
+    showSearchWithGoogle: false,
+    showCopyImage: false,
+    showCopyImageAddress: false,
+    showSaveImage: false,
+    showSaveImageAs: false,
+    showInspectElement: true,
+    showServices: false
+});
+
+// Enable DevTools also on release builds to help troubleshoot issues. Don't
+// show them automatically though.
+debug({
+    isEnabled: true,
+    showDevTools: false
+});
+
 /**
  * When in development mode:
- * - Load debug utilities (don't open the DevTools window by default though)
  * - Enable automatic reloads
  */
 if (isDev) {
-    require('electron-debug')({ showDevTools: false });
     require('electron-reload')(path.join(__dirname, 'build'));
 }
 

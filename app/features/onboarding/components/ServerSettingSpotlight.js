@@ -45,7 +45,7 @@ class ServerSettingSpotlight extends Component<Props, *> {
                         text: 'Next'
                     }
                 ] }
-                dialogPlacement = 'left top'
+                dialogPlacement = 'top right'
                 target = { 'server-setting' } >
                 This will be the server where your conferences will take place.
                 You can use your own, but you don't need to!

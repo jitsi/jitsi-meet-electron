@@ -12,7 +12,6 @@ Desktop application for [Jitsi Meet] built with [Electron].
 
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
-- Local settings
 - Builtin auto-updates
 - Remote control
 - Always-On-Top window
@@ -22,27 +21,9 @@ Desktop application for [Jitsi Meet] built with [Electron].
 Download our [latest release] and you're off to the races! The supported platforms
 are macOS, Windows, and GNU/Linux (all 64bits only).
 
-<details><summary>NOTE for old GNU/Linux distributions</summary>
-
-You might get the following error:
-
-```
-FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
-Please upgrade to the latest NSS, and if you still get this error, contact your
-distribution maintainer.
-```
-
-If you do, please install NSS (example for Debian / Ubuntu):
-
-```bash
-sudo apt-get install libnss3
-```
-
-</details>
-
 ### Homebrew
 
-For *MacOS* user, you can install the application using the following command:
+For *macOS* user, you can install the application using the following command:
 
 ```
 brew cask install jitsi-meet
@@ -62,10 +43,10 @@ location /external_api.js {
 }
 ```
 
-The following additional HTTP headers are known not to work with the Electron App:
+:warning: The following additional HTTP headers are known to break the Electron App:
 
 ```
-Content-Security-Policy "frame-ancestors 'none'";
+Content-Security-Policy "frame-ancestors [looks like any value is bad]";
 X-Frame-Options "DENY";
 ```
 
@@ -124,6 +105,40 @@ npm install jitsi-meet-electron-utils --force
 
 NOTE: Also check the [jitsi-meet-electron-utils README] to see how to configure
 your environment.
+
+</details>
+
+## Known issues
+
+### Windows
+
+A warning will show up mentioning the app is unsigned upon first install. This is expected.
+
+### macOS
+
+On macOS Catalina a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
+
+### GNU/Linux
+
+There is a known issue which prevents the app from starting on some Linux distributions: #231
+
+The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppImage --no-sandbox`
+
+<details><summary>NOTE for old GNU/Linux distributions</summary>
+
+You might get the following error:
+
+```
+FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
+Please upgrade to the latest NSS, and if you still get this error, contact your
+distribution maintainer.
+```
+
+If you do, please install NSS (example for Debian / Ubuntu):
+
+```bash
+sudo apt-get install libnss3
+```
 
 </details>
 

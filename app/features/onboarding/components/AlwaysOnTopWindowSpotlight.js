@@ -47,7 +47,7 @@ class AlwaysOnTopWindowSpotlight extends Component<Props, *> {
                         text: 'Next'
                     }
                 ] }
-                dialogPlacement = 'left top'
+                dialogPlacement = 'top right'
                 target = { 'always-on-top-window' } >
                 You can toggle whether you want to enable the "always-on-top" window,
                 which is displayed when the main window loses focus.

@@ -3,7 +3,6 @@
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
-    SET_AVATAR_URL,
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
@@ -12,22 +11,6 @@ import {
 } from './actionTypes';
 
 import { normalizeServerURL } from '../utils';
-
-/**
- * Set Avatar URL.
- *
- * @param {string} avatarURL - Avatar URL.
- * @returns {{
- *     type: SET_AVATAR_URL,
- *     avatarURL: string
- * }}
- */
-export function setAvatarURL(avatarURL: string) {
-    return {
-        type: SET_AVATAR_URL,
-        avatarURL
-    };
-}
 
 /**
  * Set the email of the user.

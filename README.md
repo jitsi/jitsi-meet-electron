@@ -11,6 +11,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 - Builtin auto-updates
 - Remote control
 - Always-On-Top window
+- Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
 
 ## Installation
 

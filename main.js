@@ -227,7 +227,6 @@ function createJitsiMeetWindow() {
      *  while app is closed
      * it will trigger this event below
      */
-    handleProtocolCall(process.argv[2]);
     if (process.platform === 'win32') {
         handleProtocolCall(process.argv.pop());
     }

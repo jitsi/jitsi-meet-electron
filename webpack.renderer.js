@@ -8,6 +8,10 @@ module.exports = {
     // target a web platform.
     target: 'web',
     entry: { app: './app/index.js' },
+    performance: {
+        maxAssetSize: 1.5 * 1024 * 1024,
+        maxEntrypointSize: 1.5 * 1024 * 1024
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './app/index.html'

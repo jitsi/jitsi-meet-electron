@@ -6,8 +6,10 @@ export default styled.div`
     background: #1754A9;
     border-radius: 0.5em;
     color: white;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: 1fr auto;
+    grid-auto-flow: column;
     font-size: 0.9em;
     margin: 0.5em;
     padding: 1em;

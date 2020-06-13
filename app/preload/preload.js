@@ -1,10 +1,9 @@
 const createElectronStorage = require('redux-persist-electron-storage');
-const { shell } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const os = require('os');
 const url = require('url');
 
 const jitsiMeetElectronUtils = require('jitsi-meet-electron-utils');
-
 
 const protocolRegex = /^https?:/i;
 
@@ -28,10 +27,35 @@ function openExternalLink(link) {
     }
 }
 
+const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
 
 window.jitsiNodeAPI = {
     createElectronStorage,
     osUserInfo: os.userInfo,
     openExternalLink,
-    jitsiMeetElectronUtils
+    jitsiMeetElectronUtils,
+    shellOpenExternal: shell.openExternal,
+    ipc: {
+        on: (channel, listener) => {
+            if (!whitelistedIpcChannels.includes(channel)) {
+                return;
+            }
+
+            return ipcRenderer.on(channel, listener);
+        },
+        send: channel => {
+            if (!whitelistedIpcChannels.includes(channel)) {
+                return;
+            }
+
+            return ipcRenderer.send(channel);
+        },
+        removeListener: (channel, listener) => {
+            if (!whitelistedIpcChannels.includes(channel)) {
+                return;
+            }
+
+            return ipcRenderer.removeListener(channel, listener);
+        }
+    }
 };

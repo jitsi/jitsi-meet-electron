@@ -4,6 +4,7 @@ const {
     BrowserWindow,
     Menu,
     app,
+    ipcMain,
     shell
 } = require('electron');
 const contextMenu = require('electron-context-menu');
@@ -21,6 +22,8 @@ const {
 const path = require('path');
 const URL = require('url');
 const config = require('./app/features/config');
+
+const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
@@ -51,7 +54,7 @@ contextMenu({
 // show them automatically though.
 debug({
     isEnabled: true,
-    showDevTools: false
+    showDevTools
 });
 
 /**
@@ -68,6 +71,14 @@ if (isDev) {
  * acidentally.
  */
 let mainWindow = null;
+
+/**
+ * Add protocol data
+ */
+const appProtocolSurplus = `${config.default.appProtocolPrefix}://`;
+let rendererReady = false;
+let protocolDataForFrontApp = null;
+
 
 /**
  * Sets the application menu. It is hidden on all platforms except macOS because
@@ -209,6 +220,44 @@ function createJitsiMeetWindow() {
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
     });
+
+    /**
+     * This is for windows [win32]
+     * so when someone tries to enter something like jitsi-meet://test
+     *  while app is closed
+     * it will trigger this event below
+     */
+    if (process.platform === 'win32') {
+        handleProtocolCall(process.argv.pop());
+    }
+}
+
+/**
+ * Handler for application protocol links to initiate a conference.
+ */
+function handleProtocolCall(fullProtocolCall) {
+    // don't touch when something is bad
+    if (
+        !fullProtocolCall
+        || fullProtocolCall.trim() === ''
+        || fullProtocolCall.indexOf(appProtocolSurplus) !== 0
+    ) {
+        return;
+    }
+
+    const inputURL = fullProtocolCall.replace(appProtocolSurplus, '');
+
+    if (app.isReady() && mainWindow === null) {
+        createJitsiMeetWindow();
+    }
+
+    protocolDataForFrontApp = inputURL;
+
+    if (rendererReady) {
+        mainWindow
+            .webContents
+            .send('protocol-data-msg', inputURL);
+    }
 }
 
 /**
@@ -245,7 +294,7 @@ app.on('certificate-error',
 
 app.on('ready', createJitsiMeetWindow);
 
-app.on('second-instance', () => {
+app.on('second-instance', (event, commandLine) => {
     /**
      * If someone creates second instance of the application, set focus on
      * existing window.
@@ -253,6 +302,13 @@ app.on('second-instance', () => {
     if (mainWindow) {
         mainWindow.isMinimized() && mainWindow.restore();
         mainWindow.focus();
+
+        /**
+         * This is for windows [win32]
+         * so when someone tries to enter something like jitsi-meet://test
+         * while app is opened it will trigger protocol handler.
+         */
+        handleProtocolCall(commandLine.pop());
     }
 });
 
@@ -260,5 +316,43 @@ app.on('window-all-closed', () => {
     // Don't quit the application on macOS.
     if (process.platform !== 'darwin') {
         app.quit();
+    }
+});
+
+// remove so we can register each time as we run the app.
+app.removeAsDefaultProtocolClient(config.default.appProtocolPrefix);
+
+// If we are running a non-packaged version of the app && on windows
+if (isDev && process.platform === 'win32') {
+    // Set the path of electron.exe and your app.
+    // These two additional parameters are only available on windows.
+    app.setAsDefaultProtocolClient(
+        config.default.appProtocolPrefix,
+        process.execPath,
+        [ path.resolve(process.argv[1]) ]
+    );
+} else {
+    app.setAsDefaultProtocolClient(config.default.appProtocolPrefix);
+}
+
+/**
+ * This is for mac [darwin]
+ * so when someone tries to enter something like jitsi-meet://test
+ * it will trigger this event below
+ */
+app.on('open-url', (event, data) => {
+    event.preventDefault();
+    handleProtocolCall(data);
+});
+
+/**
+ * This is to notify main.js [this] that front app is ready to receive messages.
+ */
+ipcMain.on('renderer-ready', () => {
+    rendererReady = true;
+    if (protocolDataForFrontApp) {
+        mainWindow
+            .webContents
+            .send('protocol-data-msg', protocolDataForFrontApp);
     }
 });

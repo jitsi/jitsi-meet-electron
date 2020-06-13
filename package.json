@@ -64,7 +64,16 @@
     },
     "directories": {
       "buildResources": "resources"
-    }
+    },
+    "protocols": [
+      {
+        "name": "jitsi-protocol",
+        "role": "Viewer",
+        "schemes": [
+          "jitsi-meet"
+        ]
+      }
+    ]
   },
   "pre-commit": [
     "lint"
@@ -134,7 +143,7 @@
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
     "devtron": "1.4.0",
-    "electron": "9.0.2",
+    "electron": "9.0.3",
     "electron-builder": "22.7.0",
     "electron-builder-notarize": "1.1.2",
     "electron-react-devtools": "0.5.3",

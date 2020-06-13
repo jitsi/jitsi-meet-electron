@@ -8,6 +8,10 @@ module.exports = {
     // target a web platform.
     target: 'web',
     entry: { app: './app/index.js' },
+    performance: {
+        maxAssetSize: 1.5 * 1024 * 1024,
+        maxEntrypointSize: 1.5 * 1024 * 1024
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './app/index.html'
@@ -21,6 +25,7 @@ module.exports = {
         __dirname: true
     },
     module: {
+        noParse: /external_api\\.js/,
         rules: [
             {
                 exclude: /node_modules(?!(\/|\\)js-utils)/,
@@ -41,12 +46,9 @@ module.exports = {
                         require.resolve('@babel/preset-react')
                     ],
                     plugins: [
-                        /* eslint-disable max-len */
                         require.resolve('@babel/plugin-transform-flow-strip-types'),
                         require.resolve('@babel/plugin-proposal-class-properties'),
-                        require.resolve('@babel/plugin-proposal-export-namespace-from'),
-                        /* eslint-enable max-len */
-                        require.resolve('babel-plugin-inline-react-svg')
+                        require.resolve('@babel/plugin-proposal-export-namespace-from')
                     ]
                 },
                 test: /\.js$/
@@ -63,8 +65,14 @@ module.exports = {
                 test: /\.png$/
             },
             {
-                loader: 'svg-inline-loader',
-                test: /\.svg$/
+                test: /\.svg$/,
+                use: [ {
+                    loader: '@svgr/webpack',
+                    options: {
+                        dimensions: false,
+                        expandProps: 'start'
+                    }
+                } ]
             }
         ]
     },

@@ -8,37 +8,22 @@ Desktop application for [Jitsi Meet] built with [Electron].
 
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
-- Local settings
 - Builtin auto-updates
 - Remote control
 - Always-On-Top window
+- Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
 
 ## Installation
 
-Download our [latest release] and you're off to the races! The supported platforms
-are macOS, Windows (both 32 and 64bits) and GNU/Linux (64bits only).
+Download our latest release and you're off to the races!
 
-<details><summary>NOTE for old GNU/Linux distributions</summary>
-
-You might get the following error:
-
-```
-FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
-Please upgrade to the latest NSS, and if you still get this error, contact your
-distribution maintainer.
-```
-
-If you do, please install NSS (example for Debian / Ubuntu):
-
-```bash
-sudo apt-get install libnss3
-```
-
-</details>
+| Windows | macOS | GNU/Linux (64bits only) |
+| -- | -- | -- |
+| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
 
 ### Homebrew
 
-For *MacOS* user, you can install the application using the following command:
+For *macOS* user, you can install the application using the following command:
 
 ```
 brew cask install jitsi-meet
@@ -85,6 +70,14 @@ npm start
 
 The debugger tools are available when running in dev mode and can be activated with keyboard shortcuts as defined here https://github.com/sindresorhus/electron-debug#features.
 
+It can also be displayed automatically from the `SHOW_DEV_TOOLS` environment variable such as:
+
+```bash
+SHOW_DEV_TOOLS=true npm start
+```
+
+or from the application `--show-dev-tools` command line flag.
+
 #### Building the production distribution
 
 ```bash
@@ -120,6 +113,40 @@ npm install jitsi-meet-electron-utils --force
 
 NOTE: Also check the [jitsi-meet-electron-utils README] to see how to configure
 your environment.
+
+</details>
+
+## Known issues
+
+### Windows
+
+A warning will show up mentioning the app is unsigned upon first install. This is expected.
+
+### macOS
+
+On macOS Catalina a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
+
+### GNU/Linux
+
+There is a known issue which prevents the app from starting on some Linux distributions: #231
+
+The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppImage --no-sandbox`
+
+<details><summary>NOTE for old GNU/Linux distributions</summary>
+
+You might get the following error:
+
+```
+FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
+Please upgrade to the latest NSS, and if you still get this error, contact your
+distribution maintainer.
+```
+
+If you do, please install NSS (example for Debian / Ubuntu):
+
+```bash
+sudo apt-get install libnss3
+```
 
 </details>
 

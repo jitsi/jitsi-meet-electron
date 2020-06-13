@@ -11,8 +11,8 @@ import config from '../../config';
 import { getSetting, setEmail, setName } from '../../settings';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
+import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
-import { getExternalApiURL } from '../../utils';
 
 type Props = {
 
@@ -30,11 +30,6 @@ type Props = {
      * AlwaysOnTop Window Enabled.
      */
     _alwaysOnTopWindowEnabled: boolean;
-
-    /**
-     * Avatar URL.
-     */
-    _avatarURL: string;
 
     /**
      * Email of user.
@@ -123,7 +118,6 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     componentDidMount() {
-        const parentNode = this._ref.current;
         const room = this.props.location.state.room;
         const serverTimeout = this.props._serverTimeout || config.defaultServerTimeout;
         const serverURL = this.props.location.state.serverURL
@@ -135,15 +129,7 @@ class Conference extends Component<Props, State> {
             serverURL
         };
 
-        const script = document.createElement('script');
-
-        script.async = true;
-        script.onload = () => this._onScriptLoad(parentNode);
-        script.onerror = (event: Event) =>
-            this._navigateToHome(event, room, serverURL);
-        script.src = getExternalApiURL(serverURL);
-
-        this._ref.current.appendChild(script);
+        this._loadConference();
 
         // Set a timer for a timeout duration, if we haven't loaded the iframe by then,
         // give up.
@@ -169,9 +155,6 @@ class Conference extends Component<Props, State> {
     componentDidUpdate(prevProps) {
         const { props } = this;
 
-        if (props._avatarURL !== prevProps._avatarURL) {
-            this._setAvatarURL(props._avatarURL);
-        }
         if (props._email !== prevProps._email) {
             this._setEmail(props._email);
         }
@@ -208,45 +191,12 @@ class Conference extends Component<Props, State> {
     }
 
     /**
-     * It renders a loading indicator, if appropriate.
+     * Load the conference by creating the iframe element in this component
+     * and attaching utils from jitsi-meet-electron-utils.
      *
-     * @returns {?ReactElement}
-     */
-    _maybeRenderLoadingIndicator() {
-        if (this.state.isLoading) {
-            return (
-                <LoadingIndicator>
-                    <Spinner size = 'large' />
-                </LoadingIndicator>
-            );
-        }
-    }
-
-    /**
-     * Navigates to home screen (Welcome).
-     *
-     * @param {Event} event - Event by which the function is called.
-     * @param {string} room - Room name.
-     * @param {string} serverURL - Server URL.
      * @returns {void}
      */
-    _navigateToHome(event: Event, room: ?string, serverURL: ?string) {
-        this.props.dispatch(push('/', {
-            error: event.type === 'error',
-            room,
-            serverURL
-        }));
-    }
-
-    /**
-     * When the script is loaded create the iframe element in this component
-     * and attach utils from jitsi-meet-electron-utils.
-     *
-     * @param {Object} parentNode - Node to which iframe has to be attached.
-     * @returns {void}
-     */
-    _onScriptLoad(parentNode: Object) {
-        const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
+    _loadConference() {
         const url = new URL(this._conference.room, this._conference.serverURL);
         const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
@@ -261,7 +211,7 @@ class Conference extends Component<Props, State> {
         const options = {
             configOverwrite,
             onload: this._onIframeLoad,
-            parentNode,
+            parentNode: this._ref.current,
             roomName
         };
 
@@ -302,6 +252,37 @@ class Conference extends Component<Props, State> {
 
         setupWiFiStats(iframe);
         setupPowerMonitorRender(this._api);
+    }
+
+    /**
+     * It renders a loading indicator, if appropriate.
+     *
+     * @returns {?ReactElement}
+     */
+    _maybeRenderLoadingIndicator() {
+        if (this.state.isLoading) {
+            return (
+                <LoadingIndicator>
+                    <Spinner size = 'large' />
+                </LoadingIndicator>
+            );
+        }
+    }
+
+    /**
+     * Navigates to home screen (Welcome).
+     *
+     * @param {Event} event - Event by which the function is called.
+     * @param {string} room - Room name.
+     * @param {string} serverURL - Server URL.
+     * @returns {void}
+     */
+    _navigateToHome(event: Event, room: ?string, serverURL: ?string) {
+        this.props.dispatch(push('/', {
+            error: event.type === 'error',
+            room,
+            serverURL
+        }));
     }
 
     _onVideoConferenceEnded: (*) => void;
@@ -370,7 +351,6 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     _onVideoConferenceJoined(conferenceInfo: Object) {
-        this._setAvatarURL(this.props._avatarURL);
         this._setEmail(this.props._email);
         this._setName(this.props._name);
 
@@ -380,16 +360,6 @@ class Conference extends Component<Props, State> {
             (params: Object) => this._onDisplayNameChange(params, id));
         this._api.on('emailChange',
             (params: Object) => this._onEmailChange(params, id));
-    }
-
-    /**
-     * Set Avatar URL from settings to conference.
-     *
-     * @param {string} avatarURL - Avatar URL.
-     * @returns {void}
-     */
-    _setAvatarURL(avatarURL: string) {
-        this._api.executeCommand('avatarUrl', avatarURL);
     }
 
     /**
@@ -422,9 +392,7 @@ class Conference extends Component<Props, State> {
  */
 function _mapStateToProps(state: Object) {
     return {
-        _alwaysOnTopWindowEnabled:
-            getSetting(state, 'alwaysOnTopWindowEnabled', true),
-        _avatarURL: state.settings.avatarURL,
+        _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
         _email: state.settings.email,
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,

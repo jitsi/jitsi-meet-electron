@@ -30,6 +30,8 @@
 		"advancedSettings": "Advanced Settings",
 		"alwaysOnTopWindow": "Always on Top Window",
 		"startWithAudioMuted": "Start with Audio muted",
-		"startWithVideoMuted": "Start with Video muted"
+		"startWithVideoMuted": "Start with Video muted",
+		"invalidServer": "Invalid Server URL or external API not enabled",
+		"serverUrl": "Server URL"
 	}
 }

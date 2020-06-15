@@ -1,1 +1,11 @@
-{}
+{
+	"enterConferenceNameOrUrl": "Enter a name for your conference or a Jitsi URL",
+	"go": "GO",
+	"help": "Help",
+	"termsLink": "Terms",
+	"privacyLink": "Privacy",
+	"sendFeedbackLink": "Send Feedback",
+	"aboutLink": "About",
+	"sourceLink": "Source Code",
+	"versionLabel": "Version: {{version}}"
+}

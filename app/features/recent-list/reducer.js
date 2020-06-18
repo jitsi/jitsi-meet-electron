@@ -1,6 +1,7 @@
 // @flow
 
 import { CONFERENCE_ENDED, CONFERENCE_JOINED } from '../conference';
+import { CONFERENCE_REMOVED } from './actionTypes';
 
 import type { RecentListItem } from './types';
 
@@ -34,6 +35,12 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
             recentList: _insertConference(state.recentList, action.conference)
         };
 
+    case CONFERENCE_REMOVED:
+        return {
+            ...state,
+            recentList: _removeConference(state.recentList, action.conference)
+        };
+
     default:
         return state;
     }
@@ -63,6 +70,21 @@ function _insertConference(
     newRecentList.unshift(newConference);
 
     return newRecentList;
+}
+
+/**
+ * Remove a conference from the recent list array.
+ *
+ * @param {Array<RecentListItem>} recentList - Previous recent list array.
+ * @param {RecentListItem} toRemove - Conference to be removed.
+ * @returns {Array<RecentListItem>} - Updated recent list array.
+ */
+function _removeConference(
+        recentList: Array<RecentListItem>,
+        toRemove: RecentListItem
+): Array<RecentListItem> {
+    return recentList.filter(
+        (conference: RecentListItem) => conference !== toRemove);
 }
 
 /**

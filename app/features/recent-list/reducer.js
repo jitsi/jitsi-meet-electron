@@ -84,7 +84,7 @@ function _removeConference(
         toRemove: RecentListItem
 ): Array<RecentListItem> {
     return recentList.filter(
-        (conference: RecentListItem) => conference.room !== toRemove.room);
+        (conference: RecentListItem) => conference !== toRemove);
 }
 
 /**

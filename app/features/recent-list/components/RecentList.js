@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 import { push } from 'react-router-redux';
+
 import { conferenceRemoved } from '../actions';
 import {
     ConferenceCard,

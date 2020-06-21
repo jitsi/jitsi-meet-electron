@@ -1,4 +1,4 @@
-# Jitsi Meet Electron
+# Freifunk Meet Electron
 
 Desktop application for [Jitsi Meet] built with [Electron].
 
@@ -19,14 +19,14 @@ Download our latest release and you're off to the races!
 
 | Windows | macOS | GNU/Linux (64bits only) |
 | -- | -- | -- |
-| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
+| [Download](https://github.com/FreifunkMUC/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/FreifunkMUC/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/FreifunkMUC/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
 
 ### Homebrew
 
 For *macOS* user, you can install the application using the following command:
 
 ```
-brew cask install jitsi-meet
+brew cask install freifunk-meet
 ```
 
 ### Using it with your own Jitsi Meet installation

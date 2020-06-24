@@ -15,6 +15,9 @@
     "validate": "npm ls",
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
+  "engines" : {
+    "node" : ">=12.0.0"
+  },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
     "productName": "Jitsi Meet",

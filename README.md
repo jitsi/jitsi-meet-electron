@@ -58,6 +58,8 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
+Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
+
 ```bash
 npm install
 ```

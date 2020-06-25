@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 import { push } from 'react-router-redux';
 
+import { conferenceRemoved } from '../actions';
 import {
     ConferenceCard,
     ConferenceTitle,
@@ -13,6 +14,8 @@ import {
     TruncatedText
 } from '../styled';
 import type { RecentListItem } from '../types';
+import Button from '@atlaskit/button';
+import CrossIcon from '@atlaskit/icon/glyph/cross';
 
 type Props = {
 
@@ -59,6 +62,20 @@ class RecentList extends Component<Props, *> {
     }
 
     /**
+     * Creates a handler for removing a conference from the recents list.
+     *
+     * @param {RecentListItem} conference - Conference Details.
+     * @returns {void}
+     */
+    _onRemoveConference(conference: RecentListItem) {
+        return e => {
+            this.props.dispatch(conferenceRemoved(conference));
+            e.stopPropagation();
+        };
+    }
+
+
+    /**
      * Renders the conference card.
      *
      * @param {RecentListItem} conference - Conference Details.
@@ -81,6 +98,11 @@ class RecentList extends Component<Props, *> {
                 <TruncatedText>
                     { this._renderDuration(conference) }
                 </TruncatedText>
+                <Button
+                    appearance = 'subtle'
+                    iconBefore = { <CrossIcon primaryColor = 'white' /> }
+                    onClick = { this._onRemoveConference(conference) }
+                    spacing = 'none' />
             </ConferenceCard>
         );
     }

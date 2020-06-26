@@ -38,9 +38,9 @@ class Onboarding extends Component<Props, *> {
         const steps = onboardingSteps[section];
 
         if (_activeOnboarding && steps.includes(_activeOnboarding)) {
-            const ActiveOnboarding = onboardingComponents[_activeOnboarding];
+            const { type: ActiveOnboarding, ...props } = onboardingComponents[_activeOnboarding];
 
-            return <ActiveOnboarding />;
+            return <ActiveOnboarding { ...props } />;
         }
 
         return null;

@@ -3,8 +3,10 @@
 import { Modal } from '@atlaskit/onboarding';
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
+import { compose } from 'redux';
 
 import OnboardingModalImage from '../../../images/onboarding.png';
 
@@ -18,6 +20,11 @@ type Props = {
      * Redux dispatch.
      */
     dispatch: Dispatch<*>;
+
+    /**
+     * I18next translation function.
+     */
+    t: Function;
 };
 
 /**
@@ -43,21 +50,23 @@ class OnboardingModal extends Component<Props, *> {
      * @returns {ReactElement}
      */
     render() {
+        const { t } = this.props;
+
         return (
             <Modal
                 actions = { [
                     {
                         onClick: this._next,
-                        text: 'Start Tour'
+                        text: t('onboarding.startTour')
                     },
                     {
                         onClick: this._skip,
-                        text: 'Skip'
+                        text: t('onboarding.skip')
                     }
                 ] }
-                heading = { `Welcome to ${config.appName}` }
+                heading = { t('onboarding.welcome', { appName: config.appName }) }
                 image = { OnboardingModalImage } >
-                <p> Let us show you around!</p>
+                <p> { t('onboarding.letUsShowYouAround') }</p>
             </Modal>
         );
     }
@@ -86,4 +95,4 @@ class OnboardingModal extends Component<Props, *> {
 
 }
 
-export default connect()(OnboardingModal);
+export default compose(connect(), withTranslation())(OnboardingModal);

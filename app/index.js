@@ -5,15 +5,18 @@
  */
 import '@atlaskit/css-reset';
 
+import Spinner from '@atlaskit/spinner';
 import { SpotlightManager } from '@atlaskit/onboarding';
 
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { App } from './features/app';
 import { persistor, store } from './features/redux';
+
+import './i18n';
 
 /**
  * Component encapsulating App component with redux store using provider.
@@ -31,7 +34,9 @@ class Root extends Component<*> {
                     loading = { null }
                     persistor = { persistor }>
                     <SpotlightManager>
-                        <App />
+                        <Suspense fallback = { <Spinner /> } >
+                            <App />
+                        </Suspense>
                     </SpotlightManager>
                 </PersistGate>
             </Provider>

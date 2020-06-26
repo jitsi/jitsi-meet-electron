@@ -4,6 +4,7 @@ import Droplist, { Item, Group } from '@atlaskit/droplist';
 import HelpIcon from '@atlaskit/icon/glyph/question-circle';
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
 import config from '../../config';
 import { openExternalLink } from '../../utils';
@@ -20,7 +21,7 @@ type State = {
 /**
  * Help button for Navigation Bar.
  */
-export default class HelpButton extends Component< *, State> {
+class HelpButton extends Component<*, State> {
     /**
      * Initializes a new {@code HelpButton} instance.
      *
@@ -87,6 +88,8 @@ export default class HelpButton extends Component< *, State> {
      * @returns {ReactElement}
      */
     render() {
+        const { t } = this.props;
+
         return (
             <Droplist
                 isOpen = { this.state.droplistOpen }
@@ -94,27 +97,29 @@ export default class HelpButton extends Component< *, State> {
                 onOpenChange = { this._onOpenChange }
                 position = 'right bottom'
                 trigger = { <HelpIcon /> }>
-                <Group heading = 'Help'>
+                <Group heading = { t('help') } >
                     <Item onActivate = { this._onTermsClick }>
-                        Terms
+                        { t('termsLink') }
                     </Item>
                     <Item onActivate = { this._onPrivacyClick }>
-                        Privacy
+                        { t('privacyLink') }
                     </Item>
                     <Item onActivate = { this._onSendFeedbackClick }>
-                        Send Feedback
+                        { t('sendFeedbackLink') }
                     </Item>
                     <Item onActivate = { this._onAboutClick }>
-                        About
+                        { t('aboutLink') }
                     </Item>
                     <Item onActivate = { this._onSourceClick }>
-                        Source
+                        { t('sourceLink') }
                     </Item>
                     <Item>
-                        Version: { version }
+                        { t('versionLabel', { version }) }
                     </Item>
                 </Group>
             </Droplist>
         );
     }
 }
+
+export default withTranslation()(HelpButton);

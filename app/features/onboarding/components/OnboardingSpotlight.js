@@ -3,23 +3,18 @@
 import { Spotlight } from '@atlaskit/onboarding';
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 
 import { continueOnboarding } from '../actions';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
 
     /**
-     * Spotlight text.
+     * Redux dispatch.
      */
-    text: String;
-
-    /**
-     * Spotlight target.
-     */
-    target: String;
+    dispatch: Dispatch<*>;
 
     /**
      * Spotlight dialog placement.
@@ -32,14 +27,20 @@ type Props = {
     onNext: Function;
 
     /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
-
-    /**
      * I18next translation function.
      */
     t: Function;
+
+    /**
+     * Spotlight target.
+     */
+    target: String;
+
+    /**
+     * Spotlight text.
+     */
+    text: String;
+
 };
 
 const OnboardingSpotlight = (props: Props) => {

@@ -6,7 +6,6 @@
 import '@atlaskit/css-reset';
 
 import Spinner from '@atlaskit/spinner';
-
 import { SpotlightManager } from '@atlaskit/onboarding';
 
 import React, { Component, Suspense } from 'react';

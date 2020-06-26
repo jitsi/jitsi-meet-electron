@@ -4,11 +4,11 @@ import Droplist, { Item, Group } from '@atlaskit/droplist';
 import HelpIcon from '@atlaskit/icon/glyph/question-circle';
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
 import config from '../../config';
 import { openExternalLink } from '../../utils';
 import { version } from '../../../../package.json';
-import { withTranslation } from 'react-i18next';
 
 type State = {
 

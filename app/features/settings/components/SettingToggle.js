@@ -9,6 +9,11 @@ import ToggleWithLabel from './ToggleWithLabel';
 type Props = {
 
     /**
+     * Redux dispatch.
+     */
+    dispatch: Dispatch<*>;
+
+    /**
      * The label for the toggle.
      */
     label: String;
@@ -21,12 +26,7 @@ type Props = {
     /**
      * A function to produce setting change events.
      */
-    settingChangeEvent: Function<Boolean, Object>;
-
-    /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
+    settingChangeEvent: Function;
 
 };
 

@@ -3,6 +3,7 @@
 import { FieldTextStateless } from '@atlaskit/field-text';
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 import { compose } from 'redux';
@@ -12,7 +13,6 @@ import { getExternalApiURL } from '../../utils';
 
 import { setServerURL } from '../actions';
 import { Form } from '../styled';
-import { withTranslation } from 'react-i18next';
 
 type Props = {
 

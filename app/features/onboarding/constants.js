@@ -36,7 +36,7 @@ export const onboardingComponents = {
         dialogPlacement: 'top right',
         target: 'settings-drawer-button',
         text: 'onboarding.settingsDrawerButton',
-        onNext: props => props.dispatch(openDrawer(SettingsDrawer))
+        onNext: (props: OnboardingSpotlight.props) => props.dispatch(openDrawer(SettingsDrawer))
     },
     'name-setting': {
         type: OnboardingSpotlight,
@@ -73,7 +73,7 @@ export const onboardingComponents = {
         dialogPlacement: 'top right',
         target: 'always-on-top-window',
         text: 'onboarding.alwaysOnTop',
-        onNext: props => setTimeout(() => {
+        onNext: (props: OnboardingSpotlight.props) => setTimeout(() => {
             props.dispatch(closeDrawer());
         }, 300)
     }

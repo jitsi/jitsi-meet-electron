@@ -7,10 +7,10 @@ import { SpotlightTarget } from '@atlaskit/onboarding';
 import Panel from '@atlaskit/panel';
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 import { compose } from 'redux';
-import { withTranslation } from 'react-i18next';
 
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
 import { Onboarding, advenaceSettingsSteps, startOnboarding } from '../../onboarding';

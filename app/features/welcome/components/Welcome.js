@@ -8,6 +8,7 @@ import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
 import { generateRoomWithoutSeparator } from 'js-utils/random';
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
@@ -19,7 +20,6 @@ import { RecentList } from '../../recent-list';
 import { createConferenceObjectFromURL } from '../../utils';
 
 import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
-import { withTranslation } from 'react-i18next';
 
 type Props = {
 
@@ -36,7 +36,6 @@ type Props = {
     /**
      * I18next translate function.
      */
-
      t: Function;
 };
 

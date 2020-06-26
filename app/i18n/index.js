@@ -3,7 +3,9 @@ import { initReactI18next } from 'react-i18next';
 import moment from 'moment';
 
 const languages = {
-    en: { translation: require('./lang/en.json') }
+    de: { translation: require('./lang/de.json') },
+    en: { translation: require('./lang/en.json') },
+    it: { translation: require('./lang/it.json') }
 };
 
 const detectedLocale = window.jitsiNodeAPI.getLocale();

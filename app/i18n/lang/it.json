@@ -1,0 +1,38 @@
+{
+	"enterConferenceNameOrUrl": "Inserisci un numero di conferenza oppure un URL Jitsi",
+	"go": "VAI",
+	"help": "Aiuto",
+	"termsLink": "Condizioni d'uso",
+	"privacyLink": "Informazioni sulla privacy",
+	"sendFeedbackLink": "Inviaci Feedback",
+	"aboutLink": "FAQ",
+	"sourceLink": "Codice sorgente",
+	"versionLabel": "Versione: {{version}}",
+	"onboarding": {
+		"startTour": "Inizia Tour",
+		"skip": "salta",
+		"welcome": "Benvenuto in {{appName}}",
+		"letUsShowYouAround": "Ti facciamo vedere come funziona tutto!",
+		"next": "Avanti",
+		"conferenceUrl": "Insecisci il nome (oppure l'url intero) della stanza in cui vuoi accedere.",
+		"settingsDrawerButton": "Premi qua per arrivare alle impostazioni.",
+		"nameSetting": "Questo non è un username.",
+		"emailSetting": "Il campo E-Mail fa parte del tuo profile, questo campo può restare vuoto.",
+		"startMutedToggles": "Qua puoi impostare se vui accedere a tutte le conferenze con audio/video disabilitato al accesso..",
+		"serverSetting": "Questo è il server dove si svolgeranno tutte le conferenze, qua si può anche inserire il proprio server!",
+		"serverTimeout": "Questo è il tempo massimo che un server può metterci per rispondere ad una richiesta di accesso a un meeting.",
+		"alwaysOnTop": "Qua puoi attivare una piccola finestra che ti farà vedere i partecipanti del meeting anche se hai minimizzato la finestra principale."
+	},
+	"settings": {
+		"back": "Indietro",
+		"name": "Nome",
+		"email": "Email",
+		"advancedSettings": "Impostazioni avanzate",
+		"alwaysOnTopWindow": "Finestra sempre in primo piano",
+		"startWithAudioMuted": "Inizia senza audio",
+		"startWithVideoMuted": "Inizio senza video",
+		"invalidServer": "URL del server errato o il server non supporta un'API esterna",
+		"serverUrl": "URL Server",
+        "serverTimeout": "Timeout del server (in secondi)"
+	}
+}

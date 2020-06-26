@@ -32,6 +32,7 @@
 		"startWithAudioMuted": "Ohne Audio starten",
 		"startWithVideoMuted": "Ohne Video starten",
 		"invalidServer": "Falsche Server URL oder der Server unterstützt keine externe API",
-		"serverUrl": "Server URL"
+		"serverUrl": "Server URL",
+        "serverTimeout": "Server Timeout (in Sekunden)"
 	}
 }

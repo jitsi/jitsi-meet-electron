@@ -31,7 +31,8 @@
 		"alwaysOnTopWindow": "Finestra sempre in primo piano",
 		"startWithAudioMuted": "Inizia senza audio",
 		"startWithVideoMuted": "Inizio senza video",
-		"invalidServer": "Falsche Server URL oder der Server unterstützt keine externe API",
-		"serverUrl": "URL Server"
+		"invalidServer": "URL del server errato o il server non supporta un'API esterna",
+		"serverUrl": "URL Server",
+        "serverTimeout": "Timeout del server (in secondi)"
 	}
 }

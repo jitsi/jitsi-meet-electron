@@ -19,7 +19,7 @@ Download our latest release and you're off to the races!
 
 | Windows | macOS | GNU/Linux (64bits only) |
 | -- | -- | -- |
-| [Download](https://github.com/FreifunkMUC/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/FreifunkMUC/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/FreifunkMUC/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
+| [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.exe) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.dmg) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet-x86_64.AppImage) |
 
 ### Homebrew
 

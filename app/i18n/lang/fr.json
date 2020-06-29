@@ -1,0 +1,38 @@
+{
+  "enterConferenceNameOrUrl": "Entrez un nom pour votre conférence ou une URL Jitsi",
+  "go": "Rejoindre",
+  "help": "Aide",
+  "termsLink": "Conditions d'utilisation",
+  "privacyLink": "Politique de confidentialité",
+  "sendFeedbackLink": "Envoyer des commentaires",
+  "aboutLink": "A propos",
+  "sourceLink": "Code source",
+  "versionLabel": "Version: {{version}}",
+  "onboarding": {
+    "startTour": "Démarrez le tutoriel",
+    "skip": "Passer",
+    "welcome": "Bienvenue sur {{appName}}",
+    "letUsShowYouAround": "Laissez-nous vous montrer!",
+    "next": "Suivant",
+    "conferenceUrl": "Entrez le nom (ou l'URL complète) de la conférence que vous souhaitez rejoindre. Vous pouvez choisir ce que vous voulez, dites simplement à vos contacts d'utiliser le même nom.",
+    "settingsDrawerButton": "Cliquez içi pour ouvrir le panneau de configuration.",
+    "nameSetting": "Ceçi est votre nom, les participants vous verrons avec celui çi.",
+    "emailSetting": "L'email que vous entrez içi fera partie de votre profil utilisateur.",
+    "startMutedToggles": "Vous pouvez choisir de démarrer vos conférences avec l'audio et la vidéo désactivés. Ceci sera appliqué à toutes les conférences.",
+    "serverSetting": "Ceçi est le serveur utilisé pour vos conférences. Vous pouvez utiliser le votre, mais vous n'êtes pas obligés!",
+    "serverTimeout": "Delai pour rejoindre la conférence. Si la conférence ne s'est pas ouverte avant ce delai, elle sera abandonnée.",
+    "alwaysOnTop": "Vous pouvez activer la fenêtre \"Toujours au Dessus\", qui sera affichée quand la fenêtre principale n'est plus en premier plan. Ceci sera appliqué à toutes les conférences.."
+  },
+  "settings": {
+    "back": "Retour",
+    "name": "Nom",
+    "email": "Email",
+    "advancedSettings": "Paramètres avancés",
+    "alwaysOnTopWindow": "Fenêtre Toujours au Dessus",
+    "startWithAudioMuted": "Démarrer avec le micro coupé",
+    "startWithVideoMuted": "Démarrer avec la caméra coupée",
+    "invalidServer": "URL invalide ou API externe non activée",
+    "serverUrl": "URL du serveur",
+    "serverTimeout": "Délai de connexion au server (en secondes)"
+  }
+}

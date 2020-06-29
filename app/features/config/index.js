@@ -29,7 +29,7 @@ export default {
     /**
      * The default server Timeout in seconds.
      */
-    defaultServerTimeout: 10,
+    defaultServerTimeout: 30,
 
     /**
      * URL to send feedback.

@@ -1,6 +1,6 @@
 # Freifunk Meet Electron
 
-Desktop application for [FFMeet] built with [Electron].
+Desktop application for [Jitsi] built with [Electron].
 
 ![](screenshot.png)
 

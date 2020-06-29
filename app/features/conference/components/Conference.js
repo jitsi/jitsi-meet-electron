@@ -7,6 +7,7 @@ import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import i18n from '../../../i18n';
 import config from '../../config';
 import { getSetting, setEmail, setName } from '../../settings';
 
@@ -201,7 +202,11 @@ class Conference extends Component<Props, State> {
         const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
         const searchParameters = Object.fromEntries(url.searchParams);
-        const urlParameters = Object.keys(searchParameters).length ? searchParameters : {};
+        const locale = { lng: i18n.language };
+        const urlParameters = {
+            ...searchParameters,
+            ...locale
+        };
 
         const configOverwrite = {
             startWithAudioMuted: this.props._startWithAudioMuted,

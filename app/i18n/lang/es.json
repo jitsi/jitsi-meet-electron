@@ -1,0 +1,38 @@
+{
+	"enterConferenceNameOrUrl": "Ingrese un nombre para su conferencia o un URL de Jitsi",
+	"go": "IR",
+	"help": "Ayuda",
+	"termsLink": "Condiciones de Uso",
+	"privacyLink": "Privacidad",
+	"sendFeedbackLink": "Enviar comentarios",
+	"aboutLink": "Acerca",
+	"sourceLink": "Código fuente",
+	"versionLabel": "Version: {{version}}",
+	"onboarding": {
+		"startTour": "Iniciar Tour",
+		"skip": "Saltar",
+		"welcome": "Bienvenido a {{appName}}",
+		"letUsShowYouAround": "¡Permítanos mostrárselo!",
+		"next": "Siguiente",
+		"conferenceUrl": "Ingrese el nombre (o URL completo) de la sala a que se quiera unir. Puede inventar el nombre, solo informe a otros para que ellos usen el mismo nombre.",
+		"settingsDrawerButton": "Click aquí para abrir la opción de configuración.",
+		"nameSetting": "Este será su nombre mostrado, otros lo verán con este nombre.",
+		"emailSetting": "El correo electrónico que ingrese será parte de su perfil.",
+		"startMutedToggles": "Puede seleccionar aquí si desea iniciar con audio o video desactivado. Esto será aplicado a todas las conferencias.",
+		"serverSetting": "Este será el servidor donde sus conferencias tomarán lugar. Puede usar el suyo, ¡pero no necesita!",
+		"serverTimeout": "Tiempo de desconexión, si nadie se une a la reunión antes del tiempo de desconexión  termina, esta se cancela.",
+		"alwaysOnTop": "Puede seleccionar si desea activar la ventana \"siempre-encima\", la que se muestra cuando la ventana principal pierde enfoque. Esto será aplicado a todas las conferencias."
+	},
+	"settings": {
+		"back": "Atrás",
+		"name": "Nombre",
+		"email": "Correo",
+		"advancedSettings": "Configuración avanzada",
+		"alwaysOnTopWindow": "Ventana siempre encima",
+		"startWithAudioMuted": "Iniciar con audio desactivado",
+		"startWithVideoMuted": "Iniciar con video desactivado",
+		"invalidServer": "URL del servidor inválido o API externo no habilitada",
+		"serverUrl": "URL del servidor",
+		"serverTimeout": "Tiempo de desconexión del servidor (en segundos)"
+	}
+}

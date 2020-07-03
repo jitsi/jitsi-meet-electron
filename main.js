@@ -222,14 +222,11 @@ function createJitsiMeetWindow() {
     });
 
     /**
-     * This is for windows [win32]
-     * so when someone tries to enter something like jitsi-meet://test
+     * When someone tries to enter something like jitsi-meet://test
      *  while app is closed
      * it will trigger this event below
      */
-    if (process.platform === 'win32') {
-        handleProtocolCall(process.argv.pop());
-    }
+    handleProtocolCall(process.argv.pop());
 }
 
 /**

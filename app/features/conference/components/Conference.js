@@ -7,12 +7,15 @@ import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import i18n from '../../../i18n';
 import config from '../../config';
 import { getSetting, setEmail, setName } from '../../settings';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
+
+const ENABLE_REMOTE_CONTROL = false;
 
 type Props = {
 
@@ -201,7 +204,11 @@ class Conference extends Component<Props, State> {
         const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
         const searchParameters = Object.fromEntries(url.searchParams);
-        const urlParameters = Object.keys(searchParameters).length ? searchParameters : {};
+        const locale = { lng: i18n.language };
+        const urlParameters = {
+            ...searchParameters,
+            ...locale
+        };
 
         const configOverwrite = {
             startWithAudioMuted: this.props._startWithAudioMuted,
@@ -243,7 +250,10 @@ class Conference extends Component<Props, State> {
         const iframe = this._api.getIFrame();
 
         setupScreenSharingRender(this._api);
-        new RemoteControl(iframe); // eslint-disable-line no-new
+
+        if (ENABLE_REMOTE_CONTROL) {
+            new RemoteControl(iframe); // eslint-disable-line no-new
+        }
 
         // Allow window to be on top if enabled in settings
         if (this.props._alwaysOnTopWindowEnabled) {

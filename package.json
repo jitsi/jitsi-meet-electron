@@ -12,8 +12,10 @@
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "postinstall": "patch-package && electron-builder install-app-deps",
-    "validate": "npm ls",
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
+  },
+  "engines": {
+    "node": ">=12.0.0"
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
@@ -114,12 +116,14 @@
     "electron-updater": "4.2.5",
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
+    "i18next": "19.4.5",
     "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.7",
     "js-utils": "github:jitsi/js-utils#cf11996bd866fdb47326c59a5d3bc24be17282d4",
     "moment": "2.23.0",
     "mousetrap": "1.6.2",
-    "react": "16.6.3",
-    "react-dom": "16.6.3",
+    "react": "16.8.0",
+    "react-dom": "16.8.0",
+    "react-i18next": "11.5.1",
     "react-redux": "5.1.1",
     "react-router-redux": "5.0.0-alpha.9",
     "redux": "4.0.1",
@@ -137,7 +141,7 @@
     "@babel/preset-env": "7.9.0",
     "@babel/preset-flow": "7.9.0",
     "@babel/preset-react": "7.9.4",
-    "@svgr/webpack": "^5.4.0",
+    "@svgr/webpack": "5.4.0",
     "babel-eslint": "10.0.3",
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
@@ -157,9 +161,7 @@
     "flow-bin": "0.109.0",
     "html-webpack-plugin": "4.0.4",
     "patch-package": "6.2.2",
-    "precommit-hook": "3.0.0",
     "style-loader": "1.1.3",
-    "svg-inline-loader": "0.8.2",
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11"
   }

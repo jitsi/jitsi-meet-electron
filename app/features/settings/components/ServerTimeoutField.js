@@ -3,7 +3,9 @@
 import { FieldTextStateless } from '@atlaskit/field-text';
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import type { Dispatch } from 'redux';
 
 import config from '../../config';
@@ -22,6 +24,11 @@ type Props = {
      * Default Jitsi Meet Server Timeout in (redux) store.
      */
     _serverTimeout: number;
+
+    /**
+     * I18next translation function.
+     */
+    t: Function;
 };
 
 type State = {
@@ -64,6 +71,8 @@ class ServerTimeoutField extends Component<Props, State> {
      * @returns {ReactElement}
      */
     render() {
+        const { t } = this.props;
+
         return (
             <Form onSubmit = { this._onServerTimeoutSubmit }>
                 <FieldTextStateless
@@ -71,7 +80,7 @@ class ServerTimeoutField extends Component<Props, State> {
                         = { 'Invalid Timeout' }
                     isInvalid = { !this.state.isValid }
                     isValidationHidden = { this.state.isValid }
-                    label = 'Server Timeout (in seconds)'
+                    label = { t('settings.serverTimeout') }
                     onBlur = { this._onServerTimeoutSubmit }
                     onChange = { this._onServerTimeoutChange }
                     placeholder = { config.defaultServerTimeout }
@@ -138,4 +147,4 @@ function _mapStateToProps(state: Object) {
     };
 }
 
-export default connect(_mapStateToProps)(ServerTimeoutField);
+export default compose(connect(_mapStateToProps), withTranslation())(ServerTimeoutField);

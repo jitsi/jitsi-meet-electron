@@ -59,6 +59,8 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
+Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
+
 ```bash
 npm install
 ```
@@ -126,6 +128,7 @@ A warning will show up mentioning the app is unsigned upon first install. This i
 ### macOS
 
 On macOS Catalina a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
+Builtin auto-updates are not yet handled in macOS due to unsigned build.
 
 ### GNU/Linux
 

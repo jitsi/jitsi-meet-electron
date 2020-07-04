@@ -1,0 +1,38 @@
+{
+	"enterConferenceNameOrUrl": "Enter a name for your conference or a Jitsi URL",
+	"go": "GO",
+	"help": "Help",
+	"termsLink": "Terms",
+	"privacyLink": "Privacy",
+	"sendFeedbackLink": "Send Feedback",
+	"aboutLink": "About",
+	"sourceLink": "Source Code",
+	"versionLabel": "Version: {{version}}",
+	"onboarding": {
+		"startTour": "Start Tour",
+		"skip": "Skip",
+		"welcome": "Welcome to {{appName}}",
+		"letUsShowYouAround": "Let us show you around!",
+		"next": "Next",
+		"conferenceUrl": "Enter the name (or full URL) of the room you want to join. You may make a name up, just let others know so they enter the same name.",
+		"settingsDrawerButton": "Click here to open the settings drawer.",
+		"nameSetting": "This will be your display name, others will see you with this name.",
+		"emailSetting": "The email you enter here will be part of your user profile.",
+		"startMutedToggles": "You can toggle if you want to start with your audio or video muted here. This will be applied to all conferences.",
+		"serverSetting": "This will be the server where your conferences will take place. You can use your own, but you don't need to!",
+		"serverTimeout": "Timeout to join a meeting, if the meeting hasn't been joined before the timeout hits, it's cancelled.",
+		"alwaysOnTop": "You can toggle whether you want to enable the \"always-on-top\" window, which is displayed when the main window loses focus. This will be applied to all conferences."
+	},
+	"settings": {
+		"back": "Back",
+		"name": "Name",
+		"email": "Email",
+		"advancedSettings": "Advanced Settings",
+		"alwaysOnTopWindow": "Always on Top Window",
+		"startWithAudioMuted": "Start with Audio muted",
+		"startWithVideoMuted": "Start with Video muted",
+		"invalidServer": "Invalid Server URL or external API not enabled",
+		"serverUrl": "Server URL",
+		"serverTimeout": "Server Timeout (in seconds)"
+	}
+}

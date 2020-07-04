@@ -7,18 +7,22 @@ import { SpotlightTarget } from '@atlaskit/onboarding';
 import Panel from '@atlaskit/panel';
 
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
+import { compose } from 'redux';
 
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
 import { Onboarding, advenaceSettingsSteps, startOnboarding } from '../../onboarding';
 import { Form, SettingsContainer, TogglesContainer } from '../styled';
-import { setEmail, setName } from '../actions';
+import {
+    setEmail, setName, setWindowAlwaysOnTop,
+    setStartWithAudioMuted, setStartWithVideoMuted
+} from '../actions';
 
-import AlwaysOnTopWindowToggle from './AlwaysOnTopWindowToggle';
+import SettingToggle from './SettingToggle';
 import ServerURLField from './ServerURLField';
 import ServerTimeoutField from './ServerTimeoutField';
-import StartMutedToggles from './StartMutedToggles';
 
 type Props = {
 
@@ -46,6 +50,11 @@ type Props = {
      * Name of the user.
      */
     _name: string;
+
+    /**
+     * I18next translation function.
+     */
+    t: Function;
 };
 
 /**
@@ -92,9 +101,11 @@ class SettingsDrawer extends Component<Props, *> {
      * @returns {ReactElement}
      */
     render() {
+        const { t } = this.props;
+
         return (
             <AkCustomDrawer
-                backIcon = { <ArrowLeft label = 'Back' /> }
+                backIcon = { <ArrowLeft label = { t('settings.back') } /> }
                 isOpen = { this.props.isOpen }
                 onBackButton = { this._onBackButton }
                 primaryIcon = { <Logo /> } >
@@ -104,7 +115,7 @@ class SettingsDrawer extends Component<Props, *> {
                             name = 'name-setting'>
                             <Form onSubmit = { this._onNameFormSubmit }>
                                 <FieldText
-                                    label = 'Name'
+                                    label = { t('settings.name') }
                                     onBlur = { this._onNameBlur }
                                     shouldFitContainer = { true }
                                     type = 'text'
@@ -115,7 +126,7 @@ class SettingsDrawer extends Component<Props, *> {
                             name = 'email-setting'>
                             <Form onSubmit = { this._onEmailFormSubmit }>
                                 <FieldText
-                                    label = 'Email'
+                                    label = { t('settings.email') }
                                     onBlur = { this._onEmailBlur }
                                     shouldFitContainer = { true }
                                     type = 'text'
@@ -125,11 +136,18 @@ class SettingsDrawer extends Component<Props, *> {
                         <TogglesContainer>
                             <SpotlightTarget
                                 name = 'start-muted-toggles'>
-                                <StartMutedToggles />
+                                <SettingToggle
+                                    label = { t('settings.startWithAudioMuted') }
+                                    settingChangeEvent = { setStartWithAudioMuted }
+                                    settingName = 'startWithAudioMuted' />
+                                <SettingToggle
+                                    label = { t('settings.startWithVideoMuted') }
+                                    settingChangeEvent = { setStartWithVideoMuted }
+                                    settingName = 'startWithVideoMuted' />
                             </SpotlightTarget>
                         </TogglesContainer>
                         <Panel
-                            header = 'Advanced Settings'
+                            header = { t('settings.advancedSettings') }
                             isDefaultExpanded = { this.props._isOnboardingAdvancedSettings }>
                             <SpotlightTarget name = 'server-setting'>
                                 <ServerURLField />
@@ -140,7 +158,10 @@ class SettingsDrawer extends Component<Props, *> {
                             <TogglesContainer>
                                 <SpotlightTarget
                                     name = 'always-on-top-window'>
-                                    <AlwaysOnTopWindowToggle />
+                                    <SettingToggle
+                                        label = { t('settings.alwaysOnTopWindow') }
+                                        settingChangeEvent = { setWindowAlwaysOnTop }
+                                        settingName = 'alwaysOnTopWindowEnabled' />
                                 </SpotlightTarget>
                             </TogglesContainer>
                         </Panel>
@@ -236,4 +257,4 @@ function _mapStateToProps(state: Object) {
     };
 }
 
-export default connect(_mapStateToProps)(SettingsDrawer);
+export default compose(connect(_mapStateToProps), withTranslation())(SettingsDrawer);

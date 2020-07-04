@@ -1,0 +1,38 @@
+{
+	"enterConferenceNameOrUrl": "Gib einen Konferenznamen oder eine Jitsi URL ein",
+	"go": "LOS",
+	"help": "Hilfe",
+	"termsLink": "Nutzungsbedingungen",
+	"privacyLink": "Datenschutzbedingungen",
+	"sendFeedbackLink": "Schicke uns Feedback",
+	"aboutLink": "FAQ",
+	"sourceLink": "Source Code",
+	"versionLabel": "Version: {{version}}",
+	"onboarding": {
+		"startTour": "Start Tour",
+		"skip": "Überspringen",
+		"welcome": "Willkommen in {{appName}}",
+		"letUsShowYouAround": "Wir zeigen dir wie alles funktioniert!",
+		"next": "Weiter",
+		"conferenceUrl": "Gib den Namen (oder die ganze URL) des Raumes ein in den du willst.",
+		"settingsDrawerButton": "Hier klicken um zu den Einstellungen zu gelangen.",
+		"nameSetting": "Das ist dein Benutzername.",
+		"emailSetting": "Das E-Mail Feld ist teil deines Profiles, dieses Feld kann leer gelassen werden.",
+		"startMutedToggles": "Hier kannst du einstellen, ob du alle Konferenzen ohne aktiviertes Audio/Video beitrittst.",
+		"serverSetting": "Das ist der Server auf dem alle deine Konferenzen stattfinden werden, hier kann auch der eigene Server eingetragen werden!",
+		"serverTimeout": "Das ist die maximale Zeit, die ein Server zum Antworten auf einen Meetingbeitritt brauchen darf.",
+		"alwaysOnTop": "Hier kannst du ein kleines Fenster aktivieren, dass die Teilnehmer zeigt auch wenn du die Hauptapp gerade minimiert hast."
+	},
+	"settings": {
+		"back": "Zurück",
+		"name": "Name",
+		"email": "Email",
+		"advancedSettings": "Erweiterte Einstellungen",
+		"alwaysOnTopWindow": "Always on Top Window",
+		"startWithAudioMuted": "Ohne Audio starten",
+		"startWithVideoMuted": "Ohne Video starten",
+		"invalidServer": "Falsche Server URL oder der Server unterstützt keine externe API",
+		"serverUrl": "Server URL",
+        "serverTimeout": "Server Timeout (in Sekunden)"
+	}
+}

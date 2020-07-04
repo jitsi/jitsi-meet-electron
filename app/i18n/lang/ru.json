@@ -1,0 +1,38 @@
+{
+	"enterConferenceNameOrUrl": "Введите название для вашей конференции или URL-адрес приглашения Jitsi",
+	"go": "Вперёд",
+	"help": "Помощь",
+	"termsLink": "Условия",
+	"privacyLink": "Конфиденциальность",
+	"sendFeedbackLink": "Отправить отзыв",
+	"aboutLink": "О приложении",
+	"sourceLink": "Исходный код",
+	"versionLabel": "Версия: {{version}}",
+	"onboarding": {
+		"startTour": "Начать ознакомительный тур",
+		"skip": "Пропустить",
+		"welcome": "Добро пожаловать в {{appName}}",
+		"letUsShowYouAround": "Мы покажем вам, как все работает!",
+		"next": "Далее",
+		"conferenceUrl": "Введите название (или полный URL-адрес) комнаты, к которой вы хотите присоединиться.",
+		"settingsDrawerButton": "Нажмите здесь, чтобы перейти к настройкам.",
+		"nameSetting": "Это ваше имя, которое будут видеть другие.",
+		"emailSetting": "Эл. адрес, который вы введете здесь, будет частью вашего профиля пользователя.",
+		"startMutedToggles": "Здесь вы можете настроить, присоединяться ли вы ко всем конференциям без включенного аудио/видео.",
+		"serverSetting": "Это сервер, на котором будут проходить все ваши конференции. Вы можете использовать свой собственный, но вам это не нужно!",
+		"serverTimeout": "Timeout to join a meeting, if the meeting hasn't been joined before the timeout hits, it's cancelled.",
+		"alwaysOnTop": "Здесь вы можете включить небольшое окно, которое показывает участников, даже если вы только что свернули основное приложение."
+	},
+	"settings": {
+		"back": "Назад",
+		"name": "Имя",
+		"email": "Эл. адрес",
+		"advancedSettings": "Расширенные настройки",
+		"alwaysOnTopWindow": "Поверх всех окон",
+		"startWithAudioMuted": "Начать без звука",
+		"startWithVideoMuted": "Начать без видео",
+		"invalidServer": "Неверный URL-адрес сервера или внешний API не включен",
+		"serverUrl": "URL-адрес сервера",
+		"serverTimeout": "Тайм-аут сервера (в секундах)"
+	}
+}

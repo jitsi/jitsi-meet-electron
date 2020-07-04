@@ -4,8 +4,7 @@ const {
     BrowserWindow,
     Menu,
     app,
-    ipcMain,
-    shell
+    ipcMain
 } = require('electron');
 const contextMenu = require('electron-context-menu');
 const debug = require('electron-debug');
@@ -22,6 +21,7 @@ const {
 const path = require('path');
 const URL = require('url');
 const config = require('./app/features/config');
+const { openExternalLink } = require('./app/features/utils/openExternalLink');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
@@ -211,7 +211,7 @@ function createJitsiMeetWindow() {
 
         if (!target || target === 'browser') {
             event.preventDefault();
-            shell.openExternal(url);
+            openExternalLink(url);
         }
     });
     mainWindow.on('closed', () => {
@@ -222,14 +222,11 @@ function createJitsiMeetWindow() {
     });
 
     /**
-     * This is for windows [win32]
-     * so when someone tries to enter something like jitsi-meet://test
+     * When someone tries to enter something like jitsi-meet://test
      *  while app is closed
      * it will trigger this event below
      */
-    if (process.platform === 'win32') {
-        handleProtocolCall(process.argv.pop());
-    }
+    handleProtocolCall(process.argv.pop());
 }
 
 /**

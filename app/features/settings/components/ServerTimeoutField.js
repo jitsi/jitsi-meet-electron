@@ -77,7 +77,7 @@ class ServerTimeoutField extends Component<Props, State> {
             <Form onSubmit = { this._onServerTimeoutSubmit }>
                 <FieldTextStateless
                     invalidMessage
-                        = { 'Invalid Timeout' }
+                        = { t('settings.invalidServerTimeout') }
                     isInvalid = { !this.state.isValid }
                     isValidationHidden = { this.state.isValid }
                     label = { t('settings.serverTimeout') }

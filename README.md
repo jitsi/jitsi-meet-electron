@@ -15,9 +15,9 @@ Desktop application for [Jitsi Meet] built with [Electron].
 
 ## Installation
 
-Download our latest release and you're off to the races!
+Download our latest release and you’re off to the races!
 
-| Windows | macOS | GNU/Linux (64bits only) |
+| Windows | macOS | GNU/Linux (64-bit only) |
 | -- | -- | -- |
 | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
 
@@ -31,7 +31,7 @@ brew cask install jitsi-meet
 
 ### Using it with your own Jitsi Meet installation
 
-In order to use this application with your own Jitsi Meet installation it's
+In order to use this application with your own Jitsi Meet installation it’s
 necessary to enable the External API. Your server must serve a `external_api.js`
 file at the root of the installation.
 
@@ -126,14 +126,14 @@ A warning will show up mentioning the app is unsigned upon first install. This i
 
 ### macOS
 
-On macOS Catalina a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
+On macOS Catalina a warning will be displayed on first install. The app won’t open unless “open” is pressed. This dialog is only shown once.
 Builtin auto-updates are not yet handled in macOS due to unsigned build.
 
 ### GNU/Linux
 
 There is a known issue which prevents the app from starting on some Linux distributions: #231
 
-If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage.AppImage`
+If after downloading it, you can’t execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage.AppImage`
 
 The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppImage --no-sandbox`
 
@@ -142,7 +142,8 @@ The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppIma
 You might get the following error:
 
 ```
-FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
+FATAL:nss_util.cc(632)] NSS_VersionCheck(
+3.26") failed. NSS >= 3.26 is required.
 Please upgrade to the latest NSS, and if you still get this error, contact your
 distribution maintainer.
 ```

@@ -190,6 +190,7 @@ function createJitsiMeetWindow() {
         minHeight: 600,
         show: false,
         webPreferences: {
+            enableRemoteModule: true,
             experimentalFeatures: true, // Insertable streams, for E2EE.
             nativeWindowOpen: true,
             nodeIntegration: false,

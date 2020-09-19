@@ -13,7 +13,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
 - Builtin auto-updates
-- Remote control
+- ~Remote control~ (currently disabled)
 - Always-On-Top window
 - Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
 

@@ -19,7 +19,7 @@ Download our latest release and you're off to the races!
 
 | Windows | macOS | GNU/Linux (64-bit only) |
 | -- | -- | -- |
-| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [AppImage Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) [Flathub Download](https://flathub.org/apps/details/org.jitsi.jitsi-meet) |
+| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [AppImage Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) [Flathub](https://flathub.org/apps/details/org.jitsi.jitsi-meet) |
 
 ### Homebrew
 

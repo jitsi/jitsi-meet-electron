@@ -47,7 +47,7 @@
           "en" : "Jitsi Meet Desktop App",
           "hu" : "Jitsi Meet asztali alkalmazás"
         }
-      ]
+      ],
       "executableName": "jitsi-meet",
       "target": [
         {

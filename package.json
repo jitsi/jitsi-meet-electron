@@ -42,7 +42,12 @@
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Jitsi Meet Desktop App",
+      "description": [
+        {
+          "en" : "Jitsi Meet Desktop App",
+          "hu" : "Jitsi Meet asztali alkalmazás"
+        }
+      ]
       "executableName": "jitsi-meet",
       "target": [
         {

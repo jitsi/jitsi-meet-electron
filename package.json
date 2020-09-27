@@ -2,6 +2,7 @@
   "name": "jitsi-meet-electron",
   "version": "2.4.0",
   "description": "Electron application for Jitsi Meet",
+  "description[hu]": "Electron alkalmazás a Jitsi Meet számára",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
   "scripts": {
@@ -36,13 +37,17 @@
       "entitlementsInherit": "entitlements.mac.plist",
       "extendInfo": {
         "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+        "NSCameraUsageDescription[hu]": "A Jitsi Meet videohívásokhoz hozzáférést igényel a kamerájához.",
+        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
+        "NSMicrophoneUsageDescription[hu]": "A Jitsi Meet-hez hozzáférés szükséges a mikrofonjához hívásokhoz (hang/videó)."
       }
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
+      "category[hu]": "Videokonferencia;HangVideó;Hang;Videó;Hálózat",
       "description": "Jitsi Meet Desktop App",
+      "description[hu]": "Jitsi Meet asztali alkalmazás",
       "executableName": "jitsi-meet",
       "target": [
         {

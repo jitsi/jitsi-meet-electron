@@ -21,6 +21,10 @@ Download our latest release and you're off to the races!
 | -- | -- | -- |
 | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
 
+### Third-Party builds
+
+[Flathub](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
+
 ### Homebrew
 
 For *macOS* user, you can install the application using the following command:

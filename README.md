@@ -22,6 +22,10 @@ Desktop application for [Jitsi Meet] built with [Electron].
 Download our [latest release] and you're off to the races! The supported platforms
 are macOS, Windows, and GNU/Linux (all 64bits only).
 
+### Third-Party builds
+
+[Flathub](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
+
 ### Homebrew
 
 For *macOS* user, you can install the application using the following command:
@@ -31,18 +35,6 @@ brew cask install jitsi-meet
 ```
 
 ### Using it with your own Jitsi Meet installation
-
-In order to use this application with your own Jitsi Meet installation it's
-necessary to enable the External API. Your server must serve a `external_api.js`
-file at the root of the installation.
-
-Here is an example using nginx:
-
-```
-location /external_api.js {
-    alias /usr/share/jitsi-meet/libs/external_api.min.js;
-}
-```
 
 :warning: The following additional HTTP headers are known to break the Electron App:
 

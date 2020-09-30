@@ -31,7 +31,7 @@
 		"alwaysOnTopWindow": "Always on Top Window",
 		"startWithAudioMuted": "Start with Audio muted",
 		"startWithVideoMuted": "Start with Video muted",
-		"invalidServer": "Invalid Server URL or external API not enabled",
+		"invalidServer": "Invalid Server URL",
 		"invalidServerTimeout": "Invalid value for Server Timeout",
 		"serverUrl": "Server URL",
 		"serverTimeout": "Server Timeout (in seconds)"

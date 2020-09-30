@@ -31,7 +31,7 @@
 		"alwaysOnTopWindow": "Mindig látható",
 		"startWithAudioMuted": "Elnémítva kezd",
 		"startWithVideoMuted": "Videó nélkül kezd",
-		"invalidServer": "Érvénytelen kiszolgáló URL-címe vagy külső API nincs engedélyezve",
+		"invalidServer": "Érvénytelen kiszolgáló URL-címe",
 		"invalidServerTimeout": "A kiszolgáló időkorlátja érvénytelen",
 		"serverUrl": "Kiszolgáló URL-címe",
 		"serverTimeout": "Kiszolgálói időkorlát (másodperc)"

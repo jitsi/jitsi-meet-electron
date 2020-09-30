@@ -31,7 +31,7 @@
 		"alwaysOnTopWindow": "Поверх всех окон",
 		"startWithAudioMuted": "Начать без звука",
 		"startWithVideoMuted": "Начать без видео",
-		"invalidServer": "Неверный URL-адрес сервера или внешний API не включен",
+		"invalidServer": "Неверный URL-адрес сервера",
 		"serverUrl": "URL-адрес сервера",
 		"serverTimeout": "Тайм-аут сервера (в секундах)"
 	}

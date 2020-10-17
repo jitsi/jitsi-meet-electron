@@ -23,7 +23,9 @@ Download our latest release and you're off to the races!
 
 ### Third-Party builds
 
-[Flathub](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
+[<img src="https://flathub.org/assets/badges/flathub-badge-en.svg"
+     alt="Download On Flathub"
+     height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
 
 ### Homebrew
 

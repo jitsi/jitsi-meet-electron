@@ -22,11 +22,16 @@ const path = require('path');
 const URL = require('url');
 const config = require('./app/features/config');
 const { openExternalLink } = require('./app/features/utils/openExternalLink');
+const pkgJson = require('./package.json');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
+
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1086373
+app.commandLine.appendSwitch('disable-webrtc-hw-encoding');
+app.commandLine.appendSwitch('disable-webrtc-hw-decoding');
 
 // Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
 app.allowRendererProcessReuse = false;
@@ -201,7 +206,7 @@ function createJitsiMeetWindow() {
     initPopupsConfigurationMain(mainWindow);
     setupAlwaysOnTopMain(mainWindow);
     setupPowerMonitorMain(mainWindow);
-    setupScreenSharingMain(mainWindow, config.default.appName);
+    setupScreenSharingMain(mainWindow, config.default.appName, pkgJson.build.appId);
 
     mainWindow.webContents.on('new-window', (event, url, frameName) => {
         const target = getPopupTarget(url, frameName);

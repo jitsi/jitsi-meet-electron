@@ -24,7 +24,9 @@ are macOS, Windows, and GNU/Linux (all 64bits only).
 
 ### Third-Party builds
 
-[Flathub](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
+[<img src="https://flathub.org/assets/badges/flathub-badge-en.svg"
+     alt="Download On Flathub"
+     height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
 
 ### Homebrew
 
@@ -125,7 +127,7 @@ On macOS Catalina a warning will be displayed on first install. The app won't op
 
 There is a known issue which prevents the app from starting on some Linux distributions: #231
 
-If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage.AppImage`
+If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
 
 The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppImage --no-sandbox`
 

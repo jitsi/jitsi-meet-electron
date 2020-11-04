@@ -54,6 +54,17 @@ If you want to hack on this project, here is how you do it.
 
 Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
 
+<details><summary>Extra dependencies for GNU/Linux</summary>
+
+X11, PNG and zlib development packages are necessary. On Debian-like systems then can be installed as follows:
+
+```bash
+sudo apt install libx11-dev zlib1g-dev libpng-dev libxtst-dev
+```
+</details>
+
+Install all required packages:
+
 ```bash
 npm install
 ```

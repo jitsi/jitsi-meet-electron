@@ -55,6 +55,17 @@ If you want to hack on this project, here is how you do it.
 
 Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
 
+<details><summary>Extra dependencies for GNU/Linux</summary>
+
+X11, PNG and zlib development packages are necessary. On Debian-like systems then can be installed as follows:
+
+```bash
+sudo apt install libx11-dev zlib1g-dev libpng-dev libxtst-dev
+```
+</details>
+
+Install all required packages:
+
 ```bash
 npm install
 ```
@@ -125,7 +136,7 @@ On macOS Catalina a warning will be displayed on first install. The app won't op
 
 ### GNU/Linux
 
-There is a known issue which prevents the app from starting on some Linux distributions: #231
+There is a known issue which prevents the app from starting on some Linux distributions: [#231](https://github.com/jitsi/jitsi-meet-electron/issues/231)
 
 If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
 

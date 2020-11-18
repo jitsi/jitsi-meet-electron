@@ -45,7 +45,9 @@
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",
       "executableName": "jitsi-meet",
-      "executableArgs": [ "--no-sandbox" ],
+      "executableArgs": [
+        "--no-sandbox"
+      ],
       "target": [
         {
           "arch": "x64",
@@ -148,7 +150,7 @@
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
     "devtron": "1.4.0",
-    "electron": "10.1.5",
+    "electron": "10.1.6",
     "electron-builder": "22.9.1",
     "electron-builder-notarize": "1.2.0",
     "electron-react-devtools": "0.5.3",

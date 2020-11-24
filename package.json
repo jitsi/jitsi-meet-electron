@@ -1,9 +1,9 @@
 {
   "name": "jitsi-meet-electron",
   "version": "2.4.2",
-  "description": "Electron application for Jitsi Meet",
+  "description": "Electron application for Assemblee",
   "main": "./build/main.js",
-  "productName": "Jitsi Meet",
+  "productName": "Assemblee",
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
@@ -19,7 +19,7 @@
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
-    "productName": "Jitsi Meet",
+    "productName": "Assemblee",
     "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
@@ -28,22 +28,22 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "Assemblee.${ext}",
       "category": "public.app-category.video",
       "darkModeSupport": true,
       "hardenedRuntime": true,
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
       "extendInfo": {
-        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+        "NSCameraUsageDescription": "Assemblee requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "Assemblee requires access to your microphone in order to make calls (audio/video)."
       }
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Jitsi Meet Desktop App",
-      "executableName": "jitsi-meet",
+      "description": "Assemblee Desktop App",
+      "executableName": "Assemblee",
       "target": [
         {
           "arch": "x64",
@@ -52,7 +52,7 @@
       ]
     },
     "win": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "Assemblee.${ext}",
       "target": [
         {
           "arch": [
@@ -90,7 +90,7 @@
     "electron",
     "jitsi-meet"
   ],
-  "author": "Jitsi Team <support@jitsi.org>",
+  "author": "Assemblee Team <contact@assemblee.io>",
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {

@@ -143,7 +143,7 @@ class Welcome extends Component<Props, State> {
      * @returns {void}
      */
     componentDidMount() {
-        this.props.dispatch(startOnboarding('welcome-page'));
+        //this.props.dispatch(startOnboarding('welcome-page'));
 
 
         this._updateRoomname();
@@ -170,7 +170,6 @@ class Welcome extends Component<Props, State> {
                     <Wrapper>
                         { this._renderHeader() }
                         { this._renderBody() }
-                        <Onboarding section = 'welcome-page' />
                     </Wrapper>
                 </AtlasKitThemeProvider>
             </Page>

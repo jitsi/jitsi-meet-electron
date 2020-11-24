@@ -3,8 +3,8 @@
 import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
 import { SpotlightTarget } from '@atlaskit/onboarding';
-import Page from '@atlaskit/page';
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
+import Page, { Grid, GridColumn } from '@atlaskit/page';
 
 import { generateRoomWithoutSeparator } from 'js-utils/random';
 import React, { Component } from 'react';
@@ -19,7 +19,17 @@ import { Onboarding, startOnboarding } from '../../onboarding';
 import { RecentList } from '../../recent-list';
 import { createConferenceObjectFromURL } from '../../utils';
 
-import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
+import { Body, FieldWrapper, Form, Header, Wrapper } from '../styled';
+
+import AssembleeImage from '../../../images/logo_assemblee.png'
+import '../style.css'
+
+import styled from 'styled-components';
+
+const Dummy = styled.div`
+  background: #fea;
+`;
+
 
 type Props = {
 
@@ -92,12 +102,27 @@ class Welcome extends Component<Props, State> {
             }
         }
 
+        this.myRef = [
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef()
+        ]
+
         this.state = {
             animateTimeoutId: undefined,
             generatedRoomname: '',
             roomPlaceholder: '',
             updateTimeoutId: undefined,
-            url
+            url,
+            value: '',
+            list: [],
+            focusInput: [true,false,false,false,false,false,false,false]
+
         };
 
         // Bind event handlers.
@@ -106,6 +131,7 @@ class Welcome extends Component<Props, State> {
         this._onFormSubmit = this._onFormSubmit.bind(this);
         this._onJoin = this._onJoin.bind(this);
         this._updateRoomname = this._updateRoomname.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     /**
@@ -118,6 +144,7 @@ class Welcome extends Component<Props, State> {
      */
     componentDidMount() {
         this.props.dispatch(startOnboarding('welcome-page'));
+
 
         this._updateRoomname();
     }
@@ -211,7 +238,9 @@ class Welcome extends Component<Props, State> {
      * @returns {void}
      */
     _onJoin() {
-        const inputURL = this.state.url || this.state.generatedRoomname;
+        console.log(this.state.list)
+        const inputURL = this.state.list.join('') || this.state.generatedRoomname;
+        console.log(inputURL)
         const conference = createConferenceObjectFromURL(inputURL);
 
         // Don't navigate if conference couldn't be created
@@ -221,6 +250,47 @@ class Welcome extends Component<Props, State> {
 
         this.props.dispatch(push('/conference', conference));
     }
+
+    _onLogin: (*) => void;
+
+    /**
+     * Redirect and join conference.
+     *
+     * @returns {void}
+     */
+    _onLogin() {
+        const{shell} = require('electron')
+        shell.openExternal('https://assemblee.io/app').then(r => console.log('coucou'));
+    }
+
+
+
+    handleChange(event) {
+        const t = event.target.value
+        const i = parseInt(event.target.name)
+        if (event.target.value === '') {
+            if (i > 0)
+                this.myRef[i - 1].current.focus()
+            this.setState(state => {
+                const list = state.list.filter((item, j) => i !== j);
+
+                return {
+                    list,
+                };
+            });
+        } else {
+            this.myRef[i + 1].current.focus()
+            this.setState(state => {
+                const list = state.list.concat(t);
+
+                return {
+                    list,
+                    value: '',
+                };
+            });
+        }
+    }
+
 
     _onURLChange: (*) => void;
 
@@ -261,26 +331,38 @@ class Welcome extends Component<Props, State> {
         const { t } = this.props;
 
         return (
-            <Header>
+            <Header style= {{ backgroundColor: "white" }}>
                 <SpotlightTarget name = 'conference-url'>
-                    <Form onSubmit = { this._onFormSubmit }>
-                        <Label>{ t('enterConferenceNameOrUrl') } </Label>
+                    <Form  onSubmit = { this._onFormSubmit }>
+                        <img className = {'center'} src = { AssembleeImage }/>
                         <FieldWrapper>
-                            <FieldTextStateless
-                                autoFocus = { true }
-                                isInvalid = { locationError }
-                                isLabelHidden = { true }
-                                onChange = { this._onURLChange }
-                                placeholder = { this.state.roomPlaceholder }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.state.url } />
-                            <Button
-                                appearance = 'primary'
-                                onClick = { this._onJoin }
-                                type = 'button'>
-                                { t('go') }
-                            </Button>
+                            <Page>
+                                <Grid>
+                                    <div id="form">
+
+                                        <div className="form__group form__pincode">
+                                            <label className="dark-inverted">
+                                                Vous avez un code de réunion ? Entrez-le ici.
+                                            </label>
+                                            {
+                                                this.state.focusInput.map((value, index) => {
+                                                    return <input type="text" ref = { this.myRef[index] } value={ this.state.list[index] } onChange={this.handleChange} name = { index } maxLength="1" pattern="[a-zA-Z]*" tabIndex="1" placeholder="·" autoComplete="off" key={index}/>
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className={'centerDiv'}>
+                                        <a className={'button-join-app blue'} onClick = { this._onJoin }>
+                                            Rejoindre une reunion
+                                        </a>
+                                    </div>
+                                    <div className={'centerDiv'}>
+                                        <a className={'button-join-app white'} onClick={ this._onLogin }>
+                                            Connexion
+                                        </a>
+                                    </div>
+                                </Grid>
+                            </Page>
                         </FieldWrapper>
                     </Form>
                 </SpotlightTarget>

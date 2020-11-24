@@ -1,0 +1,207 @@
+.inputName {
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    padding: 17px 40px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    min-width: 50px;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+.centerDiv {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+
+.button-join-app {
+    font-family: 'Montserrat', sans-serif;
+    padding: 17px 40px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 10px auto 10px;
+    min-width: 50px;
+    width: 100%;
+    max-width: 340px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+.button-join-app.blue {
+    background: #1846d0;
+    color: white!important;
+}
+.button-join-app.white {
+    background: white;
+    color: #333;
+    border: 1px solid #333;
+}
+
+
+
+/* https://codepen.io/blogui91/pen/GyBRgP */
+
+.form__group--error.form__pincode > input {
+    background-color: #eb3b3b;
+}
+.form__group--error.form__pincode > input[disabled] {
+    background-color: #eb3b3b;
+    color: #fff;
+    opacity: 1;
+}
+.form__group--success.form__pincode > input {
+    background-color: #32c832b5;
+}
+.form__group--success.form__pincode > input[disabled] {
+    background-color: #32c832b5;
+    color: #fff;
+    opacity: 1;
+}
+.form__pincode {
+    display: block;
+    width: 100%;
+    margin: 10px auto 20px;
+    padding: 0;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom:20px;
+}
+.form__pincode:before,
+.form__pincode:after {
+    display: table;
+    content: '';
+}
+.form__pincode:after {
+    clear: both;
+}
+.form__pincode > label {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+}
+.form__pincode > input[type="number"] {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.form__pincode > input {
+    display: inline-block;
+    float: left;
+    width: 12%;
+    height: 50px;
+    line-height: 48px;
+    text-align: center;
+    font-size: 2em;
+    color: #181819;
+    border: 0;
+    border-bottom: 2px solid rgb(233 233 233);
+    border-radius: 2px 2px 0 0;
+    transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+    cursor: default;
+    user-select: none;
+    margin: 0 1px;
+    margin-top: 10px;
+    padding: 0;
+}
+.form__pincode > input:focus {
+    outline: 0;
+    box-shadow: none;
+    border-color: #1486f0;
+    animation: border-pulsate 1.5s infinite;
+    -webkit-tap-highlight-color: transparent;
+}
+.form__pincode > input:last-child {
+    margin-right: 0;
+}
+.form__pincode > input[disabled] {
+    background: #eee;
+    opacity: 1;
+}
+.form__buttons {
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px 0 0;
+}
+
+/* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
+    color: inherit;
+    opacity: 0.7;
+}
+/* Firefox 19+ */
+::-moz-placeholder {
+    color: inherit;
+    opacity: 0.7;
+}
+/* IE 10+ */
+:-ms-input-placeholder {
+    color: inherit;
+    opacity: 0.7;
+}
+/* Firefox 18- */
+:-moz-placeholder {
+    color: inherit;
+    opacity: 0.7;
+}
+/* Animations
+   ============================================== */
+@-moz-keyframes border-pulsate {
+    0% {
+        border-color: #1486f0;
+    }
+    50% {
+        border-color: rgba(0,0,0,0.3);
+    }
+    100% {
+        border-color: #1486f0;
+    }
+}
+@-webkit-keyframes border-pulsate {
+    0% {
+        border-color: #1486f0;
+    }
+    50% {
+        border-color: rgba(0,0,0,0.3);
+    }
+    100% {
+        border-color: #1486f0;
+    }
+}
+@-o-keyframes border-pulsate {
+    0% {
+        border-color: #1486f0;
+    }
+    50% {
+        border-color: rgba(0,0,0,0.3);
+    }
+    100% {
+        border-color: #1486f0;
+    }
+}
+@keyframes border-pulsate {
+    0% {
+        border-color: #1486f0;
+    }
+    50% {
+        border-color: rgba(0,0,0,0.3);
+    }
+    100% {
+        border-color: #1486f0;
+    }
+}
+
+/* FIN */

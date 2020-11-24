@@ -190,7 +190,7 @@ function createJitsiMeetWindow() {
             enableBlinkFeatures: 'RTCInsertableStreams',
             enableRemoteModule: true,
             nativeWindowOpen: true,
-            nodeIntegration: false,
+            nodeIntegration: true,
             preload: path.resolve(basePath, './build/preload.js')
         }
     };

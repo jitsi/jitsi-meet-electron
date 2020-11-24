@@ -259,7 +259,7 @@ class Welcome extends Component<Props, State> {
      * @returns {void}
      */
     _onLogin() {
-        const{shell} = require('electron')
+        const { shell } = window.require('electron');
         shell.openExternal('https://assemblee.io/app').then(r => console.log('coucou'));
     }
 

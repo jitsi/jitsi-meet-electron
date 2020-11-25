@@ -1,0 +1,18 @@
+/* Main */
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  height:100%;
+  width:100%;
+}
+body webview {
+	height: 100%;
+    width: 100%;
+    -webkit-app-region: drag;
+}
+button {
+  -webkit-app-region: no-drag;
+}

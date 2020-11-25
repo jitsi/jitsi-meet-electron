@@ -1,9 +1,10 @@
 {
-  "name": "jitsi-meet-electron",
-  "version": "2.4.2",
-  "description": "Electron application for Assemblee",
-  "main": "./build/main.js",
+
+  "name": "assemblee",
   "productName": "Assemblee",
+  "version": "1.0.1",
+  "description": "Logiciel de visioconférence assemblee.io",
+  "main": "./build/main.js",
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
@@ -12,14 +13,19 @@
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "postinstall": "patch-package && electron-builder install-app-deps",
-    "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
+    "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Webview\"",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
+    "create-installer-mac": "electron-installer-dmg ./release-builds/Electron\\ webview-darwin-x64/Electron\\ webview.app electron-webview --out=release-builds --overwrite --icon=assets/icons/mac/icon.icns"
   },
   "engines": {
     "node": ">=12.0.0"
   },
   "build": {
-    "appId": "org.jitsi.jitsi-meet",
+    "appId": "io.assemblee.app",
     "productName": "Assemblee",
+    "afterSign": "scripts/notarize.js",
     "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
@@ -27,6 +33,18 @@
       "!app",
       "!main.js"
     ],
+    "directories": {
+      "buildResources": "resources"
+    },
+    "nsisWeb": {
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": true,
+      "differentialPackage": true
+    },
     "mac": {
       "artifactName": "Assemblee.${ext}",
       "category": "public.app-category.video",
@@ -63,9 +81,6 @@
         }
       ]
     },
-    "directories": {
-      "buildResources": "resources"
-    },
     "protocols": [
       {
         "name": "jitsi-protocol",
@@ -90,10 +105,12 @@
     "electron",
     "jitsi-meet"
   ],
-  "author": "Assemblee Team <contact@assemblee.io>",
+  "author": "Assemblée SAS",
+  "license": "ASC",
   "readmeFilename": "README.md",
-  "license": "Apache-2.0",
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "electron-notarize": "^1.0.0",
     "@atlaskit/button": "10.1.1",
     "@atlaskit/css-reset": "3.0.5",
     "@atlaskit/droplist": "7.0.17",
@@ -134,6 +151,9 @@
     "styled-components": "3.4.0"
   },
   "devDependencies": {
+    "electron": "10.1.5",
+    "electron-builder": "22.7.0",
+    "electron-installer-dmg": "^3.0.0",
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-proposal-export-namespace-from": "7.8.3",
@@ -147,8 +167,6 @@
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
     "devtron": "1.4.0",
-    "electron": "10.1.5",
-    "electron-builder": "22.7.0",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

@@ -76,6 +76,8 @@ type State = {
      * If this is not a url it will be treated as room name for default domain.
      */
     url: string;
+
+    cliked: boolean
 };
 
 /**
@@ -121,8 +123,8 @@ class Welcome extends Component<Props, State> {
             url,
             value: '',
             list: [],
-            focusInput: [true,false,false,false,false,false,false,false]
-
+            focusInput: [true,false,false,false,false,false,false,false],
+            clicked: false,
         };
 
         // Bind event handlers.
@@ -278,15 +280,20 @@ class Welcome extends Component<Props, State> {
                 };
             });
         } else {
-            this.myRef[i + 1].current.focus()
-            this.setState(state => {
-                const list = state.list.concat(t);
+            console.log(i)
+            if (i === 7) {
+                this._onJoin()
+            } else {
+                this.myRef[i + 1].current.focus()
+                this.setState(state => {
+                    const list = state.list.concat(t);
 
-                return {
-                    list,
-                    value: '',
-                };
-            });
+                    return {
+                        list,
+                        value: '',
+                    };
+                });
+            }
         }
     }
 
@@ -333,25 +340,33 @@ class Welcome extends Component<Props, State> {
             <Header style= {{ backgroundColor: "white" }}>
                 <SpotlightTarget name = 'conference-url'>
                     <Form  onSubmit = { this._onFormSubmit }>
-                        <img className = {'center'} src = { AssembleeImage }/>
+                        <img className = {'center'} src = { AssembleeImage } style= {{ width: '80%' }}/>
                         <FieldWrapper>
                             <Page>
                                 <Grid>
+                                    { this.state.clicked &&
                                     <div id="form">
-
                                         <div className="form__group form__pincode">
                                             <label className="dark-inverted">
                                                 Vous avez un code de réunion ? Entrez-le ici.
                                             </label>
                                             {
                                                 this.state.focusInput.map((value, index) => {
-                                                    return <input type="text" ref = { this.myRef[index] } value={ this.state.list[index] } onChange={this.handleChange} name = { index } maxLength="1" pattern="[a-zA-Z]*" tabIndex="1" placeholder="·" autoComplete="off" key={index}/>
+                                                    return <input type="text" ref={this.myRef[index]}
+                                                                  value={this.state.list[index]}
+                                                                  onChange={this.handleChange} name={index}
+                                                                  maxLength="1" pattern="[a-zA-Z]*" tabIndex="1"
+                                                                  placeholder="·" autoComplete="off" key={index}/>
                                                 })
                                             }
                                         </div>
                                     </div>
+                                    }
                                     <div className={'centerDiv'}>
-                                        <a className={'button-join-app blue'} onClick = { this._onJoin }>
+                                        <a className={'button-join-app blue'} onClick = { async () => {
+                                            await this.setState({clicked: true})
+                                            return this.myRef[0].current.focus()
+                                        } }>
                                             Rejoindre une reunion
                                         </a>
                                     </div>

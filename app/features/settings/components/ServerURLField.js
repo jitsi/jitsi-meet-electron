@@ -76,17 +76,7 @@ class ServerURLField extends Component<Props, State> {
 
         return (
             <Form onSubmit = { this._onServerURLSubmit }>
-                <FieldTextStateless
-                    invalidMessage = { t('settings.invalidServer') }
-                    isInvalid = { !this.state.isValid }
-                    isValidationHidden = { this.state.isValid }
-                    label = { t('settings.serverUrl') }
-                    onBlur = { this._onServerURLSubmit }
-                    onChange = { this._onServerURLChange }
-                    placeholder = { config.defaultServerURL }
-                    shouldFitContainer = { true }
-                    type = 'text'
-                    value = { this.state.serverURL } />
+
             </Form>
         );
     }

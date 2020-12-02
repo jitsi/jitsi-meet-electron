@@ -29,6 +29,11 @@ const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexO
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
+// We need to disable hardware acceleration on Windows because its causes the screenshare to flicker.
+if (process.platform === 'win32') {
+    app.commandLine.appendSwitch('disable-gpu');
+}
+
 // Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
 app.allowRendererProcessReuse = false;
 

@@ -23,7 +23,6 @@ const URL = require('url');
 const config = require('./app/features/config');
 const { openExternalLink } = require('./app/features/utils/openExternalLink');
 const pkgJson = require('./package.json');
-const OS = require('os');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
@@ -31,7 +30,7 @@ const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexO
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
 // We need to disable hardware acceleration on Windows because its causes the screenshare to flicker.
-if (OS.platform() === 'win32') {
+if (process.platform === 'win32') {
     app.commandLine.appendSwitch('disable-gpu');
 }
 

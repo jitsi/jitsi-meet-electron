@@ -145,7 +145,6 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "devtron": "1.4.0",
     "electron": "10.1.5",
     "electron-builder": "22.7.0",
     "electron-react-devtools": "0.5.3",

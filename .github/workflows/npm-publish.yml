@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: 12
       - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
-      - run: npm ci
-      - run: npm test
+      - run: npm install
+      - run: npm run dist
 
   publish-npm:
     needs: build
@@ -31,8 +31,8 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
-      - run: npm ci
-      - run: npm publish
+      - run: npm install
+      - run: npm run dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
@@ -46,7 +46,7 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
       - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
-      - run: npm ci
-      - run: npm publish
+      - run: npm install
+      - run: npm run dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

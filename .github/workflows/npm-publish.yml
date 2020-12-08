@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
       - run: npm ci
       - run: npm test
 
@@ -29,6 +30,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+      - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
       - run: npm ci
       - run: npm publish
         env:
@@ -43,6 +45,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
+      - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
       - run: npm ci
       - run: npm publish
         env:

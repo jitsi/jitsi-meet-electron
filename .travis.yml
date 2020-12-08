@@ -1,15 +1,15 @@
 matrix:
   include:
     - os: osx
-      osx_image: xcode9.4
+      osx_image: xcode12.2
       language: node_js
-      node_js: '12'
+      node_js: '15'
 
     - os: linux
-      dist: bionic
+      dist: focal
       sudo: true
       language: node_js
-      node_js: '12'
+      node_js: '15'
       addons:
         apt:
           packages:

@@ -41,4 +41,5 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
-
+       env:
+         GH_TOKEN: ${{secrets.GITHUB_TOKEN}}

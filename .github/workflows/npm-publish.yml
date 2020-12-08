@@ -35,7 +35,6 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
- registry-url: https://registry.npmjs.org/
       - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
       - run: sudo apt install zlib1g-dev libpng-dev libxtst-dev libx11-dev  -y
       - run: npm install

@@ -18,6 +18,7 @@ jobs:
         with:
           node-version: 12
       - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
+      - run: sudo apt install zlib1g-dev libpng-dev libxtst-dev libx11-dev  -y
       - run: npm install
       - run: npm run dist
 

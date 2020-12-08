@@ -10,7 +10,7 @@ on:
       - v*
 
 jobs:
-  build:
+  publish-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,27 +19,21 @@ jobs:
           node-version: 12
       - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
       - run: sudo apt install zlib1g-dev libpng-dev libxtst-dev libx11-dev  -y
+      - run: npm install
+      - run: npm run dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  publish-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          xcode-version: latest-stable
+      - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
       - run: npm install
       - run: npm run dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  publish-package:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/*
-          tag: ${{ github.ref }}
-          overwrite: true
-          file_glob: true
-      - run: git config --global url."https://github.com".insteadOf ssh://git@github.com
-      - run: sudo apt install zlib1g-dev libpng-dev libxtst-dev libx11-dev  -y
-      - run: npm install
-      - run: npm run dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

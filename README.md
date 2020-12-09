@@ -55,6 +55,14 @@ If you want to hack on this project, here is how you do it.
 
 Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
 
+<details><summary>Extra dependencies for Windows</summary>
+
+```bash
+npm install --global --production windows-build-tools
+npm config set msvs_version 2017
+```
+</details>
+
 <details><summary>Extra dependencies for GNU/Linux</summary>
 
 X11, PNG and zlib development packages are necessary. On Debian-like systems then can be installed as follows:

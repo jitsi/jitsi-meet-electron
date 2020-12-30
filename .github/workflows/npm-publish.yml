@@ -32,6 +32,11 @@ jobs:
       run: |
         mkdir -p ~/private_keys/
         echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+    - name: Update node-gyp for mac arm build
+      if: startsWith(matrix.os, 'macos')
+      run: |
+        npm install --global node-gyp@7.1.2
+        npm config set node_gyp $(npm prefix -g)/lib/node_modules/node-gyp/bin/node-gyp.js
     - name: Build/release Electron app
       uses: samuelmeuli/action-electron-builder@v1
       with:
@@ -50,3 +55,4 @@ jobs:
         # macOS notarization API key
         API_KEY_ID: ${{ secrets.api_key_id }}
         API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+        SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk

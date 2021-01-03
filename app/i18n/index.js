@@ -19,7 +19,7 @@ i18n
     .init({
         resources: languages,
         lng: detectedLocale,
-        fallbackLng: 'de',
+        fallbackLng: 'en',
         interpolation: {
             escapeValue: false // not needed for react as it escapes by default
         }

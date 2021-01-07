@@ -31,7 +31,7 @@
 		"alwaysOnTopWindow": "Ventana siempre encima",
 		"startWithAudioMuted": "Iniciar con audio desactivado",
 		"startWithVideoMuted": "Iniciar con video desactivado",
-		"invalidServer": "URL del servidor inválido o API externo no habilitada",
+		"invalidServer": "URL del servidor inválida",
 		"serverUrl": "URL del servidor",
 		"serverTimeout": "Tiempo de desconexión del servidor (en segundos)"
 	}

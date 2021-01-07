@@ -31,7 +31,7 @@
     "alwaysOnTopWindow": "Fenêtre Toujours au Dessus",
     "startWithAudioMuted": "Démarrer avec le micro coupé",
     "startWithVideoMuted": "Démarrer avec la caméra coupée",
-    "invalidServer": "URL invalide ou API externe non activée",
+    "invalidServer": "URL invalide",
     "serverUrl": "URL du serveur",
     "serverTimeout": "Délai de connexion au server (en secondes)"
   }

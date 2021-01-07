@@ -9,7 +9,7 @@ import type { Dispatch } from 'redux';
 import { compose } from 'redux';
 
 import config from '../../config';
-import { getExternalApiURL } from '../../utils';
+import { normalizeServerURL } from '../../utils';
 
 import { setServerURL } from '../actions';
 import { Form } from '../styled';
@@ -122,25 +122,32 @@ class ServerURLField extends Component<Props, State> {
     }
 
     /**
-     * Validates the Server URL by fetching external_api.js using the HEAD
-     * method.
+     * Validates the Server URL.
      *
      * @returns {void}
      */
     _validateServerURL() {
-        fetch(getExternalApiURL(this.state.serverURL), {
-            method: 'HEAD'
-        })
-        .then((response: Object) => {
-            this.setState({
-                isValid: response.ok
-            });
-        })
-        .catch(() => {
-            this.setState({
-                isValid: false
-            });
-        });
+        if (!this.state.serverURL.trim()) {
+            return true;
+        }
+
+        const url = normalizeServerURL(this.state.serverURL);
+        let isValid;
+
+        try {
+            // eslint-disable-next-line no-new
+            const tmp = new URL(url);
+
+            if (!tmp.protocol.startsWith('http')) {
+                throw new Error('Invalid protocol');
+            }
+
+            isValid = true;
+        } catch (_) {
+            isValid = false;
+        }
+
+        this.setState({ isValid });
     }
 }
 

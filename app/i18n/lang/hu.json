@@ -1,0 +1,39 @@
+{
+	"enterConferenceNameOrUrl": "Adja meg a konferencia nevét vagy a Jitsi URL-címét",
+	"go": "Indítás",
+	"help": "Súgó",
+	"termsLink": "Feltételek",
+	"privacyLink": "Adatvédelem",
+	"sendFeedbackLink": "Visszajelzés",
+	"aboutLink": "Névjegy",
+	"sourceLink": "Forráskód",
+	"versionLabel": "Változat: {{version}}",
+	"onboarding": {
+		"startTour": "Bemutató indítása",
+		"skip": "Kihagyás",
+		"welcome": "Isten hozott: {{appName}}!",
+		"letUsShowYouAround": "Hadd mutassuk meg Neked!",
+		"next": "Következő",
+		"conferenceUrl": "Írja be a csatlakozni kívánt szoba nevét (vagy teljes URL-címét). Megadhat egy nevet, csak tudassa másokkal, hogy ugyanazt a nevet írják be.",
+		"settingsDrawerButton": "Kattintson ide a beállítások fiókjának megnyitásához.",
+		"nameSetting": "Ez lesz a megjelenítendő neve, mások ezzel a névvel fognak látni.",
+		"emailSetting": "Az itt megadott e-mail része lesz a felhasználói profilnak.",
+		"startMutedToggles": "Hang elnémítva és videó nélkül kezd be-/kikapcsolással. Minden konferenciára vonatkozik.",
+		"serverSetting": "Kiszolgáló, ahol a konferenciákat tartják. Használja saját kiszolgálóját; ez azonban nem szükséges.",
+		"serverTimeout": "Ha a résztvevők nem csatlakoztak az időkorlát bekövetkezése előtt, akkor a találkozót visszavonják.",
+		"alwaysOnTop": "A „Mindig látható” ablak lehetővé teszi a be-/kikapcsolást. Akkor jelenik meg, amikor a főablak elveszíti a fókuszt. Ezt minden konferenciára alkalmazni kell."
+	},
+	"settings": {
+		"back": "Vissza",
+		"name": "Név",
+		"email": "E-mail",
+		"advancedSettings": "Haladó beállítások",
+		"alwaysOnTopWindow": "Mindig látható",
+		"startWithAudioMuted": "Elnémítva kezd",
+		"startWithVideoMuted": "Videó nélkül kezd",
+		"invalidServer": "Érvénytelen kiszolgáló URL-címe",
+		"invalidServerTimeout": "A kiszolgáló időkorlátja érvénytelen",
+		"serverUrl": "Kiszolgáló URL-címe",
+		"serverTimeout": "Kiszolgálói időkorlát (másodperc)"
+	}
+}

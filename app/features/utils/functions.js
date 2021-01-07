@@ -2,22 +2,6 @@
 
 // @flow
 
-import config from '../config';
-
-/**
- * Returns the URL of the external_api.js of the server.
- *
- * @param {string} serverURL - Jitsi Meet Server URL.
- * @returns {string} - The external_api.js URL.
- */
-export function getExternalApiURL(serverURL: string) {
-    if (!serverURL) {
-        // eslint-disable-next-line no-param-reassign
-        serverURL = config.defaultServerURL;
-    }
-
-    return `${normalizeServerURL(serverURL)}/external_api.js`;
-}
 
 /**
  * Return true if Electron app is running on Mac system.

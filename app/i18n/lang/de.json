@@ -28,23 +28,12 @@
 		"name": "Name",
 		"email": "E-Mail",
 		"advancedSettings": "Erweiterte Einstellungen",
-		"alwaysOnTopWindow": "Immer im Vordergrung",
+		"alwaysOnTopWindow": "Immer im Vordergrund",
 		"startWithAudioMuted": "Ohne Audio starten",
 		"startWithVideoMuted": "Ohne Video starten",
-<<<<<<< HEAD
-		"invalidServer": "Falsche Server URL oder der Server unterstützt keine externe API",
-		"invalidServerTimeout": "Üngültiger Wert für die Server Wartezeit",
-		"serverUrl": "Server URL",
-        "serverTimeout": "Server Timeout (in Sekunden)"
-||||||| e4742db
-		"invalidServer": "Falsche Server URL oder der Server unterstützt keine externe API",
-		"serverUrl": "Server URL",
-        "serverTimeout": "Server Timeout (in Sekunden)"
-=======
 		"invalidServer": "Falsche Server-Adresse",
 		"invalidServerTimeout": "Üngültiger Wert für die Server-Wartezeit",
 		"serverUrl": "Server-Adresse",
         "serverTimeout": "Server-Wartezeit (in Sekunden)"
->>>>>>> FETCH_HEAD
 	}
 }

@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   create:
     tags:
-      - v*
+      - v*.*.*
 
 jobs:
   publish-linux:

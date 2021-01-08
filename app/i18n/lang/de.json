@@ -28,7 +28,7 @@
 		"name": "Name",
 		"email": "E-Mail",
 		"advancedSettings": "Erweiterte Einstellungen",
-		"alwaysOnTopWindow": "Immer im Vordergrung",
+		"alwaysOnTopWindow": "Immer im Vordergrund",
 		"startWithAudioMuted": "Ohne Audio starten",
 		"startWithVideoMuted": "Ohne Video starten",
 		"invalidServer": "Falsche Server-Adresse",

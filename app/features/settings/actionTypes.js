@@ -68,3 +68,14 @@ export const SET_SERVER_TIMEOUT = Symbol('SET_SERVER_TIMEOUT');
  * }
  */
 export const SET_VIDEO_MUTED = Symbol('SET_VIDEO_MUTED');
+
+/**
+ * The type of (redux) action that sets Remote Control Enabled.
+ *
+ * @type {
+ *     type: SET_ENABLE_REMOTE_CONTROL,
+ *     enableRemoteControl: boolean
+ * }
+ */
+
+export const SET_ENABLE_REMOTE_CONTROL = Symbol('SET_ENABLE_REMOTE_CONTROL');

@@ -17,7 +17,7 @@ import { Onboarding, advenaceSettingsSteps, startOnboarding } from '../../onboar
 import { Form, SettingsContainer, TogglesContainer } from '../styled';
 import {
     setEmail, setName, setWindowAlwaysOnTop,
-    setStartWithAudioMuted, setStartWithVideoMuted
+    setStartWithAudioMuted, setStartWithVideoMuted, setEnableRemoteControl
 } from '../actions';
 
 import SettingToggle from './SettingToggle';
@@ -144,6 +144,10 @@ class SettingsDrawer extends Component<Props, *> {
                                     label = { t('settings.startWithVideoMuted') }
                                     settingChangeEvent = { setStartWithVideoMuted }
                                     settingName = 'startWithVideoMuted' />
+                                <SettingToggle
+                                    label = { t('settings.enableRemoteControl') }
+                                    settingChangeEvent = { setEnableRemoteControl }
+                                    settingName = 'enableRemoteControl' />
                             </SpotlightTarget>
                         </TogglesContainer>
                         <Panel

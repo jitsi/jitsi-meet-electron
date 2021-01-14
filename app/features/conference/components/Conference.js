@@ -15,7 +15,6 @@ import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
 
-const ENABLE_REMOTE_CONTROL = false;
 
 type Props = {
 
@@ -63,6 +62,11 @@ type Props = {
      * Start with Video Muted.
      */
     _startWithVideoMuted: boolean;
+
+    /**
+     * Enable Remote Control.
+     */
+    _enableRemoteControl: boolean;
 };
 
 type State = {
@@ -212,7 +216,8 @@ class Conference extends Component<Props, State> {
 
         const configOverwrite = {
             startWithAudioMuted: this.props._startWithAudioMuted,
-            startWithVideoMuted: this.props._startWithVideoMuted
+            startWithVideoMuted: this.props._startWithVideoMuted,
+            enableRemoteControl: this.props._enableRemoteControl
         };
 
         const options = {
@@ -250,8 +255,7 @@ class Conference extends Component<Props, State> {
         const iframe = this._api.getIFrame();
 
         setupScreenSharingRender(this._api);
-
-        if (ENABLE_REMOTE_CONTROL) {
+        if (this.props._enableRemoteControl) {
             new RemoteControl(iframe); // eslint-disable-line no-new
         }
 
@@ -408,7 +412,8 @@ function _mapStateToProps(state: Object) {
         _serverURL: state.settings.serverURL,
         _serverTimeout: state.settings.serverTimeout,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted
+        _startWithVideoMuted: state.settings.startWithVideoMuted,
+        _enableRemoteControl: state.settings.enableRemoteControl
     };
 }
 

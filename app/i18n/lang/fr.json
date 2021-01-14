@@ -31,6 +31,7 @@
     "alwaysOnTopWindow": "Fenêtre Toujours au Dessus",
     "startWithAudioMuted": "Démarrer avec le micro coupé",
     "startWithVideoMuted": "Démarrer avec la caméra coupée",
+    "enableRemoteControl": "activer la télécommande",
     "invalidServer": "URL invalide",
     "serverUrl": "URL du serveur",
     "serverTimeout": "Délai de connexion au server (en secondes)"

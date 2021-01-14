@@ -7,7 +7,8 @@ import {
     SET_NAME,
     SET_SERVER_URL,
     SET_SERVER_TIMEOUT,
-    SET_VIDEO_MUTED
+    SET_VIDEO_MUTED,
+    SET_ENABLE_REMOTE_CONTROL
 } from './actionTypes';
 
 import { normalizeServerURL } from '../utils';
@@ -108,6 +109,21 @@ export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
     };
 }
 
+/**
+ * Set Enable Remote Control.
+ *
+ * @param {boolean} enableRemoteControl - Whether to enable remote control
+ * @returns {{
+ *     type: SET_ENABLE_REMOTE_CONTROL,
+ *     enableRemoteControl: boolean
+ * }}
+ */
+export function setEnableRemoteControl(enableRemoteControl: boolean) {
+    return {
+        type: SET_ENABLE_REMOTE_CONTROL,
+        enableRemoteControl
+    };
+}
 
 /**
  * Set window always on top.

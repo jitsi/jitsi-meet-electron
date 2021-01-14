@@ -31,6 +31,7 @@
 		"alwaysOnTopWindow": "Immer im Vordergrund",
 		"startWithAudioMuted": "Ohne Audio starten",
 		"startWithVideoMuted": "Ohne Video starten",
+		"enableRemoteControl": "Steuerung übernehmen aktivieren",
 		"invalidServer": "Falsche Server-Adresse",
 		"invalidServerTimeout": "Üngültiger Wert für die Server-Wartezeit",
 		"serverUrl": "Server-Adresse",

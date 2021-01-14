@@ -31,6 +31,7 @@
 		"alwaysOnTopWindow": "Finestra sempre in primo piano",
 		"startWithAudioMuted": "Inizia senza audio",
 		"startWithVideoMuted": "Inizio senza video",
+		"enableRemoteControl": "Attiva le funzioni dell’ID del telecomando",
 		"invalidServer": "URL del server errato",
 		"serverUrl": "URL Server",
         "serverTimeout": "Timeout del server (in secondi)"

@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2.0.34",
+  "version": "2.0.35",
   "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
   "productName": "FreifunkMeet",
@@ -149,7 +149,7 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "11.2.0",
+    "electron": "11.2.1",
     "electron-builder": "22.7.0",
     "electron-builder-notarize": "1.2.0",
     "electron-react-devtools": "0.5.3",

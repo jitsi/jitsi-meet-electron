@@ -144,7 +144,7 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "10.1.6",
+    "electron": "10.2.0",
     "electron-builder": "22.7.0",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",

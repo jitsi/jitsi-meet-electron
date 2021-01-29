@@ -32,7 +32,7 @@ Download our latest release and you're off to the races!
 For *macOS* user, you can install the application using the following command:
 
 ```
-brew cask install jitsi-meet
+brew install --cask jitsi-meet
 ```
 
 ### Using it with your own Jitsi Meet installation

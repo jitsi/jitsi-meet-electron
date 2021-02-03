@@ -167,7 +167,19 @@ function createJitsiMeetWindow() {
     });
 
     // Path to root directory.
-    const basePath = isDev ? __dirname : app.getAppPath();
+    let basePath = isDev ? __dirname : app.getAppPath();
+
+    // special case for mac universal, based on how the asar structure is created at
+    // https://github.com/electron/universal/blob/master/src/index.ts
+    // This needs universal builds for mac, as it cannot be detected if we are
+    // running from a universal build or not.
+    if (process.platform === 'darwin') {
+        if (process.arch === 'arm64') {
+            basePath = app.getAppPath().replace('app.asar', 'app-arm64.asar');
+        } else if (process.arch === 'x64') {
+            basePath = app.getAppPath().replace('app.asar', 'app-x64.asar');
+        }
+    }
 
     // URL for index.html which will be our entry point.
     const indexURL = URL.format({

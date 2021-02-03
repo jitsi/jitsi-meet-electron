@@ -1,0 +1,16 @@
+diff --git a/node_modules/app-builder-lib/out/platformPackager.js b/node_modules/app-builder-lib/out/platformPackager.js
+index 675e461..e018994 100644
+--- a/node_modules/app-builder-lib/out/platformPackager.js
++++ b/node_modules/app-builder-lib/out/platformPackager.js
+@@ -409,9 +409,8 @@ class PlatformPackager {
+       await framework.beforeCopyExtraFiles({
+         packager: this,
+         appOutDir,
+-        asarIntegrity: asarOptions == null ? null : await (0, _integrity().computeData)(resourcesPath, asarOptions.externalAllowed ? {
+-          externalAllowed: true
+-        } : null),
++        // https://github.com/electron-userland/electron-builder/pull/5481#issuecomment-749875793
++        asarIntegrity: null,
+         platformName
+       });
+     }

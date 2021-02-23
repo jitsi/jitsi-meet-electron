@@ -1,0 +1,39 @@
+{
+	"enterConferenceNameOrUrl": "Voer de naam van de vergadering of een Jitsi-URL in",
+	"go": "Deelnemen",
+	"help": "Help",
+	"termsLink": "Voorwaarden",
+	"privacyLink": "Privacy",
+	"sendFeedbackLink": "Stuur feedback",
+	"aboutLink": "Over",
+	"sourceLink": "Broncode",
+	"versionLabel": "Versie: {{version}}",
+	"onboarding": {
+		"startTour": "Start rondleiding",
+		"skip": "Overslaan",
+		"welcome": "Welkom bij {{appName}}",
+		"letUsShowYouAround": "Start de rondleiding!",
+		"next": "Volgende",
+		"conferenceUrl": "Voer de naam of URL in van de ruimte die u wilt betreden. U kunt een naam verzinnen, maar laat deze wel weten aan de andere deelnemers, zodat zij dezelfde naam invoeren.",
+		"settingsDrawerButton": "Klik hier om het instellingenscherm te tonen.",
+		"nameSetting": "Voer hier uw naam in, andere deelnemers zullen deze naam zien.",
+		"emailSetting": "Voer hier uw e-mailadres in, dit wordt onderdeel van uw gebruikersprofiel.",
+		"startMutedToggles": "Hier kunt u kiezen om te starten met microfoon gedempt en/of camera uitgeschakeld. Dit geldt voor alle vergaderingen.",
+		"serverSetting": "Voer hier de naam van de server in waar de vergaderingen plaatsvinden. U kunt uw eigen server gebruiken, maar dat hoeft niet!",
+		"serverTimeout": "Voer hier de tijdslimiet in om de ruimte te betreden. Als de ruimte niet voor deze limiet betreden wordt, wordt de vergadering geannuleerd.",
+		"alwaysOnTop": "Hiermee kunt u het altijd zichtbare venster aan- of uitzetten. Dit venster wordt getoond wanneer een andere applicatie actief wordt. Dit geldt voor alle vergaderingen."
+	},
+	"settings": {
+		"back": "Terug",
+		"name": "Naam",
+		"email": "E-mail",
+		"advancedSettings": "Geavanceerde instellingen",
+		"alwaysOnTopWindow": "Altijd zichtbare venster",
+		"startWithAudioMuted": "Met audio gedempt starten",
+		"startWithVideoMuted": "Met camera uitgeschakeld starten",
+		"invalidServer": "Ongeldige server-URL",
+		"invalidServerTimeout": "Ongeldige waarde voor server-tijdslimiet",
+		"serverUrl": "Server-URL",
+		"serverTimeout": "Server-tijdslimiet (in seconden)"
+	}
+}

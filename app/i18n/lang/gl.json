@@ -1,0 +1,39 @@
+{
+	"enterConferenceNameOrUrl": "Introduza un nome para a conferencia ou un URL de Jitsi",
+	"go": "IR",
+	"help": "Axuda",
+	"termsLink": "Termos",
+	"privacyLink": "Privacidade",
+	"sendFeedbackLink": "Enviar unha opinión",
+	"aboutLink": "Sobre",
+	"sourceLink": "Código fonte",
+	"versionLabel": "Versión: {{version}}",
+	"onboarding": {
+		"startTour": "Comezar a visita guiada",
+		"skip": "Omitir",
+		"welcome": "Reciba a benvida a {{appName}}",
+		"letUsShowYouAround": "Permita que lle mostremos o que hai!",
+		"next": "Seguinte",
+		"conferenceUrl": "Introduza o nome (ou URL completo) da sala á que desexa sumarse. Pode dar de alta un nome e permitir que a xente coa que se reúne o saiba para que introduzan o mesmo nome.",
+		"settingsDrawerButton": "Prema aquí para abrir a gabeta de configuración.",
+		"nameSetting": "Este será o seu nome e será con el que apareza diante das demais persoas.",
+		"emailSetting": "O correo electrónico que apareza aquí será parte do seu perfil de usuario.",
+		"startMutedToggles": "Aquí pode alternar entre comezar co son ou co vídeo desactivados. Isto será aplicábel a todas as conferencias.",
+		"serverSetting": "Este será o servidor no que se leven a cabo as súas conferencias. Pode usar unha propia, mais non ten por que o facer!",
+		"serverTimeout": "Tempo de agarda para se sumar a unha reunión; se non se sumou antes de que remate, cancélase.",
+		"alwaysOnTop": "Pode alternar entre activar e desactivar a xanela «sempre por riba», que se mostra cando a xanela principal perde o foco. Isto é aplicábel a todas as conferencias."
+	},
+	"settings": {
+		"back": "Atrás",
+		"name": "Nome",
+		"email": "Correo electrónico",
+		"advancedSettings": "Configuración avanzada",
+		"alwaysOnTopWindow": "Xanela sempre por riba",
+		"startWithAudioMuted": "Comezar co son desactivado",
+		"startWithVideoMuted": "Comezar co vídeo desactivado",
+		"invalidServer": "O URL do servidor é incorrecto",
+		"invalidServerTimeout": "O tempo de agarda do servidor é incorrecto",
+		"serverUrl": "URL do servidor",
+		"serverTimeout": "Tempo de agarda do servidor (en segundos)"
+	}
+}

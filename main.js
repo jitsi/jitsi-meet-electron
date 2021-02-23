@@ -72,6 +72,8 @@ if (isDev) {
  */
 let mainWindow = null;
 
+let webrtcInternalsWindow = null;
+
 /**
  * Add protocol data
  */
@@ -202,7 +204,7 @@ function createJitsiMeetWindow() {
         minHeight: 600,
         show: false,
         webPreferences: {
-            enableBlinkFeatures: 'RTCInsertableStreams',
+            enableBlinkFeatures: 'RTCInsertableStreams,WebAssemblySimd',
             enableRemoteModule: true,
             nativeWindowOpen: true,
             nodeIntegration: false,
@@ -240,6 +242,20 @@ function createJitsiMeetWindow() {
      * it will trigger this event below
      */
     handleProtocolCall(process.argv.pop());
+}
+
+/**
+ * Opens new window with WebRTC internals.
+ */
+function createWebRTCInternalsWindow() {
+    const options = {
+        minWidth: 800,
+        minHeight: 600,
+        show: true
+    };
+
+    webrtcInternalsWindow = new BrowserWindow(options);
+    webrtcInternalsWindow.loadURL('chrome://webrtc-internals');
 }
 
 /**
@@ -303,6 +319,10 @@ app.on('certificate-error',
 );
 
 app.on('ready', createJitsiMeetWindow);
+
+if (isDev) {
+    app.on('ready', createWebRTCInternalsWindow);
+}
 
 app.on('second-instance', (event, commandLine) => {
     /**

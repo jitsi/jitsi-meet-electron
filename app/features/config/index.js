@@ -34,7 +34,7 @@ export default {
     /**
      * URL to send feedback.
      */
-    feedbackURL: 'mailto:support@jitsi.org',
+    feedbackURL: 'https://github.com/jitsi/jitsi-meet-electron/issues',
 
     /**
      * The URL of Privacy Policy Page.

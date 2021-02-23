@@ -6,7 +6,7 @@ import { SpotlightTarget } from '@atlaskit/onboarding';
 import Page from '@atlaskit/page';
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
-import { generateRoomWithoutSeparator } from 'js-utils/random';
+import { generateRoomWithoutSeparator } from '@jitsi/js-utils/random';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';

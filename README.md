@@ -33,7 +33,7 @@ are macOS, Windows, and GNU/Linux (all 64bits only).
 For *macOS* user, you can install the application using the following command:
 
 ```
-brew cask install jitsi-meet
+brew install --cask jitsi-meet
 ```
 
 ### Using it with your own Jitsi Meet installation

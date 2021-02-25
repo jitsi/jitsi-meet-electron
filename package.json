@@ -27,7 +27,16 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "target": [
+        {
+          "arch": [
+            "arm64",
+            "x64"
+          ],
+          "target": "dmg"
+        }
+      ],
       "category": "public.app-category.video",
       "darkModeSupport": true,
       "hardenedRuntime": true,
@@ -116,7 +125,7 @@
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
     "i18next": "19.4.5",
-    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.15",
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.16",
     "moment": "2.23.0",
     "mousetrap": "1.6.2",
     "react": "16.8.0",
@@ -145,7 +154,7 @@
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
     "electron": "12.0.0",
-    "electron-builder": "22.7.0",
+    "electron-builder": "22.10.5",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

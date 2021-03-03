@@ -194,6 +194,7 @@ function createJitsiMeetWindow() {
         webPreferences: {
             enableBlinkFeatures: 'RTCInsertableStreams,WebAssemblySimd',
             enableRemoteModule: true,
+            contextIsolation: false,
             nativeWindowOpen: true,
             nodeIntegration: false,
             preload: path.resolve(basePath, './build/preload.js')

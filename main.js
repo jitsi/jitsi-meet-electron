@@ -29,9 +29,6 @@ const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexO
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
-// We need to disable hardware acceleration because its causes the screenshare to flicker.
-app.commandLine.appendSwitch('disable-gpu');
-
 // Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
 app.allowRendererProcessReuse = false;
 
@@ -71,6 +68,8 @@ if (isDev) {
  * acidentally.
  */
 let mainWindow = null;
+
+let webrtcInternalsWindow = null;
 
 /**
  * Add protocol data
@@ -202,8 +201,9 @@ function createJitsiMeetWindow() {
         minHeight: 600,
         show: false,
         webPreferences: {
-            enableBlinkFeatures: 'RTCInsertableStreams',
+            enableBlinkFeatures: 'RTCInsertableStreams,WebAssemblySimd',
             enableRemoteModule: true,
+            contextIsolation: false,
             nativeWindowOpen: true,
             nodeIntegration: false,
             preload: path.resolve(basePath, './build/preload.js')
@@ -240,6 +240,20 @@ function createJitsiMeetWindow() {
      * it will trigger this event below
      */
     handleProtocolCall(process.argv.pop());
+}
+
+/**
+ * Opens new window with WebRTC internals.
+ */
+function createWebRTCInternalsWindow() {
+    const options = {
+        minWidth: 800,
+        minHeight: 600,
+        show: true
+    };
+
+    webrtcInternalsWindow = new BrowserWindow(options);
+    webrtcInternalsWindow.loadURL('chrome://webrtc-internals');
 }
 
 /**
@@ -303,6 +317,10 @@ app.on('certificate-error',
 );
 
 app.on('ready', createJitsiMeetWindow);
+
+if (isDev) {
+    app.on('ready', createWebRTCInternalsWindow);
+}
 
 app.on('second-instance', (event, commandLine) => {
     /**

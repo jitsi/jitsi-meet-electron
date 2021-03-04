@@ -8,3 +8,6 @@ Jitsi Meet*
 
 build/
 dist/
+
+app/features/conference/external_api.js
+

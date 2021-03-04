@@ -29,9 +29,6 @@ const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexO
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
-// We need to disable hardware acceleration because its causes the screenshare to flicker.
-app.commandLine.appendSwitch('disable-gpu');
-
 // Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
 app.allowRendererProcessReuse = false;
 
@@ -206,6 +203,7 @@ function createJitsiMeetWindow() {
         webPreferences: {
             enableBlinkFeatures: 'RTCInsertableStreams,WebAssemblySimd',
             enableRemoteModule: true,
+            contextIsolation: false,
             nativeWindowOpen: true,
             nodeIntegration: false,
             preload: path.resolve(basePath, './build/preload.js')

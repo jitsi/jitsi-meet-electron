@@ -29,6 +29,10 @@ const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexO
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
+// This allows BrowserWindow.setContentProtection(true) to work on macOS.
+// https://github.com/electron/electron/issues/19880
+app.commandLine.appendSwitch('disable-features', 'IOSurfaceCapturer');
+
 // Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
 app.allowRendererProcessReuse = false;
 

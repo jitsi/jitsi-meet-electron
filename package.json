@@ -28,7 +28,7 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "artifactName": "jitsi-meet.${ext}",
       "target": [
         {
           "arch": "universal",

@@ -44,6 +44,10 @@ brew install --cask jitsi-meet
 Content-Security-Policy "frame-ancestors [looks like any value is bad]";
 X-Frame-Options "DENY";
 ```
+A working Content Security Policy looks like that:
+```
+Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
+```
 
 ## Development
 

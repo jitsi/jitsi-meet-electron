@@ -27,13 +27,10 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "artifactName": "jitsi-meet.${ext}",
       "target": [
         {
-          "arch": [
-            "arm64",
-            "x64"
-          ],
+          "arch": "universal",
           "target": "dmg"
         }
       ],
@@ -121,7 +118,7 @@
     "electron-log": "4.1.1",
     "electron-reload": "1.5.0",
     "electron-store": "5.1.1",
-    "electron-updater": "4.2.5",
+    "electron-updater": "4.3.8",
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
     "i18next": "19.4.5",

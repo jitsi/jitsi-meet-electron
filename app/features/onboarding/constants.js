@@ -33,7 +33,7 @@ export const onboardingComponents = {
     },
     'settings-drawer-button': {
         type: OnboardingSpotlight,
-        dialogPlacement: 'top right',
+        dialogPlacement: 'center right',
         target: 'settings-drawer-button',
         text: 'onboarding.settingsDrawerButton',
         onNext: (props: OnboardingSpotlight.props) => props.dispatch(openDrawer(SettingsDrawer))

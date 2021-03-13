@@ -1,190 +1,47 @@
-# Jitsi Meet Electron
+# Das digitale Klassenzimmmer - HOPP Foundation
 
-Desktop application for [Jitsi Meet] built with [Electron].
+Repository für die Desktop-Anwendung des Digitalen Klassenzimmers für Jitsi Meet basierend auf Electron.
 
 ![](screenshot.png)
 
-## Features
-
-- [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
-- Works with any Jitsi Meet deployment
-- Builtin auto-updates
-- ~Remote control~ (currently disabled)
-- Always-On-Top window
-- Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
+## Funktionen
+- [Ende-zu-Ende Verschlüsslung](https://jitsi.org/blog/e2ee/) (BETA)
+- Funktioniert mit jeder Jitsi Meet Instanz
+- Automatische Updates über Microsoft Store und Mac App Store
+- Immer über andere Fenster-Modus (Always-on-top)
+- Unterstützung von Direkt-Links wie `jitsi-meet://KlassenzimmerName`. Dies wird 'KlassenzimmerName` in einer neuen Jitsi Instanz öffnen. Oder aber jitsi-meet://jitsi.meineDomain.com/meinRaum` öffnet `meinRaum` auf der Jitsi Instanz von `jitsi.meineDomain.com
 
 ## Installation
 
-Download our latest release and you're off to the races!
+| Windows | macOS | Linux |
+| -- | -- | -- |
+| [Microsoft Store](https://www.microsoft.com/de-de/p/digitales-klassenzimmer/9n9sf818473p) | [Mac App Store](https://apps.apple.com/de/app/digitales-klassenzimmer/id1508736201) | [Download](https://github.com/HoppFoundation/jitsi-meet-electron/releases/latest/download/digitales-klassenzimmer-x86_64.AppImage) |
 
-| Windows | macOS | macOS (Apple Silicon)| GNU/Linux (64-bit only) |
-| -- | -- | -- | -- |
-| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-arm64.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
+### Nutzung mit einer eigenen Jitsi Meet-Installation
 
-### Third-Party builds
-
-[<img src="https://flathub.org/assets/badges/flathub-badge-en.svg"
-     alt="Download On Flathub"
-     height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
-
-### Homebrew
-
-For *macOS* user, you can install the application using the following command:
-
-```
-brew install --cask jitsi-meet
-```
-
-### Using it with your own Jitsi Meet installation
-
-:warning: The following additional HTTP headers are known to break the Electron App:
+*Warnung*: Der folgende HTTP Header ist bekannt Fehler in der Electron Anwendung zu verursachen:
 
 ```
 Content-Security-Policy "frame-ancestors [looks like any value is bad]";
 X-Frame-Options "DENY";
 ```
-A working Content Security Policy looks like that:
+Eine funktionierende Content Security Policy sieht so aus:
 ```
 Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
 ```
 
-## Development
-
-If you want to hack on this project, here is how you do it.
-
-<details><summary>Show building instructions</summary>
-
-#### Installing dependencies
-
-Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
-
-<details><summary>Extra dependencies for Windows</summary>
-
-```bash
-npm install --global --production windows-build-tools
-npm config set msvs_version 2017
-```
-</details>
-
-<details><summary>Extra dependencies for GNU/Linux</summary>
-
-X11, PNG and zlib development packages are necessary. On Debian-like systems then can be installed as follows:
-
-```bash
-sudo apt install libx11-dev zlib1g-dev libpng-dev libxtst-dev
-```
-</details>
-
-Install all required packages:
-
-```bash
-npm install
-```
-
-#### Starting in development mode
-
-```bash
-npm start
-```
-
-The debugger tools are available when running in dev mode and can be activated with keyboard shortcuts as defined here https://github.com/sindresorhus/electron-debug#features.
-
-It can also be displayed automatically from the `SHOW_DEV_TOOLS` environment variable such as:
-
-```bash
-SHOW_DEV_TOOLS=true npm start
-```
-
-or from the application `--show-dev-tools` command line flag.
-
-#### Building the production distribution
-
-```bash
-npm run dist
-```
-
-#### Working with jitsi-meet-electron-utils
-
-[jitsi-meet-electron-utils] is a helper package which implements many features
-such as remote control and the always-on-top window. If new features are to be
-added / tested, running with a local version of these utils is very handy, here
-is how to do that.
-
-By default the jitsi-meet-electron-utils is build from its git repository
-sources. The default dependency path in package.json is:
-
-```json
-"jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils"
-```
-
-To work with local copy you must change the path to:
-
-```json
-"jitsi-meet-electron-utils": "file:///Users/name/jitsi-meet-electron-utils-copy",
-```
-
-To build the project you must force it to take the sources as `npm update` will
-not do it.
-
-```bash
-npm install jitsi-meet-electron-utils --force
-```
-
-NOTE: Also check the [jitsi-meet-electron-utils README] to see how to configure
-your environment.
-
-</details>
-
-## Known issues
-
-### Windows
-
-A warning will show up mentioning the app is unsigned upon first install. This is expected.
-
-### macOS
-
-On macOS Catalina a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
-Builtin auto-updates are not yet handled in macOS due to unsigned build.
+## Bekannte Fehler
 
 ### GNU/Linux
 
-There is a known issue which prevents the app from starting on some Linux distributions: [#231](https://github.com/jitsi/jitsi-meet-electron/issues/231)
+Unter manchen Linux-Distributionen kann es vorkommen, wenn die Anwendung nicht automatisch ausgeführt werden kann, zusätzliche Rechte zum Ausführen für die Anwendung gesetzt werden müssen.
 
-If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
+`chmod u+x ./digitales-klassenzimmer-x86_64.AppImage`
 
-The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppImage --no-sandbox`
+Unter Debian 10+ muss die App wie folgt aufgerufen werden: `./digitales-klassenzimmer-x86_64.AppImage --no-sandbox`
 
-<details><summary>NOTE for old GNU/Linux distributions</summary>
+## Lizenz
 
-You might get the following error:
+[Apache 2 License](LICENSE).
 
-```
-FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
-Please upgrade to the latest NSS, and if you still get this error, contact your
-distribution maintainer.
-```
-
-If you do, please install NSS (example for Debian / Ubuntu):
-
-```bash
-sudo apt-get install libnss3
-```
-
-</details>
-
-## License
-
-Apache 2. See the [LICENSE] file.
-
-## Community
-
-Jitsi is built by a large community of developers, if you want to participate,
-please join [community forum].
-
-[Jitsi Meet]: https://github.com/jitsi/jitsi-meet
-[Electron]: https://electronjs.org/
-[latest release]: https://github.com/jitsi/jitsi-meet-electron/releases/latest
-[jitsi-meet-electron-utils]: https://github.com/jitsi/jitsi-meet-electron-utils
-[jitsi-meet-electron-utils README]: https://github.com/jitsi/jitsi-meet-electron-utils/blob/master/README.md
-[community forum]: https://community.jitsi.org/
 [LICENSE]: LICENSE

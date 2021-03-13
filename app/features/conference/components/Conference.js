@@ -211,8 +211,8 @@ class Conference extends Component<Props, State> {
         };
 
         const configOverwrite = {
-            startWithAudioMuted: this.props._startWithAudioMuted,
-            startWithVideoMuted: this.props._startWithVideoMuted
+            startWithAudioMuted: true,
+            startWithVideoMuted: true
         };
 
         const options = {
@@ -229,6 +229,8 @@ class Conference extends Component<Props, State> {
 
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
+        this._api.on('videoConferenceLeft', this._onVideoConferenceEnded); // TODO: we'll change this for "onfeedbacksubmitted" for the next release
+
         this._api.on('readyToClose', this._onVideoConferenceEnded);
         this._api.on('videoConferenceJoined',
             (conferenceInfo: Object) => {

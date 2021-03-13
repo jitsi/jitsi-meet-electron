@@ -4,14 +4,7 @@ import moment from 'moment';
 
 const languages = {
     de: { translation: require('./lang/de.json') },
-    en: { translation: require('./lang/en.json') },
-    es: { translation: require('./lang/es.json') },
-    fr: { translation: require('./lang/fr.json') },
-    gl: { translation: require('./lang/gl.json') },
-    hu: { translation: require('./lang/hu.json') },
-    it: { translation: require('./lang/it.json') },
-    ru: { translation: require('./lang/ru.json') },
-    nl: { translation: require('./lang/nl.json') }
+    en: { translation: require('./lang/en.json') }
 };
 
 const detectedLocale = window.jitsiNodeAPI.getLocale();

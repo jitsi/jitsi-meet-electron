@@ -1,5 +1,5 @@
 {
-	"enterConferenceNameOrUrl": "Enter a name for your conference or a Jitsi URL",
+	"enterConferenceNameOrUrl": "Enter a name for your classroom or a Jitsi URL",
 	"go": "GO",
 	"help": "Help",
 	"termsLink": "Terms",
@@ -14,7 +14,7 @@
 		"welcome": "Welcome to {{appName}}",
 		"letUsShowYouAround": "Let us show you around!",
 		"next": "Next",
-		"conferenceUrl": "Enter the name (or full URL) of the room you want to join. You may make a name up, just let others know so they enter the same name.",
+		"conferenceUrl": "Enter the name (or full URL) of the classroom you want to join. You may make a name up, just let others know so they enter the same name.",
 		"settingsDrawerButton": "Click here to open the settings drawer.",
 		"nameSetting": "This will be your display name, others will see you with this name.",
 		"emailSetting": "The email you enter here will be part of your user profile.",

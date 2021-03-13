@@ -1,9 +1,9 @@
 {
-  "name": "jitsi-meet-electron",
-  "version": "2.7.1",
-  "description": "Electron application for Jitsi Meet",
+  "name": "hopp-digitales-klassenzimmer",
+  "version": "2.7.0",
+  "description": "HOPP Foundation - Das digitale Klassenzimmer",
   "main": "./build/main.js",
-  "productName": "Jitsi Meet",
+  "productName": "Digitales Klassenzimmer",
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
@@ -17,24 +17,24 @@
     "node": ">=12.0.0"
   },
   "build": {
-    "appId": "org.jitsi.jitsi-meet",
-    "productName": "Jitsi Meet",
+    "appId": "de.hopp-foundation.klassenzimmer",
+    "productName": "Digitales Klassenzimmer",
     "generateUpdatesFilesForAllChannels": true,
     "files": [
       "**/*",
       "resources",
       "!app",
-      "!main.js"
+      "!main.js",
+      "app/main.css",
+      "app/onboarding.css",
+      "app/images"
     ],
     "mac": {
-      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "artifactName": "digitales-klassenzimmer-${version}.${ext}",
       "target": [
         {
-          "arch": [
-            "arm64",
-            "x64"
-          ],
-          "target": "dmg"
+          "arch": "x64",
+          "target": "mas"
         }
       ],
       "category": "public.app-category.video",
@@ -42,16 +42,29 @@
       "hardenedRuntime": true,
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
+      "electronLanguages": [
+        "de",
+        "en"
+      ],
+      "asarUnpack": "**/*.node",
       "extendInfo": {
-        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+        "NSCameraUsageDescription": "Digitales Klassenzimmer benötigt Zugriff auf eine Kamera für Videoanrufe",
+        "NSMicrophoneUsageDescription": "Digitales Klassenzimmer bentötigt Zugriff auf ein Mikrofon um Audio/Video Anrufe zu tätigen.",
+        "LSMultipleInstancesProhibited": true,
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
+    "mas": {
+      "provisioningProfile": "embedded.provisionprofile",
+      "entitlements": "resources/entitlements.mas.plist",
+      "entitlementsInherit": "resources/entitlements.mas.inherit.plist",
+      "hardenedRuntime": false
+    },
     "linux": {
-      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "artifactName": "digitales-klassenzimmer-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Jitsi Meet Desktop App",
-      "executableName": "jitsi-meet",
+      "description": "HOPP Foundation - Digitales Klassenzimmer",
+      "executableName": "digitale-klassenzimmer",
       "target": [
         {
           "arch": "x64",
@@ -60,8 +73,15 @@
       ]
     },
     "win": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "digitales-klassenzimmer-${version}-${arch}.${ext}",
       "target": [
+        {
+          "arch": [
+            "ia32",
+            "x64"
+          ],
+          "target": "appx"
+        },
         {
           "arch": [
             "ia32",
@@ -69,6 +89,16 @@
           ],
           "target": "nsis"
         }
+      ]
+    },
+    "appx": {
+      "identityName": "HoppFoundation.DigitalesKlassenzimmer",
+      "displayName": "Digitales Klassenzimmer",
+      "publisher": "CN=18816B78-05D2-489F-BF0C-51732BBF65E3",
+      "publisherDisplayName": "Hopp Foundation",
+      "languages": [
+        "de-DE",
+        "en-US"
       ]
     },
     "directories": {
@@ -89,16 +119,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jitsi/jitsi-meet-electron"
+    "url": "https://github.com/HoppFoundation/jitsi-meet-electron"
   },
   "keywords": [
     "jingle",
     "webrtc",
     "xmpp",
     "electron",
-    "jitsi-meet"
+    "hopp foundation"
   ],
-  "author": "Jitsi Team <support@jitsi.org>",
+  "author": "Hopp Foundation <jitsi@hopp-foundation.de>",
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {

@@ -1,0 +1,70 @@
+@import "../resources/eau_web/style.css";
+
+div.atlaskit-portal-container > div:nth-child(1) > div:nth-child(4) > div,
+div.atlaskit-portal-container > div:nth-child(2) > div:nth-child(4) > div > div,
+div.atlaskit-portal-container > div:nth-child(2) > div:nth-child(4) > div > div {
+    background-color: #fff !important;
+    color: #333 !important;
+    border-radius: 6px;
+}
+
+div * {
+    border-radius: 12px;
+}
+
+body * {
+    font-family: Eau Sans Book !important;
+}
+
+input {
+    background-color: #fff !important;
+    border-color: #b5e282 !important;
+    padding: 0.8em 1.5em !important;
+    border: 1px solid #fff !important;
+    margin: 0px !important;
+    border-radius: 8px !important;
+    color: #333;
+}
+
+input::placeholder {
+    color: #5a5a5a !important;
+}
+
+button.enterButton,
+button.enterButton:active,
+button.enterButton:focus,
+button.enterButton::selection {
+    border-radius: 6px;
+    padding: 0 1.7em;
+    border: none !important;
+    background-color: #b5e282 !important;
+    color: #222 !important;
+    font-weight: bold;
+}
+
+button.enterButton:hover {
+    background-color: #fff !important;
+}
+
+button.enterButtonWhite,
+button.enterButtonWhite:active,
+button.enterButtonWhite:focus,
+button.enterButtonWhite::selection {
+    border-radius: 6px;
+    padding: 0 1.7em !important;
+    border: none !important;
+    background: none !important;
+    background-color: #986188 !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+
+button.enterButtonWhite:hover {
+    background-color: #cba5aa !important;
+    color: #fff !important;
+}
+
+p {
+    color: #333;
+}
+

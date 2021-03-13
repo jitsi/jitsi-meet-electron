@@ -1,5 +1,5 @@
 {
-	"enterConferenceNameOrUrl": "Bitte einen Konferenznamen oder eine Jitsi-Adresse eingeben",
+	"enterConferenceNameOrUrl": "Gib den Namen eines Klassenzimmers oder eine Jitsi URL ein.",
 	"go": "LOS",
 	"help": "Hilfe",
 	"termsLink": "Nutzungsbedingungen",
@@ -14,7 +14,7 @@
 		"welcome": "Willkommen in {{appName}}",
 		"letUsShowYouAround": "Wir zeigen wie alles funktioniert!",
 		"next": "Weiter",
-		"conferenceUrl": "Bitte den Namen (oder die vollständige Adresse) des Raumes eingeben, dem beigetreten werden soll. Es kann ein Name ausgedacht werden, diesen bitte anderen mitteilen, damit sie denselben Namen eingeben.",
+		"conferenceUrl": "Bitte den Namen (oder die vollständige Adresse) des Klassenzimmers eingeben, dem beigetreten werden soll. Es kann ein Name ausgedacht werden, diesen bitte anderen mitteilen, damit sie denselben Namen eingeben.",
 		"settingsDrawerButton": "Hier klicken, um zu den Einstellungen zu gelangen.",
 		"nameSetting": "Das ist der Anzeigename, andere werden Sie unter diesem Namen sehen.",
 		"emailSetting": "Die hier eingegebene E-Mail ist Teil des Benutzerprofils.",
@@ -34,6 +34,6 @@
 		"invalidServer": "Falsche Server-Adresse",
 		"invalidServerTimeout": "Ungültiger Wert für die Server-Wartezeit",
 		"serverUrl": "Server-Adresse",
-                "serverTimeout": "Server-Wartezeit (in Sekunden)"
+        "serverTimeout": "Server-Wartezeit (in Sekunden)"
 	}
 }

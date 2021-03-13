@@ -1,0 +1,79 @@
+@import "../resources/eau_web/style.css";
+
+body * {
+    font-family: Eau Sans Book !important;
+    line-height: 1.3rem !important;
+}
+
+input {
+    background-color: #fff !important;
+    border-color: #b5e282 !important;
+    padding: 0.8em 1.3em !important;
+    border: 1px solid #fff !important;
+    margin: 0px !important;
+    border-radius: 8px !important;
+    color: #333;
+}
+
+input::placeholder {
+    color: #5a5a5a !important;
+    padding-top: 4px !important;
+}
+
+button.enterButton.normal span,
+button.enterButtonWhite.normal span {
+    line-height: 0.7em !important;
+}
+
+#app > div > div > div > div > div > div > div > button,
+button.enterButton,
+button.enterButton:active,
+button.enterButton:focus,
+button.enterButton::selection {
+    border-radius: 6px;
+    padding: 0 1.7em;
+    border: none !important;
+    background-color: #b5e282 !important;
+    color: #222 !important;
+    font-weight: bold;
+    overflow: visible !important;
+}
+
+button.enterButton:hover {
+    background-color: #fff !important;
+}
+
+button.enterButton *:focus {
+    border: none !important;
+}
+
+button.enterButton span,
+button.enterButtonWhite span {
+    overflow: visible !important;
+    line-height: 2.5em !important;
+}
+
+button.enterButtonWhite,
+button.enterButtonWhite:active,
+button.enterButtonWhite:focus,
+button.enterButtonWhite::selection {
+    border-radius: 6px;
+    padding: 13px 3.7em !important;
+    border: none !important;
+    background: none !important;
+    background-color: #986188 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    margin-left: 2em !important;
+}
+
+button.enterButtonWhite:hover {
+    background-color: #cba5aa !important;
+    color: #fff !important;
+}
+
+p {
+    color: #333;
+}
+
+

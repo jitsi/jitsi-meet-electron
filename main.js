@@ -161,12 +161,14 @@ function createJitsiMeetWindow() {
     setApplicationMenu();
 
     // Check for Updates.
-    autoUpdater.checkForUpdatesAndNotify();
+    if (!process.mas) {
+        autoUpdater.checkForUpdatesAndNotify();
+    }
 
     // Load the previous window state with fallback to defaults.
     const windowState = windowStateKeeper({
-        defaultWidth: 800,
-        defaultHeight: 600
+        defaultWidth: 1024,
+        defaultHeight: 800
     });
 
     // Path to root directory.
@@ -278,8 +280,9 @@ function handleProtocolCall(fullProtocolCall) {
 
 /**
  * Force Single Instance Application.
+ * Handle this on darwin via LSMultipleInstancesProhibited in Info.plist as below does not work on MAS
  */
-const gotInstanceLock = app.requestSingleInstanceLock();
+const gotInstanceLock = process.platform === 'darwin' ? true : app.requestSingleInstanceLock();
 
 if (!gotInstanceLock) {
     app.quit();
@@ -296,10 +299,14 @@ app.on('activate', () => {
     }
 });
 
+/**
+ * Skip certificate errors in dev & MAS for now as sandboxed build does not have access to
+ * system CA certificates
+ */
 app.on('certificate-error',
     // eslint-disable-next-line max-params
     (event, webContents, url, error, certificate, callback) => {
-        if (isDev) {
+        if (isDev || process.mas) {
             event.preventDefault();
             callback(true);
         } else {
@@ -333,10 +340,7 @@ app.on('second-instance', (event, commandLine) => {
 });
 
 app.on('window-all-closed', () => {
-    // Don't quit the application on macOS.
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+    app.quit();
 });
 
 // remove so we can register each time as we run the app.

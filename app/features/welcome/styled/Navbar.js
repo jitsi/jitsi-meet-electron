@@ -8,7 +8,7 @@ export default styled.div`
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding-top: 10vh;
+    padding-top: 15%;
 
     button.enterButton {
         border-radius: 6px;

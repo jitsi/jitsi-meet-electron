@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
 import { compose } from 'redux';
 
-import OnboardingModalImage from '../../../images/onboarding.png';
+import OnboardingModalImage from '../../../images/onboarding_green.png';
 
 import config from '../../config';
 

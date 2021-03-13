@@ -28,8 +28,8 @@ const DEFAULT_STATE = {
     name: username,
     serverURL: undefined,
     serverTimeout: undefined,
-    startWithAudioMuted: false,
-    startWithVideoMuted: false
+    startWithAudioMuted: true,
+    startWithVideoMuted: true
 };
 
 /**

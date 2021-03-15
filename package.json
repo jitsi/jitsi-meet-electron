@@ -64,7 +64,7 @@
       "artifactName": "digitales-klassenzimmer-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "HOPP Foundation - Digitales Klassenzimmer",
-      "executableName": "digitale-klassenzimmer",
+      "executableName": "digitales-klassenzimmer",
       "target": [
         {
           "arch": "x64",

@@ -23,6 +23,7 @@ const URL = require('url');
 const config = require('./app/features/config');
 const { openExternalLink } = require('./app/features/utils/openExternalLink');
 const pkgJson = require('./package.json');
+const { existsSync } = require('fs');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
@@ -172,7 +173,18 @@ function createJitsiMeetWindow() {
     });
 
     // Path to root directory.
-    const basePath = isDev ? __dirname : app.getAppPath();
+    let basePath = isDev ? __dirname : app.getAppPath();
+
+    // runtime detection on mac if this is a universal build with app-arm64.asar'
+    // as prepared in https://github.com/electron/universal/blob/master/src/index.ts
+    // if universal build, load the arch-specific real asar as the app does not load otherwise
+    if (process.platform === 'darwin' && existsSync(path.join(app.getAppPath(), '..', 'app-arm64.asar'))) {
+        if (process.arch === 'arm64') {
+            basePath = app.getAppPath().replace('app.asar', 'app-arm64.asar');
+        } else if (process.arch === 'x64') {
+            basePath = app.getAppPath().replace('app.asar', 'app-x64.asar');
+        }
+    }
 
     // URL for index.html which will be our entry point.
     const indexURL = URL.format({

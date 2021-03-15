@@ -33,7 +33,7 @@
       "artifactName": "digitales-klassenzimmer-${version}.${ext}",
       "target": [
         {
-          "arch": "x64",
+          "arch": "universal",
           "target": "mas"
         }
       ],
@@ -151,7 +151,7 @@
     "electron-log": "4.1.1",
     "electron-reload": "1.5.0",
     "electron-store": "5.1.1",
-    "electron-updater": "4.2.5",
+    "electron-updater": "4.3.8",
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
     "i18next": "19.4.5",

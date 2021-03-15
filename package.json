@@ -61,9 +61,6 @@
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",
       "executableName": "jitsi-meet",
-      "executableArgs": [
-        "--no-sandbox"
-      ],
       "target": [
         {
           "arch": "x64",

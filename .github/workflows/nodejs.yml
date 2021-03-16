@@ -45,6 +45,10 @@ jobs:
 
         # no code-signing for windows, as the appxupload is signed by Microsoft after submission
 
+        # retry build and upload 5 times as uploading artifacts from github actions to github releases currently
+        # sporadically errors out with "Error: socket hang up"
+        max_attempts: 5
+
         # If the commit is tagged with a version (e.g. "v1.0.0"),
         # release the app after building
         release: ${{ startsWith(github.ref, 'refs/tags/v') }}

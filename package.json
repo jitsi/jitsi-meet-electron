@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2.5.1",
+  "version": "2.7.1",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -28,15 +28,28 @@
     ],
     "mac": {
       "artifactName": "jitsi-meet.${ext}",
+      "target": [
+        {
+          "arch": "universal",
+          "target": "dmg"
+        }
+      ],
       "category": "public.app-category.video",
       "darkModeSupport": true,
       "hardenedRuntime": true,
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
+      "asarUnpack": "**/*.node",
       "extendInfo": {
         "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video)."
+        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
+        "LSMultipleInstancesProhibited": true
       }
+    },
+    "mas": {
+      "entitlements": "resources/entitlements.mas.plist",
+      "entitlementsInherit": "resources/entitlements.mas.inherit.plist",
+      "hardenedRuntime": false
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
@@ -112,11 +125,11 @@
     "electron-log": "4.1.1",
     "electron-reload": "1.5.0",
     "electron-store": "5.1.1",
-    "electron-updater": "4.2.5",
+    "electron-updater": "4.3.8",
     "electron-window-state": "5.0.3",
     "history": "4.10.1",
     "i18next": "19.4.5",
-    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.13",
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.16",
     "moment": "2.23.0",
     "mousetrap": "1.6.2",
     "react": "16.8.0",
@@ -144,8 +157,8 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "11.3.0",
-    "electron-builder": "22.7.0",
+    "electron": "12.0.1",
+    "electron-builder": "22.10.5",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

@@ -9,7 +9,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
 - Builtin auto-updates
-- ~Remote control~ (currently disabled)
+- ~Remote control~ (currently [disabled](https://github.com/jitsi/jitsi-meet-electron/issues/483) due to [security issues](https://github.com/jitsi/security-advisories/blob/master/advisories/JSA-2020-0001.md))
 - Always-On-Top window
 - Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
 
@@ -42,6 +42,10 @@ brew install --cask jitsi-meet
 ```
 Content-Security-Policy "frame-ancestors [looks like any value is bad]";
 X-Frame-Options "DENY";
+```
+A working Content Security Policy looks like that:
+```
+Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
 ```
 
 ## Development

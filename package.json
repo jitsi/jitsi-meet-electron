@@ -32,6 +32,10 @@
         {
           "arch": "universal",
           "target": "dmg"
+        },
+        {
+          "arch": "universal",
+          "target": "zip"
         }
       ],
       "category": "public.app-category.video",

@@ -17,9 +17,11 @@ Desktop application for [Jitsi Meet] built with [Electron].
 
 Download our latest release and you're off to the races!
 
-| Windows | macOS | GNU/Linux (64-bit only) |
-| -- | -- | -- |
-| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) |
+| Windows | macOS | GNU/Linux (AppImage) | GNU/Linux (Deb) |
+| -- | -- | -- | -- |
+| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-amd64.deb) |
+
+NOTE: The GNU/LInux builds are 64-bit only.
 
 ### Third-Party builds
 

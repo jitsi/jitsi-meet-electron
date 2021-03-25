@@ -5,12 +5,12 @@ on:
   # but only for the master branch
   push:
     branches:
-      - master
+      - main
     tags:
       - '*'
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build-linux:
@@ -42,9 +42,18 @@ jobs:
       run: |
         sudo xcode-select -s "/Applications/Xcode_12.4.app"
         sudo rm -Rf /Library/Developer/CommandLineTools/SDKs/*
+    - name: Update node-gyp for mac arm build
+      run: |
+        npm install --global node-gyp@7.1.2
+        npm config set node_gyp $(npm prefix -g)/lib/node_modules/node-gyp/bin/node-gyp.js
+    - name: Prepare for mas with provisioning profile
+      run: |
+        echo '${{ secrets.mac_provisionprofile }}' | base64 -D -o embedded.provisionprofile
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CSC_LINK: ${{ secrets.mac_certs }}
+        CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
       run: |
         npm install
         npm run lint

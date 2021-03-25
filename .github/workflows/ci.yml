@@ -5,12 +5,12 @@ on:
   # but only for the master branch
   push:
     branches:
-      - master
+      - main
     tags:
       - '*'
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build-linux:

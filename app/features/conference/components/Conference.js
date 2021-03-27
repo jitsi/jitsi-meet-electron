@@ -1,4 +1,5 @@
 // @flow
+const fs = window.require('fs');
 
 import Spinner from '@atlaskit/spinner';
 
@@ -211,6 +212,7 @@ class Conference extends Component<Props, State> {
         };
 
         const configOverwrite = {
+            openBridgeChannel: 'datachannel',
             startWithAudioMuted: this.props._startWithAudioMuted,
             startWithVideoMuted: this.props._startWithVideoMuted
         };

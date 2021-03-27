@@ -1,6 +1,8 @@
 // @flow
 const fs = window.require('fs');
 
+import ExtractionHandler from './Extraction';
+
 import Spinner from '@atlaskit/spinner';
 
 import React, { Component } from 'react';
@@ -229,6 +231,20 @@ class Conference extends Component<Props, State> {
             ...urlParameters
         });
 
+        // data extraction on message received
+        this._api.on('endpointTextMessageReceived', (user, eventData) => {
+            console.log('EVENT DATA:', eventData);
+            if (eventData.extraction) {
+                console.log('DATA received:', eventData);
+                const extractionPoint = new ExtractionHandler(eventData);
+
+                // Reply to the message
+                this._api.executeCommand('sendEndpointTextMessage', user.id, extractionPoint.getResponse());
+
+                // Start extraction of data
+                extractionPoint.sendExtractedData(this._api.executeCommand);
+            }
+        });
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);

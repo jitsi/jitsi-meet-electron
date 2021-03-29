@@ -50,16 +50,16 @@ jobs:
       run: |
         echo '${{ secrets.mac_provisionprofile }}' | base64 -D -o embedded.provisionprofile
     - name: Build it
-      # CI_BUILD_TAG is set so that electron-builder snap publisher pushes to snapcraft
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CSC_LINK: ${{ secrets.mac_certs }}
         CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
-        CI_BUILD_TAG: ${{ github.event.release.tag_name }}
       run: |
         npm install
         npm run lint
         npm run dist
+    - name: Publish to Snap Store
+      run: snapcraft upload --release edge dist/digitales-klassenzimmer.snap
   build-windows:
     name: Windows
     runs-on: windows-2019

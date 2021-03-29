@@ -81,8 +81,7 @@
       ]
     },
     "snap": {
-      "artifactName": "digitales-klassenzimmer.${ext}",
-      "publish": "always"
+      "artifactName": "digitales-klassenzimmer.${ext}"
     },
     "win": {
       "artifactName": "digitales-klassenzimmer-${version}-${arch}.${ext}",

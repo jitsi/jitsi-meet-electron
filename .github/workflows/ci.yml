@@ -58,6 +58,7 @@ jobs:
         npm install
         npm run lint
         npm run dist
+        snapcraft push dist/*.snap --release edge
   build-windows:
     name: Windows
     runs-on: windows-2019

@@ -73,8 +73,15 @@
         {
           "arch": "x64",
           "target": "deb"
+        },
+        {
+          "arch": "x64",
+          "target": "snap"
         }
       ]
+    },
+    "snap": {
+      "artifactName": "digitales-klassenzimmer"
     },
     "win": {
       "artifactName": "digitales-klassenzimmer-${version}-${arch}.${ext}",

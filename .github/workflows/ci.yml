@@ -21,6 +21,10 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - name: Install Snapcraft
+      uses: samuelmeuli/action-snapcraft@v1
+      with:
+        snapcraft_token: ${{ secrets.snapcraft_token }}
     - name: Install dependencies
       run: sudo apt-get install libx11-dev zlib1g-dev libpng-dev libxtst-dev
     - name: Build it

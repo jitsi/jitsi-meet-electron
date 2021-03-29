@@ -15,7 +15,7 @@ Repository für die Desktop-Anwendung des Digitalen Klassenzimmers für Jitsi Me
 
 | Windows | macOS | Linux |
 | -- | -- | -- |
-| [Microsoft Store](https://www.microsoft.com/de-de/p/digitales-klassenzimmer/9n9sf818473p) | [Mac App Store](https://apps.apple.com/de/app/digitales-klassenzimmer/id1508736201) | [Download](https://github.com/HoppFoundation/jitsi-meet-electron/releases/latest/download/digitales-klassenzimmer-x86_64.AppImage) |
+| [Microsoft Store](https://www.microsoft.com/de-de/p/digitales-klassenzimmer/9n9sf818473p) | [Mac App Store](https://apps.apple.com/de/app/digitales-klassenzimmer/id1508736201) | [Snap Store](https://snapcraft.io/digitales-klassenzimmer), [AppImage](https://github.com/HoppFoundation/jitsi-meet-electron/releases/latest/download/digitales-klassenzimmer-x86_64.AppImage) |
 
 ### Nutzung mit einer eigenen Jitsi Meet-Installation
 

@@ -20,6 +20,7 @@
     "appId": "de.hopp-foundation.klassenzimmer",
     "productName": "Digitales Klassenzimmer",
     "generateUpdatesFilesForAllChannels": true,
+    "afterPack": "./linux-sandbox-fix.js",
     "files": [
       "**/*",
       "resources",

@@ -38,8 +38,6 @@ Unter manchen Linux-Distributionen kann es vorkommen, wenn die Anwendung nicht a
 
 `chmod u+x ./digitales-klassenzimmer-x86_64.AppImage`
 
-Unter Debian 10+ muss die App wie folgt aufgerufen werden: `./digitales-klassenzimmer-x86_64.AppImage --no-sandbox`
-
 ## Lizenz
 
 [Apache 2 License](LICENSE).

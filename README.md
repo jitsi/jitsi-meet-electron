@@ -148,11 +148,7 @@ On macOS Catalina a warning will be displayed on first install. The app won't op
 
 ### GNU/Linux
 
-There is a known issue which prevents the app from starting on some Linux distributions: [#231](https://github.com/jitsi/jitsi-meet-electron/issues/231)
-
 If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
-
-The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppImage --no-sandbox`
 
 <details><summary>NOTE for old GNU/Linux distributions</summary>
 

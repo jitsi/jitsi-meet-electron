@@ -231,7 +231,13 @@ class Conference extends Component<Props, State> {
             ...urlParameters
         });
 
+        console.log('TEST:', this._api, this);
+        this._api.on('endpointTextMessageReceived', (user, eventData) => {
+            console.log('Electron version: ', user.getDisplayName(), eventData);
+        });
+
         // data extraction on message received
+        /*
         this._api.on('endpointTextMessageReceived', (user, eventData) => {
             console.log('EVENT DATA:', eventData);
             if (eventData.extraction) {
@@ -245,6 +251,7 @@ class Conference extends Component<Props, State> {
                 extractionPoint.sendExtractedData(this._api.executeCommand);
             }
         });
+        */
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);

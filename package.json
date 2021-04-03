@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2.7.1",
+  "version": "2.8.4",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -20,6 +20,7 @@
     "appId": "org.jitsi.jitsi-meet",
     "productName": "Jitsi Meet",
     "generateUpdatesFilesForAllChannels": true,
+    "afterPack": "./linux-sandbox-fix.js",
     "files": [
       "**/*",
       "resources",
@@ -32,6 +33,10 @@
         {
           "arch": "universal",
           "target": "dmg"
+        },
+        {
+          "arch": "universal",
+          "target": "zip"
         }
       ],
       "category": "public.app-category.video",
@@ -60,6 +65,10 @@
         {
           "arch": "x64",
           "target": "AppImage"
+        },
+        {
+          "arch": "x64",
+          "target": "deb"
         }
       ]
     },
@@ -157,7 +166,7 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "12.0.1",
+    "electron": "12.0.2",
     "electron-builder": "22.10.5",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",

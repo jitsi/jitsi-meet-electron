@@ -83,6 +83,10 @@
     },
     "win": {
       "artifactName": "digitales-klassenzimmer-${version}-${arch}.${ext}",
+      "publish": {
+        "provider": "github",
+        "publishAutoUpdate": false
+      },
       "target": [
         {
           "arch": [

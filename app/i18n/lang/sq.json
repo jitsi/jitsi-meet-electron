@@ -1,0 +1,39 @@
+{
+	"enterConferenceNameOrUrl": "Jepni një emër për konferencën tuaj ose një URL Jitsi",
+	"go": "SHKO",
+	"help": "Ndihmë",
+	"termsLink": "Kushte",
+	"privacyLink": "Privatësi",
+	"sendFeedbackLink": "Dërgo Përshtypje",
+	"aboutLink": "Mbi",
+	"sourceLink": "Kod Burim",
+	"versionLabel": "Version: {{version}}",
+	"onboarding": {
+		"startTour": "Nisni Turin",
+		"skip": "Anashkaloje",
+		"welcome": "Mirë se vini te {{appName}}",
+		"letUsShowYouAround": "Le t’ju tregojmë gjërat!",
+		"next": "Pasuesi",
+		"conferenceUrl": "Jepni emrin (ose URL-në) e plotë të dhomës ku doni të hyni. Një emër mund ta sajoni, thjesht bëjuani të ditur të tjerëve, që të japin të njëjtin emër.",
+		"settingsDrawerButton": "Klikoni këtu që të hapet sirtari i rregullimeve.",
+		"nameSetting": "Ky do të jetë emri në ekran për ju, të tjerë do t’ju shohin me këtë emër.",
+		"emailSetting": "Email-i që jepni këtu do të jetë pjesë e profilit tuaj të përdoruesit.",
+		"startMutedToggles": "Mund ta klikoni, nëse doni të fillohet me audio ose videon tuaj të mbyllur. Kjo do të zbatohet për krejt konferencat.",
+		"serverSetting": "Ky do të jetë shërbyesi ku do të zhvillohen konferencat tuaja. Mund të përdorni tuajën, por jo domosdoshmërisht!",
+		"serverTimeout": "Mbarim kohe për provë hyrjeje në një takim, nëse te takimi s’hyhet para se të skadojë kjo kohë, hyrja anulohet.",
+		"alwaysOnTop": "Me këtë mund të zgjidhni nëse doni apo jo aktivizimin e dritares \"përherë-sipër\", që shfaqet kur fokusi, nga dritarja kryesore, kalon gjetkë. Kjo do të zbatohet për krejt konferencat."
+	},
+	"settings": {
+		"back": "Mbrapsht",
+		"name": "Emër",
+		"email": "Email",
+		"advancedSettings": "Rregullime të Mëtejshme",
+		"alwaysOnTopWindow": "Dritare Përherë Sipër",
+		"startWithAudioMuted": "Nise pa Audio",
+		"startWithVideoMuted": "Nis pa Video",
+		"invalidServer": "URL e Pavlefshme Shërbyesi",
+		"invalidServerTimeout": "Vlerë e pavlefshme për Mbarim Kohe Shërbyesi",
+		"serverUrl": "URL Shërbyesi",
+		"serverTimeout": "Mbarim Kohe Shërbyesi (në sekonda)"
+	}
+}

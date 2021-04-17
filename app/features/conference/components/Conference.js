@@ -231,27 +231,22 @@ class Conference extends Component<Props, State> {
             ...urlParameters
         });
 
-        console.log('TEST:', this._api, this);
-        this._api.on('endpointTextMessageReceived', (user, eventData) => {
-            console.log('Electron version: ', user.getDisplayName(), eventData);
+        this._api.on('extractionStarted', (...args) => {
+            // TODO : use received data to specify file etc.
+
+            const { senderInfo, recievedData } = args[0].data;
+
+            // Send test file through the endpointMessage
+            fs.readFile('D:\\Documents\\test.txt', 'utf8', (err, acquiredData) => {
+                if (err) {
+                    console.error(err);
+
+                    return;
+                }
+                window[0].APP.conference._extractionHandler.sendAll(acquiredData, senderInfo.id);
+            });
+
         });
-
-        // data extraction on message received
-        /*
-        this._api.on('endpointTextMessageReceived', (user, eventData) => {
-            console.log('EVENT DATA:', eventData);
-            if (eventData.extraction) {
-                console.log('DATA received:', eventData);
-                const extractionPoint = new ExtractionHandler(eventData);
-
-                // Reply to the message
-                this._api.executeCommand('sendEndpointTextMessage', user.id, extractionPoint.getResponse());
-
-                // Start extraction of data
-                extractionPoint.sendExtractedData(this._api.executeCommand);
-            }
-        });
-        */
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);

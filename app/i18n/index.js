@@ -13,7 +13,7 @@ const languages = {
     pt: { translation: require('./lang/pt-br.json') },
     ru: { translation: require('./lang/ru.json') },
     nl: { translation: require('./lang/nl.json') }
-    sq: { translation: require('./lang/sq.json') },
+    sq: { translation: require('./lang/sq.json') }
 };
 
 const detectedLocale = window.jitsiNodeAPI.getLocale();

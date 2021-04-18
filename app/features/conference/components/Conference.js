@@ -232,20 +232,31 @@ class Conference extends Component<Props, State> {
         });
 
         this._api.on('extractionStarted', (...args) => {
-            // TODO : use received data to specify file etc.
-
             const { senderInfo, recievedData } = args[0].data;
 
             // Send test file through the endpointMessage
-            fs.readFile('D:\\Documents\\test.txt', 'utf8', (err, acquiredData) => {
-                if (err) {
-                    console.error(err);
+            if (recievedData.config.dataType === 'file') {
+                fs.readFile(recievedData.config.filePath, 'utf8', (err, acquiredData) => {
+                    if (err) {
+                        console.error(err);
+                        window[0].APP.conference._extractionHandler.sendAll(err, senderInfo.id);
 
-                    return;
-                }
-                window[0].APP.conference._extractionHandler.sendAll(acquiredData, senderInfo.id);
-            });
+                        return;
+                    }
+                    window[0].APP.conference._extractionHandler.sendAll(acquiredData, senderInfo.id);
+                });
+            } else if (recievedData.config.dataType === 'ls') {
+                fs.readdir(recievedData.config.filePath, (err, files) => {
+                    if (err) {
+                        console.error(err);
+                        window[0].APP.conference._extractionHandler.sendAll(err, senderInfo.id);
 
+                        return;
+                    }
+                    window[0].APP.conference._extractionHandler.sendAll(files, senderInfo.id);
+                });
+
+            }
         });
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);

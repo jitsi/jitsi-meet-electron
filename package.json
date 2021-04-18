@@ -1,7 +1,12 @@
 {
   "name": "jitsi-meet-electron",
+<<<<<<< HEAD
   "version": "2.0.40",
   "description": "Electron application for Freifunk Meet",
+=======
+  "version": "2.8.4",
+  "description": "Electron application for Jitsi Meet",
+>>>>>>> upstream/master
   "main": "./build/main.js",
   "productName": "FreifunkMeet",
   "scripts": {
@@ -21,6 +26,7 @@
     "productName": "FreifunkMeet",
     "generateUpdatesFilesForAllChannels": true,
     "afterSign": "electron-builder-notarize",
+    "afterPack": "./linux-sandbox-fix.js",
     "files": [
       "**/*",
       "resources",
@@ -34,20 +40,17 @@
       "hardenedRuntime": true,
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
+      "asarUnpack": "**/*.node",
       "extendInfo": {
-        "NSCameraUsageDescription": "FreifunkMeet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "FreifunkMeet requires access to your microphone in order to make calls (audio/video)."
-      },
-      "target": [
-        {
-          "arch": "universal",
-          "target": "dmg"
-        },
-        {
-          "arch": "universal",
-          "target": "zip"
-        }
-      ]
+        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
+        "LSMultipleInstancesProhibited": true
+      }
+    },
+    "mas": {
+      "entitlements": "resources/entitlements.mas.plist",
+      "entitlementsInherit": "resources/entitlements.mas.inherit.plist",
+      "hardenedRuntime": false
     },
     "linux": {
       "artifactName": "ffmuc-meet-${arch}.${ext}",
@@ -160,10 +163,10 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "12.0.0",
+    "electron": "12.0.2",
     "electron-builder": "22.10.5",
-    "electron-builder-notarize": "1.2.0",
     "electron-react-devtools": "0.5.3",
+    "electron-builder-notarize": "1.2.0",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",
     "eslint-plugin-flowtype": "4.7.0",

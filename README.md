@@ -9,7 +9,7 @@ Desktop application for [Jitsi] built with [Electron].
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
 - Builtin auto-updates
-- ~Remote control~ (currently disabled)
+- ~Remote control~ (currently [disabled](https://github.com/jitsi/jitsi-meet-electron/issues/483) due to [security issues](https://github.com/jitsi/security-advisories/blob/master/advisories/JSA-2020-0001.md))
 - Always-On-Top window
 - Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
 
@@ -17,9 +17,17 @@ Desktop application for [Jitsi] built with [Electron].
 
 Download our latest release and you're off to the races!
 
+<<<<<<< HEAD
 | Windows | macOS | GNU/Linux (64-bit only) |
 | -- | -- | -- |
 | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.exe) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.dmg) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet-x86_64.AppImage) |
+=======
+| Windows | macOS | GNU/Linux (AppImage) | GNU/Linux (Deb) |
+| -- | -- | -- | -- |
+| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-amd64.deb) |
+
+NOTE: The GNU/LInux builds are 64-bit only.
+>>>>>>> upstream/master
 
 ### Third-Party builds
 
@@ -42,6 +50,10 @@ brew cask install freifunkMUC/freifunkmeet/freifunk-meet
 ```
 Content-Security-Policy "frame-ancestors [looks like any value is bad]";
 X-Frame-Options "DENY";
+```
+A working Content Security Policy looks like that:
+```
+Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
 ```
 
 ## Development
@@ -144,11 +156,7 @@ Builtin auto-updates are not yet handled in macOS due to unsigned build.
 
 ### GNU/Linux
 
-There is a known issue which prevents the app from starting on some Linux distributions: [#231](https://github.com/jitsi/jitsi-meet-electron/issues/231)
-
 If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
-
-The workaround for now is to launch the app like so: `./jitsi-meet-x86_64.AppImage --no-sandbox`
 
 <details><summary>NOTE for old GNU/Linux distributions</summary>
 

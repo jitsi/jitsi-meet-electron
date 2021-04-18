@@ -17,7 +17,6 @@ Desktop application for [Jitsi] built with [Electron].
 
 Download our latest release and you're off to the races!
 
-<<<<<<< HEAD
 | Windows | macOS | GNU/Linux (64-bit only) |
 | -- | -- | -- |
 | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.exe) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.dmg) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet-x86_64.AppImage) |

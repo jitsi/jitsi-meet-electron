@@ -21,14 +21,6 @@ Download our latest release and you're off to the races!
 | Windows | macOS | GNU/Linux (64-bit only) |
 | -- | -- | -- |
 | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.exe) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.dmg) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet-x86_64.AppImage) |
-=======
-| Windows | macOS | GNU/Linux (AppImage) | GNU/Linux (Deb) |
-| -- | -- | -- | -- |
-| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-amd64.deb) |
-
-NOTE: The GNU/LInux builds are 64-bit only.
->>>>>>> upstream/master
-
 ### Third-Party builds
 
 [<img src="https://flathub.org/assets/badges/flathub-badge-en.svg"

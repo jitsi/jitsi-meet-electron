@@ -12,7 +12,7 @@ const languages = {
     it: { translation: require('./lang/it.json') },
     pt: { translation: require('./lang/pt-br.json') },
     ru: { translation: require('./lang/ru.json') },
-    nl: { translation: require('./lang/nl.json') }
+    nl: { translation: require('./lang/nl.json') },
     sq: { translation: require('./lang/sq.json') }
 };
 

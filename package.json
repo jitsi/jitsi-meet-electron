@@ -167,7 +167,7 @@
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
     "electron": "12.0.6",
-    "electron-builder": "22.10.5",
+    "electron-builder": "22.11.1",
     "electron-react-devtools": "0.5.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

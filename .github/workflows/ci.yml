@@ -43,7 +43,7 @@ jobs:
         sudo xcode-select -s "/Applications/Xcode_12.4.app"
         sudo rm -Rf /Library/Developer/CommandLineTools/SDKs/*
     - name: Prepare for app signing and notarization
-      if: ${{ secrets.mac_certs && secrets.mac_certs_password && secrets.api_key && secrets.api_key_id  && secrets.api_key_issuer_id }}
+      if: ${{ github.event_name != 'pull_request' }}
       run: |
         mkdir -p ~/private_keys/
         echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8

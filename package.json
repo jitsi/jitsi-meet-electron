@@ -20,8 +20,8 @@
     "appId": "meet.ffmuc.net",
     "productName": "FreifunkMeet",
     "generateUpdatesFilesForAllChannels": true,
-    "afterSign": "electron-builder-notarize",
     "afterPack": "./linux-sandbox-fix.js",
+    "afterSign": "electron-builder-notarize",
     "files": [
       "build",
       "resources",

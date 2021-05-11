@@ -34,6 +34,7 @@
 		"invalidServer": "Falsche Server-Adresse",
 		"invalidServerTimeout": "Ungültiger Wert für die Server-Wartezeit",
 		"serverUrl": "Server-Adresse",
-                "serverTimeout": "Server-Wartezeit (in Sekunden)"
+		"serverTimeout": "Server-Wartezeit (in Sekunden)",
+		"disableAGC": "Automatische Mikrofonlautstärkeregelung deaktivieren"
 	}
 }

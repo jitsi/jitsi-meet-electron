@@ -20,6 +20,16 @@ export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED
 export const SET_AUDIO_MUTED = Symbol('SET_AUDIO_MUTED');
 
 /**
+ * The type of (redux) action that sets disable AGC.
+ *
+ * @type {
+ *     type: SET_DISABLE_AGC,
+ *     disableAGC: boolean
+ * }
+ */
+export const SET_DISABLE_AGC = Symbol('SET_DISABLE_AGC');
+
+/**
  * The type of (redux) action that sets the email of the user.
  *
  * @type {

@@ -34,6 +34,7 @@
 		"invalidServer": "Invalid Server URL",
 		"invalidServerTimeout": "Invalid value for Server Timeout",
 		"serverUrl": "Server URL",
-		"serverTimeout": "Server Timeout (in seconds)"
+		"serverTimeout": "Server Timeout (in seconds)",
+		"disableAGC": "Disable automatic gain control"
 	}
 }

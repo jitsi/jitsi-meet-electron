@@ -17,7 +17,7 @@ import { Onboarding, advenaceSettingsSteps, startOnboarding } from '../../onboar
 import { Form, SettingsContainer, TogglesContainer } from '../styled';
 import {
     setEmail, setName, setWindowAlwaysOnTop,
-    setStartWithAudioMuted, setStartWithVideoMuted
+    setStartWithAudioMuted, setStartWithVideoMuted, setDisableAGC
 } from '../actions';
 
 import SettingToggle from './SettingToggle';
@@ -163,6 +163,10 @@ class SettingsDrawer extends Component<Props, *> {
                                         settingChangeEvent = { setWindowAlwaysOnTop }
                                         settingName = 'alwaysOnTopWindowEnabled' />
                                 </SpotlightTarget>
+                                <SettingToggle
+                                    label = { t('settings.disableAGC') }
+                                    settingChangeEvent = { setDisableAGC }
+                                    settingName = 'disableAGC' />
                             </TogglesContainer>
                         </Panel>
                         <Onboarding section = 'settings-drawer' />

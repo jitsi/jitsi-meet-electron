@@ -3,6 +3,7 @@
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
+    SET_DISABLE_AGC,
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
@@ -108,6 +109,21 @@ export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
     };
 }
 
+/**
+ * Set disable AGC.
+ *
+ * @param {boolean} disableAGC - Whether to disable AGC.
+ * @returns {{
+ *     type: SET_DISABLE_AGC,
+ *     disableAGC: boolean
+ * }}
+ */
+export function setDisableAGC(disableAGC: boolean) {
+    return {
+        type: SET_DISABLE_AGC,
+        disableAGC
+    };
+}
 
 /**
  * Set window always on top.

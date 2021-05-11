@@ -3,6 +3,7 @@
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
+    SET_DISABLE_AGC,
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
@@ -12,6 +13,7 @@ import {
 
 type State = {
     alwaysOnTopWindowEnabled: boolean,
+    disableAGC: boolean,
     email: string,
     name: string,
     serverURL: ?string,
@@ -24,6 +26,7 @@ const username = window.jitsiNodeAPI.osUserInfo().username;
 
 const DEFAULT_STATE = {
     alwaysOnTopWindowEnabled: true,
+    disableAGC: false,
     email: '',
     name: username,
     serverURL: undefined,
@@ -51,6 +54,12 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         return {
             ...state,
             startWithAudioMuted: action.startWithAudioMuted
+        };
+
+    case SET_DISABLE_AGC:
+        return {
+            ...state,
+            disableAGC: action.disableAGC
         };
 
     case SET_EMAIL:

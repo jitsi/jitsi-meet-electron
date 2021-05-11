@@ -63,6 +63,11 @@ type Props = {
      * Start with Video Muted.
      */
     _startWithVideoMuted: boolean;
+
+    /**
+     * disable automatic gain control
+     */
+    _disableAGC: boolean;
 };
 
 type State = {
@@ -212,7 +217,8 @@ class Conference extends Component<Props, State> {
 
         const configOverwrite = {
             startWithAudioMuted: this.props._startWithAudioMuted,
-            startWithVideoMuted: this.props._startWithVideoMuted
+            startWithVideoMuted: this.props._startWithVideoMuted,
+            disableAGC: this.props._disableAGC
         };
 
         const options = {
@@ -408,7 +414,8 @@ function _mapStateToProps(state: Object) {
         _serverURL: state.settings.serverURL,
         _serverTimeout: state.settings.serverTimeout,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted
+        _startWithVideoMuted: state.settings.startWithVideoMuted,
+        _disableAGC: state.settings.disableAGC
     };
 }
 

@@ -68,3 +68,13 @@ export const SET_SERVER_TIMEOUT = Symbol('SET_SERVER_TIMEOUT');
  * }
  */
 export const SET_VIDEO_MUTED = Symbol('SET_VIDEO_MUTED');
+
+/**
+ * The type of (redux) action that sets disable AGC.
+ *
+ * @type {
+ *     type: DISABLE_AGC,
+ *     disableAGC: boolean
+ * }
+ */
+export const DISABLE_AGC = Symbol('DISABLE_AGC');

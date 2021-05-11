@@ -7,7 +7,8 @@ import {
     SET_NAME,
     SET_SERVER_URL,
     SET_SERVER_TIMEOUT,
-    SET_VIDEO_MUTED
+    SET_VIDEO_MUTED,
+    DISABLE_AGC
 } from './actionTypes';
 
 import { normalizeServerURL } from '../utils';
@@ -108,6 +109,21 @@ export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
     };
 }
 
+/**
+ * Set disable AGC.
+ *
+ * @param {boolean} disableAGC - Whether to disable AGC
+ * @returns {{
+ *     type: DISABLE_AGC,
+ *     disableAGC: boolean
+ * }}
+ */
+export function setDisableAGC(disableAGC: boolean) {
+    return {
+        type: DISABLE_AGC,
+        disableAGC
+    };
+}
 
 /**
  * Set window always on top.

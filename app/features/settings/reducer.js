@@ -7,7 +7,8 @@ import {
     SET_NAME,
     SET_SERVER_URL,
     SET_SERVER_TIMEOUT,
-    SET_VIDEO_MUTED
+    SET_VIDEO_MUTED,
+    DISABLE_AGC
 } from './actionTypes';
 
 type State = {
@@ -17,7 +18,8 @@ type State = {
     serverURL: ?string,
     serverTimeout: ?number,
     startWithAudioMuted: boolean,
-    startWithVideoMuted: boolean
+    startWithVideoMuted: boolean,
+    disableAGC: boolean
 };
 
 const username = window.jitsiNodeAPI.osUserInfo().username;
@@ -29,7 +31,8 @@ const DEFAULT_STATE = {
     serverURL: undefined,
     serverTimeout: undefined,
     startWithAudioMuted: false,
-    startWithVideoMuted: false
+    startWithVideoMuted: false,
+    disableAGC: false
 };
 
 /**
@@ -82,6 +85,12 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
             ...state,
             startWithVideoMuted: action.startWithVideoMuted
         };
+
+    case DISABLE_AGC:
+            return {
+                ...state,
+                disableAGC: action.disableAGC
+            };
 
     default:
         return state;

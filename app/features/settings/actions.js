@@ -3,12 +3,12 @@
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
+    SET_DISABLE_AGC,
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
     SET_SERVER_TIMEOUT,
-    SET_VIDEO_MUTED,
-    DISABLE_AGC
+    SET_VIDEO_MUTED
 } from './actionTypes';
 
 import { normalizeServerURL } from '../utils';
@@ -112,15 +112,15 @@ export function setStartWithVideoMuted(startWithVideoMuted: boolean) {
 /**
  * Set disable AGC.
  *
- * @param {boolean} disableAGC - Whether to disable AGC
+ * @param {boolean} disableAGC - Whether to disable AGC.
  * @returns {{
- *     type: DISABLE_AGC,
+ *     type: SET_DISABLE_AGC,
  *     disableAGC: boolean
  * }}
  */
 export function setDisableAGC(disableAGC: boolean) {
     return {
-        type: DISABLE_AGC,
+        type: SET_DISABLE_AGC,
         disableAGC
     };
 }

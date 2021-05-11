@@ -35,6 +35,11 @@ type Props = {
     _alwaysOnTopWindowEnabled: boolean;
 
     /**
+     * Disable automatic gain control.
+     */
+     _disableAGC: boolean;
+
+    /**
      * Email of user.
      */
     _email: string;
@@ -63,11 +68,6 @@ type Props = {
      * Start with Video Muted.
      */
     _startWithVideoMuted: boolean;
-
-    /**
-     * disable automatic gain control
-     */
-    _disableAGC: boolean;
 };
 
 type State = {
@@ -216,9 +216,9 @@ class Conference extends Component<Props, State> {
         };
 
         const configOverwrite = {
+            disableAGC: this.props._disableAGC,
             startWithAudioMuted: this.props._startWithAudioMuted,
-            startWithVideoMuted: this.props._startWithVideoMuted,
-            disableAGC: this.props._disableAGC
+            startWithVideoMuted: this.props._startWithVideoMuted
         };
 
         const options = {
@@ -409,13 +409,13 @@ class Conference extends Component<Props, State> {
 function _mapStateToProps(state: Object) {
     return {
         _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
+        _disableAGC: state.settings.disableAGC,
         _email: state.settings.email,
         _name: state.settings.name,
         _serverURL: state.settings.serverURL,
         _serverTimeout: state.settings.serverTimeout,
         _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted,
-        _disableAGC: state.settings.disableAGC
+        _startWithVideoMuted: state.settings.startWithVideoMuted
     };
 }
 

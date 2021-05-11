@@ -3,36 +3,36 @@
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_AUDIO_MUTED,
+    SET_DISABLE_AGC,
     SET_EMAIL,
     SET_NAME,
     SET_SERVER_URL,
     SET_SERVER_TIMEOUT,
-    SET_VIDEO_MUTED,
-    DISABLE_AGC
+    SET_VIDEO_MUTED
 } from './actionTypes';
 
 type State = {
     alwaysOnTopWindowEnabled: boolean,
+    disableAGC: boolean,
     email: string,
     name: string,
     serverURL: ?string,
     serverTimeout: ?number,
     startWithAudioMuted: boolean,
-    startWithVideoMuted: boolean,
-    disableAGC: boolean
+    startWithVideoMuted: boolean
 };
 
 const username = window.jitsiNodeAPI.osUserInfo().username;
 
 const DEFAULT_STATE = {
     alwaysOnTopWindowEnabled: true,
+    disableAGC: false,
     email: '',
     name: username,
     serverURL: undefined,
     serverTimeout: undefined,
     startWithAudioMuted: false,
-    startWithVideoMuted: false,
-    disableAGC: false
+    startWithVideoMuted: false
 };
 
 /**
@@ -54,6 +54,12 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         return {
             ...state,
             startWithAudioMuted: action.startWithAudioMuted
+        };
+
+    case SET_DISABLE_AGC:
+        return {
+            ...state,
+            disableAGC: action.disableAGC
         };
 
     case SET_EMAIL:
@@ -85,12 +91,6 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
             ...state,
             startWithVideoMuted: action.startWithVideoMuted
         };
-
-    case DISABLE_AGC:
-            return {
-                ...state,
-                disableAGC: action.disableAGC
-            };
 
     default:
         return state;

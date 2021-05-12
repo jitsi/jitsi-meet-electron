@@ -216,7 +216,7 @@ class Conference extends Component<Props, State> {
         };
 
         const configOverwrite = {
-            disableAGC: this.props._disableAGC,    
+            disableAGC: this.props._disableAGC,
             startWithAudioMuted: true,
             startWithVideoMuted: true
 

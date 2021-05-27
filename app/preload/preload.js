@@ -1,5 +1,5 @@
 const createElectronStorage = require('redux-persist-electron-storage');
-const { ipcRenderer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
 const os = require('os');
 const jitsiMeetElectronUtils = require('jitsi-meet-electron-utils');
 const { openExternalLink } = require('../features/utils/openExternalLink');
@@ -12,7 +12,6 @@ window.jitsiNodeAPI = {
     osUserInfo: os.userInfo,
     openExternalLink,
     jitsiMeetElectronUtils,
-    getLocale: remote.app.getLocale,
     ipc: {
         on: (channel, listener) => {
             if (!whitelistedIpcChannels.includes(channel)) {

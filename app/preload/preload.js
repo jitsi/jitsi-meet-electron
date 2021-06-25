@@ -1,3 +1,5 @@
+/* global process */
+
 const createElectronStorage = require('redux-persist-electron-storage');
 const { ipcRenderer } = require('electron');
 const os = require('os');
@@ -11,6 +13,7 @@ window.jitsiNodeAPI = {
     createElectronStorage,
     osUserInfo: os.userInfo,
     openExternalLink,
+    platform: process.platform,
     jitsiMeetElectronUtils,
     ipc: {
         on: (channel, listener) => {

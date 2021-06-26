@@ -271,7 +271,11 @@ class Conference extends Component<Props, State> {
             setupAlwaysOnTopRender(this._api);
         }
 
-        setupWiFiStats(iframe);
+        // Disable WiFiStats on mac due to jitsi-meet-electron#585
+        if (window.jitsiNodeAPI.platform !== 'darwin') {
+            setupWiFiStats(iframe);
+        }
+
         setupPowerMonitorRender(this._api);
     }
 

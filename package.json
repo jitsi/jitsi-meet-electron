@@ -72,6 +72,16 @@
         }
       ]
     },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnss3",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1"
+      ]
+    },
     "win": {
       "artifactName": "jitsi-meet.${ext}",
       "target": [

@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2.8.7",
+  "version": "2.8.8",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -67,6 +67,16 @@
           "arch": "x64",
           "target": "AppImage"
         }
+      ]
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnss3",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1"
       ]
     },
     "win": {
@@ -142,7 +152,7 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "12.0.12",
+    "electron": "12.0.13",
     "electron-builder": "22.10.5",
     "electron-builder-notarize": "1.2.0",
     "electron-context-menu": "^2.5.0",

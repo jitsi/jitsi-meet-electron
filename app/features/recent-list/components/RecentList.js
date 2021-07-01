@@ -2,15 +2,19 @@
 
 import moment from 'moment';
 import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { Dispatch } from 'redux';
+import { compose } from 'redux';
 import { push } from 'react-router-redux';
 
 import { conferenceRemoved } from '../actions';
 import {
     ConferenceCard,
     ConferenceTitle,
+    Label,
     RecentListContainer,
+    RecentListWrapper,
     TruncatedText
 } from '../styled';
 import type { RecentListItem } from '../types';
@@ -28,6 +32,11 @@ type Props = {
      * Array of recent conferences.
      */
     _recentList: Array<RecentListItem>;
+
+    /**
+     * I18next translation function.
+     */
+    t: Function;
 };
 
 /**
@@ -40,14 +49,23 @@ class RecentList extends Component<Props, *> {
      * @returns {ReactElement}
      */
     render() {
+        const { t } = this.props;
+
+        if (this.props._recentList.length === 0) {
+            return null;
+        }
+
         return (
-            <RecentListContainer>
-                {
-                    this.props._recentList.map(
-                        conference => this._renderRecentListEntry(conference)
-                    )
-                }
-            </RecentListContainer>
+            <RecentListWrapper>
+                <Label>{ t('recentListLabel') }</Label>
+                <RecentListContainer>
+                    {
+                        this.props._recentList.map(
+                            conference => this._renderRecentListEntry(conference)
+                        )
+                    }
+                </RecentListContainer>
+            </RecentListWrapper>
         );
     }
 
@@ -160,4 +178,4 @@ function _mapStateToProps(state: Object) {
     };
 }
 
-export default connect(_mapStateToProps)(RecentList);
+export default compose(connect(_mapStateToProps), withTranslation())(RecentList);

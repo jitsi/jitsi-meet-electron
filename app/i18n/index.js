@@ -7,7 +7,7 @@ const languages = {
     en: { translation: require('./lang/en.json') }
 };
 
-const detectedLocale = window.jitsiNodeAPI.getLocale();
+const detectedLocale = navigator.language;
 
 i18n
     .use(initReactI18next)

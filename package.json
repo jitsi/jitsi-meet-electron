@@ -14,7 +14,7 @@
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",

@@ -155,7 +155,7 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "13.1.7",
+    "electron": "13.1.9",
     "electron-builder": "22.10.5",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

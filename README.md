@@ -27,7 +27,7 @@ X-Frame-Options "DENY";
 ```
 Eine funktionierende Content Security Policy sieht so aus:
 ```
-Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
+Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline' 'wasm-eval'; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
 ```
 
 ## Bekannte Fehler

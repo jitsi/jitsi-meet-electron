@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2.2.1",
+  "version": "2.8.10",
   "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
   "productName": "FreifunkMeet",
@@ -23,7 +23,7 @@
     "afterSign": "electron-builder-notarize",
     "afterPack": "./linux-sandbox-fix.js",
     "files": [
-      "**/*",
+      "build",
       "resources",
       "!app",
       "!main.js"
@@ -61,6 +61,16 @@
           "arch": "x64",
           "target": "deb"
         }
+      ]
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnss3",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1"
       ]
     },
     "win": {
@@ -106,6 +116,7 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
+<<<<<<< HEAD
     "@atlaskit/button": "10.1.1",
     "@atlaskit/css-reset": "3.0.5",
     "@atlaskit/droplist": "7.0.17",
@@ -146,6 +157,25 @@
     "styled-components": "3.4.0"
   },
   "devDependencies": {
+=======
+    "electron-debug": "^3.2.0",
+    "electron-reload": "^1.5.0",
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.22"
+  },
+  "devDependencies": {
+    "@atlaskit/button": "^10.1.3",
+    "@atlaskit/css-reset": "^3.0.8",
+    "@atlaskit/droplist": "^7.0.19",
+    "@atlaskit/field-text": "^7.1.0",
+    "@atlaskit/icon": "^15.0.3",
+    "@atlaskit/navigation": "^33.3.10",
+    "@atlaskit/onboarding": "^6.2.0",
+    "@atlaskit/page": "^8.0.12",
+    "@atlaskit/panel": "^0.3.5",
+    "@atlaskit/spinner": "^9.0.13",
+    "@atlaskit/theme": "^7.0.5",
+    "@atlaskit/toggle": "^5.0.15",
+>>>>>>> f5a649895c3aa785f2bcb140ab1fe1881aeefbe7
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-proposal-export-namespace-from": "7.8.3",
@@ -153,15 +183,25 @@
     "@babel/preset-env": "7.9.0",
     "@babel/preset-flow": "7.9.0",
     "@babel/preset-react": "7.9.4",
+    "@jitsi/js-utils": "^1.0.6",
     "@svgr/webpack": "5.4.0",
     "babel-eslint": "10.0.3",
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "12.0.11",
+    "electron": "13.1.9",
     "electron-builder": "22.10.5",
+    "electron-context-menu": "^2.5.0",
+    "electron-is-dev": "^1.2.0",
+    "electron-log": "^4.3.2",
     "electron-react-devtools": "0.5.3",
+<<<<<<< HEAD
     "electron-builder-notarize": "1.2.0",
+=======
+    "electron-store": "^5.2.0",
+    "electron-updater": "^4.3.8",
+    "electron-window-state": "^5.0.3",
+>>>>>>> f5a649895c3aa785f2bcb140ab1fe1881aeefbe7
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",
     "eslint-plugin-flowtype": "4.7.0",
@@ -170,9 +210,24 @@
     "eslint-plugin-react": "7.19.0",
     "file-loader": "6.0.0",
     "flow-bin": "0.109.0",
+    "history": "^4.10.1",
     "html-webpack-plugin": "4.0.4",
+    "i18next": "^19.9.2",
+    "moment": "^2.29.1",
+    "mousetrap": "^1.6.5",
     "patch-package": "6.2.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-i18next": "^11.8.12",
+    "react-redux": "^5.1.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.10.0",
+    "redux-persist-electron-storage": "^2.1.0",
+    "source-map-support": "^0.5.19",
     "style-loader": "1.1.3",
+    "styled-components": "^3.4.10",
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11"
   }

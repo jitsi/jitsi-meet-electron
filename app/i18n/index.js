@@ -16,7 +16,7 @@ const languages = {
     sq: { translation: require('./lang/sq.json') }
 };
 
-const detectedLocale = window.jitsiNodeAPI.getLocale();
+const detectedLocale = navigator.language;
 
 i18n
     .use(initReactI18next)

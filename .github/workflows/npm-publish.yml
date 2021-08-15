@@ -20,9 +20,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
-        node-version: 12.x
+        node-version: '13'
     - name: Install robotjs dependencies for ubuntu
       run: sudo apt install libxtst-dev libpng++-dev
       if: startsWith(matrix.os, 'ubuntu')
@@ -35,7 +35,7 @@ jobs:
     - name: Update node-gyp for mac arm build
       if: startsWith(matrix.os, 'macos')
       run: |
-        npm install --global node-gyp@7.1.2
+        npm install --global node-gyp@8.1.0
         npm config set node_gyp $(npm prefix -g)/lib/node_modules/node-gyp/bin/node-gyp.js
     - name: Build/release Electron app
       uses: samuelmeuli/action-electron-builder@v1
@@ -55,4 +55,4 @@ jobs:
         # macOS notarization API key
         API_KEY_ID: ${{ secrets.api_key_id }}
         API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
-        SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
+        SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk

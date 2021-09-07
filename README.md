@@ -7,7 +7,7 @@ Repository für die Desktop-Anwendung des Digitalen Klassenzimmers für Jitsi Me
 ## Funktionen
 - [Ende-zu-Ende Verschlüsslung](https://jitsi.org/blog/e2ee/) (BETA)
 - Funktioniert mit jeder Jitsi Meet Instanz
-- Automatische Updates über Microsoft Store und Mac App Store
+- Automatische Updates über Microsoft Store, Mac App Store, Snap Store und Flathub
 - Immer über andere Fenster-Modus (Always-on-top)
 - Unterstützung von Direkt-Links wie `jitsi-meet://KlassenzimmerName`. Dies wird 'KlassenzimmerName` in einer neuen Jitsi Instanz öffnen. Oder aber jitsi-meet://jitsi.meineDomain.com/meinRaum` öffnet `meinRaum` auf der Jitsi Instanz von `jitsi.meineDomain.com
 
@@ -15,7 +15,7 @@ Repository für die Desktop-Anwendung des Digitalen Klassenzimmers für Jitsi Me
 
 | Windows | macOS | Linux |
 | -- | -- | -- |
-| [Microsoft Store](https://www.microsoft.com/de-de/p/digitales-klassenzimmer/9n9sf818473p) | [Mac App Store](https://apps.apple.com/de/app/digitales-klassenzimmer/id1508736201) | [Snap Store](https://snapcraft.io/digitales-klassenzimmer), [AppImage](https://github.com/HoppFoundation/jitsi-meet-electron/releases/latest/download/digitales-klassenzimmer-x86_64.AppImage) |
+| [Microsoft Store](https://www.microsoft.com/de-de/p/digitales-klassenzimmer/9n9sf818473p) | [Mac App Store](https://apps.apple.com/de/app/digitales-klassenzimmer/id1508736201) | [Snap Store](https://snapcraft.io/digitales-klassenzimmer), [Flathub](https://flathub.org/apps/details/de.hoppfoundation.klassenzimmer), [AppImage](https://github.com/HoppFoundation/jitsi-meet-electron/releases/latest/download/digitales-klassenzimmer-x86_64.AppImage) |
 
 ### Nutzung mit einer eigenen Jitsi Meet-Installation
 

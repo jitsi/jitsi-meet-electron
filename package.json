@@ -1,6 +1,6 @@
 {
   "name": "hopp-digitales-klassenzimmer",
-  "version": "2.8.13",
+  "version": "2.8.14",
   "description": "HOPP Foundation - Das digitale Klassenzimmer",
   "main": "./build/main.js",
   "productName": "Digitales Klassenzimmer",

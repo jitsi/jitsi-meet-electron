@@ -319,14 +319,10 @@ app.on('activate', () => {
     }
 });
 
-/**
- * Skip certificate errors in dev & MAS for now as sandboxed build does not have access to
- * system CA certificates
- */
 app.on('certificate-error',
     // eslint-disable-next-line max-params
     (event, webContents, url, error, certificate, callback) => {
-        if (isDev || process.mas) {
+        if (isDev) {
             event.preventDefault();
             callback(true);
         } else {

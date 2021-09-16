@@ -1,6 +1,5 @@
 /* global process */
 
-const createElectronStorage = require('redux-persist-electron-storage');
 const { ipcRenderer } = require('electron');
 const os = require('os');
 const jitsiMeetElectronUtils = require('jitsi-meet-electron-utils');
@@ -10,7 +9,6 @@ const { openExternalLink } = require('../features/utils/openExternalLink');
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
 
 window.jitsiNodeAPI = {
-    createElectronStorage,
     osUserInfo: os.userInfo,
     openExternalLink,
     platform: process.platform,

@@ -35,7 +35,7 @@
 		"invalidServer": "Érvénytelen kiszolgáló URL-címe",
 		"invalidServerTimeout": "A kiszolgáló időkorlátja érvénytelen",
 		"serverUrl": "Kiszolgáló URL-címe",
-		"serverTimeout": "Kiszolgálói időkorlát (másodperc)"
+		"serverTimeout": "Kiszolgálói időkorlát (másodperc)",
 		"disableAGC": "Önműködő erősítésvezérlés letiltása"
 	}
 }

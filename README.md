@@ -168,6 +168,12 @@ sudo apt-get install libnss3
 
 </details>
 
+## Translations
+
+The json files are for all the strings inside the application and can be translated [here](/app/i18n/lang).
+
+New translations require the addition of a line in [index.js](/app/i18n/index.js).
+
 ## License
 
 Apache 2. See the [LICENSE] file.

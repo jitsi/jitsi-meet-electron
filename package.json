@@ -60,9 +60,9 @@
       "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",      
-      desktop: {
-        comment: "Jitsi Meet Desktop App",
-        comment: {
+      "desktop": {
+        "comment": "Jitsi Meet Desktop App",
+        "comment": {
           "hu": "Asztali Jitsi Meet-alkalmazás"
         },
       },

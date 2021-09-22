@@ -58,9 +58,12 @@
     },
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
-      "Comment": "Jitsi Meet Desktop App",
-      "Comment[hu]": "Asztali Jitsi Meet-alkalmazás",
-      "Category": "VideoConference;AudioVideo;Audio;Video;Network",
+      "category": "VideoConference;AudioVideo;Audio;Video;Network",
+      "description": "Jitsi Meet Desktop App",      
+      desktop: {
+        "Comment": "Jitsi Meet Desktop App",
+        "Comment[hu]": "Asztali Jitsi Meet-alkalmazás"
+      },
       "executableName": "jitsi-meet",
       "target": [
         {

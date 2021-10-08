@@ -64,7 +64,7 @@
         "comment": {
           "en": "Jitsi Meet Desktop App",
           "hu": "Asztali Jitsi Meet-alkalmazás"
-        },
+        }
       },
       "executableName": "jitsi-meet",
       "target": [

@@ -15,6 +15,7 @@ window.jitsiNodeAPI = {
     openExternalLink,
     platform: process.platform,
     jitsiMeetElectronUtils,
+    electronStoreExists: ipcRenderer.sendSync('electron-store-exists'),
     ipc: {
         on: (channel, listener) => {
             if (!whitelistedIpcChannels.includes(channel)) {

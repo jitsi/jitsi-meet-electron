@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '14.x'
     - name: Install dependencies
       run: sudo apt-get install libx11-dev zlib1g-dev libpng-dev libxtst-dev
     - name: Build it
@@ -36,7 +36,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '14.x'
     - name: Fixup Xcode
       # https://github.com/actions/virtual-environments/issues/2557
       run: |
@@ -56,7 +56,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '14.x'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

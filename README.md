@@ -58,7 +58,7 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
-Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
+Install Node.js 14 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 14 by running `nvm use`).
 
 <details><summary>Extra dependencies for Windows</summary>
 

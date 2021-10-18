@@ -177,7 +177,7 @@ The json files are for all the strings inside the application and can be transla
 New translations require the addition of a line in [index.js](/app/i18n/index.js).
 
 `Localize desktop file on linux` requires the addition of a line in [package.json](/package.json).
-Please search for `Comment[hu]` as an example to help add your tranlation of the English string `Jitsi Meet Desktop App` for your language.
+Please search for `Comment[hu]` as an example to help add your translation of the English string `Jitsi Meet Desktop App` for your language.
 
 ## License
 

@@ -59,7 +59,7 @@
     "linux": {
       "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
-      "description": "Jitsi Meet Desktop App",      
+      "description": "Jitsi Meet Desktop App",
       "desktop": {
         "Comment[hu]": "Asztali Jitsi Meet-alkalmazás"
       },
@@ -130,7 +130,7 @@
   "dependencies": {
     "electron-debug": "^3.2.0",
     "electron-reload": "^1.5.0",
-    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.22"
+    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#64477b82008c25b203903568ec11bdac1a284b06"
   },
   "devDependencies": {
     "@atlaskit/button": "^10.1.3",

@@ -57,7 +57,7 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
-Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
+Install Node.js 14 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 14 by running `nvm use`).
 
 <details><summary>Extra dependencies for Windows</summary>
 
@@ -173,6 +173,9 @@ sudo apt-get install libnss3
 The json files are for all the strings inside the application and can be translated [here](/app/i18n/lang).
 
 New translations require the addition of a line in [index.js](/app/i18n/index.js).
+
+`Localize desktop file on linux` requires the addition of a line in [package.json](/package.json).
+Please search for `Comment[hu]` as an example to help add your translation of the English string `Jitsi Meet Desktop App` for your language.
 
 ## License
 

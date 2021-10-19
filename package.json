@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -14,7 +14,7 @@
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
@@ -61,6 +61,9 @@
       "artifactName": "jitsi-meet-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",
+      "desktop": {
+        "Comment[hu]": "Asztali Jitsi Meet-alkalmazás"
+      },
       "executableName": "jitsi-meet",
       "target": [
         {
@@ -152,15 +155,15 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "13.4.0",
-    "electron-builder": "22.10.5",
+    "electron": "13.5.2",
+    "electron-builder": "22.11.11",
     "electron-builder-notarize": "1.2.0",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",
     "electron-react-devtools": "0.5.3",
     "electron-store": "^5.2.0",
-    "electron-updater": "^4.3.8",
+    "electron-updater": "^4.4.3",
     "electron-window-state": "^5.0.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

@@ -60,6 +60,10 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '16.x'
+    - name: latest node-gyp for robotjs
+      run: |
+        npm install --global node-gyp@8.4.0
+        npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

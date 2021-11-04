@@ -9,6 +9,12 @@ exports.default = async function notarizing(context) {
         return;
     }
 
+    if (!(process.env.APPLE_ID && process.env.APPLE_ID_PASSWORD && process.env.TEAM_ID)) {
+        console.log('Skipping notarization');
+
+        return;
+    }
+
     const appName = context.packager.appInfo.productFilename;
 
     return await notarize({

@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2021.11.1",
+  "version": "2021.11.2",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -167,7 +167,7 @@
     "electron-notarize": "1.1.1",
     "electron-react-devtools": "0.5.3",
     "electron-store": "^5.2.0",
-    "electron-updater": "^4.4.3",
+    "electron-updater": "^4.3.9",
     "electron-window-state": "^5.0.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

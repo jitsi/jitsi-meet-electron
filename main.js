@@ -45,9 +45,6 @@ if (!app.commandLine.hasSwitch('enable-features')) {
     app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');
 }
 
-// Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
-app.allowRendererProcessReuse = false;
-
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
 

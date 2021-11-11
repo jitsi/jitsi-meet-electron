@@ -132,7 +132,7 @@
   "dependencies": {
     "electron-debug": "^3.2.0",
     "electron-reload": "^1.5.0",
-    "@jitsi/electron-sdk": "github:jitsi/jitsi-meet-electron-utils#9b2cbeb57e268b28e1db93d775987982e090d6dd"
+    "@jitsi/electron-sdk": "^3.0.0"
   },
   "devDependencies": {
     "@atlaskit/button": "^10.1.3",

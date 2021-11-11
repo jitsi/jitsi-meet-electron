@@ -79,7 +79,7 @@ module.exports = {
         ]
     },
     externals: [ {
-        'jitsi-meet-electron-utils': 'require(\'jitsi-meet-electron-utils\')'
+        '@jitsi/electron-sdk': 'require(\'@jitsi/electron-sdk\')'
     } ],
     resolve: {
         modules: [

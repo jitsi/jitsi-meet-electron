@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - master
-    tags:
-      - '*'
   pull_request:
     branches:
       - master
@@ -18,11 +16,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
-        node-version: '16.x'
-    - name: Install dependencies
-      run: sudo apt-get install libx11-dev zlib1g-dev libpng-dev libxtst-dev
+        node-version: '16'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,9 +30,9 @@ jobs:
     runs-on: macos-11
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
-        node-version: '16.x'
+        node-version: '16'
     - name: Prepare for app signing and notarization
       if: ${{ github.event_name != 'pull_request' }}
       run: |
@@ -57,13 +53,9 @@ jobs:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
-        node-version: '16.x'
-    - name: latest node-gyp for robotjs
-      run: |
-        npm install --global node-gyp@8.4.0
-        npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
+        node-version: '16'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

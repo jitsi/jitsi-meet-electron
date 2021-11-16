@@ -133,6 +133,18 @@ npm install @jitsi/electron-sdk --force
 NOTE: Also check the [jitsi-meet-electron-sdk README] to see how to configure
 your environment.
 
+#### Publishing
+
+1. Create release branch: `git checkout -b release-1-2-3`, replacing 1-2-3 with the desired release version
+2. Increment the version: `npm version patch`, replacing `patch` with `minor` or `major` as required
+3. Push release branch to github: `git push -u origin release-1-2-3`
+4. Create PR: `gh pr create`
+5. Once PR is reviewed and ready to merge, create draft Github release: `gh release create v1.2.3 --draft --title 1.2.3`, replacing v1.2.3 and 1.2.3 with the desired release version
+6. Merge PR
+7. Github action will build binaries and attach to the draft release
+8. Test binaries from draft release
+9. If all tests are fine, publish draft release
+
 </details>
 
 ## Known issues

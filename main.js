@@ -399,7 +399,3 @@ ipcMain.on('renderer-ready', () => {
             .send('protocol-data-msg', protocolDataForFrontApp);
     }
 });
-
-ipcMain.on('electron-store-exists', event => {
-    event.returnValue = existsSync(path.join(app.getPath('userData'), 'config.json'));
-});

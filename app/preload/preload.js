@@ -3,7 +3,7 @@
 const createElectronStorage = require('redux-persist-electron-storage');
 const { ipcRenderer } = require('electron');
 const os = require('os');
-const jitsiMeetElectronUtils = require('jitsi-meet-electron-utils');
+const jitsiMeetElectronUtils = require('@jitsi/electron-sdk');
 const { openExternalLink } = require('../features/utils/openExternalLink');
 
 
@@ -15,6 +15,7 @@ window.jitsiNodeAPI = {
     openExternalLink,
     platform: process.platform,
     jitsiMeetElectronUtils,
+    electronStoreExists: ipcRenderer.sendSync('electron-store-exists'),
     ipc: {
         on: (channel, listener) => {
             if (!whitelistedIpcChannels.includes(channel)) {

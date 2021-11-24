@@ -12,7 +12,7 @@ module.exports = {
         __dirname: true
     },
     externals: [ {
-        'jitsi-meet-electron-utils': 'require(\'jitsi-meet-electron-utils\')',
+        '@jitsi/electron-sdk': 'require(\'@jitsi/electron-sdk\')',
         'electron-debug': 'require(\'electron-debug\')',
         'electron-reload': 'require(\'electron-reload\')'
     } ],

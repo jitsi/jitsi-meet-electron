@@ -1,9 +1,14 @@
 {
   "name": "jitsi-meet-electron",
+<<<<<<< HEAD
+  "version": "2021.11.2",
+=======
   "version": "2.8.12",
+>>>>>>> main
   "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
   "productName": "FreifunkMeet",
+  "private": true,
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
@@ -14,14 +19,18 @@
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   },
   "build": {
     "appId": "meet.ffmuc.net",
     "productName": "FreifunkMeet",
     "generateUpdatesFilesForAllChannels": true,
     "afterPack": "./linux-sandbox-fix.js",
+<<<<<<< HEAD
+    "afterSign": "./notarize.js",
+=======
     "afterSign": "electron-builder-notarize",
+>>>>>>> main
     "files": [
       "build",
       "resources",
@@ -126,9 +135,12 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
+<<<<<<< HEAD
+    "@jitsi/electron-sdk": "^3.0.1",
+=======
+>>>>>>> main
     "electron-debug": "^3.2.0",
-    "electron-reload": "^1.5.0",
-    "jitsi-meet-electron-utils": "github:jitsi/jitsi-meet-electron-utils#v2.0.22"
+    "electron-reload": "^1.5.0"
   },
   "devDependencies": {
     "@atlaskit/button": "^10.1.3",
@@ -150,21 +162,27 @@
     "@babel/preset-env": "7.9.0",
     "@babel/preset-flow": "7.9.0",
     "@babel/preset-react": "7.9.4",
-    "@jitsi/js-utils": "^1.0.6",
+    "@jitsi/js-utils": "2.0.0",
     "@svgr/webpack": "5.4.0",
     "babel-eslint": "10.0.3",
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
+<<<<<<< HEAD
+    "electron": "13.5.2",
+    "electron-builder": "22.11.11",
+=======
     "electron": "13.4.0",
     "electron-builder": "22.10.5",
     "electron-builder-notarize": "1.2.0",
+>>>>>>> main
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",
+    "electron-notarize": "1.1.1",
     "electron-react-devtools": "0.5.3",
     "electron-store": "^5.2.0",
-    "electron-updater": "^4.3.8",
+    "electron-updater": "^4.3.9",
     "electron-window-state": "^5.0.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

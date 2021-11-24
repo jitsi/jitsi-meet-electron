@@ -5,16 +5,31 @@ on:
   # but only for the master branch
   push:
     branches:
+<<<<<<< HEAD
+      - master
+  pull_request:
+    branches:
+      - master
+=======
       - main
     tags:
       - '*'
   pull_request:
     branches:
       - main
+>>>>>>> main
 
 jobs:
   build-linux:
     name: Linux
+<<<<<<< HEAD
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+=======
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -23,6 +38,7 @@ jobs:
         node-version: '12.x'
     - name: Install dependencies
       run: sudo apt-get install libx11-dev zlib1g-dev libpng-dev libxtst-dev
+>>>>>>> main
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,6 +47,22 @@ jobs:
         npm run dist
   build-mac:
     name: macOS
+<<<<<<< HEAD
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - name: Prepare for app signing and notarization
+      if: ${{ github.event_name != 'pull_request' }}
+      run: |
+        echo "CSC_LINK=${{ secrets.mac_cert }}" >> $GITHUB_ENV
+        echo "CSC_KEY_PASSWORD=${{ secrets.mac_cert_password }}" >> $GITHUB_ENV
+        echo "APPLE_ID=${{ secrets.apple_id }}" >> $GITHUB_ENV
+        echo "APPLE_ID_PASSWORD=${{ secrets.apple_id_password }}" >> $GITHUB_ENV
+        echo "TEAM_ID=${{ secrets.team_id }}" >> $GITHUB_ENV
+=======
     runs-on: macos-10.15
     steps:
     - uses: actions/checkout@v2
@@ -51,6 +83,7 @@ jobs:
         echo "CSC_KEY_PASSWORD=${{ secrets.mac_certs_password }}" >> $GITHUB_ENV
         echo "API_KEY_ID=${{ secrets.api_key_id }}" >> $GITHUB_ENV
         echo "API_KEY_ISSUER_ID=${{ secrets.api_key_issuer_id }}" >> $GITHUB_ENV
+>>>>>>> main
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -63,9 +96,15 @@ jobs:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v2
+<<<<<<< HEAD
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+=======
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+>>>>>>> main
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

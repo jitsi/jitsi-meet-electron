@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2021.11.3",
+  "version": "2021.11.4",
   "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
   "productName": "FreifunkMeet",

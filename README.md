@@ -31,7 +31,7 @@ Download our latest release and you're off to the races!
 For *macOS* user, you can install the application using the following command:
 
 ```
-brew cask install freifunkMUC/freifunkmeet/freifunk-meet
+brew install --cask freifunkMUC/freifunkmeet/freifunk-meet
 ```
 
 ### Using it with your own Jitsi Meet installation

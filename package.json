@@ -1,6 +1,10 @@
 {
   "name": "jitsi-meet-electron",
+<<<<<<< HEAD
   "version": "2021.11.2",
+=======
+  "version": "2.8.12",
+>>>>>>> main
   "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
   "productName": "FreifunkMeet",
@@ -21,9 +25,12 @@
     "appId": "meet.ffmuc.net",
     "productName": "FreifunkMeet",
     "generateUpdatesFilesForAllChannels": true,
-    "afterSign": "electron-builder-notarize",
     "afterPack": "./linux-sandbox-fix.js",
+<<<<<<< HEAD
     "afterSign": "./notarize.js",
+=======
+    "afterSign": "electron-builder-notarize",
+>>>>>>> main
     "files": [
       "build",
       "resources",
@@ -32,6 +39,16 @@
     ],
     "mac": {
       "artifactName": "ffmuc-meet.${ext}",
+      "target": [
+        {
+          "arch": "universal",
+          "target": "dmg"
+        },
+        {
+          "arch": "universal",
+          "target": "zip"
+        }
+      ],
       "category": "public.app-category.video",
       "darkModeSupport": true,
       "hardenedRuntime": true,
@@ -39,8 +56,8 @@
       "entitlementsInherit": "entitlements.mac.plist",
       "asarUnpack": "**/*.node",
       "extendInfo": {
-        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
+        "NSCameraUsageDescription": "Freifunk Meet requires access to your camera in order to make video-calls.",
+        "NSMicrophoneUsageDescription": "Freifunk Meet requires access to your microphone in order to make calls (audio/video).",
         "LSMultipleInstancesProhibited": true
       }
     },
@@ -118,7 +135,10 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
+<<<<<<< HEAD
     "@jitsi/electron-sdk": "^3.0.1",
+=======
+>>>>>>> main
     "electron-debug": "^3.2.0",
     "electron-reload": "^1.5.0"
   },
@@ -148,8 +168,14 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
+<<<<<<< HEAD
     "electron": "13.5.2",
     "electron-builder": "22.11.11",
+=======
+    "electron": "13.4.0",
+    "electron-builder": "22.10.5",
+    "electron-builder-notarize": "1.2.0",
+>>>>>>> main
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",

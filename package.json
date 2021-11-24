@@ -21,7 +21,7 @@
     "productName": "Jitsi Meet",
     "generateUpdatesFilesForAllChannels": true,
     "afterPack": "./linux-sandbox-fix.js",
-    "afterSign": "electron-builder-notarize",
+    "afterSign": "./notarize.js",
     "files": [
       "build",
       "resources",
@@ -157,7 +157,6 @@
     "css-loader": "3.5.0",
     "electron": "13.5.2",
     "electron-builder": "22.11.11",
-    "electron-builder-notarize": "1.2.0",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",

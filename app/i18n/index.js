@@ -10,13 +10,13 @@ const languages = {
     gl: { translation: require('./lang/gl.json') },
     hu: { translation: require('./lang/hu.json') },
     it: { translation: require('./lang/it.json') },
+    nl: { translation: require('./lang/nl.json') },
     pt: { translation: require('./lang/pt-br.json') },
     ru: { translation: require('./lang/ru.json') },
-    nl: { translation: require('./lang/nl.json') },
     sq: { translation: require('./lang/sq.json') }
 };
 
-const detectedLocale = window.jitsiNodeAPI.getLocale();
+const detectedLocale = navigator.language;
 
 i18n
     .use(initReactI18next)

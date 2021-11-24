@@ -4,10 +4,11 @@
 	"help": "Súgó",
 	"termsLink": "Feltételek",
 	"privacyLink": "Adatvédelem",
+	"recentListLabel": "vagy csatlakozzon újra az egyik legutóbbi konferenciateremhez",
 	"sendFeedbackLink": "Visszajelzés",
 	"aboutLink": "Névjegy",
 	"sourceLink": "Forráskód",
-	"versionLabel": "Változat: {{version}}",
+	"versionLabel": "Verzió: {{version}}",
 	"onboarding": {
 		"startTour": "Bemutató indítása",
 		"skip": "Kihagyás",
@@ -26,7 +27,7 @@
 	"settings": {
 		"back": "Vissza",
 		"name": "Név",
-		"email": "E-mail",
+		"email": "E-mail-cím",
 		"advancedSettings": "Haladó beállítások",
 		"alwaysOnTopWindow": "Mindig látható",
 		"startWithAudioMuted": "Elnémítva kezd",
@@ -34,6 +35,7 @@
 		"invalidServer": "Érvénytelen kiszolgáló URL-címe",
 		"invalidServerTimeout": "A kiszolgáló időkorlátja érvénytelen",
 		"serverUrl": "Kiszolgáló URL-címe",
-		"serverTimeout": "Kiszolgálói időkorlát (másodperc)"
+		"serverTimeout": "Kiszolgálói időkorlát (másodperc)",
+		"disableAGC": "Önműködő erősítésvezérlés letiltása"
 	}
 }

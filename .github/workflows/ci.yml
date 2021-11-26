@@ -29,7 +29,6 @@ jobs:
       with:
         name: linux-binaries
         path: |
-          dist/jitsi-meet-amd64.deb
           dist/jitsi-meet-x86_64.AppImage
           dist/latest-linux.yml
   build-mac:

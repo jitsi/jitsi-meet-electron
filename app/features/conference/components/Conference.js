@@ -15,8 +15,6 @@ import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
 
-const ENABLE_REMOTE_CONTROL = false;
-
 type Props = {
 
     /**
@@ -260,7 +258,7 @@ class Conference extends Component<Props, State> {
             }
         );
 
-        const { RemoteControl,
+        const {
             setupScreenSharingRender,
             setupAlwaysOnTopRender,
             initPopupsConfigurationRender,
@@ -273,10 +271,6 @@ class Conference extends Component<Props, State> {
         const iframe = this._api.getIFrame();
 
         setupScreenSharingRender(this._api);
-
-        if (ENABLE_REMOTE_CONTROL) {
-            new RemoteControl(iframe); // eslint-disable-line no-new
-        }
 
         // Allow window to be on top if enabled in settings
         if (this.props._alwaysOnTopWindowEnabled) {

@@ -14,7 +14,6 @@ const windowStateKeeper = require('electron-window-state');
 const {
     initPopupsConfigurationMain,
     getPopupTarget,
-    RemoteControlMain,
     setupAlwaysOnTopMain,
     setupPowerMonitorMain,
     setupScreenSharingMain
@@ -27,8 +26,6 @@ const pkgJson = require('./package.json');
 const { existsSync } = require('fs');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
-
-const ENABLE_REMOTE_CONTROL = false;
 
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
@@ -232,9 +229,6 @@ function createJitsiMeetWindow() {
     setupAlwaysOnTopMain(mainWindow);
     setupPowerMonitorMain(mainWindow);
     setupScreenSharingMain(mainWindow, config.default.appName, pkgJson.build.appId);
-    if (ENABLE_REMOTE_CONTROL) {
-        new RemoteControlMain(mainWindow); // eslint-disable-line no-new
-    }
 
     mainWindow.webContents.on('new-window', (event, url, frameName) => {
         const target = getPopupTarget(url, frameName);

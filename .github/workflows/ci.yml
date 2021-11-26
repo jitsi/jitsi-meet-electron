@@ -25,6 +25,13 @@ jobs:
       run: |
         npm install
         npm run dist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: linux-binaries
+        path: |
+          dist/jitsi-meet-amd64.deb
+          dist/jitsi-meet-x86_64.AppImage
+          dist/latest-linux.yml
   build-mac:
     name: macOS
     runs-on: macos-11
@@ -50,6 +57,13 @@ jobs:
         npm install
         npm run lint
         npm run dist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: mac-binaries
+        path: |
+          dist/jitsi-meet.dmg
+          dist/jitsi-meet.zip
+          dist/latest-mac.yml
   build-windows:
     name: Windows
     runs-on: windows-2019
@@ -64,3 +78,9 @@ jobs:
       run: |
         npm install
         npm run dist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: windows-binaries
+        path: |
+          dist/jitsi-meet.exe
+          dist/latest.yml

@@ -29,8 +29,8 @@ jobs:
       with:
         name: linux-binaries
         path: |
-          dist/jitsi-meet-amd64.deb
-          dist/jitsi-meet-x86_64.AppImage
+          dist/ffmuc-meet-amd64.deb
+          dist/ffmuc-meet-x86_64.AppImage
           dist/latest-linux.yml
   build-mac:
     name: macOS
@@ -61,8 +61,8 @@ jobs:
       with:
         name: mac-binaries
         path: |
-          dist/jitsi-meet.dmg
-          dist/jitsi-meet.zip
+          dist/ffmuc-meet.dmg
+          dist/ffmuc-meet.zip
           dist/latest-mac.yml
   build-windows:
     name: Windows
@@ -82,5 +82,5 @@ jobs:
       with:
         name: windows-binaries
         path: |
-          dist/jitsi-meet.exe
+          dist/ffmuc-meet.exe
           dist/latest.yml

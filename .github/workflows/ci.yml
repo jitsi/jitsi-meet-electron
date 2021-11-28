@@ -25,6 +25,13 @@ jobs:
       run: |
         npm install
         npm run dist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: linux-binaries
+        path: |
+          dist/ffmuc-meet-amd64.deb
+          dist/ffmuc-meet-x86_64.AppImage
+          dist/latest-linux.yml
   build-mac:
     name: macOS
     runs-on: macos-11
@@ -40,6 +47,7 @@ jobs:
         echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
         echo "CSC_LINK=${{ secrets.mac_certs }}" >> $GITHUB_ENV
         echo "CSC_KEY_PASSWORD=${{ secrets.mac_certs_password }}" >> $GITHUB_ENV
+        echo "API_KEY_FILE=~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8" >> $GITHUB_ENV
         echo "API_KEY_ID=${{ secrets.api_key_id }}" >> $GITHUB_ENV
         echo "API_KEY_ISSUER_ID=${{ secrets.api_key_issuer_id }}" >> $GITHUB_ENV
     - name: Build it
@@ -49,6 +57,13 @@ jobs:
         npm install
         npm run lint
         npm run dist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: mac-binaries
+        path: |
+          dist/ffmuc-meet.dmg
+          dist/ffmuc-meet.zip
+          dist/latest-mac.yml
   build-windows:
     name: Windows
     runs-on: windows-2019
@@ -63,3 +78,9 @@ jobs:
       run: |
         npm install
         npm run dist
+    - uses: actions/upload-artifact@v2
+      with:
+        name: windows-binaries
+        path: |
+          dist/ffmuc-meet.exe
+          dist/latest.yml

@@ -58,7 +58,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: mac-binaries
-        path: dist/digitales-klassenzimmer*
+        path: dist/mas-universal/digitales-klassenzimmer*
   build-windows:
     name: Windows
     runs-on: windows-2019

@@ -83,7 +83,8 @@
       "plugs": [
         "default",
         "camera",
-        "audio-record"
+        "audio-record",
+        "screen-inhibit-control"
       ]
     },
     "deb": {

@@ -1,6 +1,6 @@
 {
   "name": "hopp-digitales-klassenzimmer",
-  "version": "2021.12.1",
+  "version": "2021.12.2",
   "description": "HOPP Foundation - Das digitale Klassenzimmer",
   "main": "./build/main.js",
   "productName": "Digitales Klassenzimmer",
@@ -190,7 +190,7 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "16.0.3",
+    "electron": "16.0.4",
     "electron-builder": "22.10.5",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

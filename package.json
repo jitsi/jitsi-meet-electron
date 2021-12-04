@@ -21,7 +21,6 @@
     "appId": "org.jitsi.jitsi-meet",
     "productName": "Jitsi Meet",
     "generateUpdatesFilesForAllChannels": true,
-    "afterPack": "./linux-sandbox-fix.js",
     "afterSign": "./notarize.js",
     "files": [
       "build",

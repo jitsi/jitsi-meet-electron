@@ -16,9 +16,6 @@ export const onboardingSteps = {
         'settings-drawer-button'
     ],
     'settings-drawer': [
-        'name-setting',
-        'email-setting',
-        'start-muted-toggles',
         ...advenaceSettingsSteps
     ]
 };
@@ -37,24 +34,6 @@ export const onboardingComponents = {
         target: 'settings-drawer-button',
         text: 'onboarding.settingsDrawerButton',
         onNext: (props: OnboardingSpotlight.props) => props.dispatch(openDrawer(SettingsDrawer))
-    },
-    'name-setting': {
-        type: OnboardingSpotlight,
-        dialogPlacement: 'top right',
-        target: 'name-setting',
-        text: 'onboarding.nameSetting'
-    },
-    'email-setting': {
-        type: OnboardingSpotlight,
-        dialogPlacement: 'top right',
-        target: 'email-setting',
-        text: 'onboarding.emailSetting'
-    },
-    'start-muted-toggles': {
-        type: OnboardingSpotlight,
-        dialogPlacement: 'top right',
-        target: 'start-muted-toggles',
-        text: 'onboarding.startMutedToggles'
     },
     'server-setting': {
         type: OnboardingSpotlight,

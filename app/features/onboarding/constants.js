@@ -3,12 +3,6 @@ import { OnboardingModal, OnboardingSpotlight } from './components';
 import { openDrawer, closeDrawer } from '../navbar';
 import { SettingsDrawer } from '../settings';
 
-export const advenaceSettingsSteps = [
-    'server-setting',
-    'server-timeout',
-    'always-on-top-window'
-];
-
 export const onboardingSteps = {
     'welcome-page': [
         'onboarding-modal',
@@ -16,7 +10,9 @@ export const onboardingSteps = {
         'settings-drawer-button'
     ],
     'settings-drawer': [
-        ...advenaceSettingsSteps
+        'server-setting',
+        'server-timeout',
+        'always-on-top-window'
     ]
 };
 

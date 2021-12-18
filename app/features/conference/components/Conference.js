@@ -9,7 +9,7 @@ import { push } from 'react-router-redux';
 
 import i18n from '../../../i18n';
 import config from '../../config';
-import { getSetting, setEmail, setName } from '../../settings';
+import { getSetting } from '../../settings';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
@@ -187,9 +187,16 @@ class Conference extends Component<Props, State> {
             ...locale
         };
 
+        // override both old and new prejoin config options,
+        // old one for servers that do not understand the new option yet
+        // and new one for newly setup servers where the new option overrides
+        // the old if set.
         const configOverwrite = {
             disableAGC: this.props._disableAGC,
-            prejoinPageEnabled: true
+            prejoinPageEnabled: true,
+            prejoinConfig: {
+                enabled: true
+            }
         };
 
         Object.entries(hashParameters).forEach(([ key, value ]) => {
@@ -216,9 +223,8 @@ class Conference extends Component<Props, State> {
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
         this._api.on('videoConferenceJoined',
-            (conferenceInfo: Object) => {
+            () => {
                 this.props.dispatch(conferenceJoined(this._conference));
-                this._onVideoConferenceJoined(conferenceInfo);
             }
         );
 

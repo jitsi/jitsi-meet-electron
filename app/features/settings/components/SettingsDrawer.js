@@ -1,10 +1,8 @@
 // @flow
 
-import FieldText from '@atlaskit/field-text';
 import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
 import { AkCustomDrawer } from '@atlaskit/navigation';
 import { SpotlightTarget } from '@atlaskit/onboarding';
-import Panel from '@atlaskit/panel';
 
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -13,8 +11,8 @@ import type { Dispatch } from 'redux';
 import { compose } from 'redux';
 
 import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
-import { Onboarding, advenaceSettingsSteps, startOnboarding } from '../../onboarding';
-import { Form, SettingsContainer, TogglesContainer } from '../styled';
+import { Onboarding, startOnboarding } from '../../onboarding';
+import { SettingsContainer, TogglesContainer } from '../styled';
 import {
     setWindowAlwaysOnTop, setDisableAGC
 } from '../actions';
@@ -130,14 +128,4 @@ class SettingsDrawer extends Component<Props, *> {
     }
 }
 
-/**
- * Maps (parts of) the redux state to the React props.
- *
- * @param {Object} state - The redux state.
- * @returns {Props}
- */
-function _mapStateToProps(state: Object) {
-    return {};
-}
-
-export default compose(connect(_mapStateToProps), withTranslation())(SettingsDrawer);
+export default compose(connect(), withTranslation())(SettingsDrawer);

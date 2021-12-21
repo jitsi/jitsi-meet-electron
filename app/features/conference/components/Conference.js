@@ -9,7 +9,7 @@ import { push } from 'react-router-redux';
 
 import i18n from '../../../i18n';
 import config from '../../config';
-import { getSetting, setEmail, setName } from '../../settings';
+import { getSetting } from '../../settings';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
@@ -40,16 +40,6 @@ type Props = {
      _disableAGC: boolean;
 
     /**
-     * Email of user.
-     */
-    _email: string;
-
-    /**
-     * Name of user.
-     */
-    _name: string;
-
-    /**
      * Default Jitsi Server URL.
      */
     _serverURL: string;
@@ -58,16 +48,6 @@ type Props = {
      * Default Jitsi Server Timeout.
      */
     _serverTimeout: number;
-
-    /**
-     * Start with Audio Muted.
-     */
-    _startWithAudioMuted: boolean;
-
-    /**
-     * Start with Video Muted.
-     */
-    _startWithVideoMuted: boolean;
 };
 
 type State = {
@@ -155,23 +135,6 @@ class Conference extends Component<Props, State> {
     }
 
     /**
-     * Keep profile settings in sync with Conference.
-     *
-     * @param {Props} prevProps - Component's prop values before update.
-     * @returns {void}
-     */
-    componentDidUpdate(prevProps) {
-        const { props } = this;
-
-        if (props._email !== prevProps._email) {
-            this._setEmail(props._email);
-        }
-        if (props._name !== prevProps._name) {
-            this._setName(props._name);
-        }
-    }
-
-    /**
      * Remove conference on unmounting.
      *
      * @returns {void}
@@ -224,10 +187,16 @@ class Conference extends Component<Props, State> {
             ...locale
         };
 
+        // override both old and new prejoin config options,
+        // old one for servers that do not understand the new option yet
+        // and new one for newly setup servers where the new option overrides
+        // the old if set.
         const configOverwrite = {
             disableAGC: this.props._disableAGC,
-            startWithAudioMuted: this.props._startWithAudioMuted,
-            startWithVideoMuted: this.props._startWithVideoMuted
+            prejoinPageEnabled: true,
+            prejoinConfig: {
+                enabled: true
+            }
         };
 
         Object.entries(hashParameters).forEach(([ key, value ]) => {
@@ -254,9 +223,8 @@ class Conference extends Component<Props, State> {
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
         this._api.on('videoConferenceJoined',
-            (conferenceInfo: Object) => {
+            () => {
                 this.props.dispatch(conferenceJoined(this._conference));
-                this._onVideoConferenceJoined(conferenceInfo);
             }
         );
 
@@ -336,32 +304,6 @@ class Conference extends Component<Props, State> {
         this._navigateToHome(event);
     }
 
-    /**
-     * Updates redux state's user name from conference.
-     *
-     * @param {Object} params - Returned object from event.
-     * @param {string} id - Local Participant ID.
-     * @returns {void}
-     */
-    _onDisplayNameChange(params: Object, id: string) {
-        if (params.id === id) {
-            this.props.dispatch(setName(params.displayname));
-        }
-    }
-
-    /**
-     * Updates redux state's email from conference.
-     *
-     * @param {Object} params - Returned object from event.
-     * @param {string} id - Local Participant ID.
-     * @returns {void}
-     */
-    _onEmailChange(params: Object, id: string) {
-        if (params.id === id) {
-            this.props.dispatch(setEmail(params.email));
-        }
-    }
-
     _onIframeLoad: (*) => void;
 
     /**
@@ -379,46 +321,6 @@ class Conference extends Component<Props, State> {
             isLoading: false
         });
     }
-
-    /**
-     * Saves conference info on joining it.
-     *
-     * @param {Object} conferenceInfo - Contains information about the current
-     * conference.
-     * @returns {void}
-     */
-    _onVideoConferenceJoined(conferenceInfo: Object) {
-        this._setEmail(this.props._email);
-        this._setName(this.props._name);
-
-        const { id } = conferenceInfo;
-
-        this._api.on('displayNameChange',
-            (params: Object) => this._onDisplayNameChange(params, id));
-        this._api.on('emailChange',
-            (params: Object) => this._onEmailChange(params, id));
-    }
-
-    /**
-     * Set email from settings to conference.
-     *
-     * @param {string} email - Email of user.
-     * @returns {void}
-     */
-    _setEmail(email: string) {
-        this._api.executeCommand('email', email);
-    }
-
-    /**
-     * Set name from settings to conference.
-     *
-     * @param {string} name - Name of user.
-     * @returns {void}
-     */
-    _setName(name: string) {
-        this._api.executeCommand('displayName', name);
-    }
-
 }
 
 /**
@@ -431,12 +333,8 @@ function _mapStateToProps(state: Object) {
     return {
         _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
         _disableAGC: state.settings.disableAGC,
-        _email: state.settings.email,
-        _name: state.settings.name,
         _serverURL: state.settings.serverURL,
-        _serverTimeout: state.settings.serverTimeout,
-        _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted
+        _serverTimeout: state.settings.serverTimeout
     };
 }
 

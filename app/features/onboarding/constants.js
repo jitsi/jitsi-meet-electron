@@ -3,12 +3,6 @@ import { OnboardingModal, OnboardingSpotlight } from './components';
 import { openDrawer, closeDrawer } from '../navbar';
 import { SettingsDrawer } from '../settings';
 
-export const advenaceSettingsSteps = [
-    'server-setting',
-    'server-timeout',
-    'always-on-top-window'
-];
-
 export const onboardingSteps = {
     'welcome-page': [
         'onboarding-modal',
@@ -16,10 +10,9 @@ export const onboardingSteps = {
         'settings-drawer-button'
     ],
     'settings-drawer': [
-        'name-setting',
-        'email-setting',
-        'start-muted-toggles',
-        ...advenaceSettingsSteps
+        'server-setting',
+        'server-timeout',
+        'always-on-top-window'
     ]
 };
 
@@ -37,24 +30,6 @@ export const onboardingComponents = {
         target: 'settings-drawer-button',
         text: 'onboarding.settingsDrawerButton',
         onNext: (props: OnboardingSpotlight.props) => props.dispatch(openDrawer(SettingsDrawer))
-    },
-    'name-setting': {
-        type: OnboardingSpotlight,
-        dialogPlacement: 'top right',
-        target: 'name-setting',
-        text: 'onboarding.nameSetting'
-    },
-    'email-setting': {
-        type: OnboardingSpotlight,
-        dialogPlacement: 'top right',
-        target: 'email-setting',
-        text: 'onboarding.emailSetting'
-    },
-    'start-muted-toggles': {
-        type: OnboardingSpotlight,
-        dialogPlacement: 'top right',
-        target: 'start-muted-toggles',
-        text: 'onboarding.startMutedToggles'
     },
     'server-setting': {
         type: OnboardingSpotlight,

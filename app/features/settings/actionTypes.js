@@ -10,16 +10,6 @@ export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED
     = Symbol('SET_ALWAYS_ON_TOP_WINDOW_ENABLED');
 
 /**
- * The type of (redux) action that sets Start with Audio Muted.
- *
- * @type {
- *     type: SET_AUDIO_MUTED,
- *     startWithAudioMuted: boolean
- * }
- */
-export const SET_AUDIO_MUTED = Symbol('SET_AUDIO_MUTED');
-
-/**
  * The type of (redux) action that sets disable AGC.
  *
  * @type {
@@ -28,26 +18,6 @@ export const SET_AUDIO_MUTED = Symbol('SET_AUDIO_MUTED');
  * }
  */
 export const SET_DISABLE_AGC = Symbol('SET_DISABLE_AGC');
-
-/**
- * The type of (redux) action that sets the email of the user.
- *
- * @type {
- *     type: SET_EMAIL,
- *     email: string
- * }
- */
-export const SET_EMAIL = Symbol('SET_EMAIL');
-
-/**
- * The type of (redux) action that sets the name of the user.
- *
- * @type {
- *     type: SET_NAME,
- *     name: string
- * }
- */
-export const SET_NAME = Symbol('SET_NAME');
 
 /**
  * The type of (redux) action that sets the Server URL.
@@ -68,13 +38,3 @@ export const SET_SERVER_URL = Symbol('SET_SERVER_URL');
  * }
  */
 export const SET_SERVER_TIMEOUT = Symbol('SET_SERVER_TIMEOUT');
-
-/**
- * The type of (redux) action that sets Start with Video Muted.
- *
- * @type {
- *     type: SET_VIDEO_MUTED,
- *     startWithVideoMuted: boolean
- * }
- */
-export const SET_VIDEO_MUTED = Symbol('SET_VIDEO_MUTED');

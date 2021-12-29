@@ -19,8 +19,6 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
-    - name: Install dependencies
-      run: sudo apt-get install libx11-dev zlib1g-dev libpng-dev libxtst-dev
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,10 +72,6 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
-    - name: latest node-gyp for robotjs
-      run: |
-        npm install --global node-gyp@8.4.0
-        npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

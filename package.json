@@ -23,7 +23,6 @@
     "generateUpdatesFilesForAllChannels": true,
     "afterPack": "./linux-sandbox-fix.js",
     "afterSign": "./notarize.js",
-    "buildDependenciesFromSource": true,
     "files": [
       "build",
       "resources",

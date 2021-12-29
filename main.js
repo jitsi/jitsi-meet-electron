@@ -203,8 +203,7 @@ function createJitsiMeetWindow() {
         minHeight: 600,
         show: false,
         webPreferences: {
-            enableBlinkFeatures: 'RTCInsertableStreams,WebAssemblySimd,WebAssemblyCSP',
-            enableRemoteModule: true,
+            enableBlinkFeatures: 'WebAssemblyCSP',
             contextIsolation: false,
             nativeWindowOpen: true,
             nodeIntegration: false,

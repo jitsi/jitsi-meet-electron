@@ -1,7 +1,6 @@
 /* global process */
 
 const { ipcRenderer } = require('electron');
-const os = require('os');
 const jitsiMeetElectronUtils = require('@jitsi/electron-sdk');
 const { openExternalLink } = require('../features/utils/openExternalLink');
 
@@ -9,7 +8,6 @@ const { openExternalLink } = require('../features/utils/openExternalLink');
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
 
 window.jitsiNodeAPI = {
-    osUserInfo: os.userInfo,
     openExternalLink,
     platform: process.platform,
     jitsiMeetElectronUtils,

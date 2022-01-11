@@ -41,7 +41,9 @@ jobs:
       with:
         node-version: '16'
     - name: Prepare for app signing and notarization
-      if: ${{ github.event_name != 'pull_request' }}
+      env:
+        API_KEY: ${{ secrets.api_key }}
+      if: ${{ env.API_KEY }}
       run: |
         mkdir -p ~/private_keys/
         echo '${{ secrets.api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8

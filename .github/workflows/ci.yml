@@ -41,7 +41,9 @@ jobs:
       with:
         node-version: '16'
     - name: Prepare for app signing and notarization
-      if: ${{ github.event_name != 'pull_request' }}
+      env:
+        API_KEY: ${{ secrets.api_key }}
+      if: ${{ env.API_KEY }}
       run: |
         echo "CSC_LINK=${{ secrets.mac_cert }}" >> $GITHUB_ENV
         echo "CSC_KEY_PASSWORD=${{ secrets.mac_cert_password }}" >> $GITHUB_ENV

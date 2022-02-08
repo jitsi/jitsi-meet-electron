@@ -171,7 +171,7 @@ class Conference extends Component<Props, State> {
         const appProtocolSurplus = `${config.appProtocolPrefix}://`;
 
         // replace the custom url with https, otherwise new URL() raises 'Invalid URL'.
-        if (this._conference.serverURL.indexOf(appProtocolSurplus) === 0) {
+        if (this._conference.serverURL.startsWith(appProtocolSurplus)) {
             this._conference.serverURL = this._conference.serverURL.replace(appProtocolSurplus, 'https://');
         }
         const url = new URL(this._conference.room, this._conference.serverURL);

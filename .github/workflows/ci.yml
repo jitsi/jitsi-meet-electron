@@ -23,7 +23,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npm install
+        npm ci
         npm run dist
     - uses: actions/upload-artifact@v2
       with:
@@ -56,7 +56,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npm install
+        npm ci
         npm run lint
         npm run dist
     - uses: actions/upload-artifact@v2
@@ -78,7 +78,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npm install
+        npm ci
         npm run dist
     - uses: actions/upload-artifact@v2
       with:

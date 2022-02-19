@@ -24,6 +24,7 @@ Repository für die Desktop-Anwendung des Digitalen Klassenzimmers für Jitsi Me
 ```
 Content-Security-Policy "frame-ancestors [looks like any value is bad]";
 X-Frame-Options "DENY";
+X-Frame-Options "sameorigin";
 ```
 Eine funktionierende Content Security Policy sieht so aus:
 ```

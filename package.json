@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
-    "lint": "eslint . && flow",
+    "lint": "eslint .",
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "dist": "npm run build && electron-builder",
     "postinstall": "patch-package && electron-builder install-app-deps",

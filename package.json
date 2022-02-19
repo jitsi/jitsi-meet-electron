@@ -1,6 +1,6 @@
 {
   "name": "hopp-digitales-klassenzimmer",
-  "version": "2022.1.1",
+  "version": "2022.2.1",
   "description": "HOPP Foundation - Das digitale Klassenzimmer",
   "main": "./build/main.js",
   "productName": "Digitales Klassenzimmer",
@@ -160,7 +160,7 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "@jitsi/electron-sdk": "^3.0.3",
+    "@jitsi/electron-sdk": "^3.0.5",
     "electron-debug": "^3.2.0",
     "electron-reload": "^1.5.0"
   },
@@ -189,7 +189,7 @@
     "babel-loader": "8.1.0",
     "concurrently": "5.1.0",
     "css-loader": "3.5.0",
-    "electron": "16.0.6",
+    "electron": "17.0.1",
     "electron-builder": "22.10.5",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

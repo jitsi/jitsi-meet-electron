@@ -27,7 +27,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npm install
+        npm ci
         npm run dist
     - name: Publish to Snap Store
       run: snapcraft upload --release edge dist/*.snap
@@ -52,7 +52,7 @@ jobs:
         CSC_LINK: ${{ secrets.mac_certs }}
         CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
       run: |
-        npm install
+        npm ci
         npm run lint
         npm run dist
     - uses: actions/upload-artifact@v2
@@ -71,7 +71,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        npm install
+        npm ci
         npm run dist
     - uses: actions/upload-artifact@v2
       with:

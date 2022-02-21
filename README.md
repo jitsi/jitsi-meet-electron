@@ -41,6 +41,7 @@ brew install --cask freifunkMUC/freifunkmeet/freifunk-meet
 ```
 Content-Security-Policy "frame-ancestors [looks like any value is bad]";
 X-Frame-Options "DENY";
+X-Frame-Options "sameorigin";
 ```
 A working Content Security Policy looks like that:
 ```

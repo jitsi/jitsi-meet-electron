@@ -209,7 +209,6 @@ function createJitsiMeetWindow() {
         webPreferences: {
             enableBlinkFeatures: 'WebAssemblyCSP',
             contextIsolation: false,
-            nativeWindowOpen: true,
             nodeIntegration: false,
             preload: path.resolve(basePath, './build/preload.js')
         }

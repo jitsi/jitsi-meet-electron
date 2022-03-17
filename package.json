@@ -177,7 +177,7 @@
     "file-loader": "6.0.0",
     "flow-bin": "0.109.0",
     "history": "^4.10.1",
-    "html-webpack-plugin": "4.0.4",
+    "html-webpack-plugin": "^5.5.0",
     "i18next": "^19.9.2",
     "moment": "^2.29.1",
     "mousetrap": "^1.6.5",

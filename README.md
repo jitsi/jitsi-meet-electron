@@ -70,10 +70,11 @@ npm install --global --production windows-build-tools
 
 <details><summary>Extra dependencies for GNU/Linux</summary>
 
-X11, PNG and zlib development packages are necessary. On Debian-like systems then can be installed as follows:
+X11, PNG and zlib development packages are necessary. In addition fpm is required. On Debian-like systems then can be installed as follows:
 
 ```bash
 sudo apt install libx11-dev zlib1g-dev libpng-dev libxtst-dev
+sudo gem install fpm
 ```
 </details>
 

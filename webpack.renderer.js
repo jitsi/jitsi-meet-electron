@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const webpack = require('webpack');
 const ELECTRON_VERSION = require('./package.json').devDependencies.electron;
 
 module.exports = {
@@ -15,7 +15,10 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './app/index.html'
-        })
+        }),
+        new webpack.ProvidePlugin({
+            process: 'process/browser',
+          })
     ],
     output: {
         path: path.resolve('./build'),
@@ -81,7 +84,10 @@ module.exports = {
     resolve: {
         modules: [
             path.resolve('./node_modules')
-        ]
+        ],
+        alias: {
+            process: "process/browser"
+        } 
     }
 };
 

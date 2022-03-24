@@ -21,8 +21,8 @@ module.exports = {
             path.resolve('./node_modules')
         ],
         alias: {
-            process: "process/browser"
-         } 
+            process: 'process/browser'
+        }
     }
 };
 

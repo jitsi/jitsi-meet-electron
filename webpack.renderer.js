@@ -17,8 +17,8 @@ module.exports = {
             template: './app/index.html'
         }),
         new webpack.ProvidePlugin({
-            process: 'process/browser',
-          })
+            process: 'process/browser'
+        })
     ],
     output: {
         path: path.resolve('./build'),
@@ -86,8 +86,8 @@ module.exports = {
             path.resolve('./node_modules')
         ],
         alias: {
-            process: "process/browser"
-        } 
+            process: 'process/browser'
+        }
     }
 };
 

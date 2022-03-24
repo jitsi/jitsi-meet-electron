@@ -12,7 +12,7 @@
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "dist": "npm run build && electron-builder",
     "postinstall": "patch-package && electron-builder install-app-deps",
-    "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-poll"
+    "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-options-poll=1000"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -129,7 +129,6 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "@babel/runtime": "^7.17.7",
     "@jitsi/electron-sdk": "^3.0.6",
     "electron-debug": "^3.2.0",
     "electron-reload": "^1.5.0"
@@ -153,6 +152,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-flow": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
+    "@babel/runtime": "^7.17.8",
     "@jitsi/js-utils": "2.0.0",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "10.0.3",

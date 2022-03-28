@@ -1,5 +1,3 @@
-/* global process */
-
 const { ipcRenderer } = require('electron');
 const { RemoteControl,
     setupScreenSharingRender,
@@ -8,9 +6,9 @@ const { RemoteControl,
     setupWiFiStats,
     setupPowerMonitorRender
 } = require('@jitsi/electron-sdk');
+const { platform } = require('process');
 const { openExternalLink } = require('../features/utils/openExternalLink');
 
-const platform = process.platform;
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
 
 /**

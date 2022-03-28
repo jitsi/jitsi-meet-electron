@@ -1,7 +1,6 @@
-/* global process */
-
 const { stat, readFile, writeFile, rename } = require('fs/promises');
 const { createHash } = require('crypto');
+const { platform } = require('process');
 const packageJson = require('./package.json');
 
 exports.default = async function(context) {
@@ -9,7 +8,7 @@ exports.default = async function(context) {
 
     const { outDir } = context;
 
-    if (process.platform !== 'linux') {
+    if (platform !== 'linux') {
         return;
     }
 

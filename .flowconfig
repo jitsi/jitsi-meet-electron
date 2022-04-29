@@ -1,6 +1,7 @@
 [ignore]
 <PROJECT_ROOT>/node_modules/@atlaskit/.*/*.js.flow
 <PROJECT_ROOT>/node_modules/redux-persist/.*/*.js.flow
+<PROJECT_ROOT>/node_modules/resolve/test/resolver/malformed_package_json/package.json
 <PROJECT_ROOT>/build/.*
 <PROJECT_ROOT>/dist/.*
 

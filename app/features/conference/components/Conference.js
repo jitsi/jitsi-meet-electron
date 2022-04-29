@@ -15,6 +15,8 @@ import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
 
+const ENABLE_REMOTE_CONTROL = false;
+
 type Props = {
 
     /**
@@ -232,31 +234,11 @@ class Conference extends Component<Props, State> {
             }
         );
 
-        const {
-            setupScreenSharingRender,
-            setupAlwaysOnTopRender,
-            initPopupsConfigurationRender,
-            setupWiFiStats,
-            setupPowerMonitorRender
-        } = window.jitsiNodeAPI.jitsiMeetElectronUtils;
-
-        initPopupsConfigurationRender(this._api);
-
-        const iframe = this._api.getIFrame();
-
-        setupScreenSharingRender(this._api);
-
-        // Allow window to be on top if enabled in settings
-        if (this.props._alwaysOnTopWindowEnabled) {
-            setupAlwaysOnTopRender(this._api);
-        }
-
-        // Disable WiFiStats on mac due to jitsi-meet-electron#585
-        if (window.jitsiNodeAPI.platform !== 'darwin') {
-            setupWiFiStats(iframe);
-        }
-
-        setupPowerMonitorRender(this._api);
+        // Setup Jitsi Meet Electron SDK on this renderer.
+        window.jitsiNodeAPI.setupRenderer(this._api, {
+            enableRemoteControl: ENABLE_REMOTE_CONTROL,
+            enableAlwaysOnTopWindow: this.props._alwaysOnTopWindowEnabled
+        });
     }
 
     /**

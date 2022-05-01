@@ -1,16 +1,5 @@
-/* global process */
-
 // @flow
 
-
-/**
- * Return true if Electron app is running on Mac system.
- *
- * @returns {boolean}
- */
-export function isElectronMac() {
-    return process.platform === 'darwin';
-}
 
 /**
  * Normalizes the given server URL so it has the proper scheme.

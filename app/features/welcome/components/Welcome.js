@@ -162,7 +162,7 @@ class Welcome extends Component<Props, State> {
      */
     _animateRoomnameChanging(word: string) {
         let animateTimeoutId;
-        const roomPlaceholder = this.state.roomPlaceholder + word.substr(0, 1);
+        const roomPlaceholder = this.state.roomPlaceholder + word.slice(0, 1);
 
         if (word.length > 1) {
             animateTimeoutId

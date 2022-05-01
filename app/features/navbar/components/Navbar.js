@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { SettingsButton, SettingsDrawer } from '../../settings';
-import { isElectronMac } from '../../utils';
 
 import HelpButton from './HelpButton';
 import Logo from './Logo';
@@ -66,7 +65,6 @@ class Navbar extends Component<Props, *> {
                 globalPrimaryActions = { this._getPrimaryActions() }
                 globalPrimaryIcon = { <Logo /> }
                 globalSecondaryActions = { this._getSecondaryActions() }
-                isElectronMac = { isElectronMac() }
                 isOpen = { false }
                 isResizeable = { false } />
         );

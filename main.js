@@ -1,4 +1,4 @@
-/* global __dirname, process */
+/* global __dirname */
 
 const {
     BrowserWindow,
@@ -20,6 +20,7 @@ const {
     setupScreenSharingMain
 } = require('@jitsi/electron-sdk');
 const path = require('path');
+const process = require('process');
 const URL = require('url');
 const config = require('./app/features/config');
 const { openExternalLink } = require('./app/features/utils/openExternalLink');

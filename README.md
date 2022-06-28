@@ -161,6 +161,18 @@ On macOS Catalina a warning will be displayed on first install. The app won't op
 
 If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
 
+On Ubuntu 22.04 the AppImage will fail with a fuse error (as AppImage uses libfuse2, while 22.04 already comes with libfuse3 by default):
+
+```
+dlopen(): error loading libfuse.so.2
+```
+
+To fix this, install libfuse2 as follows:
+
+```
+sudo apt install libfuse2
+```
+
 <details><summary>NOTE for old GNU/Linux distributions</summary>
 
 You might get the following error:

@@ -40,10 +40,6 @@ app.commandLine.appendSwitch('disable-features', 'IOSurfaceCapturer');
 // Enable Opus RED field trial.
 app.commandLine.appendSwitch('force-fieldtrials', 'WebRTC-Audio-Red-For-Opus/Enabled/');
 
-// Allow deprecated plan-b with electron 17.0.0. We'll need to address:
-// https://community.jitsi.org/t/switch-to-unified-plan-on-chrome/98322
-app.commandLine.appendSwitch('disable-features', 'RTCDisallowPlanBOutsideDeprecationTrial');
-
 // Enable optional PipeWire support.
 if (!app.commandLine.hasSwitch('enable-features')) {
     app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');

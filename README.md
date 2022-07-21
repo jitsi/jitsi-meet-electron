@@ -173,6 +173,12 @@ To fix this, install libfuse2 as follows:
 sudo apt install libfuse2
 ```
 
+In case you experience a blank page after jitsi server upgrades, try removing the local cache files:
+
+```
+rm -rf ~/.config/Jitsi\ Meet/
+```
+
 <details><summary>NOTE for old GNU/Linux distributions</summary>
 
 You might get the following error:

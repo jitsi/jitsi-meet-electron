@@ -62,7 +62,8 @@
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",
       "desktop": {
-        "Comment[hu]": "Asztali Jitsi Meet-alkalmazás"
+        "Comment[hu]": "Asztali Jitsi Meet-alkalmazás",
+        "Comment[hr]": "Jitsi Meet desktop aplikacija"
       },
       "executableName": "jitsi-meet",
       "target": [

@@ -75,6 +75,7 @@ jobs:
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PREBUILDS_ONLY: 1
       run: |
         npm ci
         npm run dist

@@ -211,7 +211,7 @@ Apache 2. See the [LICENSE] file.
 ## Community
 
 Jitsi is built by a large community of developers, if you want to participate,
-please join [community forum].
+please join them!
 
 [FreifunkMeet]: https://github.com/FreifunkMUC/jitsi-meet
 [Electron]: https://electronjs.org/

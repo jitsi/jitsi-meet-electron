@@ -41,7 +41,6 @@ app.commandLine.appendSwitch('disable-features', 'IOSurfaceCapturer');
 app.commandLine.appendSwitch('force-fieldtrials', 'WebRTC-Audio-Red-For-Opus/Enabled/');
 
 // Wayland: Enable optional PipeWire and window decorations support.
-app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
 if (!app.commandLine.hasSwitch('enable-features')) {
     app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer,WaylandWindowDecorations');
 }

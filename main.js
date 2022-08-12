@@ -40,9 +40,9 @@ app.commandLine.appendSwitch('disable-features', 'IOSurfaceCapturer');
 // Enable Opus RED field trial.
 app.commandLine.appendSwitch('force-fieldtrials', 'WebRTC-Audio-Red-For-Opus/Enabled/');
 
-// Enable optional PipeWire support.
+// Wayland: Enable optional PipeWire and window decorations support.
 if (!app.commandLine.hasSwitch('enable-features')) {
-    app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');
+    app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer,WaylandWindowDecorations');
 }
 
 autoUpdater.logger = require('electron-log');

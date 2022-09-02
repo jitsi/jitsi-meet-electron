@@ -1,0 +1,33 @@
+{
+	"enterConferenceNameOrUrl": "Upiši ime sobe za tvoju konferenciju ili Jitsi URL",
+	"go": "KRENI",
+	"help": "Pomoć",
+	"termsLink": "Uvjeti",
+	"privacyLink": "Privatnost",
+	"recentListLabel": "ili se ponovo pridruži jednoj od tvojih nedavnih konferencijskih soba",
+	"sendFeedbackLink": "Pošalji povratnu informaciju",
+	"aboutLink": "Informacije o",
+	"sourceLink": "Izvroni kod",
+	"versionLabel": "Verzija: {{version}}",
+	"onboarding": {
+		"startTour": "Započni obilazak",
+		"skip": "Preskoči",
+		"welcome": "Pozdrav u {{appName}}",
+		"letUsShowYouAround": "Upoznaj se s radom aplikacije!",
+		"next": "Dalje",
+		"conferenceUrl": "Upiši ime (ili potpuni URL) sobe kojoj se želiš pridružiti. Izmisli si ime, ali obavijesti druge kako bi ga upisali.",
+		"settingsDrawerButton": "Pritisni ovdje za otvaranje postavki.",
+		"serverSetting": "Ovo će biti poslužitelj na kojem će se održavati tvoje konferencije. Možeš koristiti vlastiti poslužitelj, ali ne moraš!",
+		"serverTimeout": "Vremensko ograničenje za pridruživanje sastanku. Ako se sastanku nitko ne pridruži prije tog vremena, sastanak se otkazuje.",
+		"alwaysOnTop": "Ovdje se može uključiti postavljanje prozora „Uvijek ispred ostalih”, koji se prikazuje kada glavni prozor nije aktivan prozor. Ovo će se primijeniti na sve konferencije."
+	},
+	"settings": {
+		"back": "Natrag",
+		"alwaysOnTopWindow": "Uvijek ispred ostalih",
+		"invalidServer": "Neispravna URL-adresa poslužitelja",
+		"invalidServerTimeout": "Neispravna vrijednost za vremensko ograničenje poslužitelja",
+		"serverUrl": "URL-adresa poslužitelja",
+		"serverTimeout": "Vremensko ograničenje poslužitelja (u sekundama)",
+		"disableAGC": "Isključi kontrolu za automasko pojačanje zvuka"
+	}
+}

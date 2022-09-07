@@ -1,10 +1,10 @@
 {
 	"enterConferenceNameOrUrl": "输入你的会议室名称或Jitsi网址",
-	"go": "前往",
+	"go": "开始",
 	"help": "帮助",
 	"termsLink": "条款",
 	"privacyLink": "隐私",
-	"recentListLabel": "或重新加入最近一次会议",
+	"recentListLabel": "或重新加入最近的会议",
 	"sendFeedbackLink": "发送反馈",
 	"aboutLink": "关于",
 	"sourceLink": "源代码",
@@ -19,11 +19,11 @@
 		"settingsDrawerButton": "点击此处打开设置。",
 		"serverSetting": "这将是你开始会议的服务器，你可以使用自己的服务器，但你无需这样做！",
 		"serverTimeout": "超时加入会议，如果在超时之前未加入会议，则会议将被取消。",
-		"alwaysOnTop": "你可以选择是否要启用“窗口始终置顶”，该窗口在主窗口失去焦点时显示，这将适用于所有会议。"
+		"alwaysOnTop": "你可以选择是否要启用“始终置顶”，该窗口在主窗口失去焦点时显示，这将适用于所有会议。"
 	},
 	"settings": {
 		"back": "返回",
-		"alwaysOnTopWindow": "窗口始终置顶",
+		"alwaysOnTopWindow": "始终置顶",
 		"invalidServer": "服务器网址无效",
 		"invalidServerTimeout": "服务器超时值无效",
 		"serverUrl": "服务器网址",

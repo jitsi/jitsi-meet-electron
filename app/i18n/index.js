@@ -15,7 +15,8 @@ const languages = {
     pt: { translation: require('./lang/pt-br.json') },
     ru: { translation: require('./lang/ru.json') },
     sq: { translation: require('./lang/sq.json') },
-    zhCN: { translation: require('./lang/zhCN.json') }
+    zh-CN: { translation: require('./lang/zh-CN.json') },
+    zh-TW: { translation: require('./lang/zh-TW.json') },
 };
 
 const detectedLocale = navigator.language;

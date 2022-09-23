@@ -63,7 +63,9 @@
       "description": "Jitsi Meet Desktop App",
       "desktop": {
         "Comment[hu]": "Asztali Jitsi Meet-alkalmazás",
-        "Comment[hr]": "Jitsi Meet desktop aplikacija"
+        "Comment[hr]": "Jitsi Meet desktop aplikacija",
+        "Comment[zh-CN]": "Jitsi Meet 桌面应用程序",
+        "Comment[zh-TW]": "Jitsi Meet 桌面應用程式"
       },
       "executableName": "jitsi-meet",
       "target": [

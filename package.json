@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2022.8.1",
+  "version": "2022.9.1",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -63,7 +63,9 @@
       "description": "Jitsi Meet Desktop App",
       "desktop": {
         "Comment[hu]": "Asztali Jitsi Meet-alkalmazás",
-        "Comment[hr]": "Jitsi Meet desktop aplikacija"
+        "Comment[hr]": "Jitsi Meet desktop aplikacija",
+        "Comment[zh-CN]": "Jitsi Meet 桌面应用程序",
+        "Comment[zh-TW]": "Jitsi Meet 桌面應用程式"
       },
       "executableName": "jitsi-meet",
       "target": [
@@ -126,7 +128,7 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "@jitsi/electron-sdk": "^3.0.15",
+    "@jitsi/electron-sdk": "3.3.1",
     "electron-debug": "^3.2.0",
     "electron-reload": "^1.5.0"
   },
@@ -149,13 +151,14 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-flow": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
+    "@hapi/bourne": "^3.0.0",
     "@jitsi/js-utils": "2.0.0",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "^8.2.3",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
-    "electron": "19.0.12",
+    "electron": "20.2.0",
     "electron-builder": "23.1.0",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

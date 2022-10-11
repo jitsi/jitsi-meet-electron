@@ -228,6 +228,17 @@ function createJitsiMeetWindow() {
 
     mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
 
+    // Filter out x-frame-options and CSP to allow loading jitsi via the iframe API
+    // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+        delete details.responseHeaders['x-frame-options'];
+        delete details.responseHeaders['content-security-policy'];
+
+        callback({
+            responseHeaders: details.responseHeaders
+        });
+    });
+
     initPopupsConfigurationMain(mainWindow);
     setupAlwaysOnTopMain(mainWindow, null, windowOpenHandler);
     setupPowerMonitorMain(mainWindow);

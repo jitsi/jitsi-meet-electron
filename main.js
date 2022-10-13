@@ -232,7 +232,15 @@ function createJitsiMeetWindow() {
     // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
     mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
         delete details.responseHeaders['x-frame-options'];
-        delete details.responseHeaders['content-security-policy'];
+
+        if (details.responseHeaders['content-security-policy']) {
+            const cspFiltered = details.responseHeaders['content-security-policy'][0]
+                .split(';')
+                .filter(x => x.indexOf('frame-ancestors') === -1)
+                .join(';');
+
+            details.responseHeaders['content-security-policy'] = [ cspFiltered ];
+        }
 
         callback({
             responseHeaders: details.responseHeaders

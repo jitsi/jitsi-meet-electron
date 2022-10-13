@@ -228,7 +228,7 @@ function createJitsiMeetWindow() {
 
     mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
 
-    // Filter out x-frame-options and CSP to allow loading jitsi via the iframe API
+    // Filter out x-frame-options and frame-ancestors CSP to allow loading jitsi via the iframe API
     // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
     mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
         delete details.responseHeaders['x-frame-options'];

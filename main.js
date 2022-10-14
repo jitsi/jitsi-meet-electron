@@ -228,6 +228,25 @@ function createJitsiMeetWindow() {
 
     mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
 
+    // Filter out x-frame-options and frame-ancestors CSP to allow loading jitsi via the iframe API
+    // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+        delete details.responseHeaders['x-frame-options'];
+
+        if (details.responseHeaders['content-security-policy']) {
+            const cspFiltered = details.responseHeaders['content-security-policy'][0]
+                .split(';')
+                .filter(x => x.indexOf('frame-ancestors') === -1)
+                .join(';');
+
+            details.responseHeaders['content-security-policy'] = [ cspFiltered ];
+        }
+
+        callback({
+            responseHeaders: details.responseHeaders
+        });
+    });
+
     initPopupsConfigurationMain(mainWindow);
     setupAlwaysOnTopMain(mainWindow, null, windowOpenHandler);
     setupPowerMonitorMain(mainWindow);

@@ -10,7 +10,6 @@ import { push } from 'react-router-redux';
 import i18n from '../../../i18n';
 import config from '../../config';
 import { getSetting } from '../../settings';
-import { parseURLParams } from '../../utils/parseURLParams';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
@@ -179,7 +178,14 @@ class Conference extends Component<Props, State> {
         const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
         const searchParameters = Object.fromEntries(url.searchParams);
-        const hashParameters = parseURLParams(url);
+        const hashParameters = url.hash.substring(1).split('&')
+            .reduce((res, item) => {
+                const parts = item.split('=');
+
+                res[parts[0]] = parts[1];
+
+                return res;
+            }, {});
 
         const locale = { lng: i18n.language };
         const urlParameters = {

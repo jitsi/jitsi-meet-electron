@@ -31,7 +31,7 @@ function setupRenderer(api, options = {}) {
 
     // Allow window to be on top if enabled in settings
     if (options.enableAlwaysOnTopWindow) {
-        setupAlwaysOnTopRender(api, null, { showOnPrejoin: true });
+        setupAlwaysOnTopRender(api);
     }
 
     // Disable WiFiStats on mac due to jitsi-meet-electron#585

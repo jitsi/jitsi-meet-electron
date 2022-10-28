@@ -35,7 +35,7 @@ app.commandLine.appendSwitch('disable-site-isolation-trials');
 
 // This allows BrowserWindow.setContentProtection(true) to work on macOS.
 // https://github.com/electron/electron/issues/19880
-app.commandLine.appendSwitch('disable-features', 'IOSurfaceCapturer');
+app.commandLine.appendSwitch('disable-features', 'DesktopCaptureMacV2,IOSurfaceCapturer');
 
 // Enable Opus RED field trial.
 app.commandLine.appendSwitch('force-fieldtrials', 'WebRTC-Audio-Red-For-Opus/Enabled/');
@@ -227,6 +227,25 @@ function createJitsiMeetWindow() {
     mainWindow.loadURL(indexURL);
 
     mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
+
+    // Filter out x-frame-options and frame-ancestors CSP to allow loading jitsi via the iframe API
+    // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+        delete details.responseHeaders['x-frame-options'];
+
+        if (details.responseHeaders['content-security-policy']) {
+            const cspFiltered = details.responseHeaders['content-security-policy'][0]
+                .split(';')
+                .filter(x => x.indexOf('frame-ancestors') === -1)
+                .join(';');
+
+            details.responseHeaders['content-security-policy'] = [ cspFiltered ];
+        }
+
+        callback({
+            responseHeaders: details.responseHeaders
+        });
+    });
 
     initPopupsConfigurationMain(mainWindow);
     setupAlwaysOnTopMain(mainWindow, null, windowOpenHandler);

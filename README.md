@@ -36,20 +36,6 @@ For *macOS* user, you can install the application using the following command:
 brew install --cask jitsi-meet
 ```
 
-### Using it with your own Jitsi Meet installation
-
-:warning: The following additional HTTP headers are known to break the Electron App:
-
-```
-Content-Security-Policy "frame-ancestors [looks like any value is bad]";
-X-Frame-Options "DENY";
-X-Frame-Options "sameorigin";
-```
-A working Content Security Policy looks like that:
-```
-Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; script-src 'self' 'unsafe-inline' 'wasm-eval'; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
-```
-
 ## Development
 
 If you want to hack on this project, here is how you do it.

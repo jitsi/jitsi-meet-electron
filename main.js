@@ -207,8 +207,19 @@ function createJitsiMeetWindow() {
             enableBlinkFeatures: 'WebAssemblyCSP',
             contextIsolation: false,
             nodeIntegration: false,
-            preload: path.resolve(basePath, './build/preload.js')
+            preload: path.resolve(basePath, './build/preload.js'),
+            sandbox: false
         }
+    };
+
+    const windowOpenHandler = ({ url, frameName }) => {
+        const target = getPopupTarget(url, frameName);
+
+        if (!target || target === 'browser') {
+            openExternalLink(url);
+        }
+
+        return { action: 'deny' };
     };
 
     mainWindow = new BrowserWindow(options);
@@ -244,14 +255,6 @@ function createJitsiMeetWindow() {
         new RemoteControlMain(mainWindow); // eslint-disable-line no-new
     }
 
-    mainWindow.webContents.on('new-window', (event, url, frameName) => {
-        const target = getPopupTarget(url, frameName);
-
-        if (!target || target === 'browser') {
-            event.preventDefault();
-            openExternalLink(url);
-        }
-    });
     mainWindow.on('closed', () => {
         mainWindow = null;
     });

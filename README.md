@@ -160,13 +160,18 @@ To fix this, install libfuse2 as follows:
 sudo apt install libfuse2
 ```
 
-Under wayland, experimental native wayland support can be enabled with the command-line switch `--ozone-platform-hint` set to `auto`:
+Under wayland, **experimental** native wayland support can be enabled with the switches
 
 ```
-./jitsi-meet-x86_64.AppImage --ozone-platform-hint=auto
+--enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto
 ```
 
-Note that screensharing is currently not supported under wayland, eg. the permissions prompt may loop endlessly.
+that is, from the command line run
+
+```
+./jitsi-meet-x86_64.AppImage --enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer --ozone-platform-hint=auto
+```
+
 
 In case you experience a blank page after jitsi server upgrades, try removing the local cache files:
 

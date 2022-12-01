@@ -17,7 +17,6 @@ const languages = {
     sq: { translation: require('./lang/sq.json') },
     'zh-CN': { translation: require('./lang/zh-CN.json') },
     'zh-TW': { translation: require('./lang/zh-TW.json') }
->>>>>>> faa522f00de887b9158f485490fb646cc8d8c3ce
 };
 
 const detectedLocale = navigator.language;

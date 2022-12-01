@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const ELECTRON_VERSION = require('./package.json').devDependencies.electron;
 
 module.exports = {
@@ -28,9 +27,6 @@ module.exports = {
         noParse: /external_api\\.js/,
         rules: [
             {
-                exclude: [
-                    new RegExp('node_modules/(?!@jitsi/js-utils)')
-                ],
                 loader: 'babel-loader',
                 options: {
                     babelrc: false,
@@ -79,7 +75,7 @@ module.exports = {
         ]
     },
     externals: [ {
-        'jitsi-meet-electron-utils': 'require(\'jitsi-meet-electron-utils\')'
+        '@jitsi/electron-sdk': 'require(\'@jitsi/electron-sdk\')'
     } ],
     resolve: {
         modules: [

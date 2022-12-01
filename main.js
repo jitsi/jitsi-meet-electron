@@ -1,4 +1,4 @@
-/* global __dirname, process */
+/* global __dirname */
 
 const {
     BrowserWindow,
@@ -14,31 +14,36 @@ const windowStateKeeper = require('electron-window-state');
 const {
     initPopupsConfigurationMain,
     getPopupTarget,
+    RemoteControlMain,
     setupAlwaysOnTopMain,
     setupPowerMonitorMain,
     setupScreenSharingMain
-} = require('jitsi-meet-electron-utils');
+} = require('@jitsi/electron-sdk');
 const path = require('path');
+const process = require('process');
 const URL = require('url');
 const config = require('./app/features/config');
 const { openExternalLink } = require('./app/features/utils/openExternalLink');
 const pkgJson = require('./package.json');
-const { existsSync } = require('fs');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
+
+const ENABLE_REMOTE_CONTROL = false;
 
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 
 // This allows BrowserWindow.setContentProtection(true) to work on macOS.
 // https://github.com/electron/electron/issues/19880
-app.commandLine.appendSwitch('disable-features', 'IOSurfaceCapturer');
+app.commandLine.appendSwitch('disable-features', 'DesktopCaptureMacV2,IOSurfaceCapturer');
 
 // Enable Opus RED field trial.
 app.commandLine.appendSwitch('force-fieldtrials', 'WebRTC-Audio-Red-For-Opus/Enabled/');
 
-// Needed until robot.js is fixed: https://github.com/octalmage/robotjs/issues/580
-app.allowRendererProcessReuse = false;
+// Wayland: Enable optional PipeWire and window decorations support.
+if (!app.commandLine.hasSwitch('enable-features')) {
+    app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer,WaylandWindowDecorations');
+}
 
 autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
@@ -176,18 +181,7 @@ function createJitsiMeetWindow() {
     });
 
     // Path to root directory.
-    let basePath = isDev ? __dirname : app.getAppPath();
-
-    // runtime detection on mac if this is a universal build with app-arm64.asar'
-    // as prepared in https://github.com/electron/universal/blob/master/src/index.ts
-    // if universal build, load the arch-specific real asar as the app does not load otherwise
-    if (process.platform === 'darwin' && existsSync(path.join(app.getAppPath(), '..', 'app-arm64.asar'))) {
-        if (process.arch === 'arm64') {
-            basePath = app.getAppPath().replace('app.asar', 'app-arm64.asar');
-        } else if (process.arch === 'x64') {
-            basePath = app.getAppPath().replace('app.asar', 'app-x64.asar');
-        }
-    }
+    const basePath = isDev ? __dirname : app.getAppPath();
 
     // URL for index.html which will be our entry point.
     const indexURL = URL.format({
@@ -210,32 +204,57 @@ function createJitsiMeetWindow() {
         minHeight: 600,
         show: false,
         webPreferences: {
-            enableBlinkFeatures: 'RTCInsertableStreams,WebAssemblySimd',
-            enableRemoteModule: true,
+            enableBlinkFeatures: 'WebAssemblyCSP',
             contextIsolation: false,
-            nativeWindowOpen: true,
             nodeIntegration: false,
-            preload: path.resolve(basePath, './build/preload.js')
+            preload: path.resolve(basePath, './build/preload.js'),
+            sandbox: false
         }
+    };
+
+    const windowOpenHandler = ({ url, frameName }) => {
+        const target = getPopupTarget(url, frameName);
+
+        if (!target || target === 'browser') {
+            openExternalLink(url);
+        }
+
+        return { action: 'deny' };
     };
 
     mainWindow = new BrowserWindow(options);
     windowState.manage(mainWindow);
     mainWindow.loadURL(indexURL);
 
+    mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
+
+    // Filter out x-frame-options and frame-ancestors CSP to allow loading jitsi via the iframe API
+    // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+        delete details.responseHeaders['x-frame-options'];
+
+        if (details.responseHeaders['content-security-policy']) {
+            const cspFiltered = details.responseHeaders['content-security-policy'][0]
+                .split(';')
+                .filter(x => x.indexOf('frame-ancestors') === -1)
+                .join(';');
+
+            details.responseHeaders['content-security-policy'] = [ cspFiltered ];
+        }
+
+        callback({
+            responseHeaders: details.responseHeaders
+        });
+    });
+
     initPopupsConfigurationMain(mainWindow);
-    setupAlwaysOnTopMain(mainWindow);
+    setupAlwaysOnTopMain(mainWindow, null, windowOpenHandler);
     setupPowerMonitorMain(mainWindow);
     setupScreenSharingMain(mainWindow, config.default.appName, pkgJson.build.appId);
+    if (ENABLE_REMOTE_CONTROL) {
+        new RemoteControlMain(mainWindow); // eslint-disable-line no-new
+    }
 
-    mainWindow.webContents.on('new-window', (event, url, frameName) => {
-        const target = getPopupTarget(url, frameName);
-
-        if (!target || target === 'browser') {
-            event.preventDefault();
-            openExternalLink(url);
-        }
-    });
     mainWindow.on('closed', () => {
         mainWindow = null;
     });

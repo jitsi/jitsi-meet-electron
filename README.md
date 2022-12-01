@@ -37,19 +37,6 @@ For *macOS* user, you can install the application using the following command:
 brew install --cask jitsi-meet
 ```
 
-### Using it with your own Jitsi Meet installation
-
-:warning: The following additional HTTP headers are known to break the Electron App:
-
-```
-Content-Security-Policy "frame-ancestors [looks like any value is bad]";
-X-Frame-Options "DENY";
-```
-A working Content Security Policy looks like that:
-```
-Content-Security-Policy "img-src 'self' 'unsafe-inline' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';";
-```
-
 ## Development
 
 If you want to hack on this project, here is how you do it.
@@ -58,13 +45,12 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
-Install Node.js 12 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 12 by running `nvm use`).
+Install Node.js 16 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 16 by running `nvm use`).
 
 <details><summary>Extra dependencies for Windows</summary>
 
 ```bash
 npm install --global --production windows-build-tools
-npm config set msvs_version 2017
 ```
 </details>
 
@@ -105,35 +91,46 @@ or from the application `--show-dev-tools` command line flag.
 npm run dist
 ```
 
-#### Working with jitsi-meet-electron-utils
+#### Working with jitsi-meet-electron-sdk
 
-[jitsi-meet-electron-utils] is a helper package which implements many features
+[jitsi-meet-electron-sdk] is a helper package which implements many features
 such as remote control and the always-on-top window. If new features are to be
 added / tested, running with a local version of these utils is very handy, here
 is how to do that.
 
-By default the jitsi-meet-electron-utils is build from its git repository
-sources. The default dependency path in package.json is:
+By default the @jitsi/electron-sdk is build from npm. The default dependency path in package.json is:
 
 ```json
-"jitsi-meet-electron-utils": "jitsi/jitsi-meet-electron-utils"
+"@jitsi/electron-sdk": "^3.0.0"
 ```
 
 To work with local copy you must change the path to:
 
 ```json
-"jitsi-meet-electron-utils": "file:///Users/name/jitsi-meet-electron-utils-copy",
+"@jitsi/electron-sdk": "file:///Users/name/jitsi-meet-electron-sdk-copy",
 ```
 
 To build the project you must force it to take the sources as `npm update` will
 not do it.
 
 ```bash
-npm install jitsi-meet-electron-utils --force
+npm install @jitsi/electron-sdk --force
 ```
 
-NOTE: Also check the [jitsi-meet-electron-utils README] to see how to configure
+NOTE: Also check the [jitsi-meet-electron-sdk README] to see how to configure
 your environment.
+
+#### Publishing
+
+1. Create release branch: `git checkout -b release-1-2-3`, replacing 1-2-3 with the desired release version
+2. Increment the version: `npm version patch`, replacing `patch` with `minor` or `major` as required
+3. Push release branch to github: `git push -u origin release-1-2-3`
+4. Create PR: `gh pr create`
+5. Once PR is reviewed and ready to merge, create draft Github release: `gh release create v1.2.3 --draft --title 1.2.3`, replacing v1.2.3 and 1.2.3 with the desired release version
+6. Merge PR
+7. Github action will build binaries and attach to the draft release
+8. Test binaries from draft release
+9. If all tests are fine, publish draft release
 
 </details>
 
@@ -146,11 +143,36 @@ A warning will show up mentioning the app is unsigned upon first install. This i
 ### macOS
 
 On macOS Catalina a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
-Builtin auto-updates are not yet handled in macOS due to unsigned build.
 
 ### GNU/Linux
 
 If after downloading it, you can't execute the file directly, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
+
+On Ubuntu 22.04 the AppImage will fail with a fuse error (as AppImage uses libfuse2, while 22.04 already comes with libfuse3 by default):
+
+```
+dlopen(): error loading libfuse.so.2
+```
+
+To fix this, install libfuse2 as follows:
+
+```
+sudo apt install libfuse2
+```
+
+Under wayland, experimental native wayland support can be enabled with the command-line switch `--ozone-platform-hint` set to `auto`:
+
+```
+./jitsi-meet-x86_64.AppImage --ozone-platform-hint=auto
+```
+
+Note that screensharing is currently not supported under wayland, eg. the permissions prompt may loop endlessly.
+
+In case you experience a blank page after jitsi server upgrades, try removing the local cache files:
+
+```
+rm -rf ~/.config/Jitsi\ Meet/
+```
 
 <details><summary>NOTE for old GNU/Linux distributions</summary>
 
@@ -170,6 +192,15 @@ sudo apt-get install libnss3
 
 </details>
 
+## Translations
+
+The json files are for all the strings inside the application and can be translated [here](/app/i18n/lang).
+
+New translations require the addition of a line in [index.js](/app/i18n/index.js).
+
+`Localize desktop file on linux` requires the addition of a line in [package.json](/package.json).
+Please search for `Comment[hu]` as an example to help add your translation of the English string `Jitsi Meet Desktop App` for your language.
+
 ## License
 
 Apache 2. See the [LICENSE] file.
@@ -182,7 +213,7 @@ please join [community forum].
 [Jitsi Meet]: https://github.com/jitsi/jitsi-meet
 [Electron]: https://electronjs.org/
 [latest release]: https://github.com/jitsi/jitsi-meet-electron/releases/latest
-[jitsi-meet-electron-utils]: https://github.com/jitsi/jitsi-meet-electron-utils
-[jitsi-meet-electron-utils README]: https://github.com/jitsi/jitsi-meet-electron-utils/blob/master/README.md
+[jitsi-meet-electron-sdk]: https://github.com/jitsi/jitsi-meet-electron-sdk
+[jitsi-meet-electron-sdk README]: https://github.com/jitsi/jitsi-meet-electron-sdk/blob/master/README.md
 [community forum]: https://community.jitsi.org/
 [LICENSE]: LICENSE

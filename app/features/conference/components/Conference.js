@@ -9,7 +9,8 @@ import { push } from 'react-router-redux';
 
 import i18n from '../../../i18n';
 import config from '../../config';
-import { getSetting, setEmail, setName } from '../../settings';
+import { getSetting } from '../../settings';
+import { parseURLParams } from '../../utils/parseURLParams';
 
 import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
@@ -35,14 +36,9 @@ type Props = {
     _alwaysOnTopWindowEnabled: boolean;
 
     /**
-     * Email of user.
+     * Disable automatic gain control.
      */
-    _email: string;
-
-    /**
-     * Name of user.
-     */
-    _name: string;
+     _disableAGC: boolean;
 
     /**
      * Default Jitsi Server URL.
@@ -53,16 +49,6 @@ type Props = {
      * Default Jitsi Server Timeout.
      */
     _serverTimeout: number;
-
-    /**
-     * Start with Audio Muted.
-     */
-    _startWithAudioMuted: boolean;
-
-    /**
-     * Start with Video Muted.
-     */
-    _startWithVideoMuted: boolean;
 };
 
 type State = {
@@ -150,23 +136,6 @@ class Conference extends Component<Props, State> {
     }
 
     /**
-     * Keep profile settings in sync with Conference.
-     *
-     * @param {Props} prevProps - Component's prop values before update.
-     * @returns {void}
-     */
-    componentDidUpdate(prevProps) {
-        const { props } = this;
-
-        if (props._email !== prevProps._email) {
-            this._setEmail(props._email);
-        }
-        if (props._name !== prevProps._name) {
-            this._setName(props._name);
-        }
-    }
-
-    /**
      * Remove conference on unmounting.
      *
      * @returns {void}
@@ -200,20 +169,43 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     _loadConference() {
+        const appProtocolSurplus = `${config.appProtocolPrefix}://`;
+
+        // replace the custom url with https, otherwise new URL() raises 'Invalid URL'.
+        if (this._conference.serverURL.startsWith(appProtocolSurplus)) {
+            this._conference.serverURL = this._conference.serverURL.replace(appProtocolSurplus, 'https://');
+        }
         const url = new URL(this._conference.room, this._conference.serverURL);
         const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
         const searchParameters = Object.fromEntries(url.searchParams);
+        const hashParameters = parseURLParams(url);
+
         const locale = { lng: i18n.language };
         const urlParameters = {
             ...searchParameters,
             ...locale
         };
 
+        // override both old and new prejoin config options,
+        // old one for servers that do not understand the new option yet
+        // and new one for newly setup servers where the new option overrides
+        // the old if set.
         const configOverwrite = {
-            startWithAudioMuted: this.props._startWithAudioMuted,
-            startWithVideoMuted: this.props._startWithVideoMuted
+            disableAGC: this.props._disableAGC,
+            prejoinPageEnabled: true,
+            prejoinConfig: {
+                enabled: true
+            }
         };
+
+        Object.entries(hashParameters).forEach(([ key, value ]) => {
+            if (key.startsWith('config.')) {
+                const configKey = key.substring('config.'.length);
+
+                configOverwrite[configKey] = value;
+            }
+        });
 
         const options = {
             configOverwrite,
@@ -231,37 +223,16 @@ class Conference extends Component<Props, State> {
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
         this._api.on('videoConferenceJoined',
-            (conferenceInfo: Object) => {
+            () => {
                 this.props.dispatch(conferenceJoined(this._conference));
-                this._onVideoConferenceJoined(conferenceInfo);
             }
         );
 
-        const { RemoteControl,
-            setupScreenSharingRender,
-            setupAlwaysOnTopRender,
-            initPopupsConfigurationRender,
-            setupWiFiStats,
-            setupPowerMonitorRender
-        } = window.jitsiNodeAPI.jitsiMeetElectronUtils;
-
-        initPopupsConfigurationRender(this._api);
-
-        const iframe = this._api.getIFrame();
-
-        setupScreenSharingRender(this._api);
-
-        if (ENABLE_REMOTE_CONTROL) {
-            new RemoteControl(iframe); // eslint-disable-line no-new
-        }
-
-        // Allow window to be on top if enabled in settings
-        if (this.props._alwaysOnTopWindowEnabled) {
-            setupAlwaysOnTopRender(this._api);
-        }
-
-        setupWiFiStats(iframe);
-        setupPowerMonitorRender(this._api);
+        // Setup Jitsi Meet Electron SDK on this renderer.
+        window.jitsiNodeAPI.setupRenderer(this._api, {
+            enableRemoteControl: ENABLE_REMOTE_CONTROL,
+            enableAlwaysOnTopWindow: this.props._alwaysOnTopWindowEnabled
+        });
     }
 
     /**
@@ -309,32 +280,6 @@ class Conference extends Component<Props, State> {
         this._navigateToHome(event);
     }
 
-    /**
-     * Updates redux state's user name from conference.
-     *
-     * @param {Object} params - Returned object from event.
-     * @param {string} id - Local Participant ID.
-     * @returns {void}
-     */
-    _onDisplayNameChange(params: Object, id: string) {
-        if (params.id === id) {
-            this.props.dispatch(setName(params.displayname));
-        }
-    }
-
-    /**
-     * Updates redux state's email from conference.
-     *
-     * @param {Object} params - Returned object from event.
-     * @param {string} id - Local Participant ID.
-     * @returns {void}
-     */
-    _onEmailChange(params: Object, id: string) {
-        if (params.id === id) {
-            this.props.dispatch(setEmail(params.email));
-        }
-    }
-
     _onIframeLoad: (*) => void;
 
     /**
@@ -352,46 +297,6 @@ class Conference extends Component<Props, State> {
             isLoading: false
         });
     }
-
-    /**
-     * Saves conference info on joining it.
-     *
-     * @param {Object} conferenceInfo - Contains information about the current
-     * conference.
-     * @returns {void}
-     */
-    _onVideoConferenceJoined(conferenceInfo: Object) {
-        this._setEmail(this.props._email);
-        this._setName(this.props._name);
-
-        const { id } = conferenceInfo;
-
-        this._api.on('displayNameChange',
-            (params: Object) => this._onDisplayNameChange(params, id));
-        this._api.on('emailChange',
-            (params: Object) => this._onEmailChange(params, id));
-    }
-
-    /**
-     * Set email from settings to conference.
-     *
-     * @param {string} email - Email of user.
-     * @returns {void}
-     */
-    _setEmail(email: string) {
-        this._api.executeCommand('email', email);
-    }
-
-    /**
-     * Set name from settings to conference.
-     *
-     * @param {string} name - Name of user.
-     * @returns {void}
-     */
-    _setName(name: string) {
-        this._api.executeCommand('displayName', name);
-    }
-
 }
 
 /**
@@ -403,12 +308,9 @@ class Conference extends Component<Props, State> {
 function _mapStateToProps(state: Object) {
     return {
         _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
-        _email: state.settings.email,
-        _name: state.settings.name,
+        _disableAGC: state.settings.disableAGC,
         _serverURL: state.settings.serverURL,
-        _serverTimeout: state.settings.serverTimeout,
-        _startWithAudioMuted: state.settings.startWithAudioMuted,
-        _startWithVideoMuted: state.settings.startWithVideoMuted
+        _serverTimeout: state.settings.serverTimeout
     };
 }
 

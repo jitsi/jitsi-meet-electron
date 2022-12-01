@@ -8,15 +8,19 @@ const languages = {
     es: { translation: require('./lang/es.json') },
     fr: { translation: require('./lang/fr.json') },
     gl: { translation: require('./lang/gl.json') },
+    hr: { translation: require('./lang/hr.json') },
     hu: { translation: require('./lang/hu.json') },
     it: { translation: require('./lang/it.json') },
+    nl: { translation: require('./lang/nl.json') },
     pt: { translation: require('./lang/pt-br.json') },
     ru: { translation: require('./lang/ru.json') },
-    nl: { translation: require('./lang/nl.json') },
-    sq: { translation: require('./lang/sq.json') }
+    sq: { translation: require('./lang/sq.json') },
+    'zh-CN': { translation: require('./lang/zh-CN.json') },
+    'zh-TW': { translation: require('./lang/zh-TW.json') }
+>>>>>>> faa522f00de887b9158f485490fb646cc8d8c3ce
 };
 
-const detectedLocale = window.jitsiNodeAPI.getLocale();
+const detectedLocale = navigator.language;
 
 i18n
     .use(initReactI18next)

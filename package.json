@@ -165,7 +165,7 @@
     "@jitsi/js-utils": "2.0.0",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "10.0.3",
-    "babel-loader": "^8.2.3",
+    "babel-loader": "^8.3.0",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
     "electron": "21.3.3",

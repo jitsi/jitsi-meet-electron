@@ -1,17 +1,18 @@
 {
-	"enterConferenceNameOrUrl": "Jepni një emër për konferencën tuaj ose një URL Jitsi",
+	"enterConferenceNameOrUrl": "Jepni një emër për konferencën tuaj, ose një URL Jitsi",
 	"go": "SHKO",
 	"help": "Ndihmë",
 	"termsLink": "Kushte",
 	"privacyLink": "Privatësi",
-	"sendFeedbackLink": "Dërgo Përshtypje",
+	"recentListLabel": "ose rihyni në një nga dhomat tuaja përdorur së fundi",
+	"sendFeedbackLink": "Dërgoni Përshtypje",
 	"aboutLink": "Mbi",
 	"sourceLink": "Kod Burim",
 	"versionLabel": "Version: {{version}}",
 	"onboarding": {
 		"startTour": "Nisni Turin",
 		"skip": "Anashkaloje",
-		"welcome": "Mirë se vini te {{appName}}",
+		"welcome": "Mirë se vini në {{appName}}",
 		"letUsShowYouAround": "Le t’ju tregojmë gjërat!",
 		"next": "Pasuesi",
 		"conferenceUrl": "Jepni emrin (ose URL-në) e plotë të dhomës ku doni të hyni. Një emër mund ta sajoni, thjesht bëjuani të ditur të tjerëve, që të japin të njëjtin emër.",
@@ -26,6 +27,7 @@
 		"invalidServer": "URL e Pavlefshme Shërbyesi",
 		"invalidServerTimeout": "Vlerë e pavlefshme për Mbarim Kohe Shërbyesi",
 		"serverUrl": "URL Shërbyesi",
-		"serverTimeout": "Mbarim Kohe Shërbyesi (në sekonda)"
+		"serverTimeout": "Mbarim Kohe Shërbyesi (në sekonda)",
+		"disableAGC": "Çaktivizoni kontroll të automatizuar gain-i"
 	}
 }

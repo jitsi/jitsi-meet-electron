@@ -217,6 +217,12 @@ function createJitsiMeetWindow() {
 
         if (!target || target === 'browser') {
             openExternalLink(url);
+
+            return { action: 'deny' };
+        }
+
+        if (target === 'electron') {
+            return { action: 'allow' };
         }
 
         return { action: 'deny' };

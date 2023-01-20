@@ -20,11 +20,6 @@ Download our latest release and you're off to the races!
 | Windows | macOS | GNU/Linux (64-bit only) |
 | -- | -- | -- |
 | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.exe) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet.dmg) | [Download](https://github.com/freifunkMUC/jitsi-meet-electron/releases/latest/download/ffmuc-meet-x86_64.AppImage) |
-### Third-Party builds
-
-[<img src="https://flathub.org/assets/badges/flathub-badge-en.svg"
-     alt="Download On Flathub"
-     height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
 
 ### Homebrew
 
@@ -163,7 +158,7 @@ Under wayland, experimental native wayland support can be enabled with the comma
 ./jitsi-meet-x86_64.AppImage --ozone-platform-hint=auto
 ```
 
-Note that screensharing is currently not supported under wayland, eg. the permissions prompt may loop endlessly.
+Note that screen-sharing is currently not supported under wayland, eg. the permissions prompt may loop endlessly.
 
 In case you experience a blank page after jitsi server upgrades, try removing the local cache files:
 

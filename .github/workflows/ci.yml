@@ -24,6 +24,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm ci
+        npm run lint
         npm run dist
     - uses: actions/upload-artifact@v3
       with:
@@ -57,7 +58,6 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm ci
-        npm run lint
         npm run dist
     - uses: actions/upload-artifact@v3
       with:

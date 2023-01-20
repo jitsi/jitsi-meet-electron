@@ -21,7 +21,7 @@ Download our latest release and you're off to the races!
 | -- | -- | -- | -- |
 | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-amd64.deb) |
 
-NOTE: The GNU/LInux builds are 64-bit only.
+NOTE: The GNU/Linux builds are 64-bit only.
 
 ### Third-Party builds
 
@@ -166,7 +166,7 @@ Under wayland, experimental native wayland support can be enabled with the comma
 ./jitsi-meet-x86_64.AppImage --ozone-platform-hint=auto
 ```
 
-Note that screensharing is currently not supported under wayland, eg. the permissions prompt may loop endlessly.
+Note that screen-sharing is currently not supported under wayland, eg. the permissions prompt may loop endlessly.
 
 In case you experience a blank page after jitsi server upgrades, try removing the local cache files:
 

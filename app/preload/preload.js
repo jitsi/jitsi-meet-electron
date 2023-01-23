@@ -3,10 +3,8 @@ const { RemoteControl,
     setupScreenSharingRender,
     setupAlwaysOnTopRender,
     initPopupsConfigurationRender,
-    setupWiFiStats,
     setupPowerMonitorRender
 } = require('@jitsi/electron-sdk');
-const { platform } = require('process');
 const { openExternalLink } = require('../features/utils/openExternalLink');
 
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
@@ -32,11 +30,6 @@ function setupRenderer(api, options = {}) {
     // Allow window to be on top if enabled in settings
     if (options.enableAlwaysOnTopWindow) {
         setupAlwaysOnTopRender(api, null, { showOnPrejoin: true });
-    }
-
-    // Disable WiFiStats on mac due to jitsi-meet-electron#585
-    if (platform !== 'darwin') {
-        setupWiFiStats(iframe);
     }
 
     setupPowerMonitorRender(api);

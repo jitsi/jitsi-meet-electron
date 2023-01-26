@@ -2,8 +2,6 @@ const { shell } = require('electron');
 const url = require('url');
 
 
-const protocolRegex = /^(https?|mailto):/i;
-
 /**
  * Opens the given link in an external browser.
  *
@@ -19,7 +17,10 @@ export function openExternalLink(link) {
         return;
     }
 
-    if (protocolRegex.test(u.protocol)) {
-        shell.openExternal(link);
+    const proto = u.protocol;
+    const href = u.href;
+
+    if (proto === 'http:' || proto === 'https:' || proto === 'mailto:') {
+        shell.openExternal(href);
     }
 }

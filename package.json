@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2023.1.2",
+  "version": "2023.2.0",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -168,7 +168,7 @@
     "babel-loader": "^8.2.3",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
-    "electron": "22.0.2",
+    "electron": "21.4.1",
     "electron-builder": "23.1.0",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

@@ -416,3 +416,10 @@ ipcMain.on('renderer-ready', () => {
             .send('protocol-data-msg', protocolDataForFrontApp);
     }
 });
+
+/**
+ * Handle opening external links in the main process.
+ */
+ipcMain.on('jitsi-open-url', (event, someUrl) => {
+    openExternalLink(someUrl);
+});

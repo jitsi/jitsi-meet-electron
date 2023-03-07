@@ -234,6 +234,25 @@ function createJitsiMeetWindow() {
 
     mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
 
+    // Block access to file:// URLs.
+    const fileFilter = {
+        urls: [ 'file://*' ]
+    };
+
+    mainWindow.webContents.session.webRequest.onBeforeSendHeaders(fileFilter, (details, callback) => {
+        const requestedUrl = new URL.URL(details.url);
+        const requestedBasename = path.resolve(requestedUrl.pathname);
+        const appBasePath = path.resolve(basePath);
+
+        if (!requestedBasename.startsWith(appBasePath)) {
+            callback(false);
+
+            return;
+        }
+
+        callback(true);
+    });
+
     // Filter out x-frame-options and frame-ancestors CSP to allow loading jitsi via the iframe API
     // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
     mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {

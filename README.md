@@ -25,7 +25,7 @@ NOTE: The GNU/Linux builds are 64-bit only.
 
 ### Third-Party builds
 
-[<img src="https://flathub.org/assets/badges/flathub-badge-en.svg"
+[<img src="https://dl.flathub.org/assets/badges/flathub-badge-en.svg"
      alt="Download On Flathub"
      height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
 

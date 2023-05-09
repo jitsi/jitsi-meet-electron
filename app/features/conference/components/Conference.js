@@ -211,7 +211,8 @@ class Conference extends Component<Props, State> {
             configOverwrite,
             onload: this._onIframeLoad,
             parentNode: this._ref.current,
-            roomName
+            roomName,
+            sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms'
         };
 
         this._api = new JitsiMeetExternalAPI(host, {

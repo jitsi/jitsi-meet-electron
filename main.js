@@ -234,6 +234,10 @@ function createJitsiMeetWindow() {
 
     mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
 
+    if (isDev) {
+        mainWindow.webContents.session.clearCache();
+    }
+
     // Block access to file:// URLs.
     const fileFilter = {
         urls: [ 'file://*' ]

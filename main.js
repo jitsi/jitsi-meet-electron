@@ -250,6 +250,7 @@ function createJitsiMeetWindow() {
 
         if (!requestedBasename.startsWith(appBasePath)) {
             callback(false);
+            console.log(`Rejected file URL: ${details.url}`);
 
             return;
         }
@@ -274,6 +275,23 @@ function createJitsiMeetWindow() {
         callback({
             responseHeaders: details.responseHeaders
         });
+    });
+
+    // Block redirects.
+    const allowedRedirects = [
+        'http:',
+        'https:',
+        'ws:',
+        'wss:'
+    ];
+
+    mainWindow.webContents.addListener('will-redirect', (ev, url) => {
+        const requestedUrl = new URL.URL(url);
+
+        if (!allowedRedirects.includes(requestedUrl.protocol)) {
+            console.log(`Disallowing redirect to ${url}`);
+            ev.preventDefault();
+        }
     });
 
     initPopupsConfigurationMain(mainWindow);

@@ -177,7 +177,8 @@ function createJitsiMeetWindow() {
     // Load the previous window state with fallback to defaults.
     const windowState = windowStateKeeper({
         defaultWidth: 800,
-        defaultHeight: 600
+        defaultHeight: 600,
+        fullScreen: false
     });
 
     // Path to root directory.

@@ -250,7 +250,7 @@ function createJitsiMeetWindow() {
 
         if (!requestedBasename.startsWith(appBasePath)) {
             callback(false);
-            console.log(`Rejected file URL: ${details.url}`);
+            console.warn(`Rejected file URL: ${details.url}`);
 
             return;
         }
@@ -289,9 +289,21 @@ function createJitsiMeetWindow() {
         const requestedUrl = new URL.URL(url);
 
         if (!allowedRedirects.includes(requestedUrl.protocol)) {
-            console.log(`Disallowing redirect to ${url}`);
+            console.warn(`Disallowing redirect to ${url}`);
             ev.preventDefault();
         }
+    });
+
+    // Block opening any external applications.
+    mainWindow.webContents.session.setPermissionRequestHandler((_, permission, callback, details) => {
+        if (permission === 'openExternal') {
+            console.warn(`Disallowing opening ${details.externalURL}`);
+            callback(false);
+
+            return;
+        }
+
+        callback(true);
     });
 
     initPopupsConfigurationMain(mainWindow);

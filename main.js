@@ -250,13 +250,13 @@ function createJitsiMeetWindow() {
         const appBasePath = path.resolve(basePath);
 
         if (!requestedBasename.startsWith(appBasePath)) {
-            callback(false);
+            callback({ cancel: true });
             console.warn(`Rejected file URL: ${details.url}`);
 
             return;
         }
 
-        callback(true);
+        callback({ cancel: false });
     });
 
     // Filter out x-frame-options and frame-ancestors CSP to allow loading jitsi via the iframe API

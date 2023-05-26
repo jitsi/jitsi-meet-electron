@@ -246,7 +246,7 @@ function createJitsiMeetWindow() {
 
     mainWindow.webContents.session.webRequest.onBeforeSendHeaders(fileFilter, (details, callback) => {
         const requestedUrl = new URL.URL(details.url);
-        const requestedBasename = path.resolve(requestedUrl.pathname);
+        const requestedBasename = path.resolve(decodeURIComponent(requestedUrl.pathname));
         const appBasePath = path.resolve(basePath);
 
         if (!requestedBasename.startsWith(appBasePath)) {

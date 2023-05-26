@@ -245,11 +245,10 @@ function createJitsiMeetWindow() {
     };
 
     mainWindow.webContents.session.webRequest.onBeforeSendHeaders(fileFilter, (details, callback) => {
-        const requestedUrl = new URL.URL(details.url);
-        const requestedBasename = path.resolve(decodeURIComponent(requestedUrl.pathname));
+        const requestedPath = path.resolve(URL.fileURLToPath(details.url));
         const appBasePath = path.resolve(basePath);
 
-        if (!requestedBasename.startsWith(appBasePath)) {
+        if (!requestedPath.startsWith(appBasePath)) {
             callback({ cancel: true });
             console.warn(`Rejected file URL: ${details.url}`);
 

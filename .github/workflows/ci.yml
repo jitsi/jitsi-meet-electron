@@ -147,6 +147,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -am "Update package.json" || echo "No changes to commit"
+        git pull --rebase origin master
         git push
 
   build-and-release:

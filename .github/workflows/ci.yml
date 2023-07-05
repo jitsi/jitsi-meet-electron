@@ -139,6 +139,7 @@ jobs:
             .build.linux.executableName="hallo-install" |
             .build.win.artifactName=$winMacArtifactName |
             .build.protocols[0].schemes[0]="hallo" |
+            .build.publish=[{"provider": "github", "releaseType": "release"}] |
             .repository.url="git://github.com/de-johannes/hallo-desktop"
             ' package.json > temp.json && mv temp.json package.json
 

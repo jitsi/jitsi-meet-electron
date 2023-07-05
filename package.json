@@ -19,10 +19,10 @@
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
-    "publish": [
+    "publish": [{
       "provider": "github",
       "releaseType": "release"
-    ],
+    }],
     "productName": "HALLO Desktop",
     "generateUpdatesFilesForAllChannels": true,
     "afterSign": "./notarize.js",

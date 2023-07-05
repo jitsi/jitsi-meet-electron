@@ -21,7 +21,6 @@
     "appId": "org.jitsi.jitsi-meet",
     "productName": "HALLO Desktop",
     "generateUpdatesFilesForAllChannels": true,
-    "publish": "null",
     "afterSign": "./notarize.js",
     "files": [
       "build",

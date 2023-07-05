@@ -106,8 +106,8 @@ jobs:
           done
 
           if [ "$should_commit" = true ]; then
-            git pull --rebase origin master
             git commit -m "Replace static files from 'hallo' branch"
+            git pull --rebase origin master
             git push
           else
             echo "Files in master and hallo branches are the same. No need to replace."

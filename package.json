@@ -1,9 +1,9 @@
 {
-  "name": "jitsi-meet-electron",
+  "name": "hallo",
   "version": "2023.7.0",
-  "description": "Electron application for Jitsi Meet",
+  "description": "App für HALLO - vom Ev. Johanneswerk",
   "main": "./build/main.js",
-  "productName": "Jitsi Meet",
+  "productName": "HALLO Desktop",
   "private": true,
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
@@ -19,7 +19,7 @@
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
-    "productName": "Jitsi Meet",
+    "productName": "HALLO Desktop",
     "generateUpdatesFilesForAllChannels": true,
     "afterSign": "./notarize.js",
     "files": [
@@ -29,7 +29,7 @@
       "!main.js"
     ],
     "mac": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "hallo-install.${ext}",
       "target": [
         {
           "arch": "universal",
@@ -47,8 +47,8 @@
       "entitlementsInherit": "entitlements.mac.plist",
       "asarUnpack": "**/*.node",
       "extendInfo": {
-        "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
-        "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
+        "NSCameraUsageDescription": "HALLO braucht für Videokonferenzen Zugriff auf die Kamera.",
+        "NSMicrophoneUsageDescription": "HALLO braucht für Videokonferenzen Zugriff auf das Mikrofon.",
         "LSMultipleInstancesProhibited": true
       }
     },
@@ -58,7 +58,7 @@
       "hardenedRuntime": false
     },
     "linux": {
-      "artifactName": "jitsi-meet-${arch}.${ext}",
+      "artifactName": "hallo-install-${arch}.${ext}",
       "category": "VideoConference;AudioVideo;Audio;Video;Network",
       "description": "Jitsi Meet Desktop App",
       "desktop": {
@@ -73,7 +73,7 @@
         "Comment[zh-CN]": "Jitsi Meet 桌面应用",
         "Comment[zh-TW]": "Jitsi Meet 桌面應用程式"
       },
-      "executableName": "jitsi-meet",
+      "executableName": "hallo-install",
       "target": [
         {
           "arch": "x64",
@@ -96,7 +96,7 @@
       ]
     },
     "win": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "hallo-install.${ext}",
       "target": [
         {
           "arch": [
@@ -115,7 +115,7 @@
         "name": "jitsi-protocol",
         "role": "Viewer",
         "schemes": [
-          "jitsi-meet"
+          "hallo"
         ]
       }
     ]
@@ -125,7 +125,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jitsi/jitsi-meet-electron"
+    "url": "git://github.com/de-johannes/hallo-desktop"
   },
   "keywords": [
     "jingle",

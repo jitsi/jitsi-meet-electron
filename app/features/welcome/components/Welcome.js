@@ -6,7 +6,6 @@ import { SpotlightTarget } from '@atlaskit/onboarding';
 import Page from '@atlaskit/page';
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 
-import { generateRoomWithoutSeparator } from '@jitsi/js-utils/random';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
@@ -36,30 +35,10 @@ type Props = {
     /**
      * I18next translate function.
      */
-     t: Function;
+    t: Function;
 };
 
 type State = {
-
-    /**
-     * Timer for animating the room name geneeration.
-     */
-    animateTimeoutId: ?TimeoutID,
-
-    /**
-     * Generated room name.
-     */
-    generatedRoomname: string,
-
-    /**
-     * Current room name placeholder.
-     */
-    roomPlaceholder: string,
-
-    /**
-     * Timer for re-generating a new room name.
-     */
-    updateTimeoutId: ?TimeoutID,
 
     /**
      * URL of the room to join.
@@ -93,42 +72,24 @@ class Welcome extends Component<Props, State> {
         }
 
         this.state = {
-            animateTimeoutId: undefined,
-            generatedRoomname: '',
-            roomPlaceholder: '',
-            updateTimeoutId: undefined,
             url
         };
 
         // Bind event handlers.
-        this._animateRoomnameChanging = this._animateRoomnameChanging.bind(this);
         this._onURLChange = this._onURLChange.bind(this);
         this._onFormSubmit = this._onFormSubmit.bind(this);
         this._onJoin = this._onJoin.bind(this);
-        this._updateRoomname = this._updateRoomname.bind(this);
     }
 
     /**
      * Start Onboarding once component is mounted.
-     * Start generating randdom room names.
      *
-     * NOTE: It autonatically checks if the onboarding is shown or not.
+     * NOTE: It automatically checks if the onboarding is shown or not.
      *
      * @returns {void}
      */
     componentDidMount() {
         this.props.dispatch(startOnboarding('welcome-page'));
-
-        this._updateRoomname();
-    }
-
-    /**
-     * Stop all timers when unmounting.
-     *
-     * @returns {voidd}
-     */
-    componentWillUnmount() {
-        this._clearTimeouts();
     }
 
     /**
@@ -148,46 +109,6 @@ class Welcome extends Component<Props, State> {
                 </AtlasKitThemeProvider>
             </Page>
         );
-    }
-
-    _animateRoomnameChanging: (string) => void;
-
-    /**
-     * Animates the changing of the room name.
-     *
-     * @param {string} word - The part of room name that should be added to
-     * placeholder.
-     * @private
-     * @returns {void}
-     */
-    _animateRoomnameChanging(word: string) {
-        let animateTimeoutId;
-        const roomPlaceholder = this.state.roomPlaceholder + word.slice(0, 1);
-
-        if (word.length > 1) {
-            animateTimeoutId
-                = setTimeout(
-                    () => {
-                        this._animateRoomnameChanging(
-                            word.substring(1, word.length));
-                    },
-                    70);
-        }
-        this.setState({
-            animateTimeoutId,
-            roomPlaceholder
-        });
-    }
-
-    /**
-     * Method that clears timeouts for animations and updates of room name.
-     *
-     * @private
-     * @returns {void}
-     */
-    _clearTimeouts() {
-        clearTimeout(this.state.animateTimeoutId);
-        clearTimeout(this.state.updateTimeoutId);
     }
 
     _onFormSubmit: (*) => void;
@@ -211,7 +132,7 @@ class Welcome extends Component<Props, State> {
      * @returns {void}
      */
     _onJoin() {
-        const inputURL = this.state.url || this.state.generatedRoomname;
+        const inputURL = this.state.url;
         const conference = createConferenceObjectFromURL(inputURL);
 
         // Don't navigate if conference couldn't be created
@@ -271,7 +192,6 @@ class Welcome extends Component<Props, State> {
                                 isInvalid = { locationError }
                                 isLabelHidden = { true }
                                 onChange = { this._onURLChange }
-                                placeholder = { this.state.roomPlaceholder }
                                 shouldFitContainer = { true }
                                 type = 'text'
                                 value = { this.state.url } />
@@ -286,30 +206,6 @@ class Welcome extends Component<Props, State> {
                 </SpotlightTarget>
             </Header>
         );
-    }
-
-    _updateRoomname: () => void;
-
-    /**
-     * Triggers the generation of a new room name and initiates an animation of
-     * its changing.
-     *
-     * @protected
-     * @returns {void}
-     */
-    _updateRoomname() {
-        const generatedRoomname = generateRoomWithoutSeparator();
-        const roomPlaceholder = '';
-        const updateTimeoutId = setTimeout(this._updateRoomname, 10000);
-
-        this._clearTimeouts();
-        this.setState(
-            {
-                generatedRoomname,
-                roomPlaceholder,
-                updateTimeoutId
-            },
-            () => this._animateRoomnameChanging(generatedRoomname));
     }
 }
 

@@ -32,7 +32,10 @@ jobs:
         path: |
           dist/jitsi-meet-amd64.deb
           dist/jitsi-meet-x86_64.AppImage
+          dist/jitsi-meet-arm64.deb
+          dist/jitsi-meet-arm64.AppImage
           dist/latest-linux.yml
+          dist/latest-linux-arm64.yml
   build-mac:
     name: macOS
     runs-on: macos-11
@@ -48,6 +51,7 @@ jobs:
       run: |
         echo "CSC_LINK=${{ secrets.mac_cert }}" >> $GITHUB_ENV
         echo "CSC_KEY_PASSWORD=${{ secrets.mac_cert_password }}" >> $GITHUB_ENV
+        echo "CSC_FOR_PULL_REQUEST=true" >> $GITHUB_ENV
         echo "APPLE_ID=${{ secrets.apple_id }}" >> $GITHUB_ENV
         echo "APPLE_ID_PASSWORD=${{ secrets.apple_id_password }}" >> $GITHUB_ENV
         echo "TEAM_ID=${{ secrets.team_id }}" >> $GITHUB_ENV

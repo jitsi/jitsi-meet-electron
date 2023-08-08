@@ -190,7 +190,10 @@ class Conference extends Component<Props, State> {
         if (this._conference.serverURL.startsWith(appProtocolSurplus)) {
             this._conference.serverURL = this._conference.serverURL.replace(appProtocolSurplus, 'https://');
         }
-        const url = new URL(this._conference.room, this._conference.serverURL);
+
+        const serverUrl = new URL(this._conference.serverURL);
+        const jwt = new URLSearchParams(serverUrl.search).get('jwt');
+        const url = new URL(this._conference.room, new URL(serverUrl.pathname, serverUrl.origin));
         const roomName = url.pathname.split('/').pop();
         const host = this._conference.serverURL.replace(/https?:\/\//, '');
         const searchParameters = Object.fromEntries(url.searchParams);
@@ -227,7 +230,8 @@ class Conference extends Component<Props, State> {
             onload: this._onIframeLoad,
             parentNode: this._ref.current,
             roomName,
-            sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms'
+            sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms',
+            jwt
         };
 
         this._api = new JitsiMeetExternalAPI(host, {

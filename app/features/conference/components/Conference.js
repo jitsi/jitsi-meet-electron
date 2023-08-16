@@ -150,6 +150,21 @@ class Conference extends Component<Props, State> {
     }
 
     /**
+     * Handle joining another another meeing while in one.
+     *
+     * @param {Object} prevProps - The previous props.
+     * @returns {void}
+     */
+    componentDidUpdate(prevProps) {
+        if (prevProps.location.key !== this.props.location.key) {
+
+            // Simulate a re-mount so the new meeting is joined.
+            this.componentWillUnmount();
+            this.componentDidMount();
+        }
+    }
+
+    /**
      * Implements React's {@link Component#render()}.
      *
      * @returns {ReactElement}

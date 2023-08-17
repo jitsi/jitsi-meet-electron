@@ -28,7 +28,7 @@ const pkgJson = require('./package.json');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
-const ENABLE_REMOTE_CONTROL = false;
+const ENABLE_REMOTE_CONTROL = true;
 
 // We need this because of https://github.com/electron/electron/issues/18214
 app.commandLine.appendSwitch('disable-site-isolation-trials');
@@ -195,6 +195,7 @@ function createJitsiMeetWindow() {
     // Use a preload script in order to provide node specific functionality
     // to a isolated BrowserWindow in accordance with electron security
     // guideline.
+    
     const options = {
         x: windowState.x,
         y: windowState.y,

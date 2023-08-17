@@ -20,6 +20,8 @@ import { RecentList } from '../../recent-list';
 import { createConferenceObjectFromURL } from '../../utils';
 
 import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
+import aislelogo from '../../../../resources/login-logo.png';
+import './style.css';
 
 type Props = {
 
@@ -140,7 +142,7 @@ class Welcome extends Component<Props, State> {
         return (
             <Page navigation = { <Navbar /> }>
                 <AtlasKitThemeProvider mode = 'light'>
-                    <Wrapper>
+                    <Wrapper className='welcome-wrapper'>
                         { this._renderHeader() }
                         { this._renderBody() }
                         <Onboarding section = 'welcome-page' />
@@ -244,7 +246,7 @@ class Welcome extends Component<Props, State> {
      */
     _renderBody() {
         return (
-            <Body>
+            <Body className='welcome-body'>
                 <RecentList />
             </Body>
         );
@@ -261,9 +263,14 @@ class Welcome extends Component<Props, State> {
         const { t } = this.props;
 
         return (
-            <Header>
-                <SpotlightTarget name = 'conference-url'>
-                    <Form onSubmit = { this._onFormSubmit }>
+            <Header className='welcome-header'>
+                <SpotlightTarget name = 'conference-url' >
+                    
+                    <Form onSubmit = { this._onFormSubmit } className='log-form'>
+                        <div class="img-container">
+                            <img src = { aislelogo } alt = 'logo' id='logo_img'/>
+                        </div>
+                            
                         <Label>{ t('enterConferenceNameOrUrl') } </Label>
                         <FieldWrapper>
                             <FieldTextStateless

@@ -8,10 +8,10 @@ const languages = {
     es: { translation: require('./lang/es.json') },
     fr: { translation: require('./lang/fr.json') },
     gl: { translation: require('./lang/gl.json') },
-    hi: { translation: require('./lang/hi.json') },
     hr: { translation: require('./lang/hr.json') },
     hu: { translation: require('./lang/hu.json') },
     it: { translation: require('./lang/it.json') },
+    ja: { translation: require('./lang/ja.json') },
     nl: { translation: require('./lang/nl.json') },
     pt: { translation: require('./lang/pt-br.json') },
     ru: { translation: require('./lang/ru.json') },
@@ -20,8 +20,8 @@ const languages = {
     'zh-TW': { translation: require('./lang/zh-TW.json') }
 };
 
-const detectedLocale = navigator.language;
-
+// const detectedLocale = navigator.language;
+const detectedLocale = 'ja';
 i18n
     .use(initReactI18next)
     .init({

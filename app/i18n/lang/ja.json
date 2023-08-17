@@ -1,0 +1,34 @@
+{
+	"enterConferenceNameOrUrl": "会議室の名前またはJitsiのURLを入力してください",
+	"go": "開始する",
+	"help": "ヘルプ",
+	"termsLink": "条項",
+	"privacyLink": "プライバシー",
+	"recentListLabel": "または、最近使用した会議室のいずれかに再度参加します",
+	"sendFeedbackLink": "フィードバックを送信する",
+	"aboutLink": "概要",
+	"sourceLink": "ソースコード",
+	"versionLabel": "バージョン: {{version}}",
+	"onboarding": {
+		"startTour": "ツアーを開始する",
+		"skip": "スキップ",
+		"welcome": "{{appName}} へようこそ",
+		"letUsShowYouAround": "ご案内しましょう！",
+		"next": "次に",
+		"conferenceUrl": "参加したいルームの名前 (または完全な URL) を入力します。 名前を作成することもできますが、他の人が同じ名前を入力できるように知らせるだけです。",
+		"settingsDrawerButton": "ここをクリックして設定ドロワーを開きます。",
+		"serverSetting": "これが会議が開催されるサーバーになります。 独自のものを使用することもできますが、そうする必要はありません。",
+		"serverTimeout": "会議に参加するためのタイムアウト。タイムアウトになる前に会議に参加しなかった場合、会議はキャンセルされます。",
+		"alwaysOnTop": "メイン ウィンドウがフォーカスを失ったときに表示される「常に手前に表示」ウィンドウを有効にするかどうかを切り替えることができます。 これはすべてのカンファレンスに適用されます。"
+	},
+	"settings": {
+		"back": "バック",
+		"alwaysOnTopWindow": "常に最前面のウィンドウに表示",
+		"invalidServer": "無効なサーバー URL",
+		"invalidServerTimeout": "サーバータイムアウトの値が無効です",
+		"serverUrl": "サーバーURL",
+		"serverTimeout": "サーバーのタイムアウト (秒単位)",
+		"disableAGC": "自動ゲイン制御を無効にする"
+	}
+}
+

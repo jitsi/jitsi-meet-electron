@@ -1,0 +1,19 @@
+.welcome-wrapper{
+  background-color: white;
+}
+.conference-url{
+  display: block;
+}
+.logo-div{
+  width: 20%;
+  margin:auto;
+  
+}
+.log-form{
+  display: block;
+  align-items: center;
+}
+#logo_img{
+  width: 1500px;
+  margin: auto;
+}

@@ -74,6 +74,11 @@ class Conference extends Component<Props, State> {
     _conference: Object;
 
     /**
+     * Whether the iframe was loaded or not.
+     */
+    _iframeLoaded: boolean;
+
+    /**
      * Timer to cancel the joining if it takes too long.
      */
     _loadTimer: ?TimeoutID;
@@ -159,6 +164,7 @@ class Conference extends Component<Props, State> {
         if (prevProps.location.key !== this.props.location.key) {
 
             // Simulate a re-mount so the new meeting is joined.
+            this._iframeLoaded = false;
             this.componentWillUnmount();
             this.componentDidMount();
         }
@@ -235,7 +241,6 @@ class Conference extends Component<Props, State> {
             ...urlParameters
         });
 
-
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
         this._api.on('videoConferenceJoined',
@@ -304,9 +309,37 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     _onIframeLoad() {
+        if (this._iframeLoaded) {
+            // Skip spurious event after meeting close.
+            return;
+        }
+
+        console.log('IFrame loaded');
+
+        this._iframeLoaded = true;
+
         if (this._loadTimer) {
             clearTimeout(this._loadTimer);
             this._loadTimer = null;
+        }
+
+        const frame = this._api.getIFrame();
+        const mainApp = frame.contentWindow.document.getElementById('react');
+
+        if (!mainApp) {
+            console.warn('Main application not loaded');
+
+            this._navigateToHome(
+
+                // $FlowFixMe
+                {
+                    error: 'Loading error',
+                    type: 'error'
+                },
+                this._conference.room,
+                this._conference.serverURL);
+
+            return;
         }
 
         this.setState({

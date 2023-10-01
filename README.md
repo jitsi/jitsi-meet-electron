@@ -147,8 +147,8 @@ On macOS Catalina, a warning will be displayed on first install. The app won't o
 * If you can't execute the file directly after downloading it, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
 
 * Under wayland, screensharing is currently buggy:
-  * When trying to start screensharing under wayland, 2 permission popups will show up. First two pipewire based system selectors, then a jitsi internal selector. You need to select something in both (overlapping) Pipewire promots. In the following jitsi-internal selector, be quick (<2 seconds) to select a screen or an application to start the screensharing. If you take longer, then the first permission pupups will come again.
-  * X11 is not affected by this
+  * Sharing a full screen is not possible
+  * When trying to start screensharing under wayland, 2 permission popups will show up. First a pipewire based system selector, then a jitsi internal selector. Select an application window in the first selector and then the same in the jitsi internal selector. Sharing application windows works via this, sharing a full screen unfortunately not.
 
 * On Ubuntu 22.04, the AppImage will fail with a fuse error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
 

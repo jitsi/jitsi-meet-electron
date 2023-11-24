@@ -230,7 +230,6 @@ class Conference extends Component<Props, State> {
 
         const options = {
             configOverwrite,
-            onload: this._onIframeLoad,
             parentNode: this._ref.current,
             roomName,
             sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms'
@@ -240,6 +239,11 @@ class Conference extends Component<Props, State> {
             ...options,
             ...urlParameters
         });
+
+        // This event is fired really early, at the same time as 'ready', but has been
+        // around for longer.
+        // TODO: remove after a while. -saghul
+        this._api.on('browserSupport', this._onIframeLoad);
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
@@ -321,25 +325,6 @@ class Conference extends Component<Props, State> {
         if (this._loadTimer) {
             clearTimeout(this._loadTimer);
             this._loadTimer = null;
-        }
-
-        const frame = this._api.getIFrame();
-        const mainApp = frame.contentWindow.document.getElementById('react');
-
-        if (!mainApp) {
-            console.warn('Main application not loaded');
-
-            this._navigateToHome(
-
-                // $FlowFixMe
-                {
-                    error: 'Loading error',
-                    type: 'error'
-                },
-                this._conference.room,
-                this._conference.serverURL);
-
-            return;
         }
 
         this.setState({

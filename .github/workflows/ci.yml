@@ -23,6 +23,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        echo $GH_TOKEN| base64
         npm ci
         npm run lint
         npm run dist

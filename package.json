@@ -179,7 +179,7 @@
     "babel-loader": "^8.2.3",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
-    "electron": "27.0.4",
+    "electron": "28.1.0",
     "electron-builder": "24.4.0",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

@@ -272,6 +272,15 @@ function createJitsiMeetWindow() {
             details.responseHeaders['content-security-policy'] = [ cspFiltered ];
         }
 
+        if (details.responseHeaders['Content-Security-Policy']) {
+            const cspFiltered = details.responseHeaders['Content-Security-Policy'][0]
+                .split(';')
+                .filter(x => x.indexOf('frame-ancestors') === -1)
+                .join(';');
+
+            details.responseHeaders['Content-Security-Policy'] = [ cspFiltered ];
+        }
+
         callback({
             responseHeaders: details.responseHeaders
         });

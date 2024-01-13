@@ -1,0 +1,33 @@
+{
+	"enterConferenceNameOrUrl": "輸入會議室名稱或 Jitsi 網址",
+	"go": "開始",
+	"help": "協助",
+	"termsLink": "條款",
+	"privacyLink": "隱私權",
+	"recentListLabel": "或重新加入最近參加過的會議",
+	"sendFeedbackLink": "傳送意見反應",
+	"aboutLink": "關於",
+	"sourceLink": "原始碼",
+	"versionLabel": "版本：{{version}}",
+	"onboarding": {
+		"startTour": "開始導覽",
+		"skip": "跳過",
+		"welcome": "歡迎使用 {{appName}}",
+		"letUsShowYouAround": "讓我們帶您四處逛逛！",
+		"next": "下一步",
+		"conferenceUrl": "請輸入您想加入的會議室名稱（或完整網址），您可以想一個名稱來建立會議室，只要其他人輸入相同的名稱就能加入會議室喔。",
+		"settingsDrawerButton": "按一下這裡開啟設定。",
+		"serverSetting": "這將是您開始會議的伺服器，您可以使用自己的伺服器，但這不是必需的！",
+		"serverTimeout": "加入會議的逾時設定，如果在逾時之前沒有加入會議，則會議將被取消。",
+		"alwaysOnTop": "您可以選擇是否啟用「保持在最上層」，該視窗將在主視窗失去焦點時顯示，這將適用於所有會議。"
+	},
+	"settings": {
+		"back": "返回",
+		"alwaysOnTopWindow": "保持在最上層",
+		"invalidServer": "伺服器網址無效",
+		"invalidServerTimeout": "伺服器逾時值無效",
+		"serverUrl": "伺服器網址",
+		"serverTimeout": "伺服器逾時（秒）",
+		"disableAGC": "停用自動增益控制"
+	}
+}

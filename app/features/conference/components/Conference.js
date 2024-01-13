@@ -232,7 +232,7 @@ class Conference extends Component<Props, State> {
             configOverwrite,
             parentNode: this._ref.current,
             roomName,
-            sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms'
+            sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms allow-downloads'
         };
 
         this._api = new JitsiMeetExternalAPI(host, {

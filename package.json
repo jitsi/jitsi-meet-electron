@@ -1,6 +1,6 @@
 {
   "name": "jitsi-meet-electron",
-  "version": "2022.11.0",
+  "version": "2024.1.0",
   "description": "Electron application for Jitsi Meet",
   "main": "./build/main.js",
   "productName": "Jitsi Meet",
@@ -11,7 +11,7 @@
     "lint": "eslint . && flow",
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "dist": "npm run build && electron-builder",
-    "postinstall": "patch-package && electron-builder install-app-deps",
+    "postinstall": "patch-package",
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-options-poll=1000"
   },
   "engines": {
@@ -22,6 +22,7 @@
     "productName": "Jitsi Meet",
     "generateUpdatesFilesForAllChannels": true,
     "afterSign": "./notarize.js",
+    "npmRebuild": false,
     "files": [
       "build",
       "resources",
@@ -46,6 +47,7 @@
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
       "asarUnpack": "**/*.node",
+      "notarize": false,
       "extendInfo": {
         "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
         "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
@@ -65,6 +67,7 @@
         "Comment[de]": "Jitsi Meet Desktop App",
         "Comment[es]": "Aplicación de escritorio Jitsi Meet",
         "Comment[fr]": "Application de bureau Jitsi Meet",
+        "Comment[hi]": "जितसि मीट डेस्कटॉप एैप",
         "Comment[hr]": "Jitsi Meet desktop aplikacija",
         "Comment[hu]": "Asztali Jitsi Meet-alkalmazás",
         "Comment[it]": "Applicazione Jitsi Meet Desktop",
@@ -81,6 +84,14 @@
         },
         {
           "arch": "x64",
+          "target": "deb"
+        },
+        {
+          "arch": "arm64",
+          "target": "AppImage"
+        },
+        {
+          "arch": "arm64",
           "target": "deb"
         }
       ]
@@ -138,7 +149,7 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "@jitsi/electron-sdk": "3.3.1",
+    "@jitsi/electron-sdk": "6.0.17",
     "electron-debug": "^3.2.0",
     "electron-reload": "^1.5.0"
   },
@@ -162,14 +173,14 @@
     "@babel/preset-flow": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
     "@hapi/bourne": "^3.0.0",
-    "@jitsi/js-utils": "2.0.0",
+    "@jitsi/js-utils": "2.0.5",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "^8.2.3",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
-    "electron": "21.3.0",
-    "electron-builder": "23.1.0",
+    "electron": "28.1.3",
+    "electron-builder": "24.4.0",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",
@@ -202,7 +213,7 @@
     "source-map-support": "^0.5.19",
     "style-loader": "^3.3.1",
     "styled-components": "^3.4.10",
-    "webpack": "^5.70.0",
+    "webpack": "^5.76.0",
     "webpack-cli": "^4.9.2"
   }
 }

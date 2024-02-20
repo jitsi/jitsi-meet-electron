@@ -74,6 +74,11 @@ class Conference extends Component<Props, State> {
     _conference: Object;
 
     /**
+     * Whether the iframe was loaded or not.
+     */
+    _iframeLoaded: boolean;
+
+    /**
      * Timer to cancel the joining if it takes too long.
      */
     _loadTimer: ?TimeoutID;
@@ -150,6 +155,22 @@ class Conference extends Component<Props, State> {
     }
 
     /**
+     * Handle joining another another meeing while in one.
+     *
+     * @param {Object} prevProps - The previous props.
+     * @returns {void}
+     */
+    componentDidUpdate(prevProps) {
+        if (prevProps.location.key !== this.props.location.key) {
+
+            // Simulate a re-mount so the new meeting is joined.
+            this._iframeLoaded = false;
+            this.componentWillUnmount();
+            this.componentDidMount();
+        }
+    }
+
+    /**
      * Implements React's {@link Component#render()}.
      *
      * @returns {ReactElement}
@@ -209,9 +230,9 @@ class Conference extends Component<Props, State> {
 
         const options = {
             configOverwrite,
-            onload: this._onIframeLoad,
             parentNode: this._ref.current,
-            roomName
+            roomName,
+            sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms allow-downloads'
         };
 
         this._api = new JitsiMeetExternalAPI(host, {
@@ -219,6 +240,10 @@ class Conference extends Component<Props, State> {
             ...urlParameters
         });
 
+        // This event is fired really early, at the same time as 'ready', but has been
+        // around for longer.
+        // TODO: remove after a while. -saghul
+        this._api.on('browserSupport', this._onIframeLoad);
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
@@ -288,6 +313,15 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      */
     _onIframeLoad() {
+        if (this._iframeLoaded) {
+            // Skip spurious event after meeting close.
+            return;
+        }
+
+        console.log('IFrame loaded');
+
+        this._iframeLoaded = true;
+
         if (this._loadTimer) {
             clearTimeout(this._loadTimer);
             this._loadTimer = null;

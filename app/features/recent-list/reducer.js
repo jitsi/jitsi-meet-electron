@@ -47,6 +47,19 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
 };
 
 /**
+ * Cleans a room name of all parameters.
+ *
+ * @param {string} roomName - The room name to be cleaned.
+ * @returns {string} - The cleaned up room name.
+ */
+function _cleanRoomName(roomName: string) {
+    const [ noQuery ] = roomName.split('?', 2);
+    const [ noParams ] = noQuery.split('#', 2);
+
+    return noParams;
+}
+
+/**
  * Insert Conference details in the recent list array.
  *
  * @param {Array<RecentListItem>} recentList - Previous recent list array.
@@ -61,9 +74,11 @@ function _insertConference(
     // Add start time to conference.
     newConference.startTime = Date.now();
 
+    newConference.room = _cleanRoomName(newConference.room);
+
     // Remove same conference.
     const newRecentList: Array<RecentListItem> = recentList.filter(
-        (conference: RecentListItem) => conference.room !== newConference.room
+        (conference: RecentListItem) => _cleanRoomName(conference.room) !== newConference.room
             || conference.serverURL !== newConference.serverURL);
 
     // Add the conference at the beginning.
@@ -99,11 +114,12 @@ function _updateEndtimeOfConference(
         recentList: Array<RecentListItem>,
         conference: RecentListItem
 ) {
-    for (const item of recentList) {
-        if (item.room === conference.room
+    for (const item of recentList.slice()) {
+        item.room = _cleanRoomName(item.room);
+
+        if (item.room === _cleanRoomName(conference.room)
                 && item.serverURL === conference.serverURL) {
             item.endTime = Date.now();
-            break;
         }
     }
 

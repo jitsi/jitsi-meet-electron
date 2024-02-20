@@ -1,0 +1,13 @@
+diff --git a/node_modules/electron-reload/main.js b/node_modules/electron-reload/main.js
+index 688934d..860e071 100644
+--- a/node_modules/electron-reload/main.js
++++ b/node_modules/electron-reload/main.js
+@@ -9,7 +9,7 @@ const ignoredPaths = /node_modules|[/\\]\./
+ // only effective when the process is restarted (hard reset)
+ // We assume that electron-reload is required by the main
+ // file of the electron application
+-const mainFile = module.parent.filename
++const mainFile = 'build/main.js'
+ 
+ /**
+  * Creates a callback for hard resets.

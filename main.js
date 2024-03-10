@@ -40,9 +40,9 @@ app.commandLine.appendSwitch('disable-features', 'DesktopCaptureMacV2,IOSurfaceC
 // Enable Opus RED field trial.
 app.commandLine.appendSwitch('force-fieldtrials', 'WebRTC-Audio-Red-For-Opus/Enabled/');
 
-// Wayland: Enable optional PipeWire and window decorations support.
+// Wayland: Enable optional PipeWire support.
 if (!app.commandLine.hasSwitch('enable-features')) {
-    app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer,WaylandWindowDecorations');
+    app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');
 }
 
 autoUpdater.logger = require('electron-log');
@@ -177,7 +177,8 @@ function createJitsiMeetWindow() {
     // Load the previous window state with fallback to defaults.
     const windowState = windowStateKeeper({
         defaultWidth: 800,
-        defaultHeight: 600
+        defaultHeight: 600,
+        fullScreen: false
     });
 
     // Path to root directory.
@@ -234,6 +235,29 @@ function createJitsiMeetWindow() {
 
     mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
 
+    if (isDev) {
+        mainWindow.webContents.session.clearCache();
+    }
+
+    // Block access to file:// URLs.
+    const fileFilter = {
+        urls: [ 'file://*' ]
+    };
+
+    mainWindow.webContents.session.webRequest.onBeforeSendHeaders(fileFilter, (details, callback) => {
+        const requestedPath = path.resolve(URL.fileURLToPath(details.url));
+        const appBasePath = path.resolve(basePath);
+
+        if (!requestedPath.startsWith(appBasePath)) {
+            callback({ cancel: true });
+            console.warn(`Rejected file URL: ${details.url}`);
+
+            return;
+        }
+
+        callback({ cancel: false });
+    });
+
     // Filter out x-frame-options and frame-ancestors CSP to allow loading jitsi via the iframe API
     // Resolves https://github.com/jitsi/jitsi-meet-electron/issues/285
     mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
@@ -248,9 +272,47 @@ function createJitsiMeetWindow() {
             details.responseHeaders['content-security-policy'] = [ cspFiltered ];
         }
 
+        if (details.responseHeaders['Content-Security-Policy']) {
+            const cspFiltered = details.responseHeaders['Content-Security-Policy'][0]
+                .split(';')
+                .filter(x => x.indexOf('frame-ancestors') === -1)
+                .join(';');
+
+            details.responseHeaders['Content-Security-Policy'] = [ cspFiltered ];
+        }
+
         callback({
             responseHeaders: details.responseHeaders
         });
+    });
+
+    // Block redirects.
+    const allowedRedirects = [
+        'http:',
+        'https:',
+        'ws:',
+        'wss:'
+    ];
+
+    mainWindow.webContents.addListener('will-redirect', (ev, url) => {
+        const requestedUrl = new URL.URL(url);
+
+        if (!allowedRedirects.includes(requestedUrl.protocol)) {
+            console.warn(`Disallowing redirect to ${url}`);
+            ev.preventDefault();
+        }
+    });
+
+    // Block opening any external applications.
+    mainWindow.webContents.session.setPermissionRequestHandler((_, permission, callback, details) => {
+        if (permission === 'openExternal') {
+            console.warn(`Disallowing opening ${details.externalURL}`);
+            callback(false);
+
+            return;
+        }
+
+        callback(true);
     });
 
     initPopupsConfigurationMain(mainWindow);
@@ -415,4 +477,11 @@ ipcMain.on('renderer-ready', () => {
             .webContents
             .send('protocol-data-msg', protocolDataForFrontApp);
     }
+});
+
+/**
+ * Handle opening external links in the main process.
+ */
+ipcMain.on('jitsi-open-url', (event, someUrl) => {
+    openExternalLink(someUrl);
 });

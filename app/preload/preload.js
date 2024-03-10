@@ -5,9 +5,18 @@ const { RemoteControl,
     initPopupsConfigurationRender,
     setupPowerMonitorRender
 } = require('@jitsi/electron-sdk');
-const { openExternalLink } = require('../features/utils/openExternalLink');
 
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
+
+/**
+ * Open an external URL.
+ *
+ * @param {string} url - The URL we with to open.
+ * @returns {void}
+ */
+function openExternalLink(url) {
+    ipcRenderer.send('jitsi-open-url', url);
+}
 
 /**
  * Setup the renderer process.

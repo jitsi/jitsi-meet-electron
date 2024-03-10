@@ -13,6 +13,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
 - Builtin auto-updates
+- Screensharing (Windows, Mac, X11 only. Not supported under Wayland, see known issues below)
 - ~Remote control~ (currently [disabled](https://github.com/jitsi/jitsi-meet-electron/issues/483) due to [security issues](https://github.com/jitsi/security-advisories/blob/master/advisories/JSA-2020-0001.md))
 - Always-On-Top window
 - Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
@@ -29,7 +30,7 @@ NOTE: The GNU/Linux builds are 64-bit only.
 
 ### Third-Party builds
 
-[<img src="https://flathub.org/assets/badges/flathub-badge-en.svg"
+[<img src="https://dl.flathub.org/assets/badges/flathub-badge-en.svg"
      alt="Download On Flathub"
      height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
 
@@ -149,6 +150,10 @@ On macOS Catalina, a warning will be displayed on first install. The app won't o
 
 * If you can't execute the file directly after downloading it, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
 
+* Under wayland, screensharing is currently buggy:
+  * Sharing a full screen is not possible
+  * When trying to start screensharing under wayland, 2 permission popups will show up. First a pipewire based system selector, then a jitsi internal selector. Select an application window in the first selector and then the same in the jitsi internal selector. Sharing application windows works via this, sharing a full screen unfortunately not.
+
 * On Ubuntu 22.04, the AppImage will fail with a fuse error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
 
   ```
@@ -160,15 +165,6 @@ On macOS Catalina, a warning will be displayed on first install. The app won't o
   ```
   sudo apt install libfuse2
   ```
-
-
-* Under wayland, experimental native wayland support can be enabled with the command-line switch `--ozone-platform-hint` set to `auto`:
-
-  ```
-  ./jitsi-meet-x86_64.AppImage --ozone-platform-hint=auto
-  ```
-
-  Note that screen-sharing is not currently supported under wayland, and the permissions prompt may loop endlessly.
 
 * If you experience a blank page after jitsi server upgrades, try removing the local cache files:
 

@@ -54,9 +54,9 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CSC_LINK: ${{ secrets.mac_certs }}
         CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
-        API_KEY_FILE: ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
-        API_KEY_ID: ${{ secrets.api_key_id }}
-        API_KEY_ISSUER_ID: ${{ secrets.api_key_issuer_id }}
+        APPLE_API_KEY: ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
+        APPLE_API_KEY_ID: ${{ secrets.api_key_id }}
+        APPLE_API_ISSUER: ${{ secrets.api_key_issuer_id }}
       run: |
         npm ci
         npm run dist

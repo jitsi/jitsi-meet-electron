@@ -22,8 +22,6 @@ Download our latest release and you're off to the races!
 | -- | -- | -- | -- |
 | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [x64_64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) [arm64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-arm64.AppImage) | [x86_64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-amd64.deb) [arm64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-arm64.deb) |
 
-NOTE: The GNU/Linux builds are 64-bit only.
-
 ### Third-Party builds
 
 [<img src="https://dl.flathub.org/assets/badges/flathub-badge-en.svg"
@@ -46,7 +44,7 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
-Install Node.js 16 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 16 by running `nvm use`).
+Install Node.js 20 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 20 by running `nvm use`).
 
 <details><summary>Extra dependencies for Windows</summary>
 
@@ -140,7 +138,7 @@ A warning that the app is unsigned will show up upon first install. This is expe
 
 ### macOS
 
-On macOS Catalina, a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
+None
 
 ### GNU/Linux
 
@@ -150,7 +148,7 @@ On macOS Catalina, a warning will be displayed on first install. The app won't o
   * Sharing a full screen is not possible
   * When trying to start screensharing under wayland, 2 permission popups will show up. First a pipewire based system selector, then a jitsi internal selector. Select an application window in the first selector and then the same in the jitsi internal selector. Sharing application windows works via this, sharing a full screen unfortunately not.
 
-* On Ubuntu 22.04, the AppImage will fail with a fuse error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
+* On Ubuntu 22.04 and later, the AppImage will fail with a fuse error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
 
   ```
   dlopen(): error loading libfuse.so.2
@@ -167,24 +165,6 @@ On macOS Catalina, a warning will be displayed on first install. The app won't o
   ```
   rm -rf ~/.config/Jitsi\ Meet/
   ```
-
-<details><summary>NOTE for old GNU/Linux distributions</summary>
-
-You might get the following error:
-
-```
-FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
-Please upgrade to the latest NSS, and if you still get this error, contact your
-distribution maintainer.
-```
-
-If you do, please install NSS (example for Debian or Ubuntu):
-
-```bash
-sudo apt-get install libnss3
-```
-
-</details>
 
 ## Translations
 

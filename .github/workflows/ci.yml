@@ -15,10 +15,10 @@ jobs:
     name: Linux
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '18'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -26,20 +26,22 @@ jobs:
         npm ci
         npm run lint
         npm run dist
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: linux-binaries
         path: |
           dist/jitsi-meet-x86_64.AppImage
+          dist/jitsi-meet-arm64.AppImage
           dist/latest-linux.yml
+          dist/latest-linux-arm64.yml
   build-mac:
     name: macOS
     runs-on: macos-11
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '18'
     - name: Prepare for app signing and notarization
       env:
         API_KEY: ${{ secrets.api_key }}
@@ -58,7 +60,7 @@ jobs:
       run: |
         npm ci
         npm run dist
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: mac-binaries
         path: |
@@ -69,17 +71,17 @@ jobs:
     name: Windows
     runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '18'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm ci
         npm run dist
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: windows-binaries
         path: |

@@ -24,7 +24,14 @@ Download our latest release and you're off to the races!
 
 NOTE: The GNU/Linux builds are 64-bit only.
 
-### Homebrew
+### WinGet (Windows)
+For *Windows* user, you can install the application using the following command in PowerShell:
+
+```
+winget install --id freifunkMUC.FreifunkMeet
+```
+
+### Homebrew (macOS)
 
 For *macOS* user, you can install the application using the following command:
 

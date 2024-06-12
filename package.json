@@ -202,7 +202,7 @@
     "i18next": "^19.9.2",
     "moment": "^2.29.2",
     "mousetrap": "^1.6.5",
-    "patch-package": "6.2.2",
+    "patch-package": "6.5.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-i18next": "^11.8.12",

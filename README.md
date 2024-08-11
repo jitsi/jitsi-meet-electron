@@ -160,6 +160,16 @@ None
   sudo apt install libfuse2
   ```
 
+* On Ubuntu 24.04 and later, the AppImage will fail with a sandboxing error (`The SUID sandbox helper binary was found, but is not configured correctly...`)
+  This is due to AppArmor conflicting by restricting unprivileged user namespaces (https://github.com/jitsi/jitsi-meet-electron/issues/965,
+  [Ubuntu blog post](https://ubuntu.com/blog/ubuntu-23-10-restricted-unprivileged-user-namespaces)).
+
+  To workaround this, disable the use of the sandbox with `--no-sandbox`:
+
+  ```
+  ./jitsi-meet-x86_64.AppImage --no-sandbox
+  ```
+  
 * If you experience a blank page after jitsi server upgrades, try removing the local cache files:
 
   ```

@@ -187,7 +187,7 @@
     "electron-log": "^4.3.2",
     "electron-notarize": "1.1.1",
     "electron-react-devtools": "0.5.3",
-    "electron-updater": "5.0.5",
+    "electron-updater": "6.3.0",
     "electron-window-state": "^5.0.3",
     "eslint": "6.5.1",
     "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",

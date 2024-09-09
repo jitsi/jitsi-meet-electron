@@ -213,6 +213,7 @@ class Conference extends Component<Props, State> {
         // and new one for newly setup servers where the new option overrides
         // the old if set.
         const configOverwrite = {
+            enableCalendarIntegration: false,
             disableAGC: this.props._disableAGC,
             prejoinPageEnabled: true,
             prejoinConfig: {

@@ -1,6 +1,5 @@
-const { notarize } = require('electron-notarize');
+const { notarize } = require('@electron/notarize');
 const process = require('process');
-const pkgJson = require('./package.json');
 
 exports.default = async function notarizing(context) {
     const { electronPlatformName, appOutDir } = context;
@@ -16,8 +15,6 @@ exports.default = async function notarizing(context) {
         console.log(`Notarizing ${appPath} with user & password`);
 
         return await notarize({
-            tool: 'notarytool',
-            appBundleId: pkgJson.build.appId,
             appPath,
             appleId: process.env.APPLE_ID,
             appleIdPassword: process.env.APPLE_ID_PASSWORD,
@@ -27,8 +24,6 @@ exports.default = async function notarizing(context) {
         console.log(`Notarizing ${appPath} with API key`);
 
         return await notarize({
-            tool: 'notarytool',
-            appBundleId: pkgJson.build.appId,
             appPath,
             appleApiKey: process.env.API_KEY_FILE,
             appleApiKeyId: process.env.API_KEY_ID,

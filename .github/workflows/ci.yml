@@ -46,8 +46,8 @@ jobs:
         node-version: '20'
     - name: Prepare for app signing and notarization
       env:
-        MAC_CERT_PASSWORD: ${{ secrets.mac_cert_password }}
-      if: ${{ env.MAC_CERT_PASSWORD }}
+        MAC_CERT: ${{ secrets.mac_cert }}
+      if: ${{ env.MAC_CERT }}
       run: |
         echo "CSC_LINK=${{ secrets.mac_cert }}" >> $GITHUB_ENV
         echo "CSC_KEY_PASSWORD=${{ secrets.mac_cert_password }}" >> $GITHUB_ENV

@@ -221,6 +221,10 @@ class Conference extends Component<Props, State> {
             }
         };
 
+        const interfaceConfigOverwrite = {
+            SHOW_CHROME_EXTENSION_BANNER: false
+        };
+
         Object.entries(hashParameters).forEach(([ key, value ]) => {
             if (key.startsWith('config.')) {
                 const configKey = key.substring('config.'.length);
@@ -231,6 +235,7 @@ class Conference extends Component<Props, State> {
 
         const options = {
             configOverwrite,
+            interfaceConfigOverwrite,
             parentNode: this._ref.current,
             roomName,
             sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms allow-downloads'

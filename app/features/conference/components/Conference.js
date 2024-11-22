@@ -16,6 +16,8 @@ import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
 
+// For enabling remote control, please change ENABLE_REMOTE_CONTROL flag in
+// main.js to true as well
 const ENABLE_REMOTE_CONTROL = false;
 
 type Props = {

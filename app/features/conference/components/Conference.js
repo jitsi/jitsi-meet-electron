@@ -210,14 +210,10 @@ class Conference extends Component<Props, State> {
             ...locale
         };
 
-        // override both old and new prejoin config options,
-        // old one for servers that do not understand the new option yet
-        // and new one for newly setup servers where the new option overrides
-        // the old if set.
+
         const configOverwrite = {
             enableCalendarIntegration: false,
             disableAGC: this.props._disableAGC,
-            prejoinPageEnabled: true,
             prejoinConfig: {
                 enabled: true
             }

@@ -8,8 +8,8 @@ Desktop application for [Jitsi] built with [Electron].
 
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
-- Builtin auto-updates
-- Screensharing (Windows, Mac, X11 only. Not supported under Wayland, see known issues below)
+- Built-in auto-updates
+- Screensharing (Windows, Mac, Linux on X11 only. Not supported under Wayland, see known issues below)
 - ~Remote control~ (currently [disabled](https://github.com/jitsi/jitsi-meet-electron/issues/483) due to [security issues](https://github.com/jitsi/security-advisories/blob/master/advisories/JSA-2020-0001.md))
 - Always-On-Top window
 - Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
@@ -33,7 +33,7 @@ winget install --id freifunkMUC.FreifunkMeet
 
 ### Homebrew (macOS)
 
-For *macOS* user, you can install the application using the following command:
+For *macOS* users, you can install the application using the following command:
 
 ```
 brew install --cask freifunkMUC/freifunkmeet/freifunk-meet
@@ -47,7 +47,7 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
-Install Node.js 16 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 16 by running `nvm use`).
+Install Node.js 20 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 20 by running `nvm use`).
 
 <details><summary>Extra dependencies for Windows</summary>
 
@@ -141,55 +141,47 @@ A warning that the app is unsigned will show up upon first install. This is expe
 
 ### macOS
 
-On macOS Catalina, a warning will be displayed on first install. The app won't open unless "open" is pressed. This dialog is only shown once.
+None
 
 ### GNU/Linux
 
 * If you can't execute the file directly after downloading it, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
 
-* Under wayland, screensharing is currently buggy:
+* Under Wayland, screensharing is currently buggy:
   * Sharing a full screen is not possible
-  * When trying to start screensharing under wayland, 2 permission popups will show up. First a pipewire based system selector, then a jitsi internal selector. Select an application window in the first selector and then the same in the jitsi internal selector. Sharing application windows works via this, sharing a full screen unfortunately not.
+  * When trying to start screensharing under Wayland, 2 permission popups will show up. First a PipeWire-based system selector, then a Jitsi internal selector. Select the application window in the first selector and click allow; then do the same in the Jitsi internal selector. This is how sharing application windows works, as sharing a full screen is unfortunately not possible.
 
-* On Ubuntu 22.04, the AppImage will fail with a fuse error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
+* On Ubuntu 22.04 and later, the AppImage will fail with a FUSE error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
 
   ```
   dlopen(): error loading libfuse.so.2
   ```
 
-  To fix this, install libfuse2 as follows:
+  To fix this, install `libfuse2` as follows:
 
   ```
   sudo apt install libfuse2
   ```
 
-* If you experience a blank page after jitsi server upgrades, try removing the local cache files:
+* On Ubuntu 24.04 and later, the AppImage will fail with a sandboxing error (`The SUID sandbox helper binary was found, but is not configured correctly...`)
+  This is due to an AppArmor conflict that restricts unprivileged user namespaces ([jitsi/jitsi-meet-electron#965](https://github.com/jitsi/jitsi-meet-electron/issues/965),
+  [Ubuntu blog post](https://ubuntu.com/blog/ubuntu-23-10-restricted-unprivileged-user-namespaces)).
+
+  To work around this, disable the use of the sandbox with `--no-sandbox`:
+
+  ```
+  ./jitsi-meet-x86_64.AppImage --no-sandbox
+  ```
+  
+* If you experience a blank page after a Jitsi server upgrades, try removing the local cache files:
 
   ```
   rm -rf ~/.config/Jitsi\ Meet/
   ```
 
-<details><summary>NOTE for old GNU/Linux distributions</summary>
-
-You might get the following error:
-
-```
-FATAL:nss_util.cc(632)] NSS_VersionCheck("3.26") failed. NSS >= 3.26 is required.
-Please upgrade to the latest NSS, and if you still get this error, contact your
-distribution maintainer.
-```
-
-If you do, please install NSS (example for Debian or Ubuntu):
-
-```bash
-sudo apt-get install libnss3
-```
-
-</details>
-
 ## Translations
 
-The JSON files are for all the strings inside the application, and can be translated [here](/app/i18n/lang).
+The JSON files contain all the strings inside the application, and can be translated [here](/app/i18n/lang).
 
 New translations require the addition of a line in [index.js](/app/i18n/index.js).
 
@@ -198,7 +190,7 @@ Please search for `Comment[hu]` as an example to help add your translation of th
 
 ## License
 
-Apache 2. See the [LICENSE] file.
+Apache License 2.0. See the [LICENSE] file.
 
 ## Community
 

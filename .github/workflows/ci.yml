@@ -18,7 +18,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -38,12 +38,12 @@ jobs:
           dist/latest-linux-arm64.yml
   build-mac:
     name: macOS
-    runs-on: macos-11
+    runs-on: macos-14
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
     - name: Prepare for app signing and notarization
       env:
         API_KEY: ${{ secrets.api_key }}
@@ -77,7 +77,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

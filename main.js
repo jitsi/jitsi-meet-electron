@@ -28,6 +28,8 @@ const pkgJson = require('./package.json');
 
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
+// For enabling remote control, please change the ENABLE_REMOTE_CONTROL flag in
+// app/features/conference/components/Conference.js to true as well
 const ENABLE_REMOTE_CONTROL = false;
 
 // We need this because of https://github.com/electron/electron/issues/18214

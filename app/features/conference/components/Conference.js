@@ -16,6 +16,8 @@ import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
 
+// For enabling remote control, please change ENABLE_REMOTE_CONTROL flag in
+// main.js to true as well
 const ENABLE_REMOTE_CONTROL = false;
 
 type Props = {
@@ -213,6 +215,7 @@ class Conference extends Component<Props, State> {
         // and new one for newly setup servers where the new option overrides
         // the old if set.
         const configOverwrite = {
+            enableCalendarIntegration: false,
             disableAGC: this.props._disableAGC,
             prejoinPageEnabled: true,
             prejoinConfig: {
@@ -220,16 +223,25 @@ class Conference extends Component<Props, State> {
             }
         };
 
+        const interfaceConfigOverwrite = {
+            SHOW_CHROME_EXTENSION_BANNER: false
+        };
+        let jwt;
+
         Object.entries(hashParameters).forEach(([ key, value ]) => {
             if (key.startsWith('config.')) {
                 const configKey = key.substring('config.'.length);
 
                 configOverwrite[configKey] = value;
+            } else if (key === 'jwt') {
+                jwt = value;
             }
         });
 
         const options = {
             configOverwrite,
+            interfaceConfigOverwrite,
+            jwt,
             parentNode: this._ref.current,
             roomName,
             sandbox: 'allow-scripts allow-same-origin allow-popups allow-forms allow-downloads'

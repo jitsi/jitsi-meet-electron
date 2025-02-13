@@ -9,7 +9,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 - [End-to-End Encryption](https://jitsi.org/blog/e2ee/) support (BETA)
 - Works with any Jitsi Meet deployment
 - Built-in auto-updates
-- Screensharing (Windows, Mac, Linux on X11 only. Not supported under Wayland, see known issues below)
+- Screen sharing
 - ~Remote control~ (currently [disabled](https://github.com/jitsi/jitsi-meet-electron/issues/483) due to [security issues](https://github.com/jitsi/security-advisories/blob/master/advisories/JSA-2020-0001.md))
 - Always-On-Top window
 - Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
@@ -143,10 +143,6 @@ None
 ### GNU/Linux
 
 * If you can't execute the file directly after downloading it, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
-
-* Under Wayland, screensharing is currently buggy:
-  * Sharing a full screen is not possible
-  * When trying to start screensharing under Wayland, 2 permission popups will show up. First a PipeWire-based system selector, then a Jitsi internal selector. Select the application window in the first selector and click allow; then do the same in the Jitsi internal selector. This is how sharing application windows works, as sharing a full screen is unfortunately not possible.
 
 * On Ubuntu 22.04 and later, the AppImage will fail with a FUSE error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
 

@@ -1,12 +1,12 @@
 name: 💡 Feature request
-description: Suggest an idea for improving lib-jitsi-meet
+description: Suggest an idea for improving Jitsi-Meet-Electron
 labels: ["feature-request"]
 
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for suggesting an idea to improve lib-jitsi-meet!
+        Thank you for suggesting an idea to improve Jitsi-Meet-Electron!
 
         **Note**: The decision to implement features lies with the Jitsi team, and not all requests will be accepted.
 

@@ -1,14 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2018",
     "module": "CommonJS",
+    "moduleResolution": "node",
     "outDir": "./build",
-    "rootDir": "./app",
+    "rootDir": ".",
+    "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
   },
-  "include": ["app/**/*"],
-  "exclude": ["node_modules", "build"]
+  "include": [
+    "app/**/*",
+    "main.js",
+    "webpack.*.js" 
+  ],
+  "exclude": ["node_modules", "build", "dist"]
 }

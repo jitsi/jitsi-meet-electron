@@ -1,0 +1,75 @@
+name: 🐛 Bug Report
+description: Report bugs to fix and improve.
+title: "[BUG] <description>"
+labels: ["bug"]
+
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug.
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Please add screenshots/video of the bug you faced.
+    validations:
+      required: false
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to Reproduce
+      description: Attach all steps/share a github gist that can help anyone reproduce the bug.
+      value: |
+        1. I first did this
+        2. I then did this
+        3. And so on . . . 
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: browser
+    attributes:
+      label: "🥦 Browser"
+      description: "What browser are you using?"
+      options:
+        - Google Chrome
+        - Brave
+        - Microsoft Edge
+        - Mozilla Firefox
+        - Safari
+        - Opera
+        - Other
+    validations:
+        required: false
+
+  - type: checkboxes
+    id: no-duplicate-issues
+    attributes:
+      label: "👀 Have you checked for similar open issues?"
+      options:
+        - label: "I checked and didn't find similar issue"
+          required: true
+
+  - type: checkboxes
+    id: check-Community-Forum
+    attributes:
+      label: "🏢 Have you checked the Community Forum?"
+      options:
+        - label: "please make sure you check https://community.jitsi.org"
+          required: true

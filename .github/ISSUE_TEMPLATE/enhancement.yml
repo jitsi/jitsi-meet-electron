@@ -1,0 +1,59 @@
+name: 💡 Feature request
+description: Suggest an idea for improving lib-jitsi-meet
+labels: ["feature-request"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an idea to improve lib-jitsi-meet!
+
+        **Note**: The decision to implement features lies with the Jitsi team, and not all requests will be accepted.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Explain the issue or limitation that this feature would address.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: What solution would you like to see?
+      description: Describe the behavior or feature you'd like to have.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative
+    attributes:
+      label: Is there an alternative?
+      description: Describe any alternative solutions or features you have considered.
+    validations:
+      required: false
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: How could this be implemented?
+      description: Suggest how this feature could be designed or integrated.
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Please add screenshots if applicable.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: check-Community-Forum
+    attributes:
+      label: "🏢 Have you checked the Community Forum?"
+      options:
+        - label: "please make sure you check https://community.jitsi.org"
+          required: true

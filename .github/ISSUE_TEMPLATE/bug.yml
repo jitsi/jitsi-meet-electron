@@ -41,22 +41,6 @@ body:
         3. And so on . . . 
     validations:
       required: true
-  
-  - type: dropdown
-    id: browser
-    attributes:
-      label: "🥦 Browser"
-      description: "What browser are you using?"
-      options:
-        - Google Chrome
-        - Brave
-        - Microsoft Edge
-        - Mozilla Firefox
-        - Safari
-        - Opera
-        - Other
-    validations:
-        required: false
 
   - type: checkboxes
     id: no-duplicate-issues

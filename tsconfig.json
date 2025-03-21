@@ -3,7 +3,7 @@
     "target": "ES6",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "outDir": "./build",
+    "outDir": "dist/esm",
     "rootDir": ".",
     "sourceMap": true,
     "strict": true,

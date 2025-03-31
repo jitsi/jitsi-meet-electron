@@ -21,7 +21,8 @@
   "include": [
     "app/**/*",
     "main.js",
-    "webpack.*.js" 
+    "webpack.*.js",
+    "global.d.ts"
   ],
   "exclude": ["node_modules", "build", "dist"]
 }

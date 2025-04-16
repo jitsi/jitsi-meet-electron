@@ -158,7 +158,6 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-flow": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
-    "@electron/notarize": "2.4.0",
     "@hapi/bourne": "^3.0.0",
     "@jitsi/js-utils": "2.0.5",
     "@svgr/webpack": "^6.2.1",

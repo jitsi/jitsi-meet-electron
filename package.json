@@ -42,10 +42,7 @@
       ],
       "category": "public.app-category.video",
       "darkModeSupport": true,
-      "hardenedRuntime": true,
-      "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist",
-      "asarUnpack": "**/*.node",
+      "entitlements": "resources/entitlements.mac.plist",
       "extendInfo": {
         "NSCameraUsageDescription": "Jitsi Meet requires access to your camera in order to make video-calls.",
         "NSMicrophoneUsageDescription": "Jitsi Meet requires access to your microphone in order to make calls (audio/video).",
@@ -79,16 +76,6 @@
           "arch": "arm64",
           "target": "deb"
         }
-      ]
-    },
-    "deb": {
-      "depends": [
-        "libgtk-3-0",
-        "libnss3",
-        "libxtst6",
-        "xdg-utils",
-        "libatspi2.0-0",
-        "libuuid1"
       ]
     },
     "win": {

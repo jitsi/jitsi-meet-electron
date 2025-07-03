@@ -51,7 +51,7 @@ app.commandLine.appendSwitch('force-fieldtrials', 'WebRTC-Audio-Red-For-Opus/Ena
 
 // Wayland: Enable optional PipeWire support.
 if (!app.commandLine.hasSwitch('enable-features')) {
-    app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');
+    app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer,WebRtcPipeWireCamera');
 }
 
 autoUpdater.logger = require('electron-log');

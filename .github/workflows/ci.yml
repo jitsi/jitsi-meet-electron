@@ -70,7 +70,7 @@ jobs:
           dist/latest-mac.yml
   build-windows:
     name: Windows
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4

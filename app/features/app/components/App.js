@@ -28,6 +28,8 @@ class App extends Component {
 
         this._listenOnProtocolMessages
             = this._listenOnProtocolMessages.bind(this);
+
+        this._listeners = [];
     }
 
     /**
@@ -37,7 +39,9 @@ class App extends Component {
      */
     componentDidMount() {
         // start listening on this events
-        window.jitsiNodeAPI.ipc.on('protocol-data-msg', this._listenOnProtocolMessages);
+        const removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
+
+        this._listeners.push(removeListener);
 
         // send notification to main process
         window.jitsiNodeAPI.ipc.send('renderer-ready');
@@ -49,16 +53,15 @@ class App extends Component {
      * @returns {void}
      */
     componentWillUnmount() {
-        // remove listening for this events
-        window.jitsiNodeAPI.ipc.removeListener(
-            'protocol-data-msg',
-            this._listenOnProtocolMessages
-        );
+        const listeners = this._listeners;
+
+        this._listeners = [];
+        listeners.forEach(removeListener => removeListener());
     }
 
 
     /**
-     * Handler when main proccess contact us.
+     * Handler when main process contact us.
      *
      * @param {Object} event - Message event.
      * @param {string} inputURL - String with room name.

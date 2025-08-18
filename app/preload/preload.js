@@ -8,6 +8,8 @@ const { ipcRenderer } = require('electron');
 
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
 
+ipcRenderer.setMaxListeners(0);
+
 /**
  * Open an external URL.
  *
@@ -48,26 +50,29 @@ window.jitsiNodeAPI = {
     openExternalLink,
     setupRenderer,
     ipc: {
-        on: (channel, listener) => {
+        addListener: (channel, listener) => {
             if (!whitelistedIpcChannels.includes(channel)) {
                 return;
             }
 
-            return ipcRenderer.on(channel, listener);
+            const cb = (_event, ...args) => {
+                listener(...args);
+            };
+
+            const remove = () => {
+                ipcRenderer.removeListener(channel, cb);
+            };
+
+            ipcRenderer.addListener(channel, cb);
+
+            return remove;
         },
         send: channel => {
             if (!whitelistedIpcChannels.includes(channel)) {
                 return;
             }
 
-            return ipcRenderer.send(channel);
-        },
-        removeListener: (channel, listener) => {
-            if (!whitelistedIpcChannels.includes(channel)) {
-                return;
-            }
-
-            return ipcRenderer.removeListener(channel, listener);
+            ipcRenderer.send(channel);
         }
     }
 };

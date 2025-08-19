@@ -1,4 +1,3 @@
-// @flow
 
 
 /**
@@ -7,7 +6,7 @@
  * @param {string} url - URL with or without scheme.
  * @returns {string}
  */
-export function normalizeServerURL(url: string) {
+export function normalizeServerURL(url) {
     // eslint-disable-next-line no-param-reassign
     url = url.trim();
 
@@ -24,7 +23,7 @@ export function normalizeServerURL(url: string) {
  * @param {string} link - Link to open outside the desktop app.
  * @returns {void}
  */
-export function openExternalLink(link: string) {
+export function openExternalLink(link) {
     window.jitsiNodeAPI.openExternalLink(link);
 }
 
@@ -35,7 +34,7 @@ export function openExternalLink(link: string) {
  * @param {string} inputURL - Combined server url with room separated by /.
  * @returns {Object}
  */
-export function createConferenceObjectFromURL(inputURL: string) {
+export function createConferenceObjectFromURL(inputURL) {
     const lastIndexOfSlash = inputURL.lastIndexOf('/');
     let room;
     let serverURL;

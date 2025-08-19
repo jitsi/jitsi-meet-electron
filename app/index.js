@@ -1,13 +1,11 @@
-// @flow
 
 /**
  * AtlasKit components will deflect from appearance if css-reset is not present.
  */
 import '@atlaskit/css-reset';
 
-import Spinner from '@atlaskit/spinner';
 import { SpotlightManager } from '@atlaskit/onboarding';
-
+import Spinner from '@atlaskit/spinner';
 import React, { Component, Suspense } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -21,7 +19,7 @@ import './i18n';
 /**
  * Component encapsulating App component with redux store using provider.
  */
-class Root extends Component<*> {
+class Root extends Component {
     /**
      * Implements React's {@link Component#render()}.
      *
@@ -46,7 +44,5 @@ class Root extends Component<*> {
 
 /**
  * Render the main / root application.
- *
- * $FlowFixMe.
  */
 render(<Root />, document.getElementById('app'));

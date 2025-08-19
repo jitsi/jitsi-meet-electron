@@ -1,12 +1,13 @@
-// @flow
 
+import Button from '@atlaskit/button';
+import CrossIcon from '@atlaskit/icon/glyph/cross';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import type { Dispatch } from 'redux';
-import { compose } from 'redux';
 import { push } from 'react-router-redux';
+import { compose } from 'redux';
 
 import { conferenceRemoved } from '../actions';
 import {
@@ -17,32 +18,12 @@ import {
     RecentListWrapper,
     TruncatedText
 } from '../styled';
-import type { RecentListItem } from '../types';
-import Button from '@atlaskit/button';
-import CrossIcon from '@atlaskit/icon/glyph/cross';
 
-type Props = {
-
-    /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
-
-    /**
-     * Array of recent conferences.
-     */
-    _recentList: Array<RecentListItem>;
-
-    /**
-     * I18next translation function.
-     */
-    t: Function;
-};
 
 /**
  * Recent List Component.
  */
-class RecentList extends Component<Props, *> {
+class RecentList extends Component {
     /**
      * Render function of component.
      *
@@ -72,20 +53,20 @@ class RecentList extends Component<Props, *> {
     /**
      * Creates a handler for navigatint to a conference.
      *
-     * @param {RecentListItem} conference - Conference Details.
+     * @param {Object} conference - Conference Details.
      * @returns {void}
      */
-    _onNavigateToConference(conference: RecentListItem) {
+    _onNavigateToConference(conference) {
         return () => this.props.dispatch(push('/conference', conference));
     }
 
     /**
      * Creates a handler for removing a conference from the recents list.
      *
-     * @param {RecentListItem} conference - Conference Details.
+     * @param {Object} conference - Conference Details.
      * @returns {void}
      */
-    _onRemoveConference(conference: RecentListItem) {
+    _onRemoveConference(conference) {
         return e => {
             this.props.dispatch(conferenceRemoved(conference));
             e.stopPropagation();
@@ -96,10 +77,10 @@ class RecentList extends Component<Props, *> {
     /**
      * Renders the conference card.
      *
-     * @param {RecentListItem} conference - Conference Details.
+     * @param {Object} conference - Conference Details.
      * @returns {ReactElement}
      */
-    _renderRecentListEntry(conference: RecentListItem) {
+    _renderRecentListEntry(conference) {
         return (
             <ConferenceCard
                 key = { conference.startTime }
@@ -131,7 +112,7 @@ class RecentList extends Component<Props, *> {
      * @param {string} serverURL - Server URL.
      * @returns {string} - Formatted server URL.
      */
-    _renderServerURL(serverURL: string) {
+    _renderServerURL(serverURL) {
         // Strip protocol to make it cleaner.
         return `${serverURL.replace('https://', '')}`;
 
@@ -140,10 +121,10 @@ class RecentList extends Component<Props, *> {
     /**
      * Returns the duration of the conference in string format.
      *
-     * @param {RecentListItem} conference - Conference Details.
+     * @param {Object} conference - Conference Details.
      * @returns {string} - Date/Time and Duration.
      */
-    _renderDuration(conference: RecentListItem) {
+    _renderDuration(conference) {
         const { startTime, endTime } = conference;
         const start = moment(startTime);
         const end = moment(endTime || Date.now());
@@ -154,15 +135,21 @@ class RecentList extends Component<Props, *> {
     /**
      * Returns the Date/Time of the conference in string format.
      *
-     * @param {RecentListItem} conference - Conference Details.
+     * @param {Object} conference - Conference Details.
      * @returns {string} - Date/Time and Duration.
      */
-    _renderStartTime(conference: RecentListItem) {
+    _renderStartTime(conference) {
         const { startTime } = conference;
 
         return moment(startTime).calendar();
     }
 }
+
+RecentList.propTypes = {
+    _recentList: PropTypes.array,
+    dispatch: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired
+};
 
 /**
  * Maps (parts of) the redux state to the React props.
@@ -172,7 +159,7 @@ class RecentList extends Component<Props, *> {
  *     _recentList: Array<RecentListItem>
  * }}
  */
-function _mapStateToProps(state: Object) {
+function _mapStateToProps(state) {
     return {
         _recentList: state.recentList.recentList
     };

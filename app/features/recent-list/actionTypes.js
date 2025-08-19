@@ -3,7 +3,7 @@
  *
  * @type {
 *     type: CONFERENCE_REMOVED,
-*     conference: Object
+*     conference
 * }
 */
 export const CONFERENCE_REMOVED = Symbol('CONFERENCE_REMOVED');

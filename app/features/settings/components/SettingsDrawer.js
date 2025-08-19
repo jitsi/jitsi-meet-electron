@@ -1,48 +1,29 @@
-// @flow
 
 import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
 import { AkCustomDrawer } from '@atlaskit/navigation';
 import { SpotlightTarget } from '@atlaskit/onboarding';
-
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import type { Dispatch } from 'redux';
 import { compose } from 'redux';
 
-import { closeDrawer, DrawerContainer, Logo } from '../../navbar';
+import { DrawerContainer, Logo, closeDrawer } from '../../navbar';
 import { Onboarding, startOnboarding } from '../../onboarding';
-import { SettingsContainer, TogglesContainer } from '../styled';
 import {
-    setWindowAlwaysOnTop, setDisableAGC
+    setDisableAGC, setWindowAlwaysOnTop
 } from '../actions';
+import { SettingsContainer, TogglesContainer } from '../styled';
 
-import SettingToggle from './SettingToggle';
-import ServerURLField from './ServerURLField';
 import ServerTimeoutField from './ServerTimeoutField';
+import ServerURLField from './ServerURLField';
+import SettingToggle from './SettingToggle';
 
-type Props = {
-
-    /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
-
-    /**
-     * Is the drawer open or not.
-     */
-    isOpen: boolean;
-
-    /**
-     * I18next translation function.
-     */
-    t: Function;
-};
 
 /**
  * Drawer that open when SettingsAction is clicked.
  */
-class SettingsDrawer extends Component<Props, *> {
+class SettingsDrawer extends Component {
     /**
      * Initializes a new {@code SettingsDrawer} instance.
      *
@@ -59,10 +40,10 @@ class SettingsDrawer extends Component<Props, *> {
      *
      * NOTE: It automatically checks if the onboarding is shown or not.
      *
-     * @param {Props} prevProps - Props before component updated.
+     * @param {Object} prevProps - Props before component updated.
      * @returns {void}
      */
-    componentDidUpdate(prevProps: Props) {
+    componentDidUpdate(prevProps) {
         if (!prevProps.isOpen && this.props.isOpen) {
 
             // TODO - Find a better way for this.
@@ -116,8 +97,6 @@ class SettingsDrawer extends Component<Props, *> {
     }
 
 
-    _onBackButton: (*) => void;
-
     /**
      * Closes the drawer when back button is clicked.
      *
@@ -127,5 +106,11 @@ class SettingsDrawer extends Component<Props, *> {
         this.props.dispatch(closeDrawer());
     }
 }
+
+SettingsDrawer.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool,
+    t: PropTypes.func.isRequired
+};
 
 export default compose(connect(), withTranslation())(SettingsDrawer);

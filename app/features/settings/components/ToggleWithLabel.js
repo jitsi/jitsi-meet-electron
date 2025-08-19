@@ -1,23 +1,15 @@
-// @flow
 
 import Toggle from '@atlaskit/toggle';
-
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { Label, ToggleContainer } from '../styled';
 
-type Props = {
-
-    /**
-     * Label to show for toggle.
-     */
-    label: string;
-};
 
 /**
  * Toggles Buttons with label.
  */
-class ToggleWithLabel extends Component<Props, *> {
+class ToggleWithLabel extends Component {
     /**
      * Render function of component.
      *
@@ -34,5 +26,12 @@ class ToggleWithLabel extends Component<Props, *> {
         );
     }
 }
+
+ToggleWithLabel.propTypes = {
+    isDefaultChecked: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.bool
+};
 
 export default ToggleWithLabel;

@@ -1,13 +1,13 @@
-// @flow
+
+import { normalizeServerURL } from '../utils';
 
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_DISABLE_AGC,
-    SET_SERVER_URL,
-    SET_SERVER_TIMEOUT
+    SET_SERVER_TIMEOUT,
+    SET_SERVER_URL
 } from './actionTypes';
 
-import { normalizeServerURL } from '../utils';
 
 /**
  * Set Server URL.
@@ -18,7 +18,7 @@ import { normalizeServerURL } from '../utils';
  *     serverURL: ?string
  * }}
  */
-export function setServerURL(serverURL: string) {
+export function setServerURL(serverURL) {
     return {
         type: SET_SERVER_URL,
         serverURL: normalizeServerURL(serverURL)
@@ -34,7 +34,7 @@ export function setServerURL(serverURL: string) {
  *     serverTimeout: ?number
  * }}
  */
-export function setServerTimeout(serverTimeout: number) {
+export function setServerTimeout(serverTimeout) {
     return {
         type: SET_SERVER_TIMEOUT,
         serverTimeout
@@ -47,10 +47,10 @@ export function setServerTimeout(serverTimeout: number) {
  * @param {boolean} disableAGC - Whether to disable AGC.
  * @returns {{
  *     type: SET_DISABLE_AGC,
- *     disableAGC: boolean
+ *     disableAGC
  * }}
  */
-export function setDisableAGC(disableAGC: boolean) {
+export function setDisableAGC(disableAGC) {
     return {
         type: SET_DISABLE_AGC,
         disableAGC
@@ -63,10 +63,10 @@ export function setDisableAGC(disableAGC: boolean) {
  * @param {boolean} alwaysOnTopWindowEnabled - Whether to set AlwaysOnTop Window Enabled.
  * @returns {{
  *     type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
- *     alwaysOnTopWindowEnabled: boolean
+ *     alwaysOnTopWindowEnabled
  * }}
  */
-export function setWindowAlwaysOnTop(alwaysOnTopWindowEnabled: boolean) {
+export function setWindowAlwaysOnTop(alwaysOnTopWindowEnabled) {
     return {
         type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
         alwaysOnTopWindowEnabled

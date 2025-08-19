@@ -1,18 +1,11 @@
-// @flow
 
 import {
     SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
     SET_DISABLE_AGC,
-    SET_SERVER_URL,
-    SET_SERVER_TIMEOUT
+    SET_SERVER_TIMEOUT,
+    SET_SERVER_URL
 } from './actionTypes';
 
-type State = {
-    alwaysOnTopWindowEnabled: boolean,
-    disableAGC: boolean,
-    serverURL: ?string,
-    serverTimeout: ?number
-};
 
 const DEFAULT_STATE = {
     alwaysOnTopWindowEnabled: true,
@@ -24,11 +17,11 @@ const DEFAULT_STATE = {
 /**
  * Reduces redux actions for features/settings.
  *
- * @param {State} state - Current reduced redux state.
+ * @param {Object} state - Current reduced redux state.
  * @param {Object} action - Action which was dispatched.
- * @returns {State} - Updated reduced redux state.
+ * @returns {Object} - Updated reduced redux state.
  */
-export default (state: State = DEFAULT_STATE, action: Object) => {
+export default (state = DEFAULT_STATE, action) => {
     switch (action.type) {
     case SET_ALWAYS_ON_TOP_WINDOW_ENABLED:
         return {

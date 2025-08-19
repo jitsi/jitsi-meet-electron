@@ -1,10 +1,9 @@
-// @flow
 
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
-
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
 import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router';
 import { ConnectedRouter as Router, push } from 'react-router-redux';
 
 import { Conference } from '../../conference';
@@ -16,7 +15,7 @@ import { Welcome } from '../../welcome';
 /**
  * Main component encapsulating the entire application.
  */
-class App extends Component<*> {
+class App extends Component {
     /**
      * Initializes a new {@code App} instance.
      *
@@ -57,7 +56,6 @@ class App extends Component<*> {
         );
     }
 
-    _listenOnProtocolMessages: (*) => void;
 
     /**
      * Handler when main proccess contact us.
@@ -67,7 +65,7 @@ class App extends Component<*> {
      *
      * @returns {void}
      */
-    _listenOnProtocolMessages(event, inputURL: string) {
+    _listenOnProtocolMessages(event, inputURL) {
         // Remove trailing slash if one exists.
         if (inputURL.slice(-1) === '/') {
             inputURL = inputURL.slice(0, -1); // eslint-disable-line no-param-reassign
@@ -108,5 +106,9 @@ class App extends Component<*> {
         );
     }
 }
+
+App.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
 
 export default connect()(App);

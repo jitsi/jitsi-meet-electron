@@ -3,7 +3,7 @@
  *
  * @type {
  *     type: CONFERENCE_JOINED,
- *     conference: Object
+ *     conference
  * }
  */
 export const CONFERENCE_JOINED = Symbol('CONFERENCE_JOINED');
@@ -13,6 +13,6 @@ export const CONFERENCE_JOINED = Symbol('CONFERENCE_JOINED');
  *
  * @type {
  *     type: CONFERENCE_ENDED,
- *     conference: Object
+ *     conference
  * }
  */export const CONFERENCE_ENDED = Symbol('CONFERENCE_ENDED');

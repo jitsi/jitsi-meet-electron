@@ -1,10 +1,9 @@
-// @flow
 
-import { setActiveOnboarding } from './actions';
 import { CONTINUE_ONBOARDING, START_ONBOARDING } from './actionTypes';
+import { setActiveOnboarding } from './actions';
 import { onboardingSteps } from './constants';
 
-export default (store: Object) => (next: Function) => (action: Object) => {
+export default store => next => action => {
     const result = next(action);
     const state = store.getState();
 

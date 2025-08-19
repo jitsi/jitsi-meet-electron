@@ -1,33 +1,15 @@
-// @flow
 
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import type { Dispatch } from 'redux';
 
 import { onboardingComponents, onboardingSteps } from '../../onboarding';
 
-type Props = {
-
-    /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
-
-    /**
-     * Onboarding Section.
-     */
-    section: string;
-
-    /**
-     * Active Onboarding.
-     */
-    _activeOnboarding: string;
-};
 
 /**
  * Onboarding Component Entry Point.
  */
-class Onboarding extends Component<Props, *> {
+class Onboarding extends Component {
     /**
      * Render function of component.
      *
@@ -47,15 +29,20 @@ class Onboarding extends Component<Props, *> {
     }
 }
 
+Onboarding.propTypes = {
+    _activeOnboarding: PropTypes.string,
+    section: PropTypes.string
+};
+
 /**
  * Maps (parts of) the redux state to the React props.
  *
  * @param {Object} state - The redux state.
  * @returns {{
- *     _activeOnboarding: string
+ *     _activeOnboarding
  * }}
  */
-function _mapStateToProps(state: Object) {
+function _mapStateToProps(state) {
     return {
         _activeOnboarding: state.onboarding.activeOnboarding
     };

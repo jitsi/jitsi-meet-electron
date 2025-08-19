@@ -1,5 +1,6 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
 const ELECTRON_VERSION = require('./package.json').devDependencies.electron;
 
 module.exports = {
@@ -40,11 +41,9 @@ module.exports = {
                                 }
                             }
                         ],
-                        require.resolve('@babel/preset-flow'),
                         require.resolve('@babel/preset-react')
                     ],
                     plugins: [
-                        require.resolve('@babel/plugin-transform-flow-strip-types'),
                         require.resolve('@babel/plugin-proposal-class-properties'),
                         require.resolve('@babel/plugin-proposal-export-namespace-from')
                     ]

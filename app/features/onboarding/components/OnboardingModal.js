@@ -1,42 +1,26 @@
-// @flow
 
 import { Modal } from '@atlaskit/onboarding';
-
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import type { Dispatch } from 'redux';
 import { compose } from 'redux';
 
 import OnboardingModalImage from '../../../images/onboarding.png';
-
 import config from '../../config';
+import { continueOnboarding, skipOnboarding } from '../actions';
 
-import { skipOnboarding, continueOnboarding } from '../actions';
-
-type Props = {
-
-    /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
-
-    /**
-     * I18next translation function.
-     */
-    t: Function;
-};
 
 /**
  * Onboarding Modal Component.
  */
-class OnboardingModal extends Component<Props, *> {
+class OnboardingModal extends Component {
     /**
      * Initializes a new {@code OnboardingModal} instance.
      *
      * @inheritdoc
      */
-    constructor(props: Props) {
+    constructor(props) {
         super(props);
 
         // Bind event handlers.
@@ -71,7 +55,6 @@ class OnboardingModal extends Component<Props, *> {
         );
     }
 
-    _next: (*) => void;
 
     /**
      * Close the spotlight component.
@@ -82,7 +65,6 @@ class OnboardingModal extends Component<Props, *> {
         this.props.dispatch(continueOnboarding());
     }
 
-    _skip: (*) => void;
 
     /**
      * Skips all the onboardings.
@@ -94,5 +76,10 @@ class OnboardingModal extends Component<Props, *> {
     }
 
 }
+
+OnboardingModal.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired
+};
 
 export default compose(connect(), withTranslation())(OnboardingModal);

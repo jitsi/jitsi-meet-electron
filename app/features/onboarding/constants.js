@@ -1,7 +1,7 @@
-// @flow
-import { OnboardingModal, OnboardingSpotlight } from './components';
-import { openDrawer, closeDrawer } from '../navbar';
+import { closeDrawer, openDrawer } from '../navbar';
 import { SettingsDrawer } from '../settings';
+
+import { OnboardingModal, OnboardingSpotlight } from './components';
 
 export const onboardingSteps = {
     'welcome-page': [
@@ -29,7 +29,7 @@ export const onboardingComponents = {
         dialogPlacement: 'top right',
         target: 'settings-drawer-button',
         text: 'onboarding.settingsDrawerButton',
-        onNext: (props: OnboardingSpotlight.props) => props.dispatch(openDrawer(SettingsDrawer))
+        onNext: props => props.dispatch(openDrawer(SettingsDrawer))
     },
     'server-setting': {
         type: OnboardingSpotlight,
@@ -48,7 +48,7 @@ export const onboardingComponents = {
         dialogPlacement: 'top right',
         target: 'always-on-top-window',
         text: 'onboarding.alwaysOnTop',
-        onNext: (props: OnboardingSpotlight.props) => setTimeout(() => {
+        onNext: props => setTimeout(() => {
             props.dispatch(closeDrawer());
         }, 300)
     }

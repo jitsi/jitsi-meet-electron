@@ -63,12 +63,11 @@ class App extends Component {
     /**
      * Handler when main process contact us.
      *
-     * @param {Object} event - Message event.
      * @param {string} inputURL - String with room name.
      *
      * @returns {void}
      */
-    _listenOnProtocolMessages(event, inputURL) {
+    _listenOnProtocolMessages(inputURL) {
         // Remove trailing slash if one exists.
         if (inputURL.slice(-1) === '/') {
             inputURL = inputURL.slice(0, -1); // eslint-disable-line no-param-reassign

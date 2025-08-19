@@ -6,7 +6,7 @@
  *     conference
  * }
  */
-export const CONFERENCE_JOINED = Symbol('CONFERENCE_JOINED');
+export const CONFERENCE_JOINED = 'CONFERENCE_JOINED';
 
 /**
  * The type of (redux) action that is dispatched when conference ends.
@@ -15,4 +15,5 @@ export const CONFERENCE_JOINED = Symbol('CONFERENCE_JOINED');
  *     type: CONFERENCE_ENDED,
  *     conference
  * }
- */export const CONFERENCE_ENDED = Symbol('CONFERENCE_ENDED');
+ */
+export const CONFERENCE_ENDED = 'CONFERENCE_ENDED';

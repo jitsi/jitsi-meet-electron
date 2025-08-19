@@ -44,7 +44,7 @@ If you want to hack on this project, here is how you do it.
 
 #### Installing dependencies
 
-Install Node.js 20 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 20 by running `nvm use`).
+Install Node.js 22 first (or if you use [nvm](https://github.com/nvm-sh/nvm), switch to Node.js 20 by running `nvm use`).
 
 <details><summary>Extra dependencies for Windows</summary>
 

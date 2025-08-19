@@ -1,6 +1,4 @@
-// @flow
 
-import type { ComponentType } from 'react';
 
 import { CLOSE_DRAWER, OPEN_DRAWER } from './actionTypes';
 
@@ -26,7 +24,7 @@ export function closeDrawer() {
  *     drawerComponent: ComponentType<*>
  * }}
  */
-export function openDrawer(drawerComponent: ComponentType<*>) {
+export function openDrawer(drawerComponent) {
     return {
         type: OPEN_DRAWER,
         drawerComponent

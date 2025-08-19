@@ -3,7 +3,7 @@
  *
  * @type {
  *     type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
- *     alwaysOnTopWindowEnabled: boolean
+ *     alwaysOnTopWindowEnabled
  * }
  */
 export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED
@@ -14,7 +14,7 @@ export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED
  *
  * @type {
  *     type: SET_DISABLE_AGC,
- *     disableAGC: boolean
+ *     disableAGC
  * }
  */
 export const SET_DISABLE_AGC = Symbol('SET_DISABLE_AGC');
@@ -24,7 +24,7 @@ export const SET_DISABLE_AGC = Symbol('SET_DISABLE_AGC');
  *
  * @type {
  *     type: SET_SERVER_URL,
- *     serverURL: string
+ *     serverURL
  * }
  */
 export const SET_SERVER_URL = Symbol('SET_SERVER_URL');
@@ -34,7 +34,7 @@ export const SET_SERVER_URL = Symbol('SET_SERVER_URL');
  *
  * @type {
  *     type: SET_SERVER_TIMEOUT,
- *     serverTimeout: number
+ *     serverTimeout
  * }
  */
 export const SET_SERVER_TIMEOUT = Symbol('SET_SERVER_TIMEOUT');

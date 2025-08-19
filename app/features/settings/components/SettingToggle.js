@@ -1,34 +1,10 @@
-// @flow
 
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import type { Dispatch } from 'redux';
 
 import ToggleWithLabel from './ToggleWithLabel';
 
-type Props = {
-
-    /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
-
-    /**
-     * The label for the toggle.
-     */
-    label: String;
-
-    /**
-     * The name of the setting.
-     */
-    settingName: String;
-
-    /**
-     * A function to produce setting change events.
-     */
-    settingChangeEvent: Function;
-
-};
 
 /**
  * Maps (parts of) the redux state to the React props.
@@ -37,7 +13,7 @@ type Props = {
  * @param {Object} ownProps - The props of the redux wrapper component.
  * @returns {Object} A props object including the current value of the setting.
  */
-const mapStateToProps = (state, ownProps: Props) => {
+const mapStateToProps = (state, ownProps) => {
     return {
         value: state.settings[ownProps.settingName],
         ...ownProps
@@ -50,7 +26,7 @@ const mapStateToProps = (state, ownProps: Props) => {
  * @param {Object} props - The props provided by mapStateToProps.
  * @returns {Object} A rendered toggle component with correct state.
  */
-function SettingToggle(props: Object) {
+function SettingToggle(props) {
     const onChange = useCallback(
         () => props.dispatch(props.settingChangeEvent(!props.value)));
 
@@ -62,5 +38,12 @@ function SettingToggle(props: Object) {
             value = { props.value } />
     );
 }
+
+SettingToggle.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    label: PropTypes.string,
+    settingChangeEvent: PropTypes.func,
+    value: PropTypes.bool
+};
 
 export default connect(mapStateToProps)(SettingToggle);

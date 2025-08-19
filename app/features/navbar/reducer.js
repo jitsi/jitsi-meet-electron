@@ -1,12 +1,7 @@
-// @flow
 
-import type { ComponentType } from 'react';
 
 import { CLOSE_DRAWER, OPEN_DRAWER } from './actionTypes';
 
-type State = {
-    openDrawer: typeof undefined | ComponentType<*>
-};
 
 const DEFAULT_STATE = {
     openDrawer: undefined
@@ -15,11 +10,11 @@ const DEFAULT_STATE = {
 /**
  * Reduces redux actions for features/settings.
  *
- * @param {State} state - Current reduced redux state.
+ * @param {Object} state - Current reduced redux state.
  * @param {Object} action - Action which was dispatched.
- * @returns {State} - Updated reduced redux state.
+ * @returns {Object} - Updated reduced redux state.
  */
-export default (state: State = DEFAULT_STATE, action: Object) => {
+export default (state = DEFAULT_STATE, action) => {
     switch (action.type) {
     case CLOSE_DRAWER:
         return {

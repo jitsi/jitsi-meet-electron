@@ -1,4 +1,3 @@
-// @flow
 
 import { persistStore } from 'redux-persist';
 

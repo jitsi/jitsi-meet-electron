@@ -13,8 +13,8 @@ export const CONTINUE_ONBOARDING = Symbol('CONTINUE_ONBOARDING');
  *
  * @type {
  *     type: SET_ACTIVE_ONBOARDING,
- *     name: string,
- *     section: string
+ *     name,
+ *     section
  * }
  */
 export const SET_ACTIVE_ONBOARDING = Symbol('SET_ACTIVE_ONBOARDING');
@@ -24,7 +24,7 @@ export const SET_ACTIVE_ONBOARDING = Symbol('SET_ACTIVE_ONBOARDING');
  *
  * @type {
  *     type: START_ONBOARDING,
- *     section: string
+ *     section
  * }
  */
 export const START_ONBOARDING = Symbol('START_ONBOARDING');

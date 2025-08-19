@@ -1,4 +1,3 @@
-// @flow
 
 import { CONFERENCE_REMOVED } from './actionTypes';
 
@@ -8,10 +7,10 @@ import { CONFERENCE_REMOVED } from './actionTypes';
  * @param {Object} conference - Conference Details.
  * @returns {{
 *     type: CONFERENCE_REMOVED,
-*     conference: Object
+*     conference
 * }}
 */
-export function conferenceRemoved(conference: Object) {
+export function conferenceRemoved(conference) {
     return {
         type: CONFERENCE_REMOVED,
         conference

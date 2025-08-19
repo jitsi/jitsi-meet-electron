@@ -1,13 +1,8 @@
-// @flow
 
 import { CONFERENCE_ENDED, CONFERENCE_JOINED } from '../conference';
+
 import { CONFERENCE_REMOVED } from './actionTypes';
 
-import type { RecentListItem } from './types';
-
-type State = {
-    recentList: Array<RecentListItem>;
-};
 
 const DEFAULT_STATE = {
     recentList: []
@@ -16,11 +11,11 @@ const DEFAULT_STATE = {
 /**
  * Reduces redux actions for features/recent-list.
  *
- * @param {State} state - Current reduced redux state.
+ * @param {Object} state - Current reduced redux state.
  * @param {Object} action - Action which was dispatched.
- * @returns {State} - Updated reduced redux state.
+ * @returns {Object} - Updated reduced redux state.
  */
-export default (state: State = DEFAULT_STATE, action: Object) => {
+export default (state = DEFAULT_STATE, action) => {
     switch (action.type) {
     case CONFERENCE_ENDED:
         return {
@@ -52,7 +47,7 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
  * @param {string} roomName - The room name to be cleaned.
  * @returns {string} - The cleaned up room name.
  */
-function _cleanRoomName(roomName: string) {
+function _cleanRoomName(roomName) {
     const [ noQuery ] = roomName.split('?', 2);
     const [ noParams ] = noQuery.split('#', 2);
 
@@ -63,13 +58,13 @@ function _cleanRoomName(roomName: string) {
  * Insert Conference details in the recent list array.
  *
  * @param {Array<RecentListItem>} recentList - Previous recent list array.
- * @param {RecentListItem} newConference - Conference that has to be added
+ * @param {Object} newConference - Conference that has to be added
  * to recent list.
  * @returns {Array<RecentListItem>} - Updated recent list array.
  */
 function _insertConference(
-        recentList: Array<RecentListItem>,
-        newConference: RecentListItem
+        recentList,
+        newConference
 ) {
     // Add start time to conference.
     newConference.startTime = Date.now();
@@ -77,8 +72,8 @@ function _insertConference(
     newConference.room = _cleanRoomName(newConference.room);
 
     // Remove same conference.
-    const newRecentList: Array<RecentListItem> = recentList.filter(
-        (conference: RecentListItem) => _cleanRoomName(conference.room) !== newConference.room
+    const newRecentList = recentList.filter(
+        conference => _cleanRoomName(conference.room) !== newConference.room
             || conference.serverURL !== newConference.serverURL);
 
     // Add the conference at the beginning.
@@ -91,28 +86,28 @@ function _insertConference(
  * Remove a conference from the recent list array.
  *
  * @param {Array<RecentListItem>} recentList - Previous recent list array.
- * @param {RecentListItem} toRemove - Conference to be removed.
+ * @param {Object} toRemove - Conference to be removed.
  * @returns {Array<RecentListItem>} - Updated recent list array.
  */
 function _removeConference(
-        recentList: Array<RecentListItem>,
-        toRemove: RecentListItem
-): Array<RecentListItem> {
+        recentList,
+        toRemove
+) {
     return recentList.filter(
-        (conference: RecentListItem) => conference !== toRemove);
+        conference => conference !== toRemove);
 }
 
 /**
  * Update the EndTime of the last conference.
  *
  * @param {Array<RecentListItem>} recentList - Previous recent list array.
- * @param {RecentListItem} conference - Conference for which endtime has to
+ * @param {Object} conference - Conference for which endtime has to
  * be updated.
  * @returns {Array<RecentListItem>} - Updated recent list array.
  */
 function _updateEndtimeOfConference(
-        recentList: Array<RecentListItem>,
-        conference: RecentListItem
+        recentList,
+        conference
 ) {
     for (const item of recentList.slice()) {
         item.room = _cleanRoomName(item.room);

@@ -1,10 +1,10 @@
-const { ipcRenderer } = require('electron');
 const { RemoteControl,
     setupScreenSharingRender,
     setupAlwaysOnTopRender,
     initPopupsConfigurationRender,
     setupPowerMonitorRender
 } = require('@jitsi/electron-sdk');
+const { ipcRenderer } = require('electron');
 
 const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
 

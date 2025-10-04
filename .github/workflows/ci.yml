@@ -13,13 +13,12 @@ on:
 jobs:
   build-linux:
     name: Linux
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v5
+    - uses: actions/setup-node@v5
       with:
         node-version-file: '.nvmrc'
-        cache: 'npm'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,13 +38,12 @@ jobs:
           dist/latest-linux-arm64.yml
   build-mac:
     name: macOS
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v5
+    - uses: actions/setup-node@v5
       with:
         node-version-file: '.nvmrc'
-        cache: 'npm'
     - name: Prepare for app signing and notarization
       env:
         MAC_CERT: ${{ secrets.mac_cert }}
@@ -74,11 +72,10 @@ jobs:
     name: Windows
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v5
+    - uses: actions/setup-node@v5
       with:
         node-version-file: '.nvmrc'
-        cache: 'npm'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -171,7 +171,7 @@
     "i18next": "^19.9.2",
     "moment": "^2.29.2",
     "mousetrap": "^1.6.5",
-    "patch-package": "6.5.1",
+    "patch-package": "8.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.8.12",

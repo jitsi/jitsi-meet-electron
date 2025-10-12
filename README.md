@@ -82,6 +82,24 @@ They can also be displayed automatically with the application `--show-dev-tools`
 SHOW_DEV_TOOLS=true npm start
 ```
 
+You can also provide a default Jitsi server URL when launching the app using the `--defaultServer` CLI option. This is useful for unattended setups or when you want the app to connect to a custom deployment by default.
+
+Examples:
+
+- Development (when using `npm start`):
+
+```bash
+npm start -- --defaultServer=https://my.company.meet
+```
+
+- Packaged app (Linux/macOS/Windows):
+
+```bash
+./jitsi-meet --defaultServer https://my.company.meet
+```
+
+The option supports both `--defaultServer=value` and `--defaultServer value` forms.
+
 #### Building the production distribution
 
 ```bash

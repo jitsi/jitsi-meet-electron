@@ -27,7 +27,74 @@ const config = require('./app/features/config');
 const { openExternalLink } = require('./app/features/utils/openExternalLink');
 const pkgJson = require('./package.json');
 
+// Electron-store for persisting CLI-provided settings (optional). We use it to
+// persist a default server URL so unattended setups can stick across restarts.
+let store;
+try {
+    const Store = require('electron-store');
+    store = new Store();
+} catch (e) {
+    // If electron-store is not available for any reason, continue without
+    // persistent storage - the runtime override will still work.
+    store = null; // eslint-disable-line no-null/no-null
+}
+
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
+
+// Allow overriding the default server URL via CLI for unattended setups.
+// Supports both `--defaultServer=https://example.com` and
+// `--defaultServer https://example.com` forms.
+{
+    const argv = process.argv.slice(1); // keep executable path out
+    for (let i = 0; i < argv.length; i++) {
+        const a = argv[i];
+
+        if (a.startsWith('--defaultServer=')) {
+            const value = a.split('=')[1];
+            if (value) {
+                // config is an ES module default export when required; the
+                // actual config object lives under `config.default`.
+                if (config && config.default && config.default.defaultServerURL !== undefined) {
+                    config.default.defaultServerURL = value;
+                }
+
+                // Persist the provided server URL so it survives restarts. We
+                // store it under `settings.serverURL` so it is easy to map to
+                // the renderer's settings slice if needed.
+                if (store) {
+                    try {
+                        const settings = store.get('settings', {});
+                        settings.serverURL = value;
+                        store.set('settings', settings);
+                    } catch (err) {
+                        console.warn('Failed to save defaultServer to store:', err);
+                    }
+                }
+            }
+            break;
+        }
+
+        if (a === '--defaultServer' && i + 1 < argv.length) {
+            const value = argv[i + 1];
+            if (value && !value.startsWith('--')) {
+                if (config && config.default && config.default.defaultServerURL !== undefined) {
+                    config.default.defaultServerURL = value;
+                }
+
+                if (store) {
+                    try {
+                        const settings = store.get('settings', {});
+                        settings.serverURL = value;
+                        store.set('settings', settings);
+                    } catch (err) {
+                        console.warn('Failed to save defaultServer to store:', err);
+                    }
+                }
+            }
+            break;
+        }
+    }
+}
 
 // For enabling remote control, please change the ENABLE_REMOTE_CONTROL flag in
 // app/features/conference/components/Conference.js to true as well
@@ -485,6 +552,18 @@ ipcMain.on('renderer-ready', () => {
         mainWindow
             .webContents
             .send('protocol-data-msg', protocolDataForFrontApp);
+    }
+    // If we have a persisted server URL, notify the renderer so it can
+    // populate the settings redux slice. We store it under 'settings.serverURL'.
+    if (store) {
+        try {
+            const settings = store.get('settings', {});
+            if (settings && settings.serverURL) {
+                mainWindow.webContents.send('set-default-server', settings.serverURL);
+            }
+        } catch (err) {
+            console.warn('Failed to read defaultServer from store:', err);
+        }
     }
 });
 

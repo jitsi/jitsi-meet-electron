@@ -1,4 +1,3 @@
-// @flow
 
 import { createStore } from 'redux';
 import { persistReducer } from 'redux-persist';

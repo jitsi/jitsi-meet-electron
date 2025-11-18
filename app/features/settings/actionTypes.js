@@ -3,38 +3,37 @@
  *
  * @type {
  *     type: SET_ALWAYS_ON_TOP_WINDOW_ENABLED,
- *     alwaysOnTopWindowEnabled: boolean
+ *     alwaysOnTopWindowEnabled
  * }
  */
-export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED
-    = Symbol('SET_ALWAYS_ON_TOP_WINDOW_ENABLED');
+export const SET_ALWAYS_ON_TOP_WINDOW_ENABLED = 'SET_ALWAYS_ON_TOP_WINDOW_ENABLED';
 
 /**
  * The type of (redux) action that sets disable AGC.
  *
  * @type {
  *     type: SET_DISABLE_AGC,
- *     disableAGC: boolean
+ *     disableAGC
  * }
  */
-export const SET_DISABLE_AGC = Symbol('SET_DISABLE_AGC');
+export const SET_DISABLE_AGC = 'SET_DISABLE_AGC';
 
 /**
  * The type of (redux) action that sets the Server URL.
  *
  * @type {
  *     type: SET_SERVER_URL,
- *     serverURL: string
+ *     serverURL
  * }
  */
-export const SET_SERVER_URL = Symbol('SET_SERVER_URL');
+export const SET_SERVER_URL = 'SET_SERVER_URL';
 
 /**
  * The type of (redux) action that sets the Server Timeout.
  *
  * @type {
  *     type: SET_SERVER_TIMEOUT,
- *     serverTimeout: number
+ *     serverTimeout
  * }
  */
-export const SET_SERVER_TIMEOUT = Symbol('SET_SERVER_TIMEOUT');
+export const SET_SERVER_TIMEOUT = 'SET_SERVER_TIMEOUT';

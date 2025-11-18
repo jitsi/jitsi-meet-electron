@@ -1,6 +1,5 @@
-// @flow
 
-import { CONFERENCE_JOINED, CONFERENCE_ENDED } from './actionTypes';
+import { CONFERENCE_ENDED, CONFERENCE_JOINED } from './actionTypes';
 
 /**
  * Notifies that conference is joined.
@@ -8,10 +7,10 @@ import { CONFERENCE_JOINED, CONFERENCE_ENDED } from './actionTypes';
  * @param {Object} conference - Conference Details.
  * @returns {{
  *     type: CONFERENCE_JOINED,
- *     conference: Object
+ *     conference
  * }}
  */
-export function conferenceJoined(conference: Object) {
+export function conferenceJoined(conference) {
     return {
         type: CONFERENCE_JOINED,
         conference
@@ -24,10 +23,10 @@ export function conferenceJoined(conference: Object) {
  * @param {Object} conference - Conference Details.
  * @returns {{
  *     type: CONFERENCE_ENDED,
- *     conference: Object
+ *     conference
  * }}
  */
-export function conferenceEnded(conference: Object) {
+export function conferenceEnded(conference) {
     return {
         type: CONFERENCE_ENDED,
         conference

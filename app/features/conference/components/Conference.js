@@ -1,9 +1,7 @@
-// @flow
 
 import Spinner from '@atlaskit/spinner';
-
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -11,7 +9,6 @@ import i18n from '../../../i18n';
 import config from '../../config';
 import { getSetting } from '../../settings';
 import { parseURLParams } from '../../utils/parseURLParams';
-
 import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
@@ -20,76 +17,11 @@ import { LoadingIndicator, Wrapper } from '../styled';
 // main.js to true as well
 const ENABLE_REMOTE_CONTROL = false;
 
-type Props = {
-
-    /**
-     * Redux dispatch.
-     */
-    dispatch: Dispatch<*>;
-
-    /**
-     * React Router location object.
-     */
-    location: Object;
-
-    /**
-     * AlwaysOnTop Window Enabled.
-     */
-    _alwaysOnTopWindowEnabled: boolean;
-
-    /**
-     * Disable automatic gain control.
-     */
-     _disableAGC: boolean;
-
-    /**
-     * Default Jitsi Server URL.
-     */
-    _serverURL: string;
-
-    /**
-     * Default Jitsi Server Timeout.
-     */
-    _serverTimeout: number;
-};
-
-type State = {
-
-    /**
-     * If the conference is loading or not.
-     */
-    isLoading: boolean;
-};
 
 /**
  * Conference component.
  */
-class Conference extends Component<Props, State> {
-    /**
-     * External API object.
-     */
-    _api: Object;
-
-    /**
-     * Conference Object.
-     */
-    _conference: Object;
-
-    /**
-     * Whether the iframe was loaded or not.
-     */
-    _iframeLoaded: boolean;
-
-    /**
-     * Timer to cancel the joining if it takes too long.
-     */
-    _loadTimer: ?TimeoutID;
-
-    /**
-     * Reference to the element of this component.
-     */
-    _ref: Object;
-
+class Conference extends Component {
     /**
      * Initializes a new {@code Conference} instance.
      *
@@ -131,8 +63,6 @@ class Conference extends Component<Props, State> {
         // give up.
         this._loadTimer = setTimeout(() => {
             this._navigateToHome(
-
-                // $FlowFixMe
                 {
                     error: 'Loading error',
                     type: 'error'
@@ -210,14 +140,10 @@ class Conference extends Component<Props, State> {
             ...locale
         };
 
-        // override both old and new prejoin config options,
-        // old one for servers that do not understand the new option yet
-        // and new one for newly setup servers where the new option overrides
-        // the old if set.
+
         const configOverwrite = {
             enableCalendarIntegration: false,
             disableAGC: this.props._disableAGC,
-            prejoinPageEnabled: true,
             prejoinConfig: {
                 enabled: true
             }
@@ -295,7 +221,7 @@ class Conference extends Component<Props, State> {
      * @param {string} serverURL - Server URL.
      * @returns {void}
      */
-    _navigateToHome(event: Event, room: ?string, serverURL: ?string) {
+    _navigateToHome(event, room, serverURL) {
         this.props.dispatch(push('/', {
             error: event.type === 'error',
             room,
@@ -303,7 +229,6 @@ class Conference extends Component<Props, State> {
         }));
     }
 
-    _onVideoConferenceEnded: (*) => void;
 
     /**
      * Dispatches conference ended and navigates to home screen.
@@ -312,12 +237,11 @@ class Conference extends Component<Props, State> {
      * @returns {void}
      * @private
      */
-    _onVideoConferenceEnded(event: Event) {
+    _onVideoConferenceEnded(event) {
         this.props.dispatch(conferenceEnded(this._conference));
         this._navigateToHome(event);
     }
 
-    _onIframeLoad: (*) => void;
 
     /**
      * Sets state of loading to false when iframe has completely loaded.
@@ -345,13 +269,22 @@ class Conference extends Component<Props, State> {
     }
 }
 
+Conference.propTypes = {
+    _alwaysOnTopWindowEnabled: PropTypes.bool,
+    _disableAGC: PropTypes.bool,
+    _serverTimeout: PropTypes.number,
+    _serverURL: PropTypes.string,
+    dispatch: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
+};
+
 /**
  * Maps (parts of) the redux state to the React props.
  *
  * @param {Object} state - The redux state.
  * @returns {Props}
  */
-function _mapStateToProps(state: Object) {
+function _mapStateToProps(state) {
     return {
         _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
         _disableAGC: state.settings.disableAGC,

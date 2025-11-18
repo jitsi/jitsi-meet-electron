@@ -1,4 +1,3 @@
-// @flow
 
 import {
     CONTINUE_ONBOARDING,
@@ -7,11 +6,6 @@ import {
 } from './actionTypes';
 import { onboardingSteps } from './constants';
 
-type State = {
-    activeOnboarding: ?string;
-    activeOnboardingSection: ?string;
-    onboardingShown: Array<string>;
-};
 
 const DEFAULT_STATE = {
     activeOnboarding: undefined,
@@ -22,20 +16,17 @@ const DEFAULT_STATE = {
 /**
  * Reduces redux actions for features/onboarding.
  *
- * @param {State} state - Current reduced redux state.
+ * @param {Object} state - Current reduced redux state.
  * @param {Object} action - Action which was dispatched.
- * @returns {State} - Updated reduced redux state.
+ * @returns {Object} - Updated reduced redux state.
  */
-export default (state: State = DEFAULT_STATE, action: Object) => {
+export default (state = DEFAULT_STATE, action) => {
     switch (action.type) {
     case CONTINUE_ONBOARDING:
         return {
             ...state,
             activeOnboarding: undefined,
-            onboardingShown:
-
-                // $FlowFixMe
-                state.onboardingShown.concat(state.activeOnboarding)
+            onboardingShown: state.onboardingShown.concat(state.activeOnboarding)
         };
 
     case SET_ACTIVE_ONBOARDING:
@@ -46,17 +37,13 @@ export default (state: State = DEFAULT_STATE, action: Object) => {
         };
 
     case SKIP_ONBOARDING: {
-        // $FlowFixMe
         const allSteps = [].concat(...Object.values(onboardingSteps));
 
         return {
             ...state,
             activeOnboarding: undefined,
             activeOnboardingSection: undefined,
-            onboardingShown:
-
-                // $FlowFixMe
-                state.onboardingShown.concat(allSteps)
+            onboardingShown: state.onboardingShown.concat(allSteps)
         };
     }
 

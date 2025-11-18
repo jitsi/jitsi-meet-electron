@@ -1,4 +1,3 @@
-// @flow
 
 import {
     CONTINUE_ONBOARDING,
@@ -28,11 +27,11 @@ export function continueOnboarding() {
  * @param {string} section - Onboarding section.
  * @returns {{
  *     type: SET_ACTIVE_ONBOARDING,
- *     name: string,
- *     section: string
+ *     name,
+ *     section
  * }}
  */
-export function setActiveOnboarding(name: string, section: string) {
+export function setActiveOnboarding(name, section) {
     return {
         type: SET_ACTIVE_ONBOARDING,
         name,
@@ -59,10 +58,10 @@ export function skipOnboarding() {
  * @param {string} section - Onboarding section.
  * @returns {{
  *     type: START_ONBOARDING,
- *     section: string
+ *     section
  * }}
  */
-export function startOnboarding(section: string) {
+export function startOnboarding(section) {
     return {
         type: START_ONBOARDING,
         section

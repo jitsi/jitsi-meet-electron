@@ -1,4 +1,3 @@
-// @flow
 
 import { createMemoryHistory as createHistory } from 'history';
 

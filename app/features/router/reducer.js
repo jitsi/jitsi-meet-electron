@@ -1,4 +1,3 @@
-// @flow
 
 import { routerReducer } from 'react-router-redux';
 

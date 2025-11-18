@@ -6,7 +6,7 @@
  *     drawerComponent: React.ComponentType<*>
  * }
  */
-export const OPEN_DRAWER = Symbol('OPEN_DRAWER');
+export const OPEN_DRAWER = 'OPEN_DRAWER';
 
 /**
  * The type of (redux) action that closes all Drawer.
@@ -15,4 +15,4 @@ export const OPEN_DRAWER = Symbol('OPEN_DRAWER');
  *     type: CLOSE_DRAWER
  * }
  */
-export const CLOSE_DRAWER = Symbol('CLOSE_DRAWER');
+export const CLOSE_DRAWER = 'CLOSE_DRAWER';

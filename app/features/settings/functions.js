@@ -1,4 +1,3 @@
-// @flow
 
 /**
  * Get's the value for the given setting, providing a default value.
@@ -9,7 +8,7 @@
  * undefined.
  * @returns {*} The setting value.
  */
-export function getSetting(state: Object, setting: string, defaultValue: any) {
+export function getSetting(state, setting, defaultValue) {
     const value = state.settings[setting];
 
     if (typeof value === 'undefined') {

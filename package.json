@@ -1,6 +1,6 @@
 {
   "name": "ffmuc-meet",
-  "version": "2025.1.1",
+  "version": "2025.10.0",
   "description": "Electron application for Freifunk Meet",
   "main": "./build/main.js",
   "productName": "FreifunkMeet",
@@ -8,20 +8,20 @@
   "scripts": {
     "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
-    "lint": "eslint . && flow",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
     "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
     "dist": "npm run build && electron-builder",
     "postinstall": "patch-package",
     "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-options-poll=1000"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=22.0.0"
   },
   "build": {
     "appId": "meet.ffmuc.net",
     "productName": "FreifunkMeet",
     "generateUpdatesFilesForAllChannels": true,
-    "afterSign": "./notarize.js",
     "npmRebuild": false,
     "files": [
       "build",
@@ -43,11 +43,7 @@
       ],
       "category": "public.app-category.video",
       "darkModeSupport": true,
-      "hardenedRuntime": true,
-      "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist",
-      "asarUnpack": "**/*.node",
-      "notarize": false,
+      "entitlements": "resources/entitlements.mac.plist",
       "extendInfo": {
         "NSCameraUsageDescription": "Freifunk Meet requires access to your camera in order to make video-calls.",
         "NSMicrophoneUsageDescription": "Freifunk Meet requires access to your microphone in order to make calls (audio/video).",
@@ -97,23 +93,14 @@
         }
       ]
     },
-    "deb": {
-      "depends": [
-        "libgtk-3-0",
-        "libnss3",
-        "libxtst6",
-        "xdg-utils",
-        "libatspi2.0-0",
-        "libuuid1"
-      ]
-    },
     "win": {
       "artifactName": "ffmuc-meet.${ext}",
       "target": [
         {
           "arch": [
             "ia32",
-            "x64"
+            "x64",
+            "arm64"
           ],
           "target": "nsis"
         }
@@ -150,9 +137,10 @@
   "readmeFilename": "README.md",
   "license": "Apache-2.0",
   "dependencies": {
-    "@jitsi/electron-sdk": "6.0.50",
+    "@jitsi/electron-sdk": "7.0.6",
     "electron-debug": "^3.2.0",
-    "electron-reload": "^1.5.0"
+    "electron-reload": "^1.5.0",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@atlaskit/button": "^10.1.3",
@@ -169,42 +157,37 @@
     "@babel/core": "^7.17.8",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-export-namespace-from": "^7.16.7",
-    "@babel/plugin-transform-flow-strip-types": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
-    "@babel/preset-flow": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
-    "@electron/notarize": "2.4.0",
     "@hapi/bourne": "^3.0.0",
+    "@jitsi/eslint-config": "^6.0.4",
     "@jitsi/js-utils": "2.0.5",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "^8.2.3",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
-    "electron": "33.3.1",
-    "electron-builder": "24.13.3",
+    "electron": "37.6.0",
+    "electron-builder": "26.0.12",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",
     "electron-react-devtools": "0.5.3",
-    "electron-updater": "5.0.5",
+    "electron-updater": "6.6.2",
     "electron-window-state": "^5.0.3",
-    "eslint": "6.5.1",
-    "eslint-config-jitsi": "github:jitsi/eslint-config-jitsi#1.0.2",
-    "eslint-plugin-flowtype": "4.7.0",
-    "eslint-plugin-import": "2.20.2",
-    "eslint-plugin-jsdoc": "22.1.0",
-    "eslint-plugin-react": "7.19.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsdoc": "^50.6.1",
+    "eslint-plugin-react": "^7.37.0",
     "file-loader": "^6.2.0",
-    "flow-bin": "0.109.0",
     "history": "^4.10.1",
     "html-webpack-plugin": "^5.5.0",
     "i18next": "^19.9.2",
     "moment": "^2.29.2",
     "mousetrap": "^1.6.5",
     "patch-package": "6.5.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-i18next": "^11.8.12",
     "react-redux": "^5.1.2",
     "react-router-redux": "^5.0.0-alpha.9",

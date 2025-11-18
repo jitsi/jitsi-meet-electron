@@ -1,8 +1,7 @@
 
-// @flow
 
 import Navigation, { AkGlobalItem } from '@atlaskit/navigation';
-
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -11,18 +10,11 @@ import { SettingsButton, SettingsDrawer } from '../../settings';
 import HelpButton from './HelpButton';
 import Logo from './Logo';
 
-type Props = {
-
-    /**
-     * Whether Settings Drawer is open or not.
-     */
-    _isSettingsDrawerOpen: boolean;
-};
 
 /**
  * Navigation Bar component.
  */
-class Navbar extends Component<Props, *> {
+class Navbar extends Component {
     /**
      * Get the array of Primary actions of Global Navigation.
      *
@@ -71,15 +63,19 @@ class Navbar extends Component<Props, *> {
     }
 }
 
+Navbar.propTypes = {
+    _isSettingsDrawerOpen: PropTypes.bool
+};
+
 /**
  * Maps (parts of) the redux state to the React props.
  *
  * @param {Object} state - The redux state.
  * @returns {{
- *     _isSettingsDrawerOpen: boolean
+ *     _isSettingsDrawerOpen
  * }}
  */
-function _mapStateToProps(state: Object) {
+function _mapStateToProps(state) {
     return {
         _isSettingsDrawerOpen: state.navbar.openDrawer === SettingsDrawer
     };

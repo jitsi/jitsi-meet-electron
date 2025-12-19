@@ -4,7 +4,8 @@ const {
     initPopupsConfigurationMain,
     getPopupTarget,
     RemoteControlMain,
-    setupAlwaysOnTopMain,
+    setupPictureInPictureMain,
+    setupRemoteControlMain,
     setupPowerMonitorMain,
     setupScreenSharingMain
 } = require('@jitsi/electron-sdk');
@@ -32,9 +33,6 @@ const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexO
 // For enabling remote control, please change the ENABLE_REMOTE_CONTROL flag in
 // app/features/conference/components/Conference.js to true as well
 const ENABLE_REMOTE_CONTROL = false;
-
-// We need this because of https://github.com/electron/electron/issues/18214
-app.commandLine.appendSwitch('disable-site-isolation-trials');
 
 // Fix screen-sharing thumbnails being missing sometimes.
 // https://github.com/electron/electron/issues/44504
@@ -325,11 +323,11 @@ function createJitsiMeetWindow() {
     });
 
     initPopupsConfigurationMain(mainWindow);
-    setupAlwaysOnTopMain(mainWindow, null, windowOpenHandler);
+    setupPictureInPictureMain(mainWindow);
     setupPowerMonitorMain(mainWindow);
     setupScreenSharingMain(mainWindow, config.default.appName, pkgJson.build.appId);
     if (ENABLE_REMOTE_CONTROL) {
-        new RemoteControlMain(mainWindow); // eslint-disable-line no-new
+        setupRemoteControlMain(mainWindow);
     }
 
     mainWindow.on('closed', () => {

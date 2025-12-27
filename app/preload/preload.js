@@ -1,7 +1,8 @@
-const { RemoteControl,
-    setupScreenSharingRender,
-    setupAlwaysOnTopRender,
+const {
     initPopupsConfigurationRender,
+    setupScreenSharingRender,
+    setupPictureInPictureRender,
+    setupRemoteControlRender,
     setupPowerMonitorRender
 } = require('@jitsi/electron-sdk');
 const { ipcRenderer } = require('electron');
@@ -30,17 +31,14 @@ function openExternalLink(url) {
 function setupRenderer(api, options = {}) {
     initPopupsConfigurationRender(api);
 
-    const iframe = api.getIFrame();
-
     setupScreenSharingRender(api);
 
     if (options.enableRemoteControl) {
-        new RemoteControl(iframe); // eslint-disable-line no-new
+        setupRemoteControlRender(api);
     }
 
-    // Allow window to be on top if enabled in settings
     if (options.enableAlwaysOnTopWindow) {
-        setupAlwaysOnTopRender(api, null, { showOnPrejoin: true });
+        setupPictureInPictureRender(api);
     }
 
     setupPowerMonitorRender(api);

@@ -3,7 +3,6 @@
 const {
     initPopupsConfigurationMain,
     getPopupTarget,
-    RemoteControlMain,
     setupPictureInPictureMain,
     setupRemoteControlMain,
     setupPowerMonitorMain,

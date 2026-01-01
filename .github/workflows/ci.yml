@@ -26,7 +26,7 @@ jobs:
         npm ci
         npm run lint
         npm run dist
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v6
       with:
         name: linux-binaries
         path: |
@@ -61,7 +61,7 @@ jobs:
       run: |
         npm ci
         npm run dist
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v6
       with:
         name: mac-binaries
         path: |
@@ -82,7 +82,7 @@ jobs:
       run: |
         npm ci
         npm run dist
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v6
       with:
         name: windows-binaries
         path: |

@@ -11,6 +11,7 @@ import config from '../../config';
 import { history } from '../../router';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Welcome } from '../../welcome';
+import { setServerURL } from '../../settings/actions';
 
 /**
  * Main component encapsulating the entire application.
@@ -41,7 +42,15 @@ class App extends Component {
         // start listening on this events
         const removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
 
+        // Listen for a default server sent from main process (persisted or CLI-provided).
+        const removeDefaultServerListener = window.jitsiNodeAPI.ipc.addListener('set-default-server', (serverURL) => {
+            if (serverURL) {
+                this.props.dispatch(setServerURL(serverURL));
+            }
+        });
+
         this._listeners.push(removeListener);
+        this._listeners.push(removeDefaultServerListener);
 
         // send notification to main process
         window.jitsiNodeAPI.ipc.send('renderer-ready');

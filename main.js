@@ -239,8 +239,6 @@ function createJitsiMeetWindow() {
     windowState.manage(mainWindow);
     mainWindow.loadURL(indexURL);
 
-    mainWindow.webContents.setWindowOpenHandler(windowOpenHandler);
-
     if (isDev) {
         mainWindow.webContents.session.clearCache();
     }
@@ -321,7 +319,7 @@ function createJitsiMeetWindow() {
         callback(true);
     });
 
-    initPopupsConfigurationMain(mainWindow);
+    initPopupsConfigurationMain(mainWindow, windowOpenHandler);
     setupPictureInPictureMain(mainWindow);
     setupPowerMonitorMain(mainWindow);
     setupScreenSharingMain(mainWindow, config.default.appName, pkgJson.build.appId);

@@ -88,6 +88,17 @@ if (isDev) {
  */
 let mainWindow = null;
 
+/**
+ * Window 2: Meeting window — created on demand, full size.
+ * IMPORTANT: Must be defined as global to avoid garbage collection.
+ */
+let meetingWindow = null;
+
+/**
+ * Holds conference data until the meeting window renderer signals it is ready.
+ */
+let pendingMeetingConference = null;
+
 let webrtcInternalsWindow = null;
 
 /**
@@ -442,7 +453,11 @@ app.on('second-instance', (event, commandLine) => {
 });
 
 app.on('window-all-closed', () => {
-    app.quit();
+    // Only quit when the launcher (mainWindow) is closed.
+    // Closing the meeting window alone must NOT quit the app.
+    if (mainWindow === null) {
+        app.quit();
+    }
 });
 
 // remove so we can register each time as we run the app.
@@ -473,13 +488,28 @@ app.on('open-url', (event, data) => {
 
 /**
  * This is to notify main.js [this] that front app is ready to receive messages.
+ * Called by BOTH the launcher and the meeting window on componentDidMount.
  */
-ipcMain.on('renderer-ready', () => {
-    rendererReady = true;
-    if (protocolDataForFrontApp) {
-        mainWindow
-            .webContents
-            .send('protocol-data-msg', protocolDataForFrontApp);
+ipcMain.on('renderer-ready', event => {
+    // Launcher window — existing behaviour unchanged.
+    if (mainWindow && event.sender.id === mainWindow.webContents.id) {
+        rendererReady = true;
+        if (protocolDataForFrontApp) {
+            mainWindow
+                .webContents
+                .send('protocol-data-msg', protocolDataForFrontApp);
+        }
+
+        return;
+    }
+
+    // Meeting window — send pending conference now that React is mounted
+    // and the navigate-to-conference listener is registered.
+    if (meetingWindow && event.sender.id === meetingWindow.webContents.id) {
+        if (pendingMeetingConference) {
+            meetingWindow.webContents.send('navigate-to-conference', pendingMeetingConference);
+            pendingMeetingConference = null;
+        }
     }
 });
 
@@ -494,10 +524,92 @@ ipcMain.on('jitsi-open-url', (event, someUrl) => {
  * Restore the meeting window (e.g. from PiP).
  */
 ipcMain.on('restore-meeting-window', () => {
-    if (mainWindow) {
-        if (mainWindow.isMinimized()) {
-            mainWindow.restore();
+    if (meetingWindow) {
+        if (meetingWindow.isMinimized()) {
+            meetingWindow.restore();
         }
-        mainWindow.focus();
+        meetingWindow.focus();
+    }
+});
+
+/**
+ * Open the meeting in Window 2.
+ * If a meeting window already exists, focus it and navigate to the new conference.
+ * Otherwise create a new one.
+ */
+ipcMain.on('open-meeting-window', (event, conference) => {
+    if (meetingWindow) {
+        meetingWindow.focus();
+        meetingWindow.webContents.send('navigate-to-conference', conference);
+
+        return;
+    }
+
+    const basePath = isDev ? __dirname : app.getAppPath();
+    const indexURL = URL.format({
+        pathname: path.resolve(basePath, './build/index.html'),
+        protocol: 'file:',
+        slashes: true,
+        query: { role: 'meeting' }
+    });
+
+    const windowOpenHandler = ({ url, frameName }) => {
+        const target = getPopupTarget(url, frameName);
+
+        if (!target || target === 'browser') {
+            openExternalLink(url);
+
+            return { action: 'deny' };
+        }
+
+        if (target === 'electron') {
+            return { action: 'allow' };
+        }
+
+        return { action: 'deny' };
+    };
+
+    meetingWindow = new BrowserWindow({
+        width: 1200,
+        height: 800,
+        minWidth: 800,
+        minHeight: 600,
+        icon: path.resolve(basePath, './resources/icon.png'),
+        resizable: true,
+        show: false,
+        webPreferences: {
+            enableBlinkFeatures: 'WebAssemblyCSP',
+            contextIsolation: false,
+            nodeIntegration: false,
+            preload: path.resolve(basePath, './build/preload.js'),
+            sandbox: false
+        }
+    });
+
+    meetingWindow.loadURL(indexURL);
+
+    // Store conference — sent to meeting window once its renderer-ready fires,
+    // guaranteeing the navigate-to-conference listener is already registered.
+    pendingMeetingConference = conference;
+
+    // Only per-window popup config — global SDK handlers already registered for launcher.
+    initPopupsConfigurationMain(meetingWindow, windowOpenHandler);
+
+    // Closing the meeting window must NOT quit the app — launcher stays open.
+    meetingWindow.on('closed', () => {
+        meetingWindow = null;
+    });
+
+    meetingWindow.once('ready-to-show', () => {
+        meetingWindow.show();
+    });
+});
+
+/**
+ * Close the meeting window — called by renderer when End Call is clicked.
+ */
+ipcMain.on('close-meeting-window', () => {
+    if (meetingWindow) {
+        meetingWindow.close();
     }
 });

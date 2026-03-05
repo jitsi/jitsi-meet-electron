@@ -7,7 +7,13 @@ const {
 } = require('@jitsi/electron-sdk');
 const { ipcRenderer } = require('electron');
 
-const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
+const whitelistedIpcChannels = [
+    'protocol-data-msg',
+    'renderer-ready',
+    'open-meeting-window',
+    'close-meeting-window',
+    'navigate-to-conference'
+];
 
 ipcRenderer.setMaxListeners(0);
 
@@ -65,12 +71,12 @@ window.jitsiNodeAPI = {
 
             return remove;
         },
-        send: channel => {
+        send: (channel, ...args) => {
             if (!whitelistedIpcChannels.includes(channel)) {
                 return;
             }
 
-            ipcRenderer.send(channel);
+            ipcRenderer.send(channel, ...args);
         }
     }
 };

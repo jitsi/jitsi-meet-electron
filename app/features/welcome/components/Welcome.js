@@ -9,9 +9,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { compose } from 'redux';
 
+import { conferenceJoined } from '../../conference';
 import { Navbar } from '../../navbar';
 import { Onboarding, startOnboarding } from '../../onboarding';
 import { RecentList } from '../../recent-list';
@@ -92,8 +92,8 @@ class Welcome extends Component {
             <Page navigation = { <Navbar /> }>
                 <AtlasKitThemeProvider mode = 'light'>
                     <Wrapper>
-                        { this._renderHeader() }
-                        { this._renderBody() }
+                        {this._renderHeader()}
+                        {this._renderBody()}
                         <Onboarding section = 'welcome-page' />
                     </Wrapper>
                 </AtlasKitThemeProvider>
@@ -167,7 +167,11 @@ class Welcome extends Component {
             return;
         }
 
-        this.props.dispatch(push('/conference', conference));
+        // Record meeting attempt immediately (matches web behaviour:
+        // appears in recent list as soon as you start joining, not only after entering)
+        this.props.dispatch(conferenceJoined(conference));
+
+        window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
     }
 
 
@@ -211,7 +215,7 @@ class Welcome extends Component {
             <Header>
                 <SpotlightTarget name = 'conference-url'>
                     <Form onSubmit = { this._onFormSubmit }>
-                        <Label>{ t('enterConferenceNameOrUrl') } </Label>
+                        <Label>{t('enterConferenceNameOrUrl')} </Label>
                         <FieldWrapper>
                             <FieldTextStateless
                                 autoFocus = { true }
@@ -226,7 +230,7 @@ class Welcome extends Component {
                                 appearance = 'primary'
                                 onClick = { this._onJoin }
                                 type = 'button'>
-                                { t('go') }
+                                {t('go')}
                             </Button>
                         </FieldWrapper>
                     </Form>

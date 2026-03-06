@@ -24,7 +24,6 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm ci
-        npm run lint
         npm run dist
     - uses: actions/upload-artifact@v6
       with:
@@ -88,3 +87,12 @@ jobs:
         path: |
           dist/jitsi-meet.exe
           dist/latest.yml
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
+      with:
+        node-version-file: '.nvmrc'
+    - run: npm ci
+    - run: npm run lint

@@ -154,12 +154,12 @@
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
     "electron": "39.5.1",
-    "electron-builder": "26.0.12",
+    "electron-builder": "^26.8.1",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",
     "electron-react-devtools": "0.5.3",
-    "electron-updater": "6.6.2",
+    "electron-updater": "^6.8.3",
     "electron-window-state": "^5.0.3",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.31.0",
@@ -183,6 +183,7 @@
     "source-map-support": "^0.5.19",
     "style-loader": "^3.3.1",
     "styled-components": "^3.4.10",
+    "typescript": "^5.9.3",
     "webpack": "^5.105.0",
     "webpack-cli": "^4.9.2"
   }

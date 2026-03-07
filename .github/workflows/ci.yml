@@ -19,6 +19,7 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version-file: '.nvmrc'
+        cache: 'npm'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -43,6 +44,7 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version-file: '.nvmrc'
+        cache: 'npm'
     - name: Prepare for app signing and notarization
       env:
         MAC_CERT: ${{ secrets.mac_cert }}
@@ -75,6 +77,7 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version-file: '.nvmrc'
+        cache: 'npm'
     - name: Build it
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -94,5 +97,6 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version-file: '.nvmrc'
+        cache: 'npm'
     - run: npm ci
     - run: npm run lint

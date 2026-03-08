@@ -331,12 +331,10 @@ function createJitsiMeetWindow() {
     });
 
     initPopupsConfigurationMain(mainWindow, windowOpenHandler);
-    setupPictureInPictureMain(mainWindow);
-    setupPowerMonitorMain(mainWindow);
-    setupScreenSharingMain(mainWindow, config.default.appName, pkgJson.build.appId);
-    if (ENABLE_REMOTE_CONTROL) {
-        setupRemoteControlMain(mainWindow);
-    }
+
+    // NOTE: PiP, screen sharing, and power monitor are set up on the
+    // meetingWindow (not the launcher) because the conference iframe
+    // only exists there.  See the 'open-meeting-window' handler below.
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -592,8 +590,25 @@ ipcMain.on('open-meeting-window', (event, conference) => {
     // guaranteeing the navigate-to-conference listener is already registered.
     pendingMeetingConference = conference;
 
-    // Only per-window popup config — global SDK handlers already registered for launcher.
+    // SDK setup — these need the window that hosts the conference iframe.
     initPopupsConfigurationMain(meetingWindow, windowOpenHandler);
+    setupPictureInPictureMain(meetingWindow);
+    setupPowerMonitorMain(meetingWindow);
+    setupScreenSharingMain(meetingWindow, config.default.appName, pkgJson.build.appId);
+    if (ENABLE_REMOTE_CONTROL) {
+        setupRemoteControlMain(meetingWindow);
+    }
+
+    // Block redirects — same protection as the launcher window.
+    meetingWindow.webContents.addListener('will-redirect', (ev, url) => {
+        const allowedProtocols = [ 'http:', 'https:', 'ws:', 'wss:' ];
+        const requestedUrl = new URL.URL(url);
+
+        if (!allowedProtocols.includes(requestedUrl.protocol)) {
+            console.warn(`Disallowing redirect to ${url}`);
+            ev.preventDefault();
+        }
+    });
 
     // Closing the meeting window must NOT quit the app — launcher stays open.
     meetingWindow.on('closed', () => {

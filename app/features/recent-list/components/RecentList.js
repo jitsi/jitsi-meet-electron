@@ -113,9 +113,12 @@ class RecentList extends Component {
      * @returns {string} - Formatted server URL.
      */
     _renderServerURL(serverURL) {
+        if (!serverURL) {
+            return '';
+        }
+
         // Strip protocol to make it cleaner.
         return `${serverURL.replace('https://', '')}`;
-
     }
 
     /**

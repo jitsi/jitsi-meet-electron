@@ -104,7 +104,7 @@ let protocolDataForFrontApp = null;
  */
 function setApplicationMenu() {
     if (process.platform === 'darwin') {
-        const template = [ {
+        const template = [{
             label: app.name,
             submenu: [
                 {
@@ -120,7 +120,7 @@ function setApplicationMenu() {
             ]
         }, {
             label: 'Edit',
-            submenu: [ {
+            submenu: [{
                 label: 'Undo',
                 accelerator: 'CmdOrCtrl+Z',
                 selector: 'undo:'
@@ -152,7 +152,7 @@ function setApplicationMenu() {
                 label: 'Select All',
                 accelerator: 'CmdOrCtrl+A',
                 selector: 'selectAll:'
-            } ]
+            }]
         }, {
             label: '&Window',
             role: 'window',
@@ -160,7 +160,7 @@ function setApplicationMenu() {
                 { role: 'minimize' },
                 { role: 'close' }
             ]
-        } ];
+        }];
 
         Menu.setApplicationMenu(Menu.buildFromTemplate(template));
     } else {
@@ -245,7 +245,7 @@ function createJitsiMeetWindow() {
 
     // Block access to file:// URLs.
     const fileFilter = {
-        urls: [ 'file://*' ]
+        urls: ['file://*']
     };
 
     mainWindow.webContents.session.webRequest.onBeforeSendHeaders(fileFilter, (details, callback) => {
@@ -273,7 +273,7 @@ function createJitsiMeetWindow() {
                 .filter(x => x.indexOf('frame-ancestors') === -1)
                 .join(';');
 
-            details.responseHeaders['content-security-policy'] = [ cspFiltered ];
+            details.responseHeaders['content-security-policy'] = [cspFiltered];
         }
 
         if (details.responseHeaders['Content-Security-Policy']) {
@@ -282,7 +282,7 @@ function createJitsiMeetWindow() {
                 .filter(x => x.indexOf('frame-ancestors') === -1)
                 .join(';');
 
-            details.responseHeaders['Content-Security-Policy'] = [ cspFiltered ];
+            details.responseHeaders['Content-Security-Policy'] = [cspFiltered];
         }
 
         callback({
@@ -455,7 +455,7 @@ if (isDev && process.platform === 'win32') {
     app.setAsDefaultProtocolClient(
         config.default.appProtocolPrefix,
         process.execPath,
-        [ path.resolve(process.argv[1]) ]
+        [path.resolve(process.argv[1])]
     );
 } else {
     app.setAsDefaultProtocolClient(config.default.appProtocolPrefix);
@@ -488,4 +488,114 @@ ipcMain.on('renderer-ready', () => {
  */
 ipcMain.on('jitsi-open-url', (event, someUrl) => {
     openExternalLink(someUrl);
+});
+/**
+ * Open the meeting in Window 2.
+ * If a meeting window already exists, focus it and navigate to the new conference.
+ * Otherwise create a new one.
+ */
+ipcMain.on('open-meeting-window', (event, conference) => {
+    if (meetingWindow) {
+        meetingWindow.focus();
+        meetingWindow.webContents.send('navigate-to-conference', conference);
+
+        return;
+    }
+
+    const basePath = isDev ? __dirname : app.getAppPath();
+    const indexURL = URL.format({
+        pathname: path.resolve(basePath, './build/index.html'),
+        protocol: 'file:',
+        slashes: true,
+        query: { role: 'meeting' }
+    });
+
+    const windowOpenHandler = ({ url, frameName }) => {
+        const target = getPopupTarget(url, frameName);
+
+        if (!target || target === 'browser') {
+            openExternalLink(url);
+
+            return { action: 'deny' };
+        }
+
+        if (target === 'electron') {
+            return { action: 'allow' };
+        }
+
+        return { action: 'deny' };
+    };
+
+    meetingWindow = new BrowserWindow({
+        width: 1200,
+        height: 800,
+        minWidth: 800,
+        minHeight: 600,
+        icon: path.resolve(basePath, './resources/icon.png'),
+        resizable: true,
+        show: false,
+        webPreferences: {
+            enableBlinkFeatures: 'WebAssemblyCSP',
+            contextIsolation: false,
+            nodeIntegration: false,
+            preload: path.resolve(basePath, './build/preload.js'),
+            sandbox: false
+        }
+    });
+
+    meetingWindow.loadURL(indexURL);
+
+    // Store conference — sent to meeting window once its renderer-ready fires,
+    // guaranteeing the navigate-to-conference listener is already registered.
+    pendingMeetingConference = conference;
+
+    // SDK setup — these need the window that hosts the conference iframe.
+    initPopupsConfigurationMain(meetingWindow, windowOpenHandler);
+    setupPictureInPictureMain(meetingWindow);
+    setupPowerMonitorMain(meetingWindow);
+    setupScreenSharingMain(meetingWindow, config.default.appName, pkgJson.build.appId);
+    if (ENABLE_REMOTE_CONTROL) {
+        setupRemoteControlMain(meetingWindow);
+    }
+
+    // Block redirects — same protection as the launcher window.
+    meetingWindow.webContents.addListener('will-redirect', (ev, url) => {
+        const allowedProtocols = ['http:', 'https:', 'ws:', 'wss:'];
+        const requestedUrl = new URL.URL(url);
+
+        if (!allowedProtocols.includes(requestedUrl.protocol)) {
+            console.warn(`Disallowing redirect to ${url}`);
+            ev.preventDefault();
+        }
+    });
+
+    // Closing the meeting window must NOT quit the app — launcher stays open.
+    meetingWindow.on('closed', () => {
+        meetingWindow = null;
+    });
+
+    meetingWindow.once('ready-to-show', () => {
+        meetingWindow.show();
+    });
+});
+
+/**
+ * Restore the meeting window (e.g. from PiP).
+ */
+ipcMain.on('restore-meeting-window', () => {
+    if (meetingWindow) {
+        if (meetingWindow.isMinimized()) {
+            meetingWindow.restore();
+        }
+        meetingWindow.focus();
+    }
+});
+
+/**
+ * Close the meeting window — called by renderer when End Call is clicked.
+ */
+ipcMain.on('close-meeting-window', () => {
+    if (meetingWindow) {
+        meetingWindow.close();
+    }
 });

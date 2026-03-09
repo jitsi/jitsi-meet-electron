@@ -7,7 +7,15 @@ const {
 } = require('@jitsi/electron-sdk');
 const { ipcRenderer } = require('electron');
 
-const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
+const whitelistedIpcChannels = [
+    'protocol-data-msg',
+    'renderer-ready',
+    'open-meeting-window',
+    'close-meeting-window',
+    'restore-meeting-window',
+    'navigate-to-conference',
+    'jitsi-pip-channel'
+];
 
 ipcRenderer.setMaxListeners(0);
 

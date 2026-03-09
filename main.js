@@ -609,6 +609,18 @@ ipcMain.on('open-meeting-window', (event, conference) => {
 });
 
 /**
+ * Restore the meeting window (e.g. from PiP).
+ */
+ipcMain.on('restore-meeting-window', () => {
+    if (meetingWindow) {
+        if (meetingWindow.isMinimized()) {
+            meetingWindow.restore();
+        }
+        meetingWindow.focus();
+    }
+});
+
+/**
  * Close the meeting window — called by renderer when End Call is clicked.
  */
 ipcMain.on('close-meeting-window', () => {

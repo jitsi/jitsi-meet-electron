@@ -12,7 +12,9 @@ const whitelistedIpcChannels = [
     'renderer-ready',
     'open-meeting-window',
     'close-meeting-window',
-    'navigate-to-conference'
+    'restore-meeting-window',
+    'navigate-to-conference',
+    'jitsi-pip-channel'
 ];
 
 ipcRenderer.setMaxListeners(0);

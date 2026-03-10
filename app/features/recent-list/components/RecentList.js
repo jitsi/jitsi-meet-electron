@@ -1,4 +1,5 @@
 
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -9,61 +10,6 @@ import styled from 'styled-components';
 import { conferenceJoined } from '../../conference';
 import { conferenceRemoved } from '../actions';
 
-// ---------------------------------------------------------------------------
-// Date/time formatting helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Formats a timestamp into a date string like "Mar 6, 2026".
- *
- * @param {number} timestamp - Ms since epoch.
- * @returns {string}
- */
-function formatDate(timestamp) {
-    const d = new Date(timestamp);
-    const months = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-
-    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
-/**
- * Formats a timestamp into a time string like "12:41 AM".
- *
- * @param {number} timestamp - Ms since epoch.
- * @returns {string}
- */
-function formatTime(timestamp) {
-    const d = new Date(timestamp);
-    let hours = d.getHours();
-    const minutes = String(d.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12 || 12;
-
-    return `${hours}:${minutes} ${ampm}`;
-}
-
-/**
- * Computes the meeting duration as "MM:SS" from start and end timestamps.
- * Returns "00:00" if endTime is not available.
- *
- * @param {number} startTime - Ms since epoch.
- * @param {number|undefined} endTime - Ms since epoch.
- * @returns {string}
- */
-function formatDuration(startTime, endTime) {
-    if (!endTime || endTime <= startTime) {
-        return '00:00';
-    }
-    const totalSeconds = Math.floor((endTime - startTime) / 1000);
-    const mins = Math.floor(totalSeconds / 60);
-    const secs = totalSeconds % 60;
-
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-}
 
 // ---------------------------------------------------------------------------
 // Trash icon SVG path — matches the web version's bin icon (Font Awesome trash-alt)
@@ -114,21 +60,6 @@ const SectionHeader = styled.div`
     margin-bottom: 10px;
 `;
 
-const SectionPrefix = styled.span`
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 12px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-`;
-
-const SectionTitle = styled.span`
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-`;
 
 const MeetingRow = styled.div`
     display: flex;
@@ -235,6 +166,8 @@ class RecentList extends Component {
      * @returns {ReactElement}
      */
     render() {
+        const { t } = this.props;
+
         if (!this.props._recentList || this.props._recentList.length === 0) {
             return null;
         }
@@ -242,8 +175,7 @@ class RecentList extends Component {
         return (
             <div>
                 <SectionHeader>
-                    <SectionPrefix>or </SectionPrefix>
-                    <SectionTitle>rejoin one of your recent conference rooms</SectionTitle>
+                    { t('recentListLabel') }
                 </SectionHeader>
                 <Panel>
                     <ListWrapper>
@@ -305,6 +237,8 @@ class RecentList extends Component {
      * @returns {ReactElement}
      */
     _renderMeetingRow(conference) {
+        const { t } = this.props;
+
         return (
             <MeetingRow
                 key = { conference.startTime }
@@ -312,25 +246,28 @@ class RecentList extends Component {
                 onClick = { this._onJoinConference.bind(this, conference) }>
                 <DateColumn>
                     <DateText>
-                        {formatDate(conference.startTime)}
+                        { moment(conference.startTime).format('MMM D, YYYY') }
                     </DateText>
                     <TimeText>
-                        {formatTime(conference.startTime)}
+                        { moment(conference.startTime).format('h:mm A') }
                     </TimeText>
                 </DateColumn>
                 <InfoColumn>
                     <RoomName title = { this._formatRoomName(conference.room) }>
-                        {this._formatRoomName(conference.room)}
+                        { this._formatRoomName(conference.room) }
                     </RoomName>
                     <Duration>
-                        {formatDuration(conference.startTime, conference.endTime)}
+                        { moment.duration(
+                            moment(conference.endTime || Date.now())
+                                .diff(moment(conference.startTime))
+                        ).humanize() }
                     </Duration>
                 </InfoColumn>
                 <DeleteButton
                     className = 'delete-btn'
                     // eslint-disable-next-line react/jsx-no-bind
                     onClick = { this._onRemoveConference.bind(this, conference) }
-                    title = 'Remove'>
+                    title = { t('remove') }>
                     <svg
                         fill = 'currentColor'
                         height = '22'
@@ -391,7 +328,8 @@ class RecentList extends Component {
 
 RecentList.propTypes = {
     _recentList: PropTypes.array,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    t: PropTypes.func.isRequired
 };
 
 /**

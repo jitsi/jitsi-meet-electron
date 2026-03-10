@@ -230,22 +230,6 @@ function createJitsiMeetWindow() {
         }
     };
 
-    const windowOpenHandler = ({ url, frameName }) => {
-        const target = getPopupTarget(url, frameName);
-
-        if (!target || target === 'browser') {
-            openExternalLink(url);
-
-            return { action: 'deny' };
-        }
-
-        if (target === 'electron') {
-            return { action: 'allow' };
-        }
-
-        return { action: 'deny' };
-    };
-
     mainWindow = new BrowserWindow(options);
     windowState.manage(mainWindow);
     mainWindow.loadURL(indexURL);
@@ -330,11 +314,9 @@ function createJitsiMeetWindow() {
         callback(true);
     });
 
-    initPopupsConfigurationMain(mainWindow, windowOpenHandler);
-
-    // NOTE: PiP, screen sharing, and power monitor are set up on the
+    // NOTE: Popups configuration and SDK handlers are set up on the
     // meetingWindow (not the launcher) because the conference iframe
-    // only exists there.  See the 'open-meeting-window' handler below.
+    // only exists there. See the 'open-meeting-window' handler below.
 
     mainWindow.on('closed', () => {
         mainWindow = null;

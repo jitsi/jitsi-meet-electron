@@ -86,7 +86,7 @@ class RecentList extends Component {
                 key = { conference.startTime }
                 onClick = { this._onNavigateToConference(conference) }>
                 <ConferenceTitle>
-                    { conference.room }
+                    { decodeURIComponent(conference.room) }
                 </ConferenceTitle>
                 <TruncatedText>
                     { this._renderServerURL(conference.serverURL) }

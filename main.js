@@ -489,3 +489,15 @@ ipcMain.on('renderer-ready', () => {
 ipcMain.on('jitsi-open-url', (event, someUrl) => {
     openExternalLink(someUrl);
 });
+
+/**
+ * Restore the meeting window (e.g. from PiP).
+ */
+ipcMain.on('restore-meeting-window', () => {
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) {
+            mainWindow.restore();
+        }
+        mainWindow.focus();
+    }
+});

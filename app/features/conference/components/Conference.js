@@ -185,6 +185,9 @@ class Conference extends Component {
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
+        this._api.on('pipLeft', () => {
+            window.jitsiNodeAPI.ipc.send('restore-meeting-window');
+        });
         this._api.on('videoConferenceJoined',
             () => {
                 this.props.dispatch(conferenceJoined(this._conference));

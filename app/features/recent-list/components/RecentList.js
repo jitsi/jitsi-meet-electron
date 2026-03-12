@@ -60,6 +60,22 @@ const SectionHeader = styled.div`
     margin-bottom: 10px;
 `;
 
+const SectionPrefix = styled.span`
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+`;
+
+const SectionTitle = styled.span`
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+`;
+
 
 const MeetingRow = styled.div`
     display: flex;
@@ -175,7 +191,8 @@ class RecentList extends Component {
         return (
             <div>
                 <SectionHeader>
-                    { t('recentListLabel') }
+                    <SectionPrefix>{ t('recentListPrefix') } </SectionPrefix>
+                    <SectionTitle>{ t('recentListTitle') }</SectionTitle>
                 </SectionHeader>
                 <Panel>
                     <ListWrapper>
@@ -280,50 +297,8 @@ class RecentList extends Component {
             </MeetingRow>
         );
     }
-<<<<<<< HEAD
 
-    /**
-     * Returns formatted Server URL.
-     *
-     * @param {string} serverURL - Server URL.
-     * @returns {string} - Formatted server URL.
-     */
-    _renderServerURL(serverURL) {
-        if (!serverURL) {
-            return '';
-        }
 
-        // Strip protocol to make it cleaner.
-        return `${serverURL.replace('https://', '')}`;
-    }
-
-    /**
-     * Returns the duration of the conference in string format.
-     *
-     * @param {Object} conference - Conference Details.
-     * @returns {string} - Date/Time and Duration.
-     */
-    _renderDuration(conference) {
-        const { startTime, endTime } = conference;
-        const start = moment(startTime);
-        const end = moment(endTime || Date.now());
-
-        return moment.duration(end.diff(start)).humanize();
-    }
-
-    /**
-     * Returns the Date/Time of the conference in string format.
-     *
-     * @param {Object} conference - Conference Details.
-     * @returns {string} - Date/Time and Duration.
-     */
-    _renderStartTime(conference) {
-        const { startTime } = conference;
-
-        return moment(startTime).calendar();
-    }
-=======
->>>>>>> 9c09a3e (feat(two-window): redesigned Recent Meetings UI and two-window layout)
 }
 
 RecentList.propTypes = {

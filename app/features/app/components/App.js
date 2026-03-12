@@ -41,7 +41,23 @@ class App extends Component {
         // start listening on this events
         const removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
 
+        // Meeting window: navigate to /conference when main process sends conference data.
+        // Only the meeting window (identified by ?role=meeting query param) handles this.
+        const removeConferenceListener = window.jitsiNodeAPI.ipc.addListener(
+            'navigate-to-conference',
+            conference => {
+                // Only the meeting window should navigate to /conference.
+                const isMeetingWindow
+                    = window.location.search.includes('role=meeting');
+
+                if (isMeetingWindow) {
+                    this.props.dispatch(push('/conference', conference));
+                }
+            }
+        );
+
         this._listeners.push(removeListener);
+        this._listeners.push(removeConferenceListener);
 
         // send notification to main process
         window.jitsiNodeAPI.ipc.send('renderer-ready');
@@ -61,7 +77,9 @@ class App extends Component {
 
 
     /**
-     * Handler when main process contact us.
+     * Handler when main process contacts us with a protocol URL.
+     * In the two-window architecture, this opens the meeting in Window 2
+     * instead of navigating the launcher.
      *
      * @param {string} inputURL - String with room name.
      *
@@ -80,8 +98,8 @@ class App extends Component {
             return;
         }
 
-        // change route when we are notified
-        this.props.dispatch(push('/conference', conference));
+        // Open in the meeting window (Window 2), not in the launcher.
+        window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
     }
 
     /**

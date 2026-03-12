@@ -3,7 +3,6 @@ import Spinner from '@atlaskit/spinner';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 
 import i18n from '../../../i18n';
 import config from '../../config';
@@ -59,16 +58,9 @@ class Conference extends Component {
 
         this._loadConference();
 
-        // Set a timer for a timeout duration, if we haven't loaded the iframe by then,
-        // give up.
+        // Set a timer: if the iframe hasn't loaded by then, close the meeting window.
         this._loadTimer = setTimeout(() => {
-            this._navigateToHome(
-                {
-                    error: 'Loading error',
-                    type: 'error'
-                },
-                room,
-                serverURL);
+            window.jitsiNodeAPI.ipc.send('close-meeting-window');
         }, serverTimeout * 1000);
     }
 
@@ -110,7 +102,7 @@ class Conference extends Component {
     render() {
         return (
             <Wrapper innerRef = { this._ref }>
-                { this._maybeRenderLoadingIndicator() }
+                {this._maybeRenderLoadingIndicator()}
             </Wrapper>
         );
     }
@@ -217,32 +209,14 @@ class Conference extends Component {
     }
 
     /**
-     * Navigates to home screen (Welcome).
+     * Dispatches conference ended and closes the meeting window (Window 2).
      *
-     * @param {Event} event - Event by which the function is called.
-     * @param {string} room - Room name.
-     * @param {string} serverURL - Server URL.
-     * @returns {void}
-     */
-    _navigateToHome(event, room, serverURL) {
-        this.props.dispatch(push('/', {
-            error: event.type === 'error',
-            room,
-            serverURL
-        }));
-    }
-
-
-    /**
-     * Dispatches conference ended and navigates to home screen.
-     *
-     * @param {Event} event - Event by which the function is called.
      * @returns {void}
      * @private
      */
-    _onVideoConferenceEnded(event) {
+    _onVideoConferenceEnded() {
         this.props.dispatch(conferenceEnded(this._conference));
-        this._navigateToHome(event);
+        window.jitsiNodeAPI.ipc.send('close-meeting-window');
     }
 
 

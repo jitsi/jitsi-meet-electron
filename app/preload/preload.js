@@ -7,7 +7,7 @@ const {
 } = require('@jitsi/electron-sdk');
 const { ipcRenderer } = require('electron');
 
-const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready' ];
+const whitelistedIpcChannels = [ 'protocol-data-msg', 'renderer-ready', 'set-default-server' ];
 
 ipcRenderer.setMaxListeners(0);
 

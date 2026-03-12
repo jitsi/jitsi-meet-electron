@@ -9,6 +9,7 @@ import { ConnectedRouter as Router, push } from 'react-router-redux';
 import { Conference } from '../../conference';
 import config from '../../config';
 import { history } from '../../router';
+import { setServerURL } from '../../settings';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Welcome } from '../../welcome';
 
@@ -28,6 +29,7 @@ class App extends Component {
 
         this._listenOnProtocolMessages
             = this._listenOnProtocolMessages.bind(this);
+        this._onSetDefaultServer = this._onSetDefaultServer.bind(this);
 
         this._listeners = [];
     }
@@ -42,6 +44,11 @@ class App extends Component {
         const removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
 
         this._listeners.push(removeListener);
+
+        const removeSetDefaultServerListener
+            = window.jitsiNodeAPI.ipc.addListener('set-default-server', this._onSetDefaultServer);
+
+        this._listeners.push(removeSetDefaultServerListener);
 
         // send notification to main process
         window.jitsiNodeAPI.ipc.send('renderer-ready');
@@ -59,6 +66,16 @@ class App extends Component {
         listeners.forEach(removeListener => removeListener());
     }
 
+
+    /**
+     * Handler for the set-default-server IPC message from the main process.
+     *
+     * @param {string} serverURL - The default server URL passed via CLI.
+     * @returns {void}
+     */
+    _onSetDefaultServer(serverURL) {
+        this.props.dispatch(setServerURL(serverURL));
+    }
 
     /**
      * Handler when main process contact us.

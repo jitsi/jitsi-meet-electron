@@ -94,10 +94,6 @@ let mainWindow = null;
  */
 let meetingWindow = null;
 
-/**
- * Holds conference data until the meeting window renderer signals it is ready.
- */
-let pendingMeetingConference = null;
 
 let webrtcInternalsWindow = null;
 
@@ -480,17 +476,10 @@ ipcMain.on('renderer-ready', event => {
                 .send('protocol-data-msg', protocolDataForFrontApp);
         }
 
-        return;
+
     }
 
-    // Meeting window — send pending conference now that React is mounted
-    // and the navigate-to-conference listener is registered.
-    if (meetingWindow && event.sender.id === meetingWindow.webContents.id) {
-        if (pendingMeetingConference) {
-            meetingWindow.webContents.send('navigate-to-conference', pendingMeetingConference);
-            pendingMeetingConference = null;
-        }
-    }
+    // Meeting window is ready.
 });
 
 /**
@@ -568,9 +557,9 @@ ipcMain.on('open-meeting-window', (event, conference) => {
 
     meetingWindow.loadURL(indexURL);
 
-    // Store conference — sent to meeting window once its renderer-ready fires,
-    // guaranteeing the navigate-to-conference listener is already registered.
-    pendingMeetingConference = conference;
+    meetingWindow.webContents.once('did-finish-load', () => {
+        meetingWindow.webContents.send('navigate-to-conference', conference);
+    });
 
     // SDK setup — these need the window that hosts the conference iframe.
     initPopupsConfigurationMain(meetingWindow, windowOpenHandler);

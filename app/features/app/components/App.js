@@ -1,14 +1,10 @@
 
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router';
-import { ConnectedRouter as Router, push } from 'react-router-redux';
 
 import { Conference } from '../../conference';
 import config from '../../config';
-import { history } from '../../router';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Welcome } from '../../welcome';
 
@@ -26,6 +22,11 @@ class App extends Component {
 
         document.title = config.appName;
 
+        this.state = {
+            conference: null,
+            isMeetingWindow: window.location.search.includes('role=meeting')
+        };
+
         this._listenOnProtocolMessages
             = this._listenOnProtocolMessages.bind(this);
 
@@ -41,17 +42,12 @@ class App extends Component {
         // start listening on this events
         const removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
 
-        // Meeting window: navigate to /conference when main process sends conference data.
-        // Only the meeting window (identified by ?role=meeting query param) handles this.
+        // Meeting window: render conference when main process sends conference data.
         const removeConferenceListener = window.jitsiNodeAPI.ipc.addListener(
             'navigate-to-conference',
             conference => {
-                // Only the meeting window should navigate to /conference.
-                const isMeetingWindow
-                    = window.location.search.includes('role=meeting');
-
-                if (isMeetingWindow) {
-                    this.props.dispatch(push('/conference', conference));
+                if (this.state.isMeetingWindow) {
+                    this.setState({ conference });
                 }
             }
         );
@@ -109,26 +105,26 @@ class App extends Component {
      * @returns {ReactElement}
      */
     render() {
+        const { isMeetingWindow, conference } = this.state;
+        let content;
+
+        if (isMeetingWindow) {
+            // Wait for the IPC message to deliver the conference details.
+            if (!conference) {
+                return null;
+            }
+
+            content = <Conference conference = { conference } />;
+        } else {
+            content = <Welcome />;
+        }
+
         return (
             <AtlasKitThemeProvider mode = 'dark'>
-                <Router history = { history }>
-                    <Switch>
-                        <Route
-                            component = { Welcome }
-                            exact = { true }
-                            path = '/' />
-                        <Route
-                            component = { Conference }
-                            path = '/conference' />
-                    </Switch>
-                </Router>
+                { content }
             </AtlasKitThemeProvider>
         );
     }
 }
-
-App.propTypes = {
-    dispatch: PropTypes.func.isRequired
-};
 
 export default connect()(App);

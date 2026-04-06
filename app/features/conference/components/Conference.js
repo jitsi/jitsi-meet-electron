@@ -45,9 +45,9 @@ class Conference extends Component {
      * @returns {void}
      */
     componentDidMount() {
-        const room = this.props.location.state.room;
+        const room = this.props.conference.room;
         const serverTimeout = this.props._serverTimeout || config.defaultServerTimeout;
-        const serverURL = this.props.location.state.serverURL
+        const serverURL = this.props.conference.serverURL
             || this.props._serverURL
             || config.defaultServerURL;
 
@@ -85,7 +85,11 @@ class Conference extends Component {
      * @returns {void}
      */
     componentDidUpdate(prevProps) {
-        if (prevProps.location.key !== this.props.location.key) {
+        const prevConference = prevProps.conference || {};
+        const currentConference = this.props.conference || {};
+
+        if (prevConference.room !== currentConference.room
+            || prevConference.serverURL !== currentConference.serverURL) {
 
             // Simulate a re-mount so the new meeting is joined.
             this._iframeLoaded = false;
@@ -251,8 +255,8 @@ Conference.propTypes = {
     _disableAGC: PropTypes.bool,
     _serverTimeout: PropTypes.number,
     _serverURL: PropTypes.string,
-    dispatch: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired
+    conference: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
 };
 
 /**

@@ -11,10 +11,9 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { conferenceJoined } from '../../conference';
 import { Navbar } from '../../navbar';
 import { Onboarding, startOnboarding } from '../../onboarding';
-import { RecentList } from '../../recent-list';
+import { RecentList, addRecentListEntry } from '../../recent-list';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
 
@@ -35,7 +34,7 @@ class Welcome extends Component {
         let url = '';
 
         // Check and parse url if exists in location state.
-        if (props.location.state) {
+        if (props.location && props.location.state) {
             const { room, serverURL } = props.location.state;
 
             if (room && serverURL) {
@@ -92,8 +91,8 @@ class Welcome extends Component {
             <Page navigation = { <Navbar /> }>
                 <AtlasKitThemeProvider mode = 'light'>
                     <Wrapper>
-                        {this._renderHeader()}
-                        {this._renderBody()}
+                        { this._renderHeader() }
+                        { this._renderBody() }
                         <Onboarding section = 'welcome-page' />
                     </Wrapper>
                 </AtlasKitThemeProvider>
@@ -167,10 +166,7 @@ class Welcome extends Component {
             return;
         }
 
-        // Record meeting attempt immediately (matches web behaviour:
-        // appears in recent list as soon as you start joining, not only after entering)
-        this.props.dispatch(conferenceJoined(conference));
-
+        this.props.dispatch(addRecentListEntry(conference));
         window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
     }
 
@@ -207,7 +203,7 @@ class Welcome extends Component {
      * @returns {ReactElement}
      */
     _renderHeader() {
-        const locationState = this.props.location.state;
+        const locationState = this.props.location && this.props.location.state;
         const locationError = locationState && locationState.error;
         const { t } = this.props;
 
@@ -215,7 +211,7 @@ class Welcome extends Component {
             <Header>
                 <SpotlightTarget name = 'conference-url'>
                     <Form onSubmit = { this._onFormSubmit }>
-                        <Label>{t('enterConferenceNameOrUrl')} </Label>
+                        <Label>{ t('enterConferenceNameOrUrl') } </Label>
                         <FieldWrapper>
                             <FieldTextStateless
                                 autoFocus = { true }
@@ -230,7 +226,7 @@ class Welcome extends Component {
                                 appearance = 'primary'
                                 onClick = { this._onJoin }
                                 type = 'button'>
-                                {t('go')}
+                                { t('go') }
                             </Button>
                         </FieldWrapper>
                     </Form>
@@ -265,7 +261,7 @@ class Welcome extends Component {
 
 Welcome.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.object,
     t: PropTypes.func.isRequired
 };
 

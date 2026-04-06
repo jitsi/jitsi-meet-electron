@@ -1,7 +1,6 @@
+import { CONFERENCE_ENDED } from '../conference';
 
-import { CONFERENCE_ENDED, CONFERENCE_JOINED } from '../conference';
-
-import { CONFERENCE_REMOVED } from './actionTypes';
+import { ADD_RECENT_LIST_ENTRY, CONFERENCE_REMOVED } from './actionTypes';
 
 
 const DEFAULT_STATE = {
@@ -24,7 +23,7 @@ export default (state = DEFAULT_STATE, action) => {
                 _updateEndtimeOfConference(state.recentList, action.conference)
         };
 
-    case CONFERENCE_JOINED:
+    case ADD_RECENT_LIST_ENTRY:
         return {
             ...state,
             recentList: _insertConference(state.recentList, action.conference)

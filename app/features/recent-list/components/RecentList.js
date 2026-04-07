@@ -8,7 +8,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { conferenceRemoved } from '../actions';
+import { addRecentListEntry, conferenceRemoved } from '../actions';
 import {
     ConferenceCard,
     ConferenceTitle,
@@ -56,7 +56,10 @@ class RecentList extends Component {
      * @returns {void}
      */
     _onNavigateToConference(conference) {
-        return () => window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
+        return () => {
+            this.props.dispatch(addRecentListEntry(conference));
+            window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
+        };
     }
 
     /**

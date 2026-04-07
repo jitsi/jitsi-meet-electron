@@ -429,11 +429,7 @@ app.on('second-instance', (event, commandLine) => {
 });
 
 app.on('window-all-closed', () => {
-    // Only quit when the launcher (mainWindow) is closed.
-    // Closing the meeting window alone must NOT quit the app.
-    if (mainWindow === null) {
-        app.quit();
-    }
+    app.quit();
 });
 
 // remove so we can register each time as we run the app.
@@ -515,11 +511,10 @@ ipcMain.on('open-meeting-window', (event, conference) => {
     }
 
     const basePath = isDev ? __dirname : app.getAppPath();
-    const indexURL = URL.format({
-        pathname: path.resolve(basePath, './build/index.html'),
+    const meetingURL = URL.format({
+        pathname: path.resolve(basePath, './build/meeting.html'),
         protocol: 'file:',
-        slashes: true,
-        query: { role: 'meeting' }
+        slashes: true
     });
 
     const windowOpenHandler = ({ url, frameName }) => {
@@ -555,7 +550,7 @@ ipcMain.on('open-meeting-window', (event, conference) => {
         }
     });
 
-    meetingWindow.loadURL(indexURL);
+    meetingWindow.loadURL(meetingURL);
 
     meetingWindow.webContents.once('did-finish-load', () => {
         meetingWindow.webContents.send('navigate-to-conference', conference);

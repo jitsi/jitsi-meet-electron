@@ -7,14 +7,24 @@ module.exports = {
     // The renderer code rus in BrowserWindow without node support so we must
     // target a web platform.
     target: 'web',
-    entry: { app: './app/index.js' },
+    entry: {
+        app: './app/index.js',
+        meeting: './app/meeting.js'
+    },
     performance: {
         maxAssetSize: 1.5 * 1024 * 1024,
         maxEntrypointSize: 1.5 * 1024 * 1024
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './app/index.html'
+            template: './app/index.html',
+            filename: 'index.html',
+            chunks: [ 'app' ]
+        }),
+        new HtmlWebpackPlugin({
+            template: './app/index.html',
+            filename: 'meeting.html',
+            chunks: [ 'meeting' ]
         })
     ],
     output: {

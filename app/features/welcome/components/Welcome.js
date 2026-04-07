@@ -34,7 +34,7 @@ class Welcome extends Component {
         let url = '';
 
         // Check and parse url if exists in location state.
-        if (props.location && props.location.state) {
+        if (props.location?.state) {
             const { room, serverURL } = props.location.state;
 
             if (room && serverURL) {
@@ -203,7 +203,7 @@ class Welcome extends Component {
      * @returns {ReactElement}
      */
     _renderHeader() {
-        const locationState = this.props.location && this.props.location.state;
+        const locationState = this.props.location?.state;
         const locationError = locationState && locationState.error;
         const { t } = this.props;
 

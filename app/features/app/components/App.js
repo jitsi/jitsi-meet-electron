@@ -1,4 +1,5 @@
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -92,5 +93,9 @@ class App extends Component {
         );
     }
 }
+
+App.propTypes = {
+    dispatch: PropTypes.func
+};
 
 export default connect()(App);

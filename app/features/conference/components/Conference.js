@@ -46,7 +46,6 @@ class Conference extends Component {
      */
     componentDidMount() {
         const room = this.props.conference.room;
-        const serverTimeout = this.props._serverTimeout || config.defaultServerTimeout;
         const serverURL = this.props.conference.serverURL
             || this.props._serverURL
             || config.defaultServerURL;
@@ -58,10 +57,7 @@ class Conference extends Component {
 
         this._loadConference();
 
-        // Set a timer: if the iframe hasn't loaded by then, close the meeting window.
-        this._loadTimer = setTimeout(() => {
-            window.jitsiNodeAPI.ipc.send('close-meeting-window');
-        }, serverTimeout * 1000);
+
     }
 
     /**
@@ -70,9 +66,7 @@ class Conference extends Component {
      * @returns {void}
      */
     componentWillUnmount() {
-        if (this._loadTimer) {
-            clearTimeout(this._loadTimer);
-        }
+
         if (this._api) {
             this._api.dispose();
         }
@@ -239,10 +233,6 @@ class Conference extends Component {
 
         this._iframeLoaded = true;
 
-        if (this._loadTimer) {
-            clearTimeout(this._loadTimer);
-            this._loadTimer = null;
-        }
 
         this.setState({
             isLoading: false

@@ -8,7 +8,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { addRecentListEntry, conferenceRemoved } from '../actions';
+import { addRecentListEntry, removeRecentListEntry } from '../actions';
 import {
     ConferenceCard,
     ConferenceTitle,
@@ -70,7 +70,7 @@ class RecentList extends Component {
      */
     _onRemoveConference(conference) {
         return e => {
-            this.props.dispatch(conferenceRemoved(conference));
+            this.props.dispatch(removeRecentListEntry(conference));
             e.stopPropagation();
         };
     }

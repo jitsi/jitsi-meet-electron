@@ -1,6 +1,6 @@
 import { CONFERENCE_ENDED } from '../conference';
 
-import { ADD_RECENT_LIST_ENTRY, CONFERENCE_REMOVED } from './actionTypes';
+import { ADD_RECENT_LIST_ENTRY, REMOVE_RECENT_LIST_ENTRY } from './actionTypes';
 
 
 const DEFAULT_STATE = {
@@ -29,7 +29,7 @@ export default (state = DEFAULT_STATE, action) => {
             recentList: _insertConference(state.recentList, action.conference)
         };
 
-    case CONFERENCE_REMOVED:
+    case REMOVE_RECENT_LIST_ENTRY:
         return {
             ...state,
             recentList: _removeConference(state.recentList, action.conference)

@@ -6,10 +6,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { compose } from 'redux';
 
-import { conferenceRemoved } from '../actions';
+import { addRecentListEntry, removeRecentListEntry } from '../actions';
 import {
     ConferenceCard,
     ConferenceTitle,
@@ -38,7 +37,7 @@ class RecentList extends Component {
 
         return (
             <RecentListWrapper>
-                <Label>{ t('recentListLabel') }</Label>
+                <Label>{t('recentListLabel')}</Label>
                 <RecentListContainer>
                     {
                         this.props._recentList.map(
@@ -51,13 +50,16 @@ class RecentList extends Component {
     }
 
     /**
-     * Creates a handler for navigatint to a conference.
+     * Creates a handler for navigating to a conference.
      *
      * @param {Object} conference - Conference Details.
      * @returns {void}
      */
     _onNavigateToConference(conference) {
-        return () => this.props.dispatch(push('/conference', conference));
+        return () => {
+            this.props.dispatch(addRecentListEntry(conference));
+            window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
+        };
     }
 
     /**
@@ -68,7 +70,7 @@ class RecentList extends Component {
      */
     _onRemoveConference(conference) {
         return e => {
-            this.props.dispatch(conferenceRemoved(conference));
+            this.props.dispatch(removeRecentListEntry(conference));
             e.stopPropagation();
         };
     }
@@ -86,16 +88,16 @@ class RecentList extends Component {
                 key = { conference.startTime }
                 onClick = { this._onNavigateToConference(conference) }>
                 <ConferenceTitle>
-                    { conference.room }
+                    {conference.room}
                 </ConferenceTitle>
                 <TruncatedText>
-                    { this._renderServerURL(conference.serverURL) }
+                    {this._renderServerURL(conference.serverURL)}
                 </TruncatedText>
                 <TruncatedText>
-                    { this._renderStartTime(conference) }
+                    {this._renderStartTime(conference)}
                 </TruncatedText>
                 <TruncatedText>
-                    { this._renderDuration(conference) }
+                    {this._renderDuration(conference)}
                 </TruncatedText>
                 <Button
                     appearance = 'subtle'

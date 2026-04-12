@@ -3,7 +3,6 @@ import Spinner from '@atlaskit/spinner';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 
 import i18n from '../../../i18n';
 import config from '../../config';
@@ -46,9 +45,8 @@ class Conference extends Component {
      * @returns {void}
      */
     componentDidMount() {
-        const room = this.props.location.state.room;
-        const serverTimeout = this.props._serverTimeout || config.defaultServerTimeout;
-        const serverURL = this.props.location.state.serverURL
+        const room = this.props.conference.room;
+        const serverURL = this.props.conference.serverURL
             || this.props._serverURL
             || config.defaultServerURL;
 
@@ -59,17 +57,7 @@ class Conference extends Component {
 
         this._loadConference();
 
-        // Set a timer for a timeout duration, if we haven't loaded the iframe by then,
-        // give up.
-        this._loadTimer = setTimeout(() => {
-            this._navigateToHome(
-                {
-                    error: 'Loading error',
-                    type: 'error'
-                },
-                room,
-                serverURL);
-        }, serverTimeout * 1000);
+
     }
 
     /**
@@ -78,9 +66,7 @@ class Conference extends Component {
      * @returns {void}
      */
     componentWillUnmount() {
-        if (this._loadTimer) {
-            clearTimeout(this._loadTimer);
-        }
+
         if (this._api) {
             this._api.dispose();
         }
@@ -93,7 +79,11 @@ class Conference extends Component {
      * @returns {void}
      */
     componentDidUpdate(prevProps) {
-        if (prevProps.location.key !== this.props.location.key) {
+        const prevConference = prevProps.conference || {};
+        const currentConference = this.props.conference || {};
+
+        if (prevConference.room !== currentConference.room
+            || prevConference.serverURL !== currentConference.serverURL) {
 
             // Simulate a re-mount so the new meeting is joined.
             this._iframeLoaded = false;
@@ -110,7 +100,7 @@ class Conference extends Component {
     render() {
         return (
             <Wrapper innerRef = { this._ref }>
-                { this._maybeRenderLoadingIndicator() }
+                {this._maybeRenderLoadingIndicator()}
             </Wrapper>
         );
     }
@@ -217,32 +207,14 @@ class Conference extends Component {
     }
 
     /**
-     * Navigates to home screen (Welcome).
+     * Dispatches conference ended and closes the meeting window (Window 2).
      *
-     * @param {Event} event - Event by which the function is called.
-     * @param {string} room - Room name.
-     * @param {string} serverURL - Server URL.
-     * @returns {void}
-     */
-    _navigateToHome(event, room, serverURL) {
-        this.props.dispatch(push('/', {
-            error: event.type === 'error',
-            room,
-            serverURL
-        }));
-    }
-
-
-    /**
-     * Dispatches conference ended and navigates to home screen.
-     *
-     * @param {Event} event - Event by which the function is called.
      * @returns {void}
      * @private
      */
-    _onVideoConferenceEnded(event) {
+    _onVideoConferenceEnded() {
         this.props.dispatch(conferenceEnded(this._conference));
-        this._navigateToHome(event);
+        window.jitsiNodeAPI.ipc.send('close-meeting-window');
     }
 
 
@@ -261,10 +233,6 @@ class Conference extends Component {
 
         this._iframeLoaded = true;
 
-        if (this._loadTimer) {
-            clearTimeout(this._loadTimer);
-            this._loadTimer = null;
-        }
 
         this.setState({
             isLoading: false
@@ -277,8 +245,8 @@ Conference.propTypes = {
     _disableAGC: PropTypes.bool,
     _serverTimeout: PropTypes.number,
     _serverURL: PropTypes.string,
-    dispatch: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired
+    conference: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
 };
 
 /**

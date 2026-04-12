@@ -14,7 +14,14 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './app/index.html'
+            template: './app/index.html',
+            filename: 'index.html',
+            chunks: [ 'app' ]
+        }),
+        new HtmlWebpackPlugin({
+            template: './app/meeting.html',
+            filename: 'meeting.html',
+            chunks: [ 'app' ]
         })
     ],
     output: {

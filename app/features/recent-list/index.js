@@ -1,4 +1,4 @@
 export * from './components';
-export * from './styled';
+export * from './actions';
 
 export { default as reducer } from './reducer';

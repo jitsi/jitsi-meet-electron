@@ -9,12 +9,11 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { compose } from 'redux';
 
 import { Navbar } from '../../navbar';
 import { Onboarding, startOnboarding } from '../../onboarding';
-import { RecentList } from '../../recent-list';
+import { RecentList, addRecentListEntry } from '../../recent-list';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
 
@@ -35,7 +34,7 @@ class Welcome extends Component {
         let url = '';
 
         // Check and parse url if exists in location state.
-        if (props.location.state) {
+        if (props.location?.state) {
             const { room, serverURL } = props.location.state;
 
             if (room && serverURL) {
@@ -167,7 +166,8 @@ class Welcome extends Component {
             return;
         }
 
-        this.props.dispatch(push('/conference', conference));
+        this.props.dispatch(addRecentListEntry(conference));
+        window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
     }
 
 
@@ -203,7 +203,7 @@ class Welcome extends Component {
      * @returns {ReactElement}
      */
     _renderHeader() {
-        const locationState = this.props.location.state;
+        const locationState = this.props.location?.state;
         const locationError = locationState && locationState.error;
         const { t } = this.props;
 
@@ -261,7 +261,7 @@ class Welcome extends Component {
 
 Welcome.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired,
+    location: PropTypes.object,
     t: PropTypes.func.isRequired
 };
 

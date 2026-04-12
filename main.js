@@ -88,6 +88,13 @@ if (isDev) {
  */
 let mainWindow = null;
 
+/**
+ * Window 2: Meeting window — created on demand, full size.
+ * IMPORTANT: Must be defined as global to avoid garbage collection.
+ */
+let meetingWindow = null;
+
+
 let webrtcInternalsWindow = null;
 
 /**
@@ -219,22 +226,6 @@ function createJitsiMeetWindow() {
         }
     };
 
-    const windowOpenHandler = ({ url, frameName }) => {
-        const target = getPopupTarget(url, frameName);
-
-        if (!target || target === 'browser') {
-            openExternalLink(url);
-
-            return { action: 'deny' };
-        }
-
-        if (target === 'electron') {
-            return { action: 'allow' };
-        }
-
-        return { action: 'deny' };
-    };
-
     mainWindow = new BrowserWindow(options);
     windowState.manage(mainWindow);
     mainWindow.loadURL(indexURL);
@@ -319,13 +310,9 @@ function createJitsiMeetWindow() {
         callback(true);
     });
 
-    initPopupsConfigurationMain(mainWindow, windowOpenHandler);
-    setupPictureInPictureMain(mainWindow);
-    setupPowerMonitorMain(mainWindow);
-    setupScreenSharingMain(mainWindow, config.default.appName, pkgJson.build.appId);
-    if (ENABLE_REMOTE_CONTROL) {
-        setupRemoteControlMain(mainWindow);
-    }
+    // NOTE: Popups configuration and SDK handlers are set up on the
+    // meetingWindow (not the launcher) because the conference iframe
+    // only exists there. See the 'open-meeting-window' handler below.
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -473,14 +460,22 @@ app.on('open-url', (event, data) => {
 
 /**
  * This is to notify main.js [this] that front app is ready to receive messages.
+ * Called by BOTH the launcher and the meeting window on componentDidMount.
  */
-ipcMain.on('renderer-ready', () => {
-    rendererReady = true;
-    if (protocolDataForFrontApp) {
-        mainWindow
-            .webContents
-            .send('protocol-data-msg', protocolDataForFrontApp);
+ipcMain.on('renderer-ready', event => {
+    // Launcher window — existing behaviour unchanged.
+    if (mainWindow && event.sender.id === mainWindow.webContents.id) {
+        rendererReady = true;
+        if (protocolDataForFrontApp) {
+            mainWindow
+                .webContents
+                .send('protocol-data-msg', protocolDataForFrontApp);
+        }
+
+
     }
+
+    // Meeting window is ready.
 });
 
 /**
@@ -494,10 +489,108 @@ ipcMain.on('jitsi-open-url', (event, someUrl) => {
  * Restore the meeting window (e.g. from PiP).
  */
 ipcMain.on('restore-meeting-window', () => {
-    if (mainWindow) {
-        if (mainWindow.isMinimized()) {
-            mainWindow.restore();
+    if (meetingWindow) {
+        if (meetingWindow.isMinimized()) {
+            meetingWindow.restore();
         }
-        mainWindow.focus();
+        meetingWindow.focus();
+    }
+});
+
+/**
+ * Open the meeting in Window 2.
+ * If a meeting window already exists, focus it and navigate to the new conference.
+ * Otherwise create a new one.
+ */
+ipcMain.on('open-meeting-window', (event, conference) => {
+    if (meetingWindow) {
+        meetingWindow.focus();
+        meetingWindow.webContents.send('navigate-to-conference', conference);
+
+        return;
+    }
+
+    const basePath = isDev ? __dirname : app.getAppPath();
+    const meetingURL = URL.format({
+        pathname: path.resolve(basePath, './build/meeting.html'),
+        protocol: 'file:',
+        slashes: true
+    });
+
+    const windowOpenHandler = ({ url, frameName }) => {
+        const target = getPopupTarget(url, frameName);
+
+        if (!target || target === 'browser') {
+            openExternalLink(url);
+
+            return { action: 'deny' };
+        }
+
+        if (target === 'electron') {
+            return { action: 'allow' };
+        }
+
+        return { action: 'deny' };
+    };
+
+    meetingWindow = new BrowserWindow({
+        width: 1200,
+        height: 800,
+        minWidth: 800,
+        minHeight: 600,
+        icon: path.resolve(basePath, './resources/icon.png'),
+        resizable: true,
+        show: false,
+        webPreferences: {
+            enableBlinkFeatures: 'WebAssemblyCSP',
+            contextIsolation: false,
+            nodeIntegration: false,
+            preload: path.resolve(basePath, './build/preload.js'),
+            sandbox: false
+        }
+    });
+
+    meetingWindow.loadURL(meetingURL);
+
+    meetingWindow.webContents.once('did-finish-load', () => {
+        meetingWindow.webContents.send('navigate-to-conference', conference);
+    });
+
+    // SDK setup — these need the window that hosts the conference iframe.
+    initPopupsConfigurationMain(meetingWindow, windowOpenHandler);
+    setupPictureInPictureMain(meetingWindow);
+    setupPowerMonitorMain(meetingWindow);
+    setupScreenSharingMain(meetingWindow, config.default.appName, pkgJson.build.appId);
+    if (ENABLE_REMOTE_CONTROL) {
+        setupRemoteControlMain(meetingWindow);
+    }
+
+    // Block redirects — same protection as the launcher window.
+    meetingWindow.webContents.addListener('will-redirect', (ev, url) => {
+        const allowedProtocols = [ 'http:', 'https:', 'ws:', 'wss:' ];
+        const requestedUrl = new URL.URL(url);
+
+        if (!allowedProtocols.includes(requestedUrl.protocol)) {
+            console.warn(`Disallowing redirect to ${url}`);
+            ev.preventDefault();
+        }
+    });
+
+    // Closing the meeting window must NOT quit the app — launcher stays open.
+    meetingWindow.on('closed', () => {
+        meetingWindow = null;
+    });
+
+    meetingWindow.once('ready-to-show', () => {
+        meetingWindow.show();
+    });
+});
+
+/**
+ * Close the meeting window — called by renderer when End Call is clicked.
+ */
+ipcMain.on('close-meeting-window', () => {
+    if (meetingWindow) {
+        meetingWindow.close();
     }
 });

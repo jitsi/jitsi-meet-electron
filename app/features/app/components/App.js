@@ -1,19 +1,15 @@
-
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router';
-import { ConnectedRouter as Router, push } from 'react-router-redux';
 
-import { Conference } from '../../conference';
 import config from '../../config';
-import { history } from '../../router';
+import { addRecentListEntry } from '../../recent-list/actions';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Welcome } from '../../welcome';
 
 /**
- * Main component encapsulating the entire application.
+ * Main component encapsulating the Launcher application.
  */
 class App extends Component {
     /**
@@ -28,8 +24,6 @@ class App extends Component {
 
         this._listenOnProtocolMessages
             = this._listenOnProtocolMessages.bind(this);
-
-        this._listeners = [];
     }
 
     /**
@@ -39,9 +33,7 @@ class App extends Component {
      */
     componentDidMount() {
         // start listening on this events
-        const removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
-
-        this._listeners.push(removeListener);
+        this._removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
 
         // send notification to main process
         window.jitsiNodeAPI.ipc.send('renderer-ready');
@@ -53,15 +45,16 @@ class App extends Component {
      * @returns {void}
      */
     componentWillUnmount() {
-        const listeners = this._listeners;
-
-        this._listeners = [];
-        listeners.forEach(removeListener => removeListener());
+        if (this._removeListener) {
+            this._removeListener();
+        }
     }
 
 
     /**
-     * Handler when main process contact us.
+     * Handler when main process contacts us with a protocol URL.
+     * In the two-window architecture, this opens the meeting in Window 2
+     * instead of navigating the launcher.
      *
      * @param {string} inputURL - String with room name.
      *
@@ -80,8 +73,10 @@ class App extends Component {
             return;
         }
 
-        // change route when we are notified
-        this.props.dispatch(push('/conference', conference));
+        this.props.dispatch(addRecentListEntry(conference));
+
+        // Open in the meeting window (Window 2), not in the launcher.
+        window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
     }
 
     /**
@@ -93,24 +88,14 @@ class App extends Component {
     render() {
         return (
             <AtlasKitThemeProvider mode = 'dark'>
-                <Router history = { history }>
-                    <Switch>
-                        <Route
-                            component = { Welcome }
-                            exact = { true }
-                            path = '/' />
-                        <Route
-                            component = { Conference }
-                            path = '/conference' />
-                    </Switch>
-                </Router>
+                <Welcome />
             </AtlasKitThemeProvider>
         );
     }
 }
 
 App.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func
 };
 
 export default connect()(App);

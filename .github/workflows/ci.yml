@@ -15,8 +15,8 @@ jobs:
     name: Linux
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6
+    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f  # v6
       with:
         node-version-file: '.nvmrc'
     - name: Build it
@@ -25,7 +25,7 @@ jobs:
       run: |
         npm ci
         npm run dist
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6
       with:
         name: linux-binaries
         path: |
@@ -39,8 +39,8 @@ jobs:
     name: macOS
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6
+    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f  # v6
       with:
         node-version-file: '.nvmrc'
     - name: Prepare for app signing and notarization
@@ -60,7 +60,7 @@ jobs:
       run: |
         npm ci
         npm run dist
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6
       with:
         name: mac-binaries
         path: |
@@ -71,8 +71,8 @@ jobs:
     name: Windows
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6
+    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f  # v6
       with:
         node-version-file: '.nvmrc'
     - name: Build it
@@ -81,7 +81,7 @@ jobs:
       run: |
         npm ci
         npm run dist
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6
       with:
         name: windows-binaries
         path: |
@@ -90,8 +90,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6
+    - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f  # v6
       with:
         node-version-file: '.nvmrc'
     - run: npm ci

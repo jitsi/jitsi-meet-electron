@@ -17,10 +17,6 @@ import {
     TruncatedText
 } from '../styled';
 
-const DAY_SECONDS = 24 * 60 * 60;
-const HOUR_SECONDS = 60 * 60;
-const MINUTE_SECONDS = 60;
-
 
 /**
  * Recent List Component.
@@ -99,9 +95,6 @@ class RecentList extends Component {
                 <TruncatedText>
                     {this._renderStartTime(conference)}
                 </TruncatedText>
-                <TruncatedText>
-                    {this._renderDuration(conference)}
-                </TruncatedText>
                 <Button
                     appearance = 'subtle'
                     iconBefore = { <CrossIcon primaryColor = 'white' /> }
@@ -124,37 +117,6 @@ class RecentList extends Component {
 
         // Strip protocol to make it cleaner.
         return `${serverURL.replace('https://', '')}`;
-    }
-
-    /**
-     * Returns the duration of the conference in string format.
-     *
-     * @param {Object} conference - Conference Details.
-     * @returns {string} - Date/Time and Duration.
-     */
-    _renderDuration(conference) {
-        const { startTime, endTime } = conference;
-
-        if (typeof startTime !== 'number') {
-            return '';
-        }
-
-        const endTimestamp = typeof endTime === 'number' ? endTime : Date.now();
-        const totalSeconds = Math.max(0, Math.round((endTimestamp - startTime) / 1000));
-        const days = Math.floor(totalSeconds / DAY_SECONDS);
-        const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
-        const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
-        const seconds = totalSeconds % MINUTE_SECONDS;
-        const formatter = new Intl.DurationFormat(navigator.language, {
-            style: 'short'
-        });
-
-        return formatter.format({
-            days,
-            hours,
-            minutes,
-            seconds
-        });
     }
 
     /**

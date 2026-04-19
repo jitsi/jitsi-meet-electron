@@ -1,7 +1,6 @@
 
 import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -17,6 +16,10 @@ import {
     RecentListWrapper,
     TruncatedText
 } from '../styled';
+
+const DAY_SECONDS = 24 * 60 * 60;
+const HOUR_SECONDS = 60 * 60;
+const MINUTE_SECONDS = 60;
 
 
 /**
@@ -131,10 +134,32 @@ class RecentList extends Component {
      */
     _renderDuration(conference) {
         const { startTime, endTime } = conference;
-        const start = moment(startTime);
-        const end = moment(endTime || Date.now());
+        const startTimestamp = Date.parse(startTime);
+        const endTimestamp = Date.parse(endTime || Date.now());
 
-        return moment.duration(end.diff(start)).humanize();
+        if (Number.isNaN(startTimestamp) || Number.isNaN(endTimestamp)) {
+            return '';
+        }
+
+        const totalSeconds = Math.max(0, Math.round((endTimestamp - startTimestamp) / 1000));
+        const days = Math.floor(totalSeconds / DAY_SECONDS);
+        const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
+        const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
+        const seconds = totalSeconds % MINUTE_SECONDS;
+
+        if (days > 0) {
+            return `${days}d ${hours}h`;
+        }
+
+        if (hours > 0) {
+            return `${hours}h ${minutes}m`;
+        }
+
+        if (minutes > 0) {
+            return `${minutes}m ${seconds}s`;
+        }
+
+        return `${seconds}s`;
     }
 
     /**
@@ -145,8 +170,16 @@ class RecentList extends Component {
      */
     _renderStartTime(conference) {
         const { startTime } = conference;
+        const timestamp = Date.parse(startTime);
 
-        return moment(startTime).calendar();
+        if (Number.isNaN(timestamp)) {
+            return '';
+        }
+
+        return new Intl.DateTimeFormat(undefined, {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        }).format(timestamp);
     }
 }
 

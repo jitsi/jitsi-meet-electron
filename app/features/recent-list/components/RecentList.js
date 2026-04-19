@@ -134,14 +134,13 @@ class RecentList extends Component {
      */
     _renderDuration(conference) {
         const { startTime, endTime } = conference;
-        const startTimestamp = this._parseTimestamp(startTime);
-        const endTimestamp = endTime ? this._parseTimestamp(endTime) : Date.now();
 
-        if (Number.isNaN(startTimestamp) || Number.isNaN(endTimestamp)) {
+        if (typeof startTime !== 'number') {
             return '';
         }
 
-        const totalSeconds = Math.max(0, Math.round((endTimestamp - startTimestamp) / 1000));
+        const endTimestamp = typeof endTime === 'number' ? endTime : Date.now();
+        const totalSeconds = Math.max(0, Math.round((endTimestamp - startTime) / 1000));
         const days = Math.floor(totalSeconds / DAY_SECONDS);
         const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
         const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
@@ -166,31 +165,17 @@ class RecentList extends Component {
      */
     _renderStartTime(conference) {
         const { startTime } = conference;
-        const timestamp = this._parseTimestamp(startTime);
 
-        if (Number.isNaN(timestamp)) {
+        if (typeof startTime !== 'number') {
             return '';
         }
 
         return new Intl.DateTimeFormat(navigator.language, {
             dateStyle: 'medium',
             timeStyle: 'short'
-        }).format(timestamp);
+        }).format(startTime);
     }
 
-    /**
-     * Parses a timestamp.
-     *
-     * @param {string|number} time - Time value.
-     * @returns {number}
-     */
-    _parseTimestamp(time) {
-        if (typeof time === 'number') {
-            return time;
-        }
-
-        return Date.parse(time);
-    }
 }
 
 RecentList.propTypes = {

@@ -20,11 +20,6 @@ import {
 const DAY_SECONDS = 24 * 60 * 60;
 const HOUR_SECONDS = 60 * 60;
 const MINUTE_SECONDS = 60;
-const durationFormatter = typeof Intl.DurationFormat === 'function'
-    ? new Intl.DurationFormat(undefined, {
-        style: 'short'
-    })
-    : undefined;
 const dateTimeFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: 'medium',
     timeStyle: 'short'
@@ -155,16 +150,6 @@ class RecentList extends Component {
         const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
         const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
         const seconds = totalSeconds % MINUTE_SECONDS;
-
-        if (durationFormatter) {
-            return durationFormatter.format({
-                days,
-                hours,
-                minutes,
-                seconds
-            });
-        }
-
         const paddedHours = String(hours).padStart(2, '0');
         const paddedMinutes = String(minutes).padStart(2, '0');
         const paddedSeconds = String(seconds).padStart(2, '0');

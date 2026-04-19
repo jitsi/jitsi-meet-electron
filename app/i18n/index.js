@@ -1,5 +1,4 @@
 import i18n from 'i18next';
-import moment from 'moment';
 import { initReactI18next } from 'react-i18next';
 
 const languages = {
@@ -32,7 +31,5 @@ i18n
             escapeValue: false // not needed for react as it escapes by default
         }
     });
-
-moment.locale(detectedLocale);
 
 export default i18n;

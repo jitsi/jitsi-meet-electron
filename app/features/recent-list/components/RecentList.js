@@ -1,7 +1,6 @@
 
 import Button from '@atlaskit/button';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -96,9 +95,6 @@ class RecentList extends Component {
                 <TruncatedText>
                     {this._renderStartTime(conference)}
                 </TruncatedText>
-                <TruncatedText>
-                    {this._renderDuration(conference)}
-                </TruncatedText>
                 <Button
                     appearance = 'subtle'
                     iconBefore = { <CrossIcon primaryColor = 'white' /> }
@@ -124,20 +120,6 @@ class RecentList extends Component {
     }
 
     /**
-     * Returns the duration of the conference in string format.
-     *
-     * @param {Object} conference - Conference Details.
-     * @returns {string} - Date/Time and Duration.
-     */
-    _renderDuration(conference) {
-        const { startTime, endTime } = conference;
-        const start = moment(startTime);
-        const end = moment(endTime || Date.now());
-
-        return moment.duration(end.diff(start)).humanize();
-    }
-
-    /**
      * Returns the Date/Time of the conference in string format.
      *
      * @param {Object} conference - Conference Details.
@@ -146,8 +128,16 @@ class RecentList extends Component {
     _renderStartTime(conference) {
         const { startTime } = conference;
 
-        return moment(startTime).calendar();
+        if (typeof startTime !== 'number') {
+            return '';
+        }
+
+        return new Intl.DateTimeFormat(navigator.language, {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        }).format(startTime);
     }
+
 }
 
 RecentList.propTypes = {

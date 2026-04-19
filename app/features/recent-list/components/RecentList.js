@@ -146,7 +146,7 @@ class RecentList extends Component {
         const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
         const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
         const seconds = totalSeconds % MINUTE_SECONDS;
-        const formatter = new Intl.DurationFormat(this._getLocale(), {
+        const formatter = new Intl.DurationFormat(navigator.language, {
             style: 'short'
         });
 
@@ -172,19 +172,10 @@ class RecentList extends Component {
             return '';
         }
 
-        return new Intl.DateTimeFormat(this._getLocale(), {
+        return new Intl.DateTimeFormat(navigator.language, {
             dateStyle: 'medium',
             timeStyle: 'short'
         }).format(timestamp);
-    }
-
-    /**
-     * Gets the active locale.
-     *
-     * @returns {string}
-     */
-    _getLocale() {
-        return this.props.i18n?.language || undefined;
     }
 
     /**
@@ -205,7 +196,6 @@ class RecentList extends Component {
 RecentList.propTypes = {
     _recentList: PropTypes.array,
     dispatch: PropTypes.func.isRequired,
-    i18n: PropTypes.object,
     t: PropTypes.func.isRequired
 };
 

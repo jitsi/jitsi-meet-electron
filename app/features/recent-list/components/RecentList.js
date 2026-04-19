@@ -25,6 +25,10 @@ const durationFormatter = typeof Intl.DurationFormat === 'function'
         style: 'short'
     })
     : undefined;
+const dateTimeFormatter = new Intl.DateTimeFormat(undefined, {
+    dateStyle: 'medium',
+    timeStyle: 'short'
+});
 
 
 /**
@@ -161,7 +165,13 @@ class RecentList extends Component {
             });
         }
 
-        return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        const paddedHours = String(hours).padStart(2, '0');
+        const paddedMinutes = String(minutes).padStart(2, '0');
+        const paddedSeconds = String(seconds).padStart(2, '0');
+
+        return days > 0
+            ? `${days}:${paddedHours}:${paddedMinutes}:${paddedSeconds}`
+            : `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
     }
 
     /**
@@ -178,10 +188,7 @@ class RecentList extends Component {
             return '';
         }
 
-        return new Intl.DateTimeFormat(undefined, {
-            dateStyle: 'medium',
-            timeStyle: 'short'
-        }).format(timestamp);
+        return dateTimeFormatter.format(timestamp);
     }
 }
 

@@ -146,30 +146,16 @@ class RecentList extends Component {
         const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
         const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
         const seconds = totalSeconds % MINUTE_SECONDS;
-        const locale = this._getLocale();
+        const formatter = new Intl.DurationFormat(this._getLocale(), {
+            style: 'short'
+        });
 
-        if (days > 0) {
-            const dayValue = this._formatDurationUnit(days, 'day', locale);
-            const hourValue = this._formatDurationUnit(hours, 'hour', locale);
-
-            return `${dayValue} ${hourValue}`;
-        }
-
-        if (hours > 0) {
-            const hourValue = this._formatDurationUnit(hours, 'hour', locale);
-            const minuteValue = this._formatDurationUnit(minutes, 'minute', locale);
-
-            return `${hourValue} ${minuteValue}`;
-        }
-
-        if (minutes > 0) {
-            const minuteValue = this._formatDurationUnit(minutes, 'minute', locale);
-            const secondValue = this._formatDurationUnit(seconds, 'second', locale);
-
-            return `${minuteValue} ${secondValue}`;
-        }
-
-        return this._formatDurationUnit(seconds, 'second', locale);
+        return formatter.format({
+            days,
+            hours,
+            minutes,
+            seconds
+        });
     }
 
     /**
@@ -190,23 +176,6 @@ class RecentList extends Component {
             dateStyle: 'medium',
             timeStyle: 'short'
         }).format(timestamp);
-    }
-
-    /**
-     * Formats duration units for display.
-     *
-     * @param {number} value - Unit value.
-     * @param {string} unit - Unit type.
-     * @param {string} locale - Active locale.
-     * @returns {string}
-     */
-    _formatDurationUnit(value, unit, locale) {
-        return new Intl.NumberFormat(locale, {
-            style: 'unit',
-            unit,
-            unitDisplay: 'short',
-            maximumFractionDigits: 0
-        }).format(value);
     }
 
     /**

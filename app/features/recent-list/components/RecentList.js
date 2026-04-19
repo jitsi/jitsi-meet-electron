@@ -20,6 +20,11 @@ import {
 const DAY_SECONDS = 24 * 60 * 60;
 const HOUR_SECONDS = 60 * 60;
 const MINUTE_SECONDS = 60;
+const durationFormatter = typeof Intl.DurationFormat === 'function'
+    ? new Intl.DurationFormat(undefined, {
+        style: 'short'
+    })
+    : undefined;
 
 
 /**
@@ -135,7 +140,7 @@ class RecentList extends Component {
     _renderDuration(conference) {
         const { startTime, endTime } = conference;
         const startTimestamp = Date.parse(startTime);
-        const endTimestamp = Date.parse(endTime || Date.now());
+        const endTimestamp = endTime ? Date.parse(endTime) : Date.now();
 
         if (Number.isNaN(startTimestamp) || Number.isNaN(endTimestamp)) {
             return '';
@@ -147,19 +152,16 @@ class RecentList extends Component {
         const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
         const seconds = totalSeconds % MINUTE_SECONDS;
 
-        if (days > 0) {
-            return `${days}d ${hours}h`;
+        if (durationFormatter) {
+            return durationFormatter.format({
+                days,
+                hours,
+                minutes,
+                seconds
+            });
         }
 
-        if (hours > 0) {
-            return `${hours}h ${minutes}m`;
-        }
-
-        if (minutes > 0) {
-            return `${minutes}m ${seconds}s`;
-        }
-
-        return `${seconds}s`;
+        return `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
     /**

@@ -20,10 +20,6 @@ import {
 const DAY_SECONDS = 24 * 60 * 60;
 const HOUR_SECONDS = 60 * 60;
 const MINUTE_SECONDS = 60;
-const dateTimeFormatter = new Intl.DateTimeFormat(undefined, {
-    dateStyle: 'medium',
-    timeStyle: 'short'
-});
 
 
 /**
@@ -138,8 +134,8 @@ class RecentList extends Component {
      */
     _renderDuration(conference) {
         const { startTime, endTime } = conference;
-        const startTimestamp = Date.parse(startTime);
-        const endTimestamp = endTime ? Date.parse(endTime) : Date.now();
+        const startTimestamp = this._parseTimestamp(startTime);
+        const endTimestamp = endTime ? this._parseTimestamp(endTime) : Date.now();
 
         if (Number.isNaN(startTimestamp) || Number.isNaN(endTimestamp)) {
             return '';
@@ -150,13 +146,30 @@ class RecentList extends Component {
         const hours = Math.floor((totalSeconds % DAY_SECONDS) / HOUR_SECONDS);
         const minutes = Math.floor((totalSeconds % HOUR_SECONDS) / MINUTE_SECONDS);
         const seconds = totalSeconds % MINUTE_SECONDS;
-        const paddedHours = String(hours).padStart(2, '0');
-        const paddedMinutes = String(minutes).padStart(2, '0');
-        const paddedSeconds = String(seconds).padStart(2, '0');
+        const locale = this._getLocale();
 
-        return days > 0
-            ? `${days}:${paddedHours}:${paddedMinutes}:${paddedSeconds}`
-            : `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+        if (days > 0) {
+            const dayValue = this._formatDurationUnit(days, 'day', locale);
+            const hourValue = this._formatDurationUnit(hours, 'hour', locale);
+
+            return `${dayValue} ${hourValue}`;
+        }
+
+        if (hours > 0) {
+            const hourValue = this._formatDurationUnit(hours, 'hour', locale);
+            const minuteValue = this._formatDurationUnit(minutes, 'minute', locale);
+
+            return `${hourValue} ${minuteValue}`;
+        }
+
+        if (minutes > 0) {
+            const minuteValue = this._formatDurationUnit(minutes, 'minute', locale);
+            const secondValue = this._formatDurationUnit(seconds, 'second', locale);
+
+            return `${minuteValue} ${secondValue}`;
+        }
+
+        return this._formatDurationUnit(seconds, 'second', locale);
     }
 
     /**
@@ -167,19 +180,63 @@ class RecentList extends Component {
      */
     _renderStartTime(conference) {
         const { startTime } = conference;
-        const timestamp = Date.parse(startTime);
+        const timestamp = this._parseTimestamp(startTime);
 
         if (Number.isNaN(timestamp)) {
             return '';
         }
 
-        return dateTimeFormatter.format(timestamp);
+        return new Intl.DateTimeFormat(this._getLocale(), {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        }).format(timestamp);
+    }
+
+    /**
+     * Formats duration units for display.
+     *
+     * @param {number} value - Unit value.
+     * @param {string} unit - Unit type.
+     * @param {string} locale - Active locale.
+     * @returns {string}
+     */
+    _formatDurationUnit(value, unit, locale) {
+        return new Intl.NumberFormat(locale, {
+            style: 'unit',
+            unit,
+            unitDisplay: 'short',
+            maximumFractionDigits: 0
+        }).format(value);
+    }
+
+    /**
+     * Gets the active locale.
+     *
+     * @returns {string}
+     */
+    _getLocale() {
+        return this.props.i18n?.language || undefined;
+    }
+
+    /**
+     * Parses a timestamp.
+     *
+     * @param {string|number} time - Time value.
+     * @returns {number}
+     */
+    _parseTimestamp(time) {
+        if (typeof time === 'number') {
+            return time;
+        }
+
+        return Date.parse(time);
     }
 }
 
 RecentList.propTypes = {
     _recentList: PropTypes.array,
     dispatch: PropTypes.func.isRequired,
+    i18n: PropTypes.object,
     t: PropTypes.func.isRequired
 };
 

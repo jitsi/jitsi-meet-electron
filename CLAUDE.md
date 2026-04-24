@@ -70,7 +70,7 @@ Uses two separate webpack configurations:
 **webpack.renderer.js**:
 - Target: `web` (renderer runs without node integration)
 - Entry: `app/index.js`
-- Uses Babel to transpile for specific Electron version
+- Uses SWC to transpile JSX and modern JS (targeting ES2022)
 - Bundles React app with HTML generation via `HtmlWebpackPlugin`
 - Handles CSS, SVG (via @svgr/webpack), and PNG assets
 - Does NOT parse `external_api.js` (Jitsi Meet External API)

@@ -43,7 +43,7 @@ class MeetingApp extends Component {
                         const url = new URL(conference.room, serverURL);
 
                         document.title = url.href;
-                    } catch (e) {
+                    } catch (_e) {
                         const defaultURL = this.props._serverURL || config.defaultServerURL;
                         const serverURL = conference.serverURL || defaultURL;
 

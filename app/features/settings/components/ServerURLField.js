@@ -100,7 +100,6 @@ class ServerURLField extends Component {
         let isValid;
 
         try {
-            // eslint-disable-next-line no-new
             const tmp = new URL(url);
 
             if (!tmp.protocol.startsWith('http')) {

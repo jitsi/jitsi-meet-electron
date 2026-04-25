@@ -13,7 +13,7 @@ export function openExternalLink(link) {
 
     try {
         u = url.parse(link);
-    } catch (e) {
+    } catch (_e) {
         return;
     }
 

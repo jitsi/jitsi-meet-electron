@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { Conference } from '../../conference';
 import config from '../../config';
+import { createConferenceObjectFromURL } from '../../utils';
 
 /**
  * Main component encapsulating the Meeting Window application.
@@ -56,6 +57,24 @@ class MeetingApp extends Component {
             }
         );
 
+        this._removeProtocolDataListener = window.jitsiNodeAPI.ipc.addListener(
+            'protocol-data-msg',
+            inputURL => {
+                let parsedURL = inputURL;
+
+                // Remove trailing slash if one exists.
+                if (parsedURL.slice(-1) === '/') {
+                    parsedURL = parsedURL.slice(0, -1);
+                }
+
+                const conference = createConferenceObjectFromURL(parsedURL);
+
+                if (conference && conference.room) {
+                    this.setState({ conference });
+                }
+            }
+        );
+
         // send notification to main process
         window.jitsiNodeAPI.ipc.send('renderer-ready');
     }
@@ -68,6 +87,10 @@ class MeetingApp extends Component {
     componentWillUnmount() {
         if (this._removeConferenceListener) {
             this._removeConferenceListener();
+        }
+
+        if (this._removeProtocolDataListener) {
+            this._removeProtocolDataListener();
         }
     }
 

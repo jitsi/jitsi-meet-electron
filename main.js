@@ -358,13 +358,19 @@ function handleProtocolCall(fullProtocolCall) {
 
     const inputURL = fullProtocolCall.replace(appProtocolSurplus, '');
 
+    if (meetingWindow) {
+        meetingWindow.webContents.send('protocol-data-msg', inputURL);
+
+        return;
+    }
+
     if (app.isReady() && mainWindow === null) {
         createJitsiMeetWindow();
     }
 
     protocolDataForFrontApp = inputURL;
 
-    if (rendererReady) {
+    if (rendererReady && mainWindow) {
         mainWindow
             .webContents
             .send('protocol-data-msg', inputURL);
@@ -415,17 +421,20 @@ app.on('second-instance', (event, commandLine) => {
      * If someone creates second instance of the application, set focus on
      * existing window.
      */
-    if (mainWindow) {
+    if (meetingWindow) {
+        meetingWindow.isMinimized() && meetingWindow.restore();
+        meetingWindow.focus();
+    } else if (mainWindow) {
         mainWindow.isMinimized() && mainWindow.restore();
         mainWindow.focus();
-
-        /**
-         * This is for windows [win32]
-         * so when someone tries to enter something like jitsi-meet://test
-         * while app is opened it will trigger protocol handler.
-         */
-        handleProtocolCall(commandLine.pop());
     }
+
+    /**
+     * This is for windows [win32]
+     * so when someone tries to enter something like jitsi-meet://test
+     * while app is opened it will trigger protocol handler.
+     */
+    handleProtocolCall(commandLine.pop());
 });
 
 app.on('window-all-closed', () => {

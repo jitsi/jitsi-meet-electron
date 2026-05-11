@@ -1,12 +1,10 @@
-
-import SettingsIcon from '@atlaskit/icon/glyph/settings';
-import { SpotlightTarget } from '@atlaskit/onboarding';
 import * as Mousetrap from 'mousetrap';
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { IconButton, SettingsIcon, SpotlightTarget } from '../../base-ui';
 import { openDrawer } from '../../navbar';
 
 import SettingsDrawer from './SettingsDrawer';
@@ -59,7 +57,9 @@ class SettingsButton extends Component {
         return (
             <SpotlightTarget
                 name = 'settings-drawer-button'>
-                <SettingsIcon
+                <IconButton
+                    ariaLabel = 'Open settings'
+                    icon = { <SettingsIcon /> }
                     onClick = { this._onIconClick } />
             </SpotlightTarget>
         );

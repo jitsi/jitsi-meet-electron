@@ -1,5 +1,3 @@
-
-import { Modal } from '@atlaskit/onboarding';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -7,6 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import OnboardingModalImage from '../../../images/onboarding.png';
+import { Modal } from '../../base-ui';
 import config from '../../config';
 import { continueOnboarding, skipOnboarding } from '../actions';
 
@@ -49,7 +48,7 @@ class OnboardingModal extends Component {
                     }
                 ] }
                 heading = { t('onboarding.welcome', { appName: config.appName }) }
-                image = { OnboardingModalImage } >
+                image = { OnboardingModalImage }>
                 <p> { t('onboarding.letUsShowYouAround') }</p>
             </Modal>
         );

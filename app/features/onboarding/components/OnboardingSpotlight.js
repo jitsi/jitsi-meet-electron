@@ -1,10 +1,9 @@
-
-import { Spotlight } from '@atlaskit/onboarding';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
+import { Spotlight } from '../../base-ui';
 import { continueOnboarding } from '../actions';
 
 
@@ -23,7 +22,7 @@ const OnboardingSpotlight = props => {
                 }
             ] }
             dialogPlacement = { props.dialogPlacement }
-            target = { props.target } >
+            target = { props.target }>
             { t(props.text) }
         </Spotlight>
     );

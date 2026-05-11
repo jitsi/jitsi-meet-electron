@@ -1,14 +1,21 @@
-
-import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
-import { AkCustomDrawer } from '@atlaskit/navigation';
-import { SpotlightTarget } from '@atlaskit/onboarding';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { DrawerContainer, Logo, closeDrawer } from '../../navbar';
+import {
+    ArrowLeftIcon,
+    Drawer,
+    IconButton,
+    SpotlightTarget
+} from '../../base-ui';
+import {
+    DrawerContainer,
+    DrawerHeader,
+    Logo,
+    closeDrawer
+} from '../../navbar';
 import { Onboarding, startOnboarding } from '../../onboarding';
 import {
     setDisableAGC, setWindowAlwaysOnTop
@@ -63,12 +70,18 @@ class SettingsDrawer extends Component {
         const { t } = this.props;
 
         return (
-            <AkCustomDrawer
-                backIcon = { <ArrowLeft label = { t('settings.back') } /> }
+            <Drawer
                 isOpen = { this.props.isOpen }
-                onBackButton = { this._onBackButton }
-                primaryIcon = { <Logo /> } >
+                onClose = { this._onBackButton }>
                 <DrawerContainer>
+                    <DrawerHeader>
+                        <IconButton
+                            appearance = 'subtle'
+                            ariaLabel = { t('settings.back') }
+                            icon = { <ArrowLeftIcon /> }
+                            onClick = { this._onBackButton } />
+                        <Logo />
+                    </DrawerHeader>
                     <SettingsContainer>
                         <SpotlightTarget name = 'server-setting'>
                             <ServerURLField />
@@ -92,7 +105,7 @@ class SettingsDrawer extends Component {
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>
-            </AkCustomDrawer>
+            </Drawer>
         );
     }
 

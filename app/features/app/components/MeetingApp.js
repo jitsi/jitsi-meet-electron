@@ -1,12 +1,19 @@
-import Spinner from '@atlaskit/spinner';
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
+import { Spinner } from '../../base-ui';
 import { Conference } from '../../conference';
 import config from '../../config';
 import { createConferenceObjectFromURL } from '../../utils';
+
+const LoadingContainer = styled.div`
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+`;
 
 /**
  * Main component encapsulating the Meeting Window application.
@@ -106,23 +113,13 @@ class MeetingApp extends Component {
         // Wait for the IPC message to deliver the conference details.
         if (!conference) {
             return (
-                <div
-                    style = {{
-                        display: 'flex',
-                        height: '100vh',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
+                <LoadingContainer>
                     <Spinner size = 'large' />
-                </div>
+                </LoadingContainer>
             );
         }
 
-        return (
-            <AtlasKitThemeProvider mode = 'dark'>
-                <Conference conference = { conference } />
-            </AtlasKitThemeProvider>
-        );
+        return <Conference conference = { conference } />;
     }
 }
 

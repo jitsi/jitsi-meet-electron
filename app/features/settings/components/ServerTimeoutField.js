@@ -1,5 +1,3 @@
-
-import { FieldTextStateless } from '@atlaskit/field-text';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -7,6 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 
+import { TextInput } from '../../base-ui';
 import config from '../../config';
 import { setServerTimeout } from '../actions';
 import { Form } from '../styled';
@@ -31,6 +30,7 @@ class ServerTimeoutField extends Component {
 
         this._onServerTimeoutChange = this._onServerTimeoutChange.bind(this);
         this._onServerTimeoutSubmit = this._onServerTimeoutSubmit.bind(this);
+        this._validateServerTimeout = this._validateServerTimeout.bind(this);
     }
 
     /**
@@ -43,16 +43,14 @@ class ServerTimeoutField extends Component {
 
         return (
             <Form onSubmit = { this._onServerTimeoutSubmit }>
-                <FieldTextStateless
-                    invalidMessage
-                        = { t('settings.invalidServerTimeout') }
+                <TextInput
+                    invalidMessage = { t('settings.invalidServerTimeout') }
                     isInvalid = { !this.state.isValid }
                     isValidationHidden = { this.state.isValid }
                     label = { t('settings.serverTimeout') }
                     onBlur = { this._onServerTimeoutSubmit }
                     onChange = { this._onServerTimeoutChange }
-                    placeholder = { config.defaultServerTimeout }
-                    shouldFitContainer = { true }
+                    placeholder = { String(config.defaultServerTimeout) }
                     type = 'number'
                     value = { this.state.serverTimeout } />
             </Form>

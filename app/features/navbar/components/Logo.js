@@ -1,8 +1,7 @@
-
-import Icon from '@atlaskit/icon';
 import React, { Component } from 'react';
 
 import LogoSVG from '../../../images/logo.svg';
+import { LogoWrapper } from '../styled';
 
 /**
  * Logo component.
@@ -16,10 +15,12 @@ export default class Logo extends Component {
      */
     render() {
         return (
-            <Icon
-                glyph = { LogoSVG }
-                size = 'xlarge' />
+            <LogoWrapper>
+                <LogoSVG
+                    aria-hidden = 'true'
+                    height = '36'
+                    width = '36' />
+            </LogoWrapper>
         );
     }
 }
-

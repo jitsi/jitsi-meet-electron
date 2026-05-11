@@ -1,11 +1,10 @@
-
-import { FieldTextStateless } from '@atlaskit/field-text';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
+import { TextInput } from '../../base-ui';
 import config from '../../config';
 import { normalizeServerURL } from '../../utils';
 import { setServerURL } from '../actions';
@@ -31,6 +30,7 @@ class ServerURLField extends Component {
 
         this._onServerURLChange = this._onServerURLChange.bind(this);
         this._onServerURLSubmit = this._onServerURLSubmit.bind(this);
+        this._validateServerURL = this._validateServerURL.bind(this);
     }
 
     /**
@@ -43,7 +43,7 @@ class ServerURLField extends Component {
 
         return (
             <Form onSubmit = { this._onServerURLSubmit }>
-                <FieldTextStateless
+                <TextInput
                     invalidMessage = { t('settings.invalidServer') }
                     isInvalid = { !this.state.isValid }
                     isValidationHidden = { this.state.isValid }
@@ -51,7 +51,6 @@ class ServerURLField extends Component {
                     onBlur = { this._onServerURLSubmit }
                     onChange = { this._onServerURLChange }
                     placeholder = { config.defaultServerURL }
-                    shouldFitContainer = { true }
                     type = 'text'
                     value = { this.state.serverURL } />
             </Form>

@@ -1,10 +1,9 @@
-
-import Spinner from '@atlaskit/spinner';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import i18n from '../../../i18n';
+import { Spinner } from '../../base-ui';
 import config from '../../config';
 import { getSetting } from '../../settings';
 import { parseURLParams } from '../../utils/parseURLParams';

@@ -1,13 +1,14 @@
-
-import Droplist, { Group, Item } from '@atlaskit/droplist';
-import HelpIcon from '@atlaskit/icon/glyph/question-circle';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
-import { version } from '../../../../package.json';
+import packageJSON from '../../../../package.json';
+import { DropdownMenu, HelpIcon, IconButton } from '../../base-ui';
 import config from '../../config';
 import { openExternalLink } from '../../utils';
+import { MenuHeading, MenuItem } from '../styled';
+
+const { version } = packageJSON;
 
 
 /**
@@ -62,6 +63,18 @@ class HelpButton extends Component {
         });
     }
 
+    /**
+     * Runs the provided action and closes the menu.
+     *
+     * @param {Function} action - The action to execute.
+     * @returns {Function}
+     */
+    _wrapMenuAction(action) {
+        return () => {
+            this._onOpenChange();
+            action();
+        };
+    }
 
     /**
      * Render function of component.
@@ -72,33 +85,35 @@ class HelpButton extends Component {
         const { t } = this.props;
 
         return (
-            <Droplist
+            <DropdownMenu
                 isOpen = { this.state.droplistOpen }
-                onClick = { this._onIconClick }
-                onOpenChange = { this._onOpenChange }
-                position = 'right bottom'
-                trigger = { <HelpIcon /> }>
-                <Group heading = { t('help') } >
-                    <Item onActivate = { this._onTermsClick }>
-                        { t('termsLink') }
-                    </Item>
-                    <Item onActivate = { this._onPrivacyClick }>
-                        { t('privacyLink') }
-                    </Item>
-                    <Item onActivate = { this._onSendFeedbackClick }>
-                        { t('sendFeedbackLink') }
-                    </Item>
-                    <Item onActivate = { this._onAboutClick }>
-                        { t('aboutLink') }
-                    </Item>
-                    <Item onActivate = { this._onSourceClick }>
-                        { t('sourceLink') }
-                    </Item>
-                    <Item>
-                        { t('versionLabel', { version }) }
-                    </Item>
-                </Group>
-            </Droplist>
+                onClose = { this._onOpenChange }
+                onToggle = { this._onIconClick }
+                trigger = {
+                    <IconButton
+                        ariaLabel = { t('help') }
+                        icon = { <HelpIcon /> } />
+                }>
+                <MenuHeading>{ t('help') }</MenuHeading>
+                <MenuItem onClick = { this._wrapMenuAction(this._onTermsClick) }>
+                    { t('termsLink') }
+                </MenuItem>
+                <MenuItem onClick = { this._wrapMenuAction(this._onPrivacyClick) }>
+                    { t('privacyLink') }
+                </MenuItem>
+                <MenuItem onClick = { this._wrapMenuAction(this._onSendFeedbackClick) }>
+                    { t('sendFeedbackLink') }
+                </MenuItem>
+                <MenuItem onClick = { this._wrapMenuAction(this._onAboutClick) }>
+                    { t('aboutLink') }
+                </MenuItem>
+                <MenuItem onClick = { this._wrapMenuAction(this._onSourceClick) }>
+                    { t('sourceLink') }
+                </MenuItem>
+                <MenuItem as = 'div'>
+                    { t('versionLabel', { version }) }
+                </MenuItem>
+            </DropdownMenu>
         );
     }
 }

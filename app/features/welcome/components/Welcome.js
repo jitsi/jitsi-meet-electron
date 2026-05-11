@@ -1,9 +1,3 @@
-
-import Button from '@atlaskit/button';
-import { FieldTextStateless } from '@atlaskit/field-text';
-import { SpotlightTarget } from '@atlaskit/onboarding';
-import Page from '@atlaskit/page';
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import { generateRoomWithoutSeparator } from '@jitsi/js-utils/random';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -11,7 +5,8 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { Navbar } from '../../navbar';
+import { Button, SpotlightTarget, TextInput } from '../../base-ui';
+import { Navbar, PageContent, PageShell } from '../../navbar';
 import { Onboarding, startOnboarding } from '../../onboarding';
 import { RecentList, addRecentListEntry } from '../../recent-list';
 import { createConferenceObjectFromURL } from '../../utils';
@@ -88,15 +83,16 @@ class Welcome extends Component {
      */
     render() {
         return (
-            <Page navigation = { <Navbar /> }>
-                <AtlasKitThemeProvider mode = 'light'>
+            <PageShell>
+                <Navbar />
+                <PageContent>
                     <Wrapper>
                         { this._renderHeader() }
                         { this._renderBody() }
                         <Onboarding section = 'welcome-page' />
                     </Wrapper>
-                </AtlasKitThemeProvider>
-            </Page>
+                </PageContent>
+            </PageShell>
         );
     }
 
@@ -213,13 +209,12 @@ class Welcome extends Component {
                     <Form onSubmit = { this._onFormSubmit }>
                         <Label>{ t('enterConferenceNameOrUrl') } </Label>
                         <FieldWrapper>
-                            <FieldTextStateless
+                            <TextInput
                                 autoFocus = { true }
                                 isInvalid = { locationError }
                                 isLabelHidden = { true }
                                 onChange = { this._onURLChange }
                                 placeholder = { this.state.roomPlaceholder }
-                                shouldFitContainer = { true }
                                 type = 'text'
                                 value = { this.state.url } />
                             <Button

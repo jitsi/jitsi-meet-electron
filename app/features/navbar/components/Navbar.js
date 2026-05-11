@@ -1,11 +1,12 @@
-
-
-import Navigation, { AkGlobalItem } from '@atlaskit/navigation';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { SettingsButton, SettingsDrawer } from '../../settings';
+import {
+    NavSection,
+    NavbarContainer
+} from '../styled';
 
 import HelpButton from './HelpButton';
 import Logo from './Logo';
@@ -16,49 +17,22 @@ import Logo from './Logo';
  */
 class Navbar extends Component {
     /**
-     * Get the array of Primary actions of Global Navigation.
-     *
-     * @returns {ReactElement[]}
-     */
-    _getPrimaryActions() {
-        return [
-            <AkGlobalItem key = { 0 }>
-                <SettingsButton />
-            </AkGlobalItem>
-        ];
-    }
-
-    /**
-     * Get the array of Secondary actions of Global Navigation.
-     *
-     * @returns {ReactElement[]}
-     */
-    _getSecondaryActions() {
-        return [
-            <AkGlobalItem key = { 0 }>
-                <HelpButton />
-            </AkGlobalItem>
-        ];
-    }
-
-    /**
      * Render function of component.
      *
      * @returns {ReactElement}
      */
     render() {
         return (
-            <Navigation
-                drawers = { [
-                    <SettingsDrawer
-                        isOpen = { this.props._isSettingsDrawerOpen }
-                        key = { 0 } />
-                ] }
-                globalPrimaryActions = { this._getPrimaryActions() }
-                globalPrimaryIcon = { <Logo /> }
-                globalSecondaryActions = { this._getSecondaryActions() }
-                isOpen = { false }
-                isResizeable = { false } />
+            <NavbarContainer>
+                <NavSection>
+                    <Logo />
+                </NavSection>
+                <NavSection>
+                    <SettingsButton />
+                    <HelpButton />
+                </NavSection>
+                <SettingsDrawer isOpen = { this.props._isSettingsDrawerOpen } />
+            </NavbarContainer>
         );
     }
 }

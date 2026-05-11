@@ -1,21 +1,23 @@
-
-/**
- * AtlasKit components will deflect from appearance if css-reset is not present.
- */
-import '@atlaskit/css-reset';
-
-import { SpotlightManager } from '@atlaskit/onboarding';
-import Spinner from '@atlaskit/spinner';
 import PropTypes from 'prop-types';
 import React, { Component, Suspense } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import styled from 'styled-components';
 
 import { App, MeetingApp } from './features/app';
+import { Spinner } from './features/base-ui';
 import { persistor, store } from './features/redux';
 
+import './base.css';
 import './i18n';
+
+const SuspenseFallback = styled.div`
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+`;
 
 /**
  * Component encapsulating a given entry-point component with the redux store
@@ -35,11 +37,14 @@ class Root extends Component {
                 <PersistGate
                     loading = { null }
                     persistor = { persistor }>
-                    <SpotlightManager>
-                        <Suspense fallback = { <Spinner /> } >
-                            <EntryPoint />
-                        </Suspense>
-                    </SpotlightManager>
+                    <Suspense
+                        fallback = {
+                            <SuspenseFallback>
+                                <Spinner size = 'large' />
+                            </SuspenseFallback>
+                        }>
+                        <EntryPoint />
+                    </Suspense>
                 </PersistGate>
             </Provider>
         );

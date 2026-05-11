@@ -1,8 +1,7 @@
-
-import Toggle from '@atlaskit/toggle';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import { Toggle } from '../../base-ui';
 import { Label, ToggleContainer } from '../styled';
 
 
@@ -19,8 +18,8 @@ class ToggleWithLabel extends Component {
         return (
             <ToggleContainer>
                 <Toggle
-                    size = 'large'
-                    { ...this.props } />
+                    checked = { this.props.value }
+                    onChange = { this.props.onChange } />
                 <Label>{ this.props.label }</Label>
             </ToggleContainer>
         );
@@ -28,7 +27,6 @@ class ToggleWithLabel extends Component {
 }
 
 ToggleWithLabel.propTypes = {
-    isDefaultChecked: PropTypes.bool,
     label: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.bool

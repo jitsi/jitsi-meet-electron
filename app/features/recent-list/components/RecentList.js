@@ -1,12 +1,10 @@
-
-import Button from '@atlaskit/button';
-import CrossIcon from '@atlaskit/icon/glyph/cross';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
+import { Button, CrossIcon } from '../../base-ui';
 import { addRecentListEntry, removeRecentListEntry } from '../actions';
 import {
     ConferenceCard,

@@ -142,7 +142,6 @@
     "@atlaskit/theme": "^7.0.5",
     "@atlaskit/toggle": "^5.0.15",
     "@babel/core": "^7.17.8",
-    "babel-runtime": "npm:@babel/runtime@^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-export-namespace-from": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
@@ -153,6 +152,7 @@
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "^8.2.3",
+    "babel-runtime": "npm:@babel/runtime@^7.0.0",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
     "electron": "41.1.0",
@@ -184,8 +184,8 @@
     "style-loader": "^3.3.1",
     "styled-components": "^3.4.10",
     "typescript": "^5.9.3",
-    "webpack": "^5.105.0",
-    "webpack-cli": "^4.9.2"
+    "webpack": "^5.106.2",
+    "webpack-cli": "^7.0.2"
   },
   "overrides": {
     "babel-runtime": "npm:@babel/runtime@^7.0.0",

@@ -15,8 +15,8 @@ const getPadding = props => {
 const getPrimaryStyles = props => {
     if (props.appearance === 'primary') {
         return `
-            background: #87ceeb;
-            color: #1a1a1a;
+            background: #0074e0;
+            color: white;
             &:hover { background: #a8ddf0; }
             &:active { background: #5bb8e8; }
         `;

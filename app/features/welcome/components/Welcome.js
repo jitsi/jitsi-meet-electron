@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import styled from 'styled-components';
 
 import { Navbar } from '../../navbar';
 import { Onboarding, SpotlightTarget, startOnboarding } from '../../onboarding';
@@ -14,6 +15,21 @@ import FieldText from '../../shared/components/FieldText';
 import Page from '../../shared/components/Page';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
+
+
+const MainFieldText = styled(FieldText)`
+    input {
+        box-sizing: border-box;
+        height: 3em;
+    }
+`;
+
+const MainGoButton = styled(Button)`
+    height: 3em;
+    margin-left: 0.5em;
+    padding-bottom: 0;
+    padding-top: 0;
+`;
 
 
 /**
@@ -209,7 +225,7 @@ class Welcome extends Component {
                     <Form onSubmit = { this._onFormSubmit }>
                         <Label>{ t('enterConferenceNameOrUrl') } </Label>
                         <FieldWrapper>
-                            <FieldText
+                            <MainFieldText
                                 autoFocus = { true }
                                 isInvalid = { locationError }
                                 isLabelHidden = { true }
@@ -218,12 +234,12 @@ class Welcome extends Component {
                                 shouldFitContainer = { true }
                                 type = 'text'
                                 value = { this.state.url } />
-                            <Button
+                            <MainGoButton
                                 appearance = 'primary'
                                 onClick = { this._onJoin }
                                 type = 'button'>
                                 { t('go') }
-                            </Button>
+                            </MainGoButton>
                         </FieldWrapper>
                     </Form>
                 </SpotlightTarget>

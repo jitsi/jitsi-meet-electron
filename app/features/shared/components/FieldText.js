@@ -58,7 +58,7 @@ const StyledInput = styled.input`
     }
 
     &::placeholder {
-        color: #5e6c84;
+        color: #b9c8e0;
     }
 `;
 
@@ -76,6 +76,7 @@ const ErrorMessage = styled.span`
  */
 const FieldText = ({
     autoFocus,
+    className,
     invalidMessage,
     isInvalid,
     isLabelHidden,
@@ -88,7 +89,9 @@ const FieldText = ({
     type,
     value
 }) => (
-    <Wrapper shouldFitContainer = { shouldFitContainer }>
+    <Wrapper
+        className = { className }
+        shouldFitContainer = { shouldFitContainer }>
         { label && !isLabelHidden
             ? <StyledLabel>{ label }</StyledLabel>
             : null }
@@ -108,6 +111,7 @@ const FieldText = ({
 
 FieldText.propTypes = {
     autoFocus: PropTypes.bool,
+    className: PropTypes.string,
     invalidMessage: PropTypes.string,
     isInvalid: PropTypes.bool,
     isLabelHidden: PropTypes.bool,

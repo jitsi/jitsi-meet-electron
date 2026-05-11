@@ -2,9 +2,9 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    background: #1754A9;
+    background: #aec4e4;
     border-radius: 0.5em;
-    color: white;
+    color: black;
     display: grid;
     grid-template-rows: repeat(3, auto);
     grid-template-columns: 1fr auto;

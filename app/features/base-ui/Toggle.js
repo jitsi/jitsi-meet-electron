@@ -23,7 +23,7 @@ function getCursor(props) {
  * @returns {string}
  */
 function getTrackBackground(props) {
-    return props._checked ? '#36B37E' : 'rgba(255, 255, 255, 0.28)';
+    return props._checked ? '#5BB5FF' : 'rgba(255, 255, 255, 0.28)';
 }
 
 /**

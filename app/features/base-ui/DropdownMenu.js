@@ -8,10 +8,10 @@ const Container = styled.div`
 `;
 
 const Panel = styled.div`
-    background: #102A4C;
+    background: #1E1E1E;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 16px;
-    box-shadow: 0 16px 32px rgba(9, 30, 66, 0.35);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
     min-width: 220px;
     padding: 8px;
     position: absolute;

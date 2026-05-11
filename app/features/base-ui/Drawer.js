@@ -25,7 +25,7 @@ const slideIn = keyframes`
 
 const Overlay = styled.div`
     animation: ${fadeIn} 0.2s ease;
-    background: rgba(9, 30, 66, 0.55);
+    background: rgba(0, 0, 0, 0.55);
     inset: 0;
     position: fixed;
     z-index: 1000;
@@ -35,8 +35,8 @@ const panelElement = ({ _width, ...props }) => React.createElement('aside', prop
 
 const Panel = styled(panelElement)`
     animation: ${slideIn} 0.2s ease;
-    background: #0F2747;
-    box-shadow: 0 16px 48px rgba(9, 30, 66, 0.35);
+    background: #161616;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     color: #FFFFFF;
     height: 100%;
     left: 0;

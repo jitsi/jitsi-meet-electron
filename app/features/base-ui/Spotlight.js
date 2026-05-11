@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Button from './Button';
 
 const Overlay = styled.div`
-    background: rgba(9, 30, 66, 0.6);
+    background: rgba(0, 0, 0, 0.6);
     inset: 0;
     position: fixed;
     z-index: 1100;
@@ -15,15 +15,15 @@ const Overlay = styled.div`
 const Highlight = styled.div`
     border: 2px solid rgba(255, 255, 255, 0.9);
     border-radius: 16px;
-    box-shadow: 0 0 0 9999px rgba(9, 30, 66, 0.15);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.15);
     pointer-events: none;
     position: fixed;
 `;
 
 const Dialog = styled.div`
-    background: #102A4C;
+    background: #1E1E1E;
     border-radius: 18px;
-    box-shadow: 0 16px 32px rgba(9, 30, 66, 0.35);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
     max-width: 320px;
     padding: 20px;
     position: fixed;

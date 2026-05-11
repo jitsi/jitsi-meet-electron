@@ -7,7 +7,7 @@ import Button from './Button';
 
 const Overlay = styled.div`
     align-items: center;
-    background: rgba(9, 30, 66, 0.7);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     inset: 0;
     justify-content: center;
@@ -17,9 +17,9 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.div`
-    background: #102A4C;
+    background: #1E1E1E;
     border-radius: 24px;
-    box-shadow: 0 24px 48px rgba(9, 30, 66, 0.4);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
     max-width: 560px;
     overflow: hidden;
     width: 100%;

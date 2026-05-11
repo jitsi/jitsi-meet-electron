@@ -4,11 +4,11 @@ import styled, { css } from 'styled-components';
 
 const appearanceStyles = {
     primary: css`
-        background: #0E5FFF;
+        background: #5BB5FF;
         color: #FFFFFF;
 
         &:hover {
-            background: #0052CC;
+            background: #3A9FEF;
         }
     `,
     subtle: css`

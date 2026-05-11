@@ -16,7 +16,7 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 const getTrackBackground = props => {
     if (props.checked) {
-        return '#0052cc';
+        return '#87ceeb';
     }
 
     return '#6b778c';

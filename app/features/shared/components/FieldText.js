@@ -25,7 +25,7 @@ const getFocusBorderColor = props => {
         return '#ff5630';
     }
 
-    return '#4c9aff';
+    return '#87ceeb';
 };
 
 const Wrapper = styled.div`

@@ -11,7 +11,7 @@ import Logo from './Logo';
 
 
 const NavBar = styled.nav`
-    background: #0747a6;
+    background: #1a1a1a;
     display: flex;
     flex-direction: column;
     height: 100vh;

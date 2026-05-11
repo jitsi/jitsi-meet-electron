@@ -1,11 +1,10 @@
-import Spinner from '@atlaskit/spinner';
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Conference } from '../../conference';
 import config from '../../config';
+import Spinner from '../../shared/components/Spinner';
 import { createConferenceObjectFromURL } from '../../utils';
 
 /**
@@ -119,9 +118,7 @@ class MeetingApp extends Component {
         }
 
         return (
-            <AtlasKitThemeProvider mode = 'dark'>
-                <Conference conference = { conference } />
-            </AtlasKitThemeProvider>
+            <Conference conference = { conference } />
         );
     }
 }

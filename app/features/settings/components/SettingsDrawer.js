@@ -1,15 +1,14 @@
 
-import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
-import { AkCustomDrawer } from '@atlaskit/navigation';
-import { SpotlightTarget } from '@atlaskit/onboarding';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import styled from 'styled-components';
 
 import { DrawerContainer, Logo, closeDrawer } from '../../navbar';
-import { Onboarding, startOnboarding } from '../../onboarding';
+import { Onboarding, SpotlightTarget, startOnboarding } from '../../onboarding';
+import { ArrowLeftIcon } from '../../shared/icons';
 import {
     setDisableAGC, setWindowAlwaysOnTop
 } from '../actions';
@@ -20,8 +19,55 @@ import ServerURLField from './ServerURLField';
 import SettingToggle from './SettingToggle';
 
 
+const getDrawerTransform = props => {
+    if (props.isOpen) {
+        return 'translateX(0)';
+    }
+
+    return 'translateX(-100%)';
+};
+
+const Drawer = styled.div`
+    background: #0e1624;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+    color: #f4f5f7;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    left: 0;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    transform: ${getDrawerTransform};
+    transition: transform 0.25s ease;
+    width: 360px;
+    z-index: 400;
+`;
+
+const DrawerHeader = styled.div`
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+`;
+
+const BackButton = styled.button`
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    padding: 4px;
+
+    &:hover {
+        opacity: 0.8;
+    }
+`;
+
+
 /**
- * Drawer that open when SettingsAction is clicked.
+ * Drawer that opens when SettingsAction is clicked.
  */
 class SettingsDrawer extends Component {
     /**
@@ -63,11 +109,17 @@ class SettingsDrawer extends Component {
         const { t } = this.props;
 
         return (
-            <AkCustomDrawer
-                backIcon = { <ArrowLeft label = { t('settings.back') } /> }
-                isOpen = { this.props.isOpen }
-                onBackButton = { this._onBackButton }
-                primaryIcon = { <Logo /> } >
+            <Drawer isOpen = { this.props.isOpen }>
+                <DrawerHeader>
+                    <BackButton
+                        aria-label = { t('settings.back') }
+                        onClick = { this._onBackButton }>
+                        <ArrowLeftIcon
+                            color = 'white'
+                            size = { 24 } />
+                    </BackButton>
+                    <Logo />
+                </DrawerHeader>
                 <DrawerContainer>
                     <SettingsContainer>
                         <SpotlightTarget name = 'server-setting'>
@@ -92,7 +144,7 @@ class SettingsDrawer extends Component {
                         <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>
-            </AkCustomDrawer>
+            </Drawer>
         );
     }
 

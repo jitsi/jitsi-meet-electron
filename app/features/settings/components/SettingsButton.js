@@ -1,6 +1,4 @@
 
-import SettingsIcon from '@atlaskit/icon/glyph/settings';
-import { SpotlightTarget } from '@atlaskit/onboarding';
 import * as Mousetrap from 'mousetrap';
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import PropTypes from 'prop-types';
@@ -8,6 +6,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { openDrawer } from '../../navbar';
+import { SpotlightTarget } from '../../onboarding';
+import { SettingsIcon } from '../../shared/icons';
 
 import SettingsDrawer from './SettingsDrawer';
 
@@ -60,7 +60,9 @@ class SettingsButton extends Component {
             <SpotlightTarget
                 name = 'settings-drawer-button'>
                 <SettingsIcon
-                    onClick = { this._onIconClick } />
+                    color = 'white'
+                    onClick = { this._onIconClick }
+                    size = { 24 } />
             </SpotlightTarget>
         );
     }

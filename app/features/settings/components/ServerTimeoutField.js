@@ -1,13 +1,12 @@
 
-import { FieldTextStateless } from '@atlaskit/field-text';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-
 import config from '../../config';
+import FieldText from '../../shared/components/FieldText';
 import { setServerTimeout } from '../actions';
 import { Form } from '../styled';
 
@@ -43,7 +42,7 @@ class ServerTimeoutField extends Component {
 
         return (
             <Form onSubmit = { this._onServerTimeoutSubmit }>
-                <FieldTextStateless
+                <FieldText
                     invalidMessage
                         = { t('settings.invalidServerTimeout') }
                     isInvalid = { !this.state.isValid }

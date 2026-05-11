@@ -1,5 +1,4 @@
 
-import Icon from '@atlaskit/icon';
 import React, { Component } from 'react';
 
 import LogoSVG from '../../../images/logo.svg';
@@ -16,10 +15,9 @@ export default class Logo extends Component {
      */
     render() {
         return (
-            <Icon
-                glyph = { LogoSVG }
-                size = 'xlarge' />
+            <LogoSVG
+                height = { 40 }
+                width = { 40 } />
         );
     }
 }
-

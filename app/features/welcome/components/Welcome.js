@@ -1,9 +1,4 @@
 
-import Button from '@atlaskit/button';
-import { FieldTextStateless } from '@atlaskit/field-text';
-import { SpotlightTarget } from '@atlaskit/onboarding';
-import Page from '@atlaskit/page';
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import { generateRoomWithoutSeparator } from '@jitsi/js-utils/random';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -12,8 +7,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { Navbar } from '../../navbar';
-import { Onboarding, startOnboarding } from '../../onboarding';
+import { Onboarding, SpotlightTarget, startOnboarding } from '../../onboarding';
 import { RecentList, addRecentListEntry } from '../../recent-list';
+import Button from '../../shared/components/Button';
+import FieldText from '../../shared/components/FieldText';
+import Page from '../../shared/components/Page';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
 
@@ -89,13 +87,11 @@ class Welcome extends Component {
     render() {
         return (
             <Page navigation = { <Navbar /> }>
-                <AtlasKitThemeProvider mode = 'light'>
-                    <Wrapper>
-                        { this._renderHeader() }
-                        { this._renderBody() }
-                        <Onboarding section = 'welcome-page' />
-                    </Wrapper>
-                </AtlasKitThemeProvider>
+                <Wrapper>
+                    { this._renderHeader() }
+                    { this._renderBody() }
+                    <Onboarding section = 'welcome-page' />
+                </Wrapper>
             </Page>
         );
     }
@@ -213,7 +209,7 @@ class Welcome extends Component {
                     <Form onSubmit = { this._onFormSubmit }>
                         <Label>{ t('enterConferenceNameOrUrl') } </Label>
                         <FieldWrapper>
-                            <FieldTextStateless
+                            <FieldText
                                 autoFocus = { true }
                                 isInvalid = { locationError }
                                 isLabelHidden = { true }

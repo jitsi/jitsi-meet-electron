@@ -1,4 +1,3 @@
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -87,9 +86,7 @@ class App extends Component {
      */
     render() {
         return (
-            <AtlasKitThemeProvider mode = 'dark'>
-                <Welcome />
-            </AtlasKitThemeProvider>
+            <Welcome />
         );
     }
 }

@@ -1,5 +1,4 @@
 
-import Spinner from '@atlaskit/spinner';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -7,6 +6,7 @@ import { connect } from 'react-redux';
 import i18n from '../../../i18n';
 import config from '../../config';
 import { getSetting } from '../../settings';
+import Spinner from '../../shared/components/Spinner';
 import { parseURLParams } from '../../utils/parseURLParams';
 import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';

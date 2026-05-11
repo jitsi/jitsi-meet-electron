@@ -1,11 +1,9 @@
 
 /**
- * AtlasKit components will deflect from appearance if css-reset is not present.
+ * CSS reset imported first so it applies to all components.
  */
-import '@atlaskit/css-reset';
+import './styles/reset.css';
 
-import { SpotlightManager } from '@atlaskit/onboarding';
-import Spinner from '@atlaskit/spinner';
 import PropTypes from 'prop-types';
 import React, { Component, Suspense } from 'react';
 import { render } from 'react-dom';
@@ -13,7 +11,9 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { App, MeetingApp } from './features/app';
+import { SpotlightManager } from './features/onboarding';
 import { persistor, store } from './features/redux';
+import Spinner from './features/shared/components/Spinner';
 
 import './i18n';
 

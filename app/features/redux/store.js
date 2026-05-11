@@ -10,7 +10,6 @@ const persistConfig = {
     key: 'root',
     storage,
     whitelist: [
-        'onboarding',
         'recentList',
         'settings'
     ]

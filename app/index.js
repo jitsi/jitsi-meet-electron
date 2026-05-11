@@ -4,7 +4,6 @@
  */
 import '@atlaskit/css-reset';
 
-import { SpotlightManager } from '@atlaskit/onboarding';
 import Spinner from '@atlaskit/spinner';
 import PropTypes from 'prop-types';
 import React, { Component, Suspense } from 'react';
@@ -35,11 +34,9 @@ class Root extends Component {
                 <PersistGate
                     loading = { null }
                     persistor = { persistor }>
-                    <SpotlightManager>
-                        <Suspense fallback = { <Spinner /> } >
-                            <EntryPoint />
-                        </Suspense>
-                    </SpotlightManager>
+                    <Suspense fallback = { <Spinner /> } >
+                        <EntryPoint />
+                    </Suspense>
                 </PersistGate>
             </Provider>
         );

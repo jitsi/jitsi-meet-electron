@@ -8,18 +8,6 @@
 	"aboutLink": "Over",
 	"sourceLink": "Broncode",
 	"versionLabel": "Versie: {{version}}",
-	"onboarding": {
-		"startTour": "Start rondleiding",
-		"skip": "Overslaan",
-		"welcome": "Welkom bij {{appName}}",
-		"letUsShowYouAround": "Start de rondleiding!",
-		"next": "Volgende",
-		"conferenceUrl": "Voer de naam of URL in van de ruimte die u wilt betreden. U kunt een naam verzinnen, maar laat deze wel weten aan de andere deelnemers, zodat zij dezelfde naam invoeren.",
-		"settingsDrawerButton": "Klik hier om het instellingenscherm te tonen.",
-		"serverSetting": "Voer hier de naam van de server in waar de vergaderingen plaatsvinden. U kunt uw eigen server gebruiken, maar dat hoeft niet!",
-		"serverTimeout": "Voer hier de tijdslimiet in om de ruimte te betreden. Als de ruimte niet voor deze limiet betreden wordt, wordt de vergadering geannuleerd.",
-		"alwaysOnTop": "Hiermee kunt u het altijd zichtbare venster aan- of uitzetten. Dit venster wordt getoond wanneer een andere applicatie actief wordt. Dit geldt voor alle vergaderingen."
-	},
 	"settings": {
 		"back": "Terug",
 		"alwaysOnTopWindow": "Altijd zichtbare venster",

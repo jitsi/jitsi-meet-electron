@@ -155,7 +155,7 @@
     "babel-runtime": "npm:@babel/runtime@^7.0.0",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
-    "electron": "41.1.0",
+    "electron": "42.0.1",
     "electron-builder": "^26.8.1",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

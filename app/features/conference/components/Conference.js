@@ -257,7 +257,7 @@ Conference.propTypes = {
  */
 function _mapStateToProps(state) {
     return {
-        _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', true),
+        _alwaysOnTopWindowEnabled: getSetting(state, 'alwaysOnTopWindowEnabled', false),
         _disableAGC: state.settings.disableAGC,
         _serverURL: state.settings.serverURL,
         _serverTimeout: state.settings.serverTimeout

@@ -8,7 +8,7 @@ import {
 
 
 const DEFAULT_STATE = {
-    alwaysOnTopWindowEnabled: true,
+    alwaysOnTopWindowEnabled: false,
     disableAGC: false,
     serverURL: undefined,
     serverTimeout: undefined

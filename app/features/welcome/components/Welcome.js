@@ -1,7 +1,6 @@
 
 import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
-import { SpotlightTarget } from '@atlaskit/onboarding';
 import Page from '@atlaskit/page';
 import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import { generateRoomWithoutSeparator } from '@jitsi/js-utils/random';
@@ -12,7 +11,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { Navbar } from '../../navbar';
-import { Onboarding, startOnboarding } from '../../onboarding';
 import { RecentList, addRecentListEntry } from '../../recent-list';
 import { createConferenceObjectFromURL } from '../../utils';
 import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
@@ -59,16 +57,11 @@ class Welcome extends Component {
     }
 
     /**
-     * Start Onboarding once component is mounted.
-     * Start generating randdom room names.
-     *
-     * NOTE: It autonatically checks if the onboarding is shown or not.
+     * Start generating random room names.
      *
      * @returns {void}
      */
     componentDidMount() {
-        this.props.dispatch(startOnboarding('welcome-page'));
-
         this._updateRoomname();
     }
 
@@ -93,7 +86,6 @@ class Welcome extends Component {
                     <Wrapper>
                         { this._renderHeader() }
                         { this._renderBody() }
-                        <Onboarding section = 'welcome-page' />
                     </Wrapper>
                 </AtlasKitThemeProvider>
             </Page>
@@ -209,28 +201,26 @@ class Welcome extends Component {
 
         return (
             <Header>
-                <SpotlightTarget name = 'conference-url'>
-                    <Form onSubmit = { this._onFormSubmit }>
-                        <Label>{ t('enterConferenceNameOrUrl') } </Label>
-                        <FieldWrapper>
-                            <FieldTextStateless
-                                autoFocus = { true }
-                                isInvalid = { locationError }
-                                isLabelHidden = { true }
-                                onChange = { this._onURLChange }
-                                placeholder = { this.state.roomPlaceholder }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.state.url } />
-                            <Button
-                                appearance = 'primary'
-                                onClick = { this._onJoin }
-                                type = 'button'>
-                                { t('go') }
-                            </Button>
-                        </FieldWrapper>
-                    </Form>
-                </SpotlightTarget>
+                <Form onSubmit = { this._onFormSubmit }>
+                    <Label>{ t('enterConferenceNameOrUrl') } </Label>
+                    <FieldWrapper>
+                        <FieldTextStateless
+                            autoFocus = { true }
+                            isInvalid = { locationError }
+                            isLabelHidden = { true }
+                            onChange = { this._onURLChange }
+                            placeholder = { this.state.roomPlaceholder }
+                            shouldFitContainer = { true }
+                            type = 'text'
+                            value = { this.state.url } />
+                        <Button
+                            appearance = 'primary'
+                            onClick = { this._onJoin }
+                            type = 'button'>
+                            { t('go') }
+                        </Button>
+                    </FieldWrapper>
+                </Form>
             </Header>
         );
     }

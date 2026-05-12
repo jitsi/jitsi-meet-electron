@@ -8,18 +8,6 @@
 	"aboutLink": "О приложении",
 	"sourceLink": "Исходный код",
 	"versionLabel": "Версия: {{version}}",
-	"onboarding": {
-		"startTour": "Начать ознакомительный тур",
-		"skip": "Пропустить",
-		"welcome": "Добро пожаловать в {{appName}}",
-		"letUsShowYouAround": "Мы покажем вам, как все работает!",
-		"next": "Далее",
-		"conferenceUrl": "Введите название (или полный URL-адрес) комнаты, к которой вы хотите присоединиться.",
-		"settingsDrawerButton": "Нажмите здесь, чтобы перейти к настройкам.",
-		"serverSetting": "Это сервер, на котором будут проходить все ваши конференции. Вы можете использовать свой собственный, но вам это не нужно!",
-		"serverTimeout": "Timeout to join a meeting, if the meeting hasn't been joined before the timeout hits, it's cancelled.",
-		"alwaysOnTop": "Здесь вы можете включить небольшое окно, которое показывает участников, даже если вы только что свернули основное приложение."
-	},
 	"settings": {
 		"back": "Назад",
 		"alwaysOnTopWindow": "Поверх всех окон",

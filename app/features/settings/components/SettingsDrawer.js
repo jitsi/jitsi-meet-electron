@@ -1,7 +1,6 @@
 
 import ArrowLeft from '@atlaskit/icon/glyph/arrow-left';
 import { AkCustomDrawer } from '@atlaskit/navigation';
-import { SpotlightTarget } from '@atlaskit/onboarding';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -9,7 +8,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { DrawerContainer, Logo, closeDrawer } from '../../navbar';
-import { Onboarding, startOnboarding } from '../../onboarding';
 import {
     setDisableAGC, setWindowAlwaysOnTop
 } from '../actions';
@@ -36,25 +34,6 @@ class SettingsDrawer extends Component {
     }
 
     /**
-     * Start Onboarding once component is mounted.
-     *
-     * NOTE: It automatically checks if the onboarding is shown or not.
-     *
-     * @param {Object} prevProps - Props before component updated.
-     * @returns {void}
-     */
-    componentDidUpdate(prevProps) {
-        if (!prevProps.isOpen && this.props.isOpen) {
-
-            // TODO - Find a better way for this.
-            // Delay for 300ms to let drawer open.
-            setTimeout(() => {
-                this.props.dispatch(startOnboarding('settings-drawer'));
-            }, 300);
-        }
-    }
-
-    /**
      * Render function of component.
      *
      * @returns {ReactElement}
@@ -70,26 +49,18 @@ class SettingsDrawer extends Component {
                 primaryIcon = { <Logo /> } >
                 <DrawerContainer>
                     <SettingsContainer>
-                        <SpotlightTarget name = 'server-setting'>
-                            <ServerURLField />
-                        </SpotlightTarget>
-                        <SpotlightTarget name = 'server-timeout'>
-                            <ServerTimeoutField />
-                        </SpotlightTarget>
+                        <ServerURLField />
+                        <ServerTimeoutField />
                         <TogglesContainer>
-                            <SpotlightTarget
-                                name = 'always-on-top-window'>
-                                <SettingToggle
-                                    label = { t('settings.alwaysOnTopWindow') }
-                                    settingChangeEvent = { setWindowAlwaysOnTop }
-                                    settingName = 'alwaysOnTopWindowEnabled' />
-                            </SpotlightTarget>
+                            <SettingToggle
+                                label = { t('settings.alwaysOnTopWindow') }
+                                settingChangeEvent = { setWindowAlwaysOnTop }
+                                settingName = 'alwaysOnTopWindowEnabled' />
                             <SettingToggle
                                 label = { t('settings.disableAGC') }
                                 settingChangeEvent = { setDisableAGC }
                                 settingName = 'disableAGC' />
                         </TogglesContainer>
-                        <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>
             </AkCustomDrawer>

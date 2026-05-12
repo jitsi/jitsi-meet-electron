@@ -9,18 +9,6 @@
 	"aboutLink": "About",
 	"sourceLink": "Source Code",
 	"versionLabel": "Version: {{version}}",
-	"onboarding": {
-		"startTour": "Start Tour",
-		"skip": "Skip",
-		"welcome": "Welcome to {{appName}}",
-		"letUsShowYouAround": "Let us show you around!",
-		"next": "Next",
-		"conferenceUrl": "Enter the name (or full URL) of the room you want to join. You may make a name up, just let others know so they enter the same name.",
-		"settingsDrawerButton": "Click here to open the settings drawer.",
-		"serverSetting": "This will be the server where your conferences will take place. You can use your own, but you don't need to!",
-		"serverTimeout": "Timeout to join a meeting, if the meeting hasn't been joined before the timeout hits, it's cancelled.",
-		"alwaysOnTop": "You can toggle whether you want to enable the \"always-on-top\" window, which is displayed when the main window loses focus. This will be applied to all conferences."
-	},
 	"settings": {
 		"back": "Back",
 		"alwaysOnTopWindow": "Always on Top Window",

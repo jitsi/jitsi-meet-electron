@@ -8,18 +8,6 @@
 	"aboutLink": "Sobre",
 	"sourceLink": "Código fonte",
 	"versionLabel": "Versión: {{version}}",
-	"onboarding": {
-		"startTour": "Comezar a visita guiada",
-		"skip": "Omitir",
-		"welcome": "Reciba a benvida a {{appName}}",
-		"letUsShowYouAround": "Permita que lle mostremos o que hai!",
-		"next": "Seguinte",
-		"conferenceUrl": "Introduza o nome (ou URL completo) da sala á que desexa sumarse. Pode dar de alta un nome e permitir que a xente coa que se reúne o saiba para que introduzan o mesmo nome.",
-		"settingsDrawerButton": "Prema aquí para abrir a gabeta de configuración.",
-		"serverSetting": "Este será o servidor no que se leven a cabo as súas conferencias. Pode usar unha propia, mais non ten por que o facer!",
-		"serverTimeout": "Tempo de agarda para se sumar a unha reunión; se non se sumou antes de que remate, cancélase.",
-		"alwaysOnTop": "Pode alternar entre activar e desactivar a xanela «sempre por riba», que se mostra cando a xanela principal perde o foco. Isto é aplicábel a todas as conferencias."
-	},
 	"settings": {
 		"back": "Atrás",
 		"alwaysOnTopWindow": "Xanela sempre por riba",

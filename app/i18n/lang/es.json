@@ -8,18 +8,6 @@
 	"aboutLink": "Acerca",
 	"sourceLink": "Código fuente",
 	"versionLabel": "Version: {{version}}",
-	"onboarding": {
-		"startTour": "Iniciar Tour",
-		"skip": "Saltar",
-		"welcome": "Bienvenido a {{appName}}",
-		"letUsShowYouAround": "¡Permítanos mostrárselo!",
-		"next": "Siguiente",
-		"conferenceUrl": "Ingrese el nombre (o URL completo) de la sala a que se quiera unir. Puede inventar el nombre, solo informe a otros para que ellos usen el mismo nombre.",
-		"settingsDrawerButton": "Click aquí para abrir la opción de configuración.",
-		"serverSetting": "Este será el servidor donde sus conferencias tomarán lugar. Puede usar el suyo, ¡pero no necesita!",
-		"serverTimeout": "Tiempo de desconexión, si nadie se une a la reunión antes del tiempo de desconexión  termina, esta se cancela.",
-		"alwaysOnTop": "Puede seleccionar si desea activar la ventana \"siempre-encima\", la que se muestra cuando la ventana principal pierde enfoque. Esto será aplicado a todas las conferencias."
-	},
 	"settings": {
 		"back": "Atrás",
 		"alwaysOnTopWindow": "Ventana siempre encima",

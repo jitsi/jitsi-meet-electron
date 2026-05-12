@@ -9,18 +9,6 @@
 	"aboutLink": "Névjegy",
 	"sourceLink": "Forráskód",
 	"versionLabel": "Verzió: {{version}}",
-	"onboarding": {
-		"startTour": "Bemutató indítása",
-		"skip": "Kihagyás",
-		"welcome": "Isten hozott: {{appName}}!",
-		"letUsShowYouAround": "Hadd mutassuk meg Neked!",
-		"next": "Következő",
-		"conferenceUrl": "Írja be a csatlakozni kívánt szoba nevét (vagy teljes URL-címét). Megadhat egy nevet, csak tudassa másokkal, hogy ugyanazt a nevet írják be.",
-		"settingsDrawerButton": "Kattintson ide a beállítások fiókjának megnyitásához.",
-		"serverSetting": "Kiszolgáló, ahol a konferenciákat tartják. Használja saját kiszolgálóját; ez azonban nem szükséges.",
-		"serverTimeout": "Ha a résztvevők nem csatlakoztak az időkorlát bekövetkezése előtt, akkor a találkozót visszavonják.",
-		"alwaysOnTop": "A „Mindig látható” ablak lehetővé teszi a be-/kikapcsolást. Akkor jelenik meg, amikor a főablak elveszíti a fókuszt. Ezt minden konferenciára alkalmazni kell."
-	},
 	"settings": {
 		"back": "Vissza",
 		"alwaysOnTopWindow": "Mindig látható",

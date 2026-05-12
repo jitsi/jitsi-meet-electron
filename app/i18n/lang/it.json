@@ -8,23 +8,11 @@
 	"aboutLink": "FAQ",
 	"sourceLink": "Codice sorgente",
 	"versionLabel": "Versione: {{version}}",
-	"onboarding": {
-		"startTour": "Inizia Tour",
-		"skip": "salta",
-		"welcome": "Benvenuto in {{appName}}",
-		"letUsShowYouAround": "Ti facciamo vedere come funziona tutto!",
-		"next": "Avanti",
-		"conferenceUrl": "Insecisci il nome (oppure l'url intero) della stanza in cui vuoi accedere.",
-		"settingsDrawerButton": "Premi qua per arrivare alle impostazioni.",
-		"serverSetting": "Questo è il server dove si svolgeranno tutte le conferenze, qua si può anche inserire il proprio server!",
-		"serverTimeout": "Questo è il tempo massimo che un server può metterci per rispondere ad una richiesta di accesso a un meeting.",
-		"alwaysOnTop": "Qua puoi attivare una piccola finestra che ti farà vedere i partecipanti del meeting anche se hai minimizzato la finestra principale."
-	},
 	"settings": {
 		"back": "Indietro",
 		"alwaysOnTopWindow": "Finestra sempre in primo piano",
 		"invalidServer": "URL del server errato",
 		"serverUrl": "URL Server",
-        "serverTimeout": "Timeout del server (in secondi)"
+		"serverTimeout": "Timeout del server (in secondi)"
 	}
 }

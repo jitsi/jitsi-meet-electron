@@ -9,18 +9,6 @@
 	"aboutLink": "关于",
 	"sourceLink": "源代码",
 	"versionLabel": "版本：{{version}}",
-	"onboarding": {
-		"startTour": "开始参观",
-		"skip": "跳过",
-		"welcome": "欢迎使用{{appName}}",
-		"letUsShowYouAround": "让我们带你参观一下！",
-		"next": "下一个",
-		"conferenceUrl": "输入你想加入的会议室的名称（或完整的网址），你也可以使用不同的名称创建会议室，其他人只需输入相同的名称即可加入。",
-		"settingsDrawerButton": "点击此处打开设置。",
-		"serverSetting": "这将是你开始会议的服务器，你可以使用自己的服务器，但你无需这样做！",
-		"serverTimeout": "加入会议超时，如果在超时之前未加入会议，则会议将被取消。",
-		"alwaysOnTop": "你可以选择是否要启用“始终置顶”，该窗口在主窗口失去焦点时显示，这将适用于所有会议。"
-	},
 	"settings": {
 		"back": "返回",
 		"alwaysOnTopWindow": "始终置顶",

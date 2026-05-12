@@ -27,7 +27,7 @@ const getDrawerTransform = props => {
 };
 
 const Drawer = styled.div`
-    background: #0e1624;
+    background: #1a1a1a;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
     color: #f4f5f7;
     display: flex;

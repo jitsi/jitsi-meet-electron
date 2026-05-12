@@ -17,7 +17,7 @@ const getBorderColor = props => {
         return '#ff5630';
     }
 
-    return '#2c333d';
+    return '#3e3e3e';
 };
 
 const getFocusBorderColor = props => {
@@ -25,7 +25,7 @@ const getFocusBorderColor = props => {
         return '#ff5630';
     }
 
-    return '#87ceeb';
+    return '#dddddd';
 };
 
 const Wrapper = styled.div`
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledLabel = styled.label`
-    color: #b3bac5;
+    color: #c6c6c6;
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 4px;
@@ -43,7 +43,7 @@ const StyledLabel = styled.label`
 `;
 
 const StyledInput = styled.input`
-    background: #2c333d;
+    background: #3e3e3e;
     border: 2px solid ${getBorderColor};
     border-radius: 4px;
     color: #f4f5f7;
@@ -58,7 +58,7 @@ const StyledInput = styled.input`
     }
 
     &::placeholder {
-        color: #b9c8e0;
+        color: #cdcdcd;
     }
 `;
 

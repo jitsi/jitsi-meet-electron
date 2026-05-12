@@ -66,7 +66,10 @@ class MeetingApp extends Component {
                     parsedURL = parsedURL.slice(0, -1);
                 }
 
-                const conference = createConferenceObjectFromURL(parsedURL);
+                const conference = createConferenceObjectFromURL(
+                    parsedURL,
+                    this.props._serverURL || config.defaultServerURL
+                );
 
                 if (conference && conference.room) {
                     this.setState({ conference });

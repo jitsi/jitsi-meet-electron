@@ -65,7 +65,10 @@ class App extends Component {
             inputURL = inputURL.slice(0, -1); // eslint-disable-line no-param-reassign
         }
 
-        const conference = createConferenceObjectFromURL(inputURL);
+        const conference = createConferenceObjectFromURL(
+            inputURL,
+            this.props._serverURL || config.defaultServerURL
+        );
 
         // Don't navigate if conference couldn't be created
         if (!conference) {
@@ -92,7 +95,20 @@ class App extends Component {
 }
 
 App.propTypes = {
+    _serverURL: PropTypes.string,
     dispatch: PropTypes.func
 };
 
-export default connect()(App);
+/**
+ * Maps (parts of) the redux state to the React props.
+ *
+ * @param {Object} state - The redux state.
+ * @returns {Object}
+ */
+function _mapStateToProps(state) {
+    return {
+        _serverURL: state.settings.serverURL
+    };
+}
+
+export default connect(_mapStateToProps)(App);

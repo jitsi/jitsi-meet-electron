@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled from 'styled-components';
 
+import config from '../../config';
 import { Navbar } from '../../navbar';
 import { RecentList, addRecentListEntry } from '../../recent-list';
 import Button from '../../shared/components/Button';
@@ -164,7 +165,10 @@ class Welcome extends Component {
      */
     _onJoin() {
         const inputURL = this.state.url || this.state.generatedRoomname;
-        const conference = createConferenceObjectFromURL(inputURL);
+        const conference = createConferenceObjectFromURL(
+            inputURL,
+            this.props._serverURL || config.defaultServerURL
+        );
 
         // Don't navigate if conference couldn't be created
         if (!conference) {
@@ -263,9 +267,22 @@ class Welcome extends Component {
 }
 
 Welcome.propTypes = {
+    _serverURL: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object,
     t: PropTypes.func.isRequired
 };
 
-export default compose(connect(), withTranslation())(Welcome);
+/**
+ * Maps (parts of) the redux state to the React props.
+ *
+ * @param {Object} state - The redux state.
+ * @returns {Object}
+ */
+function _mapStateToProps(state) {
+    return {
+        _serverURL: state.settings.serverURL
+    };
+}
+
+export default compose(connect(_mapStateToProps), withTranslation())(Welcome);

@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { openDrawer } from '../../navbar';
-import { SpotlightTarget } from '../../onboarding';
 import { SettingsIcon } from '../../shared/icons';
 
 import SettingsDrawer from './SettingsDrawer';
@@ -57,13 +56,10 @@ class SettingsButton extends Component {
      */
     render() {
         return (
-            <SpotlightTarget
-                name = 'settings-drawer-button'>
-                <SettingsIcon
-                    color = 'white'
-                    onClick = { this._onIconClick }
-                    size = { 24 } />
-            </SpotlightTarget>
+            <SettingsIcon
+                color = 'white'
+                onClick = { this._onIconClick }
+                size = { 24 } />
         );
     }
 

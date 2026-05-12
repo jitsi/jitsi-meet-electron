@@ -11,7 +11,6 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { App, MeetingApp } from './features/app';
-import { SpotlightManager } from './features/onboarding';
 import { persistor, store } from './features/redux';
 import Spinner from './features/shared/components/Spinner';
 
@@ -35,11 +34,9 @@ class Root extends Component {
                 <PersistGate
                     loading = { null }
                     persistor = { persistor }>
-                    <SpotlightManager>
-                        <Suspense fallback = { <Spinner /> } >
-                            <EntryPoint />
-                        </Suspense>
-                    </SpotlightManager>
+                    <Suspense fallback = { <Spinner /> } >
+                        <EntryPoint />
+                    </Suspense>
                 </PersistGate>
             </Provider>
         );

@@ -8,7 +8,6 @@ import { compose } from 'redux';
 import styled from 'styled-components';
 
 import { Navbar } from '../../navbar';
-import { Onboarding, SpotlightTarget, startOnboarding } from '../../onboarding';
 import { RecentList, addRecentListEntry } from '../../recent-list';
 import Button from '../../shared/components/Button';
 import FieldText from '../../shared/components/FieldText';
@@ -73,16 +72,11 @@ class Welcome extends Component {
     }
 
     /**
-     * Start Onboarding once component is mounted.
-     * Start generating randdom room names.
-     *
-     * NOTE: It autonatically checks if the onboarding is shown or not.
+     * Start generating random room names.
      *
      * @returns {void}
      */
     componentDidMount() {
-        this.props.dispatch(startOnboarding('welcome-page'));
-
         this._updateRoomname();
     }
 
@@ -106,7 +100,6 @@ class Welcome extends Component {
                 <Wrapper>
                     { this._renderHeader() }
                     { this._renderBody() }
-                    <Onboarding section = 'welcome-page' />
                 </Wrapper>
             </Page>
         );
@@ -221,28 +214,26 @@ class Welcome extends Component {
 
         return (
             <Header>
-                <SpotlightTarget name = 'conference-url'>
-                    <Form onSubmit = { this._onFormSubmit }>
-                        <Label>{ t('enterConferenceNameOrUrl') } </Label>
-                        <FieldWrapper>
-                            <MainFieldText
-                                autoFocus = { true }
-                                isInvalid = { locationError }
-                                isLabelHidden = { true }
-                                onChange = { this._onURLChange }
-                                placeholder = { this.state.roomPlaceholder }
-                                shouldFitContainer = { true }
-                                type = 'text'
-                                value = { this.state.url } />
-                            <MainGoButton
-                                appearance = 'primary'
-                                onClick = { this._onJoin }
-                                type = 'button'>
-                                { t('go') }
-                            </MainGoButton>
-                        </FieldWrapper>
-                    </Form>
-                </SpotlightTarget>
+                <Form onSubmit = { this._onFormSubmit }>
+                    <Label>{ t('enterConferenceNameOrUrl') } </Label>
+                    <FieldWrapper>
+                        <MainFieldText
+                            autoFocus = { true }
+                            isInvalid = { locationError }
+                            isLabelHidden = { true }
+                            onChange = { this._onURLChange }
+                            placeholder = { this.state.roomPlaceholder }
+                            shouldFitContainer = { true }
+                            type = 'text'
+                            value = { this.state.url } />
+                        <MainGoButton
+                            appearance = 'primary'
+                            onClick = { this._onJoin }
+                            type = 'button'>
+                            { t('go') }
+                        </MainGoButton>
+                    </FieldWrapper>
+                </Form>
             </Header>
         );
     }

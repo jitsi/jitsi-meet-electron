@@ -7,7 +7,6 @@ import { compose } from 'redux';
 import styled from 'styled-components';
 
 import { DrawerContainer, Logo, closeDrawer } from '../../navbar';
-import { Onboarding, SpotlightTarget, startOnboarding } from '../../onboarding';
 import { ArrowLeftIcon } from '../../shared/icons';
 import {
     setDisableAGC, setWindowAlwaysOnTop
@@ -82,25 +81,6 @@ class SettingsDrawer extends Component {
     }
 
     /**
-     * Start Onboarding once component is mounted.
-     *
-     * NOTE: It automatically checks if the onboarding is shown or not.
-     *
-     * @param {Object} prevProps - Props before component updated.
-     * @returns {void}
-     */
-    componentDidUpdate(prevProps) {
-        if (!prevProps.isOpen && this.props.isOpen) {
-
-            // TODO - Find a better way for this.
-            // Delay for 300ms to let drawer open.
-            setTimeout(() => {
-                this.props.dispatch(startOnboarding('settings-drawer'));
-            }, 300);
-        }
-    }
-
-    /**
      * Render function of component.
      *
      * @returns {ReactElement}
@@ -122,26 +102,18 @@ class SettingsDrawer extends Component {
                 </DrawerHeader>
                 <DrawerContainer>
                     <SettingsContainer>
-                        <SpotlightTarget name = 'server-setting'>
-                            <ServerURLField />
-                        </SpotlightTarget>
-                        <SpotlightTarget name = 'server-timeout'>
-                            <ServerTimeoutField />
-                        </SpotlightTarget>
+                        <ServerURLField />
+                        <ServerTimeoutField />
                         <TogglesContainer>
-                            <SpotlightTarget
-                                name = 'always-on-top-window'>
-                                <SettingToggle
-                                    label = { t('settings.alwaysOnTopWindow') }
-                                    settingChangeEvent = { setWindowAlwaysOnTop }
-                                    settingName = 'alwaysOnTopWindowEnabled' />
-                            </SpotlightTarget>
+                            <SettingToggle
+                                label = { t('settings.alwaysOnTopWindow') }
+                                settingChangeEvent = { setWindowAlwaysOnTop }
+                                settingName = 'alwaysOnTopWindowEnabled' />
                             <SettingToggle
                                 label = { t('settings.disableAGC') }
                                 settingChangeEvent = { setDisableAGC }
                                 settingName = 'disableAGC' />
                         </TogglesContainer>
-                        <Onboarding section = 'settings-drawer' />
                     </SettingsContainer>
                 </DrawerContainer>
             </Drawer>

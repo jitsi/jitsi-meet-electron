@@ -141,7 +141,6 @@
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "^8.2.3",
-    "babel-runtime": "npm:@babel/runtime@^7.0.0",
     "concurrently": "5.1.0",
     "css-loader": "^6.7.1",
     "electron": "41.1.0",
@@ -177,7 +176,6 @@
     "webpack-cli": "^7.0.2"
   },
   "overrides": {
-    "babel-runtime": "npm:@babel/runtime@^7.0.0",
     "fbjs": "^3.0.5"
   }
 }

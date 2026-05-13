@@ -17,7 +17,7 @@ const getSize = props => SIZES[props.size] || SIZES.medium;
 
 const Spinner = styled.div`
     animation: ${spin} 0.8s linear infinite;
-    border: 4px solid rgba(255, 255, 255, 0.3);
+    border: 4px solid rgba(0, 0, 0, 0.3);
     border-radius: 50%;
     border-top-color: white;
     height: ${getSize};

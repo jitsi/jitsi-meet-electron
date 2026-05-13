@@ -14,7 +14,7 @@ import Button from '../../shared/components/Button';
 import FieldText from '../../shared/components/FieldText';
 import Page from '../../shared/components/Page';
 import { createConferenceObjectFromURL } from '../../utils';
-import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
+import { Body, Form, Header, Label, Wrapper } from '../styled';
 
 
 const MainFieldText = styled(FieldText)`

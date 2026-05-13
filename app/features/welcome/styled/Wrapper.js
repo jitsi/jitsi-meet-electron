@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export default styled.div`
     background: black;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
+    min-width: 100%;
 `;

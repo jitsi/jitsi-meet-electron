@@ -189,7 +189,6 @@ function createJitsiMeetWindow() {
 
     // Load the previous window state with fallback to defaults.
     const windowState = windowStateKeeper({
-        defaultWidth: 800,
         defaultHeight: 600,
         fullScreen: false
     });
@@ -211,10 +210,10 @@ function createJitsiMeetWindow() {
     const options = {
         x: windowState.x,
         y: windowState.y,
-        width: windowState.width,
+        width: 480,
         height: windowState.height,
         icon: path.resolve(basePath, './resources/icon.png'),
-        minWidth: 800,
+        minWidth: 480,
         minHeight: 600,
         show: false,
         webPreferences: {

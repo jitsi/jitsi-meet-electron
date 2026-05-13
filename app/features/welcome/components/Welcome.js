@@ -19,16 +19,12 @@ import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
 
 const MainFieldText = styled(FieldText)`
     input {
-        box-sizing: border-box;
         height: 3em;
     }
 `;
 
 const MainGoButton = styled(Button)`
     height: 3em;
-    margin-left: 0.5em;
-    padding-bottom: 0;
-    padding-top: 0;
 `;
 
 
@@ -220,23 +216,21 @@ class Welcome extends Component {
             <Header>
                 <Form onSubmit = { this._onFormSubmit }>
                     <Label>{ t('enterConferenceNameOrUrl') } </Label>
-                    <FieldWrapper>
-                        <MainFieldText
-                            autoFocus = { true }
-                            isInvalid = { locationError }
-                            isLabelHidden = { true }
-                            onChange = { this._onURLChange }
-                            placeholder = { this.state.roomPlaceholder }
-                            shouldFitContainer = { true }
-                            type = 'text'
-                            value = { this.state.url } />
-                        <MainGoButton
-                            appearance = 'primary'
-                            onClick = { this._onJoin }
-                            type = 'button'>
-                            { t('go') }
-                        </MainGoButton>
-                    </FieldWrapper>
+                    <MainFieldText
+                        autoFocus = { true }
+                        isInvalid = { locationError }
+                        isLabelHidden = { true }
+                        onChange = { this._onURLChange }
+                        placeholder = { this.state.roomPlaceholder }
+                        shouldFitContainer = { true }
+                        type = 'text'
+                        value = { this.state.url } />
+                    <MainGoButton
+                        appearance = 'primary'
+                        onClick = { this._onJoin }
+                        type = 'button'>
+                        { t('go') }
+                    </MainGoButton>
                 </Form>
             </Header>
         );

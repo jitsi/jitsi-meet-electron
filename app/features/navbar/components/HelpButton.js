@@ -1,13 +1,60 @@
 
-import Droplist, { Group, Item } from '@atlaskit/droplist';
-import HelpIcon from '@atlaskit/icon/glyph/question-circle';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-import { version } from '../../../../package.json';
+import packageInfo from '../../../../package.json';
 import config from '../../config';
+import { QuestionCircleIcon } from '../../shared/icons';
 import { openExternalLink } from '../../utils';
+
+
+const Wrapper = styled.div`
+    position: relative;
+`;
+
+const getDropMenuDisplay = props => {
+    if (props.isOpen) {
+        return 'block';
+    }
+
+    return 'none';
+};
+
+const DropMenu = styled.ul`
+    background: #2c333d;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    bottom: 0;
+    display: ${getDropMenuDisplay};
+    left: 100%;
+    list-style: none;
+    margin: 0;
+    min-width: 180px;
+    padding: 4px 0;
+    position: absolute;
+    z-index: 500;
+`;
+
+const GroupHeading = styled.li`
+    color: #8993a4;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 8px 12px 4px;
+    text-transform: uppercase;
+`;
+
+const MenuItem = styled.li`
+    color: #f4f5f7;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 12px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+`;
 
 
 /**
@@ -30,6 +77,8 @@ class HelpButton extends Component {
         this._onSourceClick = openExternalLink.bind(undefined, config.sourceURL);
         this._onIconClick = this._onIconClick.bind(this);
         this._onOpenChange = this._onOpenChange.bind(this);
+        this._onDocumentClick = this._onDocumentClick.bind(this);
+        this._setWrapperRef = this._setWrapperRef.bind(this);
         this._onPrivacyClick
             = openExternalLink.bind(undefined, config.privacyPolicyURL);
         this._onTermsClick
@@ -38,6 +87,45 @@ class HelpButton extends Component {
             = openExternalLink.bind(undefined, config.feedbackURL);
     }
 
+    /**
+     * Attach document click listener for outside-click detection.
+     *
+     * @returns {void}
+     */
+    componentDidMount() {
+        document.addEventListener('mousedown', this._onDocumentClick);
+    }
+
+    /**
+     * Remove document click listener on unmount.
+     *
+     * @returns {void}
+     */
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this._onDocumentClick);
+    }
+
+    /**
+     * Stores a ref to the wrapper element for outside-click detection.
+     *
+     * @param {Element} ref - The element reference.
+     * @returns {void}
+     */
+    _setWrapperRef(ref) {
+        this._wrapperRef = ref;
+    }
+
+    /**
+     * Closes the dropdown when clicking outside.
+     *
+     * @param {MouseEvent} e - The mousedown event.
+     * @returns {void}
+     */
+    _onDocumentClick(e) {
+        if (this._wrapperRef && !this._wrapperRef.contains(e.target)) {
+            this._onOpenChange();
+        }
+    }
 
     /**
      * Toggles the droplist.
@@ -72,33 +160,33 @@ class HelpButton extends Component {
         const { t } = this.props;
 
         return (
-            <Droplist
-                isOpen = { this.state.droplistOpen }
-                onClick = { this._onIconClick }
-                onOpenChange = { this._onOpenChange }
-                position = 'right bottom'
-                trigger = { <HelpIcon /> }>
-                <Group heading = { t('help') } >
-                    <Item onActivate = { this._onTermsClick }>
+            <Wrapper ref = { this._setWrapperRef }>
+                <QuestionCircleIcon
+                    color = 'white'
+                    onClick = { this._onIconClick }
+                    size = { 24 } />
+                <DropMenu isOpen = { this.state.droplistOpen }>
+                    <GroupHeading>{ t('help') }</GroupHeading>
+                    <MenuItem onClick = { this._onTermsClick }>
                         { t('termsLink') }
-                    </Item>
-                    <Item onActivate = { this._onPrivacyClick }>
+                    </MenuItem>
+                    <MenuItem onClick = { this._onPrivacyClick }>
                         { t('privacyLink') }
-                    </Item>
-                    <Item onActivate = { this._onSendFeedbackClick }>
+                    </MenuItem>
+                    <MenuItem onClick = { this._onSendFeedbackClick }>
                         { t('sendFeedbackLink') }
-                    </Item>
-                    <Item onActivate = { this._onAboutClick }>
+                    </MenuItem>
+                    <MenuItem onClick = { this._onAboutClick }>
                         { t('aboutLink') }
-                    </Item>
-                    <Item onActivate = { this._onSourceClick }>
+                    </MenuItem>
+                    <MenuItem onClick = { this._onSourceClick }>
                         { t('sourceLink') }
-                    </Item>
-                    <Item>
-                        { t('versionLabel', { version }) }
-                    </Item>
-                </Group>
-            </Droplist>
+                    </MenuItem>
+                    <MenuItem>
+                        { t('versionLabel', { version: packageInfo.version }) }
+                    </MenuItem>
+                </DropMenu>
+            </Wrapper>
         );
     }
 }

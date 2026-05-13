@@ -32,9 +32,10 @@ export function openExternalLink(link) {
  * Get URL, extract room name from it and create a Conference object.
  *
  * @param {string} inputURL - Combined server url with room separated by /.
+ * @param {string} defaultServerURL - Server URL to use for room-only input.
  * @returns {Object}
  */
-export function createConferenceObjectFromURL(inputURL) {
+export function createConferenceObjectFromURL(inputURL, defaultServerURL) {
     const lastIndexOfSlash = inputURL.lastIndexOf('/');
     let room;
     let serverURL;
@@ -42,6 +43,7 @@ export function createConferenceObjectFromURL(inputURL) {
     if (lastIndexOfSlash === -1) {
         // This must be only the room name.
         room = inputURL;
+        serverURL = normalizeServerURL(defaultServerURL || '');
     } else {
         // Take the substring after last slash to be the room name.
         room = inputURL.substring(lastIndexOfSlash + 1);

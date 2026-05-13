@@ -1,10 +1,9 @@
 
-import Toggle from '@atlaskit/toggle';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
+import Toggle from '../../shared/components/Toggle';
 import { Label, ToggleContainer } from '../styled';
-
 
 /**
  * Toggles Buttons with label.

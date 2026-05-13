@@ -1,11 +1,10 @@
-import Spinner from '@atlaskit/spinner';
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Conference } from '../../conference';
 import config from '../../config';
+import Spinner from '../../shared/components/Spinner';
 import { createConferenceObjectFromURL } from '../../utils';
 
 /**
@@ -67,7 +66,10 @@ class MeetingApp extends Component {
                     parsedURL = parsedURL.slice(0, -1);
                 }
 
-                const conference = createConferenceObjectFromURL(parsedURL);
+                const conference = createConferenceObjectFromURL(
+                    parsedURL,
+                    this.props._serverURL || config.defaultServerURL
+                );
 
                 if (conference && conference.room) {
                     this.setState({ conference });
@@ -119,9 +121,7 @@ class MeetingApp extends Component {
         }
 
         return (
-            <AtlasKitThemeProvider mode = 'dark'>
-                <Conference conference = { conference } />
-            </AtlasKitThemeProvider>
+            <Conference conference = { conference } />
         );
     }
 }

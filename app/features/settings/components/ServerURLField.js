@@ -1,5 +1,4 @@
 
-import { FieldTextStateless } from '@atlaskit/field-text';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
@@ -7,6 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import config from '../../config';
+import FieldText from '../../shared/components/FieldText';
 import { normalizeServerURL } from '../../utils';
 import { setServerURL } from '../actions';
 import { Form } from '../styled';
@@ -43,7 +43,7 @@ class ServerURLField extends Component {
 
         return (
             <Form onSubmit = { this._onServerURLSubmit }>
-                <FieldTextStateless
+                <FieldText
                     invalidMessage = { t('settings.invalidServer') }
                     isInvalid = { !this.state.isValid }
                     isValidationHidden = { this.state.isValid }

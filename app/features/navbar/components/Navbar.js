@@ -1,9 +1,8 @@
 
-
-import Navigation, { AkGlobalItem } from '@atlaskit/navigation';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { SettingsButton, SettingsDrawer } from '../../settings';
 
@@ -11,36 +10,43 @@ import HelpButton from './HelpButton';
 import Logo from './Logo';
 
 
+const NavBar = styled.nav`
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    padding: 8px 0;
+    width: 64px;
+`;
+
+const NavSection = styled.div`
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+`;
+
+const NavItem = styled.div`
+    align-items: center;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+    }
+`;
+
+
 /**
  * Navigation Bar component.
  */
 class Navbar extends Component {
-    /**
-     * Get the array of Primary actions of Global Navigation.
-     *
-     * @returns {ReactElement[]}
-     */
-    _getPrimaryActions() {
-        return [
-            <AkGlobalItem key = { 0 }>
-                <SettingsButton />
-            </AkGlobalItem>
-        ];
-    }
-
-    /**
-     * Get the array of Secondary actions of Global Navigation.
-     *
-     * @returns {ReactElement[]}
-     */
-    _getSecondaryActions() {
-        return [
-            <AkGlobalItem key = { 0 }>
-                <HelpButton />
-            </AkGlobalItem>
-        ];
-    }
-
     /**
      * Render function of component.
      *
@@ -48,17 +54,24 @@ class Navbar extends Component {
      */
     render() {
         return (
-            <Navigation
-                drawers = { [
-                    <SettingsDrawer
-                        isOpen = { this.props._isSettingsDrawerOpen }
-                        key = { 0 } />
-                ] }
-                globalPrimaryActions = { this._getPrimaryActions() }
-                globalPrimaryIcon = { <Logo /> }
-                globalSecondaryActions = { this._getSecondaryActions() }
-                isOpen = { false }
-                isResizeable = { false } />
+            <>
+                <NavBar>
+                    <NavSection>
+                        <NavItem>
+                            <Logo />
+                        </NavItem>
+                        <NavItem>
+                            <SettingsButton />
+                        </NavItem>
+                    </NavSection>
+                    <NavSection>
+                        <NavItem>
+                            <HelpButton />
+                        </NavItem>
+                    </NavSection>
+                </NavBar>
+                <SettingsDrawer isOpen = { this.props._isSettingsDrawerOpen } />
+            </>
         );
     }
 }

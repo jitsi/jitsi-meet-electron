@@ -1,19 +1,31 @@
 
-import Button from '@atlaskit/button';
-import { FieldTextStateless } from '@atlaskit/field-text';
-import Page from '@atlaskit/page';
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import { generateRoomWithoutSeparator } from '@jitsi/js-utils/random';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import styled from 'styled-components';
 
+import config from '../../config';
 import { Navbar } from '../../navbar';
 import { RecentList, addRecentListEntry } from '../../recent-list';
+import Button from '../../shared/components/Button';
+import FieldText from '../../shared/components/FieldText';
+import Page from '../../shared/components/Page';
 import { createConferenceObjectFromURL } from '../../utils';
-import { Body, FieldWrapper, Form, Header, Label, Wrapper } from '../styled';
+import { Body, Form, Header, Label, Wrapper } from '../styled';
+
+
+const MainFieldText = styled(FieldText)`
+    input {
+        height: 3em;
+    }
+`;
+
+const MainGoButton = styled(Button)`
+    height: 3em;
+`;
 
 
 /**
@@ -82,12 +94,10 @@ class Welcome extends Component {
     render() {
         return (
             <Page navigation = { <Navbar /> }>
-                <AtlasKitThemeProvider mode = 'light'>
-                    <Wrapper>
-                        { this._renderHeader() }
-                        { this._renderBody() }
-                    </Wrapper>
-                </AtlasKitThemeProvider>
+                <Wrapper>
+                    { this._renderHeader() }
+                    { this._renderBody() }
+                </Wrapper>
             </Page>
         );
     }
@@ -151,7 +161,10 @@ class Welcome extends Component {
      */
     _onJoin() {
         const inputURL = this.state.url || this.state.generatedRoomname;
-        const conference = createConferenceObjectFromURL(inputURL);
+        const conference = createConferenceObjectFromURL(
+            inputURL,
+            this.props._serverURL || config.defaultServerURL
+        );
 
         // Don't navigate if conference couldn't be created
         if (!conference) {
@@ -203,23 +216,21 @@ class Welcome extends Component {
             <Header>
                 <Form onSubmit = { this._onFormSubmit }>
                     <Label>{ t('enterConferenceNameOrUrl') } </Label>
-                    <FieldWrapper>
-                        <FieldTextStateless
-                            autoFocus = { true }
-                            isInvalid = { locationError }
-                            isLabelHidden = { true }
-                            onChange = { this._onURLChange }
-                            placeholder = { this.state.roomPlaceholder }
-                            shouldFitContainer = { true }
-                            type = 'text'
-                            value = { this.state.url } />
-                        <Button
-                            appearance = 'primary'
-                            onClick = { this._onJoin }
-                            type = 'button'>
-                            { t('go') }
-                        </Button>
-                    </FieldWrapper>
+                    <MainFieldText
+                        autoFocus = { true }
+                        isInvalid = { locationError }
+                        isLabelHidden = { true }
+                        onChange = { this._onURLChange }
+                        placeholder = { this.state.roomPlaceholder }
+                        shouldFitContainer = { true }
+                        type = 'text'
+                        value = { this.state.url } />
+                    <MainGoButton
+                        appearance = 'primary'
+                        onClick = { this._onJoin }
+                        type = 'button'>
+                        { t('go') }
+                    </MainGoButton>
                 </Form>
             </Header>
         );
@@ -250,9 +261,22 @@ class Welcome extends Component {
 }
 
 Welcome.propTypes = {
+    _serverURL: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object,
     t: PropTypes.func.isRequired
 };
 
-export default compose(connect(), withTranslation())(Welcome);
+/**
+ * Maps (parts of) the redux state to the React props.
+ *
+ * @param {Object} state - The redux state.
+ * @returns {Object}
+ */
+function _mapStateToProps(state) {
+    return {
+        _serverURL: state.settings.serverURL
+    };
+}
+
+export default compose(connect(_mapStateToProps), withTranslation())(Welcome);

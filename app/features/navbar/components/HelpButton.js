@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { version } from '../../../../package.json';
+import packageInfo from '../../../../package.json';
 import config from '../../config';
 import { QuestionCircleIcon } from '../../shared/icons';
 import { openExternalLink } from '../../utils';
@@ -183,7 +183,7 @@ class HelpButton extends Component {
                         { t('sourceLink') }
                     </MenuItem>
                     <MenuItem>
-                        { t('versionLabel', { version }) }
+                        { t('versionLabel', { version: packageInfo.version }) }
                     </MenuItem>
                 </DropMenu>
             </Wrapper>

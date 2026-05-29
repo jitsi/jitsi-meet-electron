@@ -27,6 +27,13 @@ const config = require('./app/features/config');
 const { openExternalLink } = require('./app/features/utils/openExternalLink');
 const pkgJson = require('./package.json');
 
+// This file is bundled to ./build/main.js, so under esbuild __dirname is the
+// build/ directory and its parent is the application root holding build/ and
+// resources/ (in both development and the packaged app). Do not use __dirname
+// directly for app paths: the previous webpack build neutralised __dirname via
+// `node: { __dirname: true }`, so this indirection replaces that behaviour.
+const rootDir = path.resolve(__dirname, '..');
+
 const showDevTools = Boolean(process.env.SHOW_DEV_TOOLS) || (process.argv.indexOf('--show-dev-tools') > -1);
 
 // For enabling remote control, please change the ENABLE_REMOTE_CONTROL flag in
@@ -78,7 +85,7 @@ debug({
  * - Enable automatic reloads
  */
 if (isDev) {
-    require('electron-reload')(path.join(__dirname, 'build'));
+    require('electron-reload')(path.join(rootDir, 'build'));
 }
 
 /**
@@ -194,7 +201,7 @@ function createJitsiMeetWindow() {
     });
 
     // Path to root directory.
-    const basePath = isDev ? __dirname : app.getAppPath();
+    const basePath = isDev ? rootDir : app.getAppPath();
 
     // URL for index.html which will be our entry point.
     const indexURL = URL.format({
@@ -518,7 +525,7 @@ ipcMain.on('open-meeting-window', (event, conference) => {
         return;
     }
 
-    const basePath = isDev ? __dirname : app.getAppPath();
+    const basePath = isDev ? rootDir : app.getAppPath();
     const meetingURL = URL.format({
         pathname: path.resolve(basePath, './build/meeting.html'),
         protocol: 'file:',

@@ -6,17 +6,17 @@
   "productName": "Jitsi Meet",
   "private": true,
   "scripts": {
-    "start": "webpack --config ./webpack.main.js --mode development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
+    "start": "node ./esbuild.js --dev && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "clean": "rm -rf node_modules build dist",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "build": "webpack --config ./webpack.main.js --mode production && webpack --config ./webpack.renderer.js --mode production",
+    "build": "node ./esbuild.js",
     "dist": "npm run build && electron-builder",
     "postinstall": "patch-package",
-    "watch": "webpack --config ./webpack.renderer.js --mode development --watch --watch-options-poll=1000"
+    "watch": "node ./esbuild.js renderer --dev --watch"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=24.0.0"
   },
   "build": {
     "appId": "org.jitsi.jitsi-meet",
@@ -131,33 +131,29 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
-    "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/plugin-proposal-export-namespace-from": "^7.16.7",
-    "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@hapi/bourne": "^3.0.0",
     "@jitsi/eslint-config": "^6.0.4",
     "@jitsi/js-utils": "2.0.5",
-    "@svgr/webpack": "^6.2.1",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
     "babel-eslint": "10.0.3",
-    "babel-loader": "^8.2.3",
     "concurrently": "5.1.0",
-    "css-loader": "^6.7.1",
     "electron": "41.1.0",
     "electron-builder": "^26.8.1",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",
     "electron-react-devtools": "0.5.3",
+    "electron-to-chromium": "^1.5.364",
     "electron-updater": "^6.8.3",
     "electron-window-state": "^5.0.3",
+    "esbuild": "^0.25.0",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsdoc": "^50.6.1",
     "eslint-plugin-react": "^7.37.0",
-    "file-loader": "^6.2.0",
     "history": "^4.10.1",
-    "html-webpack-plugin": "^5.5.0",
     "i18next": "^19.9.2",
     "mousetrap": "^1.6.5",
     "patch-package": "8.0.1",
@@ -169,11 +165,8 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "source-map-support": "^0.5.19",
-    "style-loader": "^3.3.1",
     "styled-components": "^3.4.10",
-    "typescript": "^5.9.3",
-    "webpack": "^5.106.2",
-    "webpack-cli": "^7.0.2"
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "fbjs": "^3.0.5"

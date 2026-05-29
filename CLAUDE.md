@@ -10,13 +10,13 @@ Jitsi Meet Electron is a desktop application for Jitsi Meet built with Electron.
 
 ### Setup
 - **Install dependencies**: `npm install`
-  - Requires Node.js 22+ (see `.nvmrc`)
+  - Requires Node.js 24+ (see `.nvmrc`)
   - Linux requires: `libx11-dev zlib1g-dev libpng-dev libxtst-dev`
   - Windows requires: `windows-build-tools` (global install)
 
 ### Development
 - **Start in development mode**: `npm start`
-  - Runs webpack for main process, then starts concurrent watch + electron
+  - Runs esbuild for the main, preload, and renderer bundles, then starts concurrent watch + electron
   - Opens WebRTC internals window automatically in dev mode
 - **Start with DevTools open**: `SHOW_DEV_TOOLS=true npm start` or `npm start -- --show-dev-tools`
 - **Watch renderer changes**: `npm run watch` (runs automatically with `npm start`)
@@ -54,26 +54,38 @@ The application follows Electron's main/renderer process model:
 - IPC communication with renderer
 
 **Renderer Process** (`app/` directory):
-- React application bundled via webpack
+- React application bundled via esbuild
 - Contains all UI components and business logic
 - Uses `@jitsi/electron-sdk` via preload script (`app/preload/preload.js`)
 - Communicates with main process via IPC
 
 ### Build System
-Uses two separate webpack configurations:
+A single esbuild script (`esbuild.js`) builds all three bundles into `build/`.
+Run it directly with target/flag arguments:
+- `node ./esbuild.js` — production build of everything
+- `node ./esbuild.js --dev` — development build (unminified, inline sourcemaps)
+- `node ./esbuild.js renderer --dev --watch` — watch/rebuild the renderer (this is `npm run watch`)
+- `node ./esbuild.js main` — build only main + preload
 
-**webpack.main.js**:
-- Target: `electron-main`
+**Main config** (`main` target):
+- `platform: 'node'`, `format: 'cjs'`, `target: 'node22'`
 - Bundles `main.js` and `app/preload/preload.js`
-- Externalizes electron-specific dependencies
+- Externalizes `electron` plus the runtime dependencies that ship in
+  `node_modules` (`@jitsi/electron-sdk`, `electron-debug`, `electron-reload`);
+  everything else (devDependencies used by the main process) is bundled in
 
-**webpack.renderer.js**:
-- Target: `web` (renderer runs without node integration)
-- Entry: `app/index.js`
-- Uses Babel to transpile for specific Electron version
-- Bundles React app with HTML generation via `HtmlWebpackPlugin`
-- Handles CSS, SVG (via @svgr/webpack), and PNG assets
-- Does NOT parse `external_api.js` (Jitsi Meet External API)
+**Renderer config** (`renderer` target):
+- `platform: 'browser'`, `format: 'iife'`, `target: 'chrome120'`
+- Entry: `app/index.js` → `build/app.js` (+ `build/app.css` from imported CSS)
+- JSX in `.js` files is compiled by esbuild (classic runtime, React in scope)
+- `process.env.NODE_ENV` is injected via `define`; `global` is polyfilled via banner
+- Custom esbuild plugins replace the old webpack loaders/plugins:
+  - `svgr` — turns imported `.svg` files into React components (uses `@svgr/core`,
+    replacing `@svgr/webpack`; options `dimensions: false`, `expandProps: 'start'`)
+  - `external-api` — keeps the vendored, pre-bundled `external_api.js` usable
+    (strips its dangling sourceMappingURL; stands in for webpack's `noParse`)
+  - `html` — renders `index.html`/`meeting.html` from the `app/` templates and
+    injects the `<link>`/`<script>` tags (replaces `HtmlWebpackPlugin`)
 
 ### Feature-Based Architecture
 Code is organized by feature domain under `app/features/`:
@@ -194,6 +206,7 @@ Documented in README.md Publishing section:
 - **styled-components**: CSS-in-JS styling
 - **electron-updater**: Auto-update functionality
 - **electron-builder**: Application packaging
+- **esbuild**: Bundler for the main, preload, and renderer bundles (via `esbuild.js`)
 
 ## Important Flags and Constants
 

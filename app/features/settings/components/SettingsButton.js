@@ -1,5 +1,8 @@
 
-import * as Mousetrap from 'mousetrap';
+// Default import keeps a live reference to the Mousetrap object so the
+// bindGlobal method added by the side-effect plugin import below is visible.
+// (A namespace `import * as` snapshots its members before the plugin runs.)
+import Mousetrap from 'mousetrap';
 import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';

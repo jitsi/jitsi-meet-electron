@@ -174,8 +174,8 @@ const configs = {
     main: {
         ...common,
         entryPoints: {
-            main: 'main.js',
-            preload: 'app/preload/preload.js'
+            main: 'main.ts',
+            preload: 'app/preload/preload.ts'
         },
         outdir: OUTDIR,
         platform: 'node',
@@ -196,7 +196,7 @@ const configs = {
     renderer: {
         ...common,
         entryPoints: {
-            app: 'app/index.js'
+            app: 'app/index.tsx'
         },
         outdir: OUTDIR,
         platform: 'browser',
@@ -204,9 +204,9 @@ const configs = {
         target: RENDERER_TARGET,
         jsx: 'transform',
 
-        // JSX lives in .js files (as it did under babel-loader + preset-react).
+        // JSX lives in .tsx files (auto-detected by esbuild). The vendored
+        // external_api.js is plain JS, handled by externalApiPlugin below.
         loader: {
-            '.js': 'jsx',
             '.png': 'file'
         },
 

@@ -1,0 +1,67 @@
+/**
+ * CSS reset imported first so it applies to all components.
+ */
+import './styles/reset.css';
+
+import React, { Component, ComponentType, Suspense } from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import { App, MeetingApp } from './features/app';
+import { persistor, store } from './features/redux';
+import Spinner from './features/shared/components/Spinner';
+
+import './i18n';
+
+interface IProps {
+    component: ComponentType<any>;
+}
+
+/**
+ * Component encapsulating a given entry-point component with the redux store
+ * and other required wrappers.
+ */
+class Root extends Component<IProps> {
+    /**
+     * Implements React's {@link Component#render()}.
+     *
+     * @returns {ReactElement}
+     */
+    render() {
+        const { component: EntryPoint } = this.props;
+
+        return (
+            <Provider store = { store }>
+                <PersistGate
+                    loading = { null }
+                    persistor = { persistor }>
+                    <Suspense fallback = { <Spinner /> } >
+                        <EntryPoint />
+                    </Suspense>
+                </PersistGate>
+            </Provider>
+        );
+    }
+}
+
+/**
+ * A map of available entry-point components.
+ */
+const entryPoints: Record<string, ComponentType<any>> = {
+    APP: App,
+    MEETING: MeetingApp
+};
+
+/**
+ * Renders the given entry-point into the DOM.
+ *
+ * @param {string} entryPoint - The key of the entry-point to render.
+ * @returns {void}
+ */
+window.renderEntryPoint = function(entryPoint: string) {
+    render(
+        <Root component = { entryPoints[entryPoint] } />,
+        document.getElementById('app')
+    );
+};

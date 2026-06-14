@@ -90,31 +90,7 @@ npm run dist
 
 #### Working with `jitsi-meet-electron-sdk`
 
-[`jitsi-meet-electron-sdk`] is a helper package which implements many features
-such as remote control and the always-on-top window. If new features are to be
-added or tested, running with a local version of these utils is very handy.
-
-By default, the @jitsi/electron-sdk is build from `npm`. The default dependency path in `package.json` is:
-
-```json
-"@jitsi/electron-sdk": "^3.0.0"
-```
-
-To work with a local copy, you must change the path to:
-
-```json
-"@jitsi/electron-sdk": "file:///Users/name/jitsi-meet-electron-sdk-copy",
-```
-
-To build the project, you must force it to take the sources, as `npm update` will
-not do it.
-
-```bash
-npm install @jitsi/electron-sdk --force
-```
-
-NOTE: Also check the [`jitsi-meet-electron-sdk` `README`] to see how to configure
-your environment.
+For instructions on SDK versus electron-app separation and how to set up local development using `npm link`, please refer to the [Contributing and Local Development guide in the Jitsi Handbook](https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-electron-sdk#contributing-and-local-development).
 
 #### Publishing
 

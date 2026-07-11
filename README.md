@@ -119,28 +119,6 @@ None
 ### GNU/Linux
 
 * If you can't execute the file directly after downloading it, try running `chmod u+x ./jitsi-meet-x86_64.AppImage`
-
-* On Ubuntu 22.04 and later, the AppImage will fail with a FUSE error (as the AppImage uses `libfuse2`, while 22.04 comes with `libfuse3` by default):
-
-  ```
-  dlopen(): error loading libfuse.so.2
-  ```
-
-  To fix this, install `libfuse2` as follows:
-
-  ```
-  sudo apt install libfuse2
-  ```
-
-* On Ubuntu 24.04 and later, the AppImage will fail with a sandboxing error (`The SUID sandbox helper binary was found, but is not configured correctly...`)
-  This is due to an AppArmor conflict that restricts unprivileged user namespaces ([jitsi/jitsi-meet-electron#965](https://github.com/jitsi/jitsi-meet-electron/issues/965),
-  [Ubuntu blog post](https://ubuntu.com/blog/ubuntu-23-10-restricted-unprivileged-user-namespaces)).
-
-  To work around this, disable the use of the sandbox with `--no-sandbox`:
-
-  ```
-  ./jitsi-meet-x86_64.AppImage --no-sandbox
-  ```
   
 * If you experience a blank page after a Jitsi server upgrades, try removing the local cache files:
 

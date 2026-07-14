@@ -44,7 +44,7 @@ class MeetingApp extends Component<IProps, IMeetingAppState> {
      */
     componentDidMount() {
         // Meeting window: set conference data when main process sends it.
-        this._removeConferenceListener = window.jitsiNodeAPI.ipc.addListener(
+        this._removeConferenceListener = window.jitsiElectronApp.ipc.addListener(
             'navigate-to-conference',
             (conference: any) => {
                 if (conference && typeof conference === 'object' && conference.room) {
@@ -67,7 +67,7 @@ class MeetingApp extends Component<IProps, IMeetingAppState> {
             }
         );
 
-        this._removeProtocolDataListener = window.jitsiNodeAPI.ipc.addListener(
+        this._removeProtocolDataListener = window.jitsiElectronApp.ipc.addListener(
             'protocol-data-msg',
             (inputURL: string) => {
                 let parsedURL = inputURL;
@@ -89,7 +89,7 @@ class MeetingApp extends Component<IProps, IMeetingAppState> {
         );
 
         // send notification to main process
-        window.jitsiNodeAPI.ipc.send('renderer-ready');
+        window.jitsiElectronApp.ipc.send('renderer-ready');
     }
 
     /**

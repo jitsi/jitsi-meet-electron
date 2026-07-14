@@ -1,11 +1,9 @@
-import {
-    initPopupsConfigurationRender,
-    setupPictureInPictureRender,
-    setupPowerMonitorRender,
-    setupRemoteControlRender,
-    setupScreenSharingRender
-} from '@jitsi/electron-sdk';
-import { IpcRendererEvent, ipcRenderer } from 'electron';
+import { install as installJitsiElectronSdk } from '@jitsi/electron-sdk/preload';
+import { IpcRendererEvent, contextBridge, ipcRenderer } from 'electron';
+
+// Expose the SDK's own bridge (window.jitsiElectronSDK, an SDK-internal detail
+// the renderer helpers read) before wiring up our own bridge below.
+installJitsiElectronSdk();
 
 const whitelistedIpcChannels = [
     'protocol-data-msg',
@@ -28,34 +26,12 @@ function openExternalLink(url: string): void {
     ipcRenderer.send('jitsi-open-url', url);
 }
 
-/**
- * Setup the renderer process.
- *
- * @param {*} api - API object.
- * @param {*} options - Options for what to enable.
- * @returns {void}
- */
-function setupRenderer(
-        api: any,
-        options: { enableAlwaysOnTopWindow?: boolean; enableRemoteControl?: boolean; } = {}): void {
-    initPopupsConfigurationRender(api);
-
-    setupScreenSharingRender(api);
-
-    if (options.enableRemoteControl) {
-        setupRemoteControlRender(api);
-    }
-
-    if (options.enableAlwaysOnTopWindow) {
-        setupPictureInPictureRender(api);
-    }
-
-    setupPowerMonitorRender(api);
-}
-
-window.jitsiNodeAPI = {
+// The Jitsi Meet SDK exposes its own bridge (window.jitsiElectronSDK) via the
+// side-effect import above. This is the app's own, separate bridge; it only
+// carries cloneable data plus callbacks (listeners and the unsubscribe they
+// return), which contextBridge supports, so it works under contextIsolation.
+contextBridge.exposeInMainWorld('jitsiElectronApp', {
     openExternalLink,
-    setupRenderer,
     ipc: {
         addListener: (channel: string, listener: (...args: any[]) => void) => {
             if (!whitelistedIpcChannels.includes(channel)) {
@@ -82,4 +58,4 @@ window.jitsiNodeAPI = {
             ipcRenderer.send(channel, ...args);
         }
     }
-};
+});

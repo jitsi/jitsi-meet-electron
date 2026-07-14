@@ -29,7 +29,7 @@ Jitsi Meet Electron is a desktop application for Jitsi Meet built with Electron.
 - **Create distribution**: `npm run dist` (runs build then electron-builder)
 - **Clean build artifacts**: `npm run clean`
 
-The codebase is written in **TypeScript** (`.ts` / `.tsx`). esbuild strips types during bundling but does not check them, so type errors are caught by `npm run type-check` (and the type-aware ESLint pass), which `npm run build` runs first. The only remaining `.js` files are build tooling (`esbuild.js`, `.eslintrc.js`) and the vendored, pre-bundled `app/features/conference/external_api.js` (typed by an adjacent `external_api.d.ts`). Ambient type declarations live in `types/` (`global.d.ts` for the `window.jitsiNodeAPI` global and `process.mas`; `modules.d.ts` for untyped deps and `*.svg`/`*.png`/`*.css` imports). Shared redux/state interfaces live in `app/types.ts` (`IState`, `IConference`, etc.).
+The codebase is written in **TypeScript** (`.ts` / `.tsx`). esbuild strips types during bundling but does not check them, so type errors are caught by `npm run type-check` (and the type-aware ESLint pass), which `npm run build` runs first. The only remaining `.js` files are build tooling (`esbuild.js`, `.eslintrc.js`) and the vendored, pre-bundled `app/features/conference/external_api.js` (typed by an adjacent `external_api.d.ts`). Ambient type declarations live in `types/` (`global.d.ts` for the `window.jitsiElectronApp` global and `process.mas`; `modules.d.ts` for untyped deps and `*.svg`/`*.png`/`*.css` imports). Shared redux/state interfaces live in `app/types.ts` (`IState`, `IConference`, etc.).
 
 ### CI Workflow
 The CI runs on push/PR to master:
@@ -59,7 +59,9 @@ The application follows Electron's main/renderer process model:
 **Renderer Process** (`app/` directory):
 - React application bundled via esbuild
 - Contains all UI components and business logic
-- Uses `@jitsi/electron-sdk` via preload script (`app/preload/preload.ts`)
+- Imports the SDK's `setup*Render` helpers from `@jitsi/electron-sdk/renderer` directly into
+  the renderer bundle; the preload (`app/preload/preload.ts`) only installs the two
+  contextBridge surfaces the renderer talks through
 - Communicates with main process via IPC
 
 ### Build System
@@ -127,14 +129,18 @@ The `Conference` component (`app/features/conference/components/Conference.tsx`)
 - Creates iframe using `JitsiMeetExternalAPI` from `external_api.js`
 - Handles meeting lifecycle events (`videoConferenceJoined`, `readyToClose`, `suspendDetected`)
 - Configures Jitsi Meet via `configOverwrite` and `interfaceConfigOverwrite`
-- Integrates with `@jitsi/electron-sdk` via `window.jitsiNodeAPI.setupRenderer()`
+- Integrates with `@jitsi/electron-sdk` via its `/main`, `/preload`, and `/renderer` entry points (the renderer-side `setup*Render` helpers are called here with the `JitsiMeetExternalAPI` instance)
 - Parses URL parameters and hash config overrides (e.g., `#config.startWithAudioMuted=true`)
 - Implements loading timeout with configurable `serverTimeout`
 - Supports remote control (controlled by `ENABLE_REMOTE_CONTROL` flag)
 
 ### Security Features
 Implemented in `main.ts`:
-- Context isolation disabled for SDK integration (historical)
+- Context isolation and sandboxing enabled on both windows (`contextIsolation: true`,
+  `sandbox: true`, `nodeIntegration: false`); the renderer reaches the main process only
+  through the two contextBridge surfaces (`window.jitsiElectronApp` for the app's own
+  whitelisted IPC, `window.jitsiElectronSDK` for the SDK's, installed by
+  `@jitsi/electron-sdk/preload`)
 - CSP header modification to allow iframe embedding
 - File URL access restricted to app base path
 - Redirect blocking for non-web protocols
@@ -201,8 +207,9 @@ Documented in README.md Publishing section:
 
 ## Key Dependencies
 
-- **electron**: Desktop application framework (v37.6.0)
-- **@jitsi/electron-sdk**: Jitsi-specific Electron utilities (v7.0.6)
+- **electron**: Desktop application framework (v43)
+- **@jitsi/electron-sdk**: Jitsi-specific Electron utilities (v10; `/main`, `/preload` and
+  `/renderer` entry points, requires `contextIsolation: true`)
 - **react** & **react-dom**: UI framework (v17.0.2)
 - **redux**: State management
 - **@atlaskit/***: UI component library (buttons, toggles, spinners, navigation)

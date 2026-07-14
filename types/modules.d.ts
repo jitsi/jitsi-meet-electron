@@ -25,19 +25,26 @@ declare module '*.css' {
     export default content;
 }
 
-declare module '@jitsi/electron-sdk' {
+declare module '@jitsi/electron-sdk/main' {
     export function initPopupsConfigurationMain(window: any, windowOpenHandler?: any): void;
     export function getPopupTarget(url: string, frameName: string): string | undefined;
     export function setupPictureInPictureMain(window: any): void;
     export function setupRemoteControlMain(window: any): void;
     export function setupPowerMonitorMain(window: any): void;
     export function setupScreenSharingMain(window: any, appName: string, appId: string): void;
+}
 
+declare module '@jitsi/electron-sdk/renderer' {
     export function initPopupsConfigurationRender(api: any): void;
     export function setupScreenSharingRender(api: any): void;
     export function setupPictureInPictureRender(api: any): void;
     export function setupRemoteControlRender(api: any): void;
     export function setupPowerMonitorRender(api: any): void;
+}
+
+declare module '@jitsi/electron-sdk/preload' {
+    // Exposes the SDK bridge on the main world; call once from the preload.
+    export function install(): void;
 }
 
 declare module '@jitsi/js-utils/random' {

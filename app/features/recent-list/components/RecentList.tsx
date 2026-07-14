@@ -60,7 +60,7 @@ class RecentList extends Component<IProps> {
     _onNavigateToConference(conference: IConference) {
         return () => {
             this.props.dispatch(addRecentListEntry(conference));
-            window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
+            window.jitsiElectronApp.ipc.send('open-meeting-window', conference);
         };
     }
 

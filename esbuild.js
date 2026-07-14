@@ -17,7 +17,8 @@
  *   node esbuild.js                     # production build of everything
  *   node esbuild.js --dev               # development build of everything
  *   node esbuild.js renderer --dev --watch   # watch+rebuild the renderer
- *   node esbuild.js main --dev          # build only main + preload
+ *   node esbuild.js main --dev          # build only the main process
+ *   node esbuild.js preload --dev       # build only the preload
  */
 
 const { transform: svgrTransform } = require('@svgr/core');
@@ -32,7 +33,7 @@ const targets = process.argv.slice(2).filter(a => !a.startsWith('--'));
 const isDev = flags.includes('--dev') || process.env.NODE_ENV === 'development';
 const watch = flags.includes('--watch');
 const mode = isDev ? 'development' : 'production';
-const buildTargets = targets.length ? targets : [ 'main', 'renderer' ];
+const buildTargets = targets.length ? targets : [ 'main', 'preload', 'renderer' ];
 
 const OUTDIR = 'build';
 
@@ -174,8 +175,7 @@ const configs = {
     main: {
         ...common,
         entryPoints: {
-            main: 'main.ts',
-            preload: 'app/preload/preload.ts'
+            main: 'main.ts'
         },
         outdir: OUTDIR,
         platform: 'node',
@@ -191,6 +191,24 @@ const configs = {
             '@jitsi/electron-sdk',
             'electron-debug',
             'electron-reload'
+        ]
+    },
+    preload: {
+        ...common,
+        entryPoints: {
+            preload: 'app/preload/preload.ts'
+        },
+        outdir: OUTDIR,
+        platform: 'node',
+        format: 'cjs',
+        target: MAIN_TARGET,
+
+        // The preload runs in a sandboxed renderer, which cannot require from
+        // node_modules — so @jitsi/electron-sdk/preload must be bundled in here
+        // (unlike the main process, where it stays external and is required at
+        // runtime). Only electron itself is provided by the runtime.
+        external: [
+            'electron'
         ]
     },
     renderer: {

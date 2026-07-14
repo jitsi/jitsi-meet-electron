@@ -25,7 +25,7 @@ export function normalizeServerURL(url: string): string {
  * @returns {void}
  */
 export function openExternalLink(link: string): void {
-    window.jitsiNodeAPI.openExternalLink(link);
+    window.jitsiElectronApp.openExternalLink(link);
 }
 
 

@@ -40,10 +40,10 @@ class App extends Component<IProps> {
      */
     componentDidMount() {
         // start listening on this events
-        this._removeListener = window.jitsiNodeAPI.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
+        this._removeListener = window.jitsiElectronApp.ipc.addListener('protocol-data-msg', this._listenOnProtocolMessages);
 
         // send notification to main process
-        window.jitsiNodeAPI.ipc.send('renderer-ready');
+        window.jitsiElectronApp.ipc.send('renderer-ready');
     }
 
     /**
@@ -86,7 +86,7 @@ class App extends Component<IProps> {
         this.props.dispatch(addRecentListEntry(conference));
 
         // Open in the meeting window (Window 2), not in the launcher.
-        window.jitsiNodeAPI.ipc.send('open-meeting-window', conference);
+        window.jitsiElectronApp.ipc.send('open-meeting-window', conference);
     }
 
     /**

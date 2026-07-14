@@ -29,7 +29,7 @@ Jitsi Meet Electron is a desktop application for Jitsi Meet built with Electron.
 - **Create distribution**: `npm run dist` (runs build then electron-builder)
 - **Clean build artifacts**: `npm run clean`
 
-The codebase is written in **TypeScript** (`.ts` / `.tsx`). esbuild strips types during bundling but does not check them, so type errors are caught by `npm run type-check` (and the type-aware ESLint pass), which `npm run build` runs first. The only remaining `.js` files are build tooling (`esbuild.js`, `.eslintrc.js`) and the vendored, pre-bundled `app/features/conference/external_api.js` (typed by an adjacent `external_api.d.ts`). Ambient type declarations live in `types/` (`global.d.ts` for the `window.jitsiNodeAPI` global and `process.mas`; `modules.d.ts` for untyped deps and `*.svg`/`*.png`/`*.css` imports). Shared redux/state interfaces live in `app/types.ts` (`IState`, `IConference`, etc.).
+The codebase is written in **TypeScript** (`.ts` / `.tsx`). esbuild strips types during bundling but does not check them, so type errors are caught by `npm run type-check` (and the type-aware ESLint pass), which `npm run build` runs first. The only remaining `.js` files are build tooling (`esbuild.js`, `.eslintrc.js`) and the vendored, pre-bundled `app/features/conference/external_api.js` (typed by an adjacent `external_api.d.ts`). Ambient type declarations live in `types/` (`global.d.ts` for the `window.jitsiElectronApp` global and `process.mas`; `modules.d.ts` for untyped deps and `*.svg`/`*.png`/`*.css` imports). Shared redux/state interfaces live in `app/types.ts` (`IState`, `IConference`, etc.).
 
 ### CI Workflow
 The CI runs on push/PR to master:
@@ -127,7 +127,7 @@ The `Conference` component (`app/features/conference/components/Conference.tsx`)
 - Creates iframe using `JitsiMeetExternalAPI` from `external_api.js`
 - Handles meeting lifecycle events (`videoConferenceJoined`, `readyToClose`, `suspendDetected`)
 - Configures Jitsi Meet via `configOverwrite` and `interfaceConfigOverwrite`
-- Integrates with `@jitsi/electron-sdk` via `window.jitsiNodeAPI.setupRenderer()`
+- Integrates with `@jitsi/electron-sdk` via its `/main`, `/preload`, and `/renderer` entry points (the renderer-side `setup*Render` helpers are called here with the `JitsiMeetExternalAPI` instance)
 - Parses URL parameters and hash config overrides (e.g., `#config.startWithAudioMuted=true`)
 - Implements loading timeout with configurable `serverTimeout`
 - Supports remote control (controlled by `ENABLE_REMOTE_CONTROL` flag)

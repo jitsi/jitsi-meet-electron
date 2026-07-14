@@ -5,7 +5,7 @@ import {
     setupPowerMonitorMain,
     setupRemoteControlMain,
     setupScreenSharingMain
-} from '@jitsi/electron-sdk';
+} from '@jitsi/electron-sdk/main';
 import {
     BrowserWindow,
     Menu,
@@ -228,10 +228,10 @@ function createJitsiMeetWindow() {
         show: false,
         webPreferences: {
             enableBlinkFeatures: 'WebAssemblyCSP',
-            contextIsolation: false,
+            contextIsolation: true,
             nodeIntegration: false,
             preload: path.resolve(basePath, './build/preload.js'),
-            sandbox: false
+            sandbox: true
         }
     };
 
@@ -566,10 +566,10 @@ ipcMain.on('open-meeting-window', (event, conference) => {
         show: false,
         webPreferences: {
             enableBlinkFeatures: 'WebAssemblyCSP',
-            contextIsolation: false,
+            contextIsolation: true,
             nodeIntegration: false,
             preload: path.resolve(basePath, './build/preload.js'),
-            sandbox: false
+            sandbox: true
         }
     });
 

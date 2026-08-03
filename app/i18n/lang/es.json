@@ -14,5 +14,11 @@
 		"invalidServer": "URL del servidor inválida",
 		"serverUrl": "URL del servidor",
 		"serverTimeout": "Tiempo de desconexión del servidor (en segundos)"
+	},
+	"remoteControl": {
+		"message": "¿Permitir el control remoto de este ordenador?",
+		"detail": "Un participante de la conferencia solicita controlar su ratón y su teclado.",
+		"allow": "Permitir",
+		"deny": "Denegar"
 	}
 }

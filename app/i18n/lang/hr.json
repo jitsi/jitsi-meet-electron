@@ -17,5 +17,11 @@
 		"serverUrl": "URL-adresa poslužitelja",
 		"serverTimeout": "Vremensko ograničenje poslužitelja (u sekundama)",
 		"disableAGC": "Isključi kontrolu za automasko pojačanje zvuka"
+	},
+	"remoteControl": {
+		"message": "Dopustiti daljinsko upravljanje ovim računalom?",
+		"detail": "Sudionik konferencije traži upravljanje tvojim mišem i tipkovnicom.",
+		"allow": "Dopusti",
+		"deny": "Odbij"
 	}
 }

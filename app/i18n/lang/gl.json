@@ -15,5 +15,11 @@
 		"invalidServerTimeout": "O tempo de agarda do servidor é incorrecto",
 		"serverUrl": "URL do servidor",
 		"serverTimeout": "Tempo de agarda do servidor (en segundos)"
+	},
+	"remoteControl": {
+		"message": "Permitir o control remoto deste computador?",
+		"detail": "Un participante da conferencia solicita o control do seu rato e do seu teclado.",
+		"allow": "Permitir",
+		"deny": "Denegar"
 	}
 }

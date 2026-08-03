@@ -17,5 +17,11 @@
 		"serverUrl": "Kiszolgáló URL-címe",
 		"serverTimeout": "Kiszolgálói időkorlát (másodperc)",
 		"disableAGC": "Önműködő erősítésvezérlés letiltása"
+	},
+	"remoteControl": {
+		"message": "Engedélyezi a számítógép távoli irányítását?",
+		"detail": "A konferencia egyik résztvevője az egér és a billentyűzet irányítását kéri.",
+		"allow": "Engedélyezés",
+		"deny": "Elutasítás"
 	}
 }

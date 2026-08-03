@@ -17,5 +17,11 @@
 		"serverUrl": "Server URL",
 		"serverTimeout": "Server Timeout (in seconds)",
 		"disableAGC": "Disable automatic gain control"
+	},
+	"remoteControl": {
+		"message": "Allow remote control of this computer?",
+		"detail": "A meeting participant is requesting control of your mouse and keyboard.",
+		"allow": "Allow",
+		"deny": "Deny"
 	}
 }

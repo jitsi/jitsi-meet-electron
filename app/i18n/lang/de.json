@@ -17,5 +17,11 @@
 		"serverUrl": "Server-Adresse",
 		"serverTimeout": "Server-Wartezeit (in Sekunden)",
 		"disableAGC": "Automatische Mikrofonlautstärkeregelung deaktivieren"
+	},
+	"remoteControl": {
+		"message": "Fernsteuerung dieses Computers zulassen?",
+		"detail": "Ein Konferenzteilnehmer möchte Maus und Tastatur dieses Computers steuern.",
+		"allow": "Zulassen",
+		"deny": "Ablehnen"
 	}
 }

@@ -48,7 +48,8 @@ The application follows Electron's main/renderer process model:
 - Handles protocol calls (`jitsi-meet://` deeplinks)
 - Configures security policies (CSP, file:// blocking, redirect filtering)
 - Integrates `@jitsi/electron-sdk` features:
-  - Remote control (controlled by `ENABLE_REMOTE_CONTROL` flag)
+  - Remote control (gated on a native consent dialog supplied via `requestConsent`,
+    see Security Features)
   - Always-on-top window
   - Screen sharing
   - Power monitor
@@ -132,7 +133,8 @@ The `Conference` component (`app/features/conference/components/Conference.tsx`)
 - Integrates with `@jitsi/electron-sdk` via its `/main`, `/preload`, and `/renderer` entry points (the renderer-side `setup*Render` helpers are called here with the `JitsiMeetExternalAPI` instance)
 - Parses URL parameters and hash config overrides (e.g., `#config.startWithAudioMuted=true`)
 - Implements loading timeout with configurable `serverTimeout`
-- Supports remote control (controlled by `ENABLE_REMOTE_CONTROL` flag)
+- Sets up remote control on the renderer side (`setupRemoteControlRender`); session start is
+  gated on the main process consent dialog
 
 ### Security Features
 Implemented in `main.ts`:
@@ -146,6 +148,11 @@ Implemented in `main.ts`:
 - Redirect blocking for non-web protocols
 - External app opening blocked via permission handler
 - Site isolation trials disabled (Electron issue workaround)
+- Remote control sessions require explicit user consent: `requestRemoteControlConsent()`
+  shows a native, modal `dialog.showMessageBox` (translated via `app/i18n/main.ts`) and is
+  passed to `setupRemoteControlMain` as `requestConsent`. The start request reaches the
+  meeting window as a `postMessage` from the conference iframe, so it carries no trustworthy
+  identity — only a main-process prompt cannot be rendered or dismissed by web content
 
 ### Protocol Handling
 Supports `jitsi-meet://` protocol for deeplinks:
@@ -156,8 +163,12 @@ Supports `jitsi-meet://` protocol for deeplinks:
 
 ### Internationalization
 Uses i18next with react-i18next:
-- Translation files in `app/i18n/lang/`
-- New translations require updating `app/i18n/index.ts`
+- Translation files in `app/i18n/lang/`, bundled into the resource map in `app/i18n/languages.ts`
+- New languages require updating `app/i18n/languages.ts`
+- `app/i18n/index.ts` is the renderer instance (react-i18next, language from `navigator.language`)
+- `app/i18n/main.ts` is a separate instance for the main process over the same resources
+  (language from `app.getLocale()`, initialized lazily after `ready`); use its `t()` for
+  native UI such as dialogs
 - Locale passed to Jitsi Meet iframe via URL parameters
 
 ## Working with @jitsi/electron-sdk
@@ -220,7 +231,6 @@ Documented in README.md Publishing section:
 
 ## Important Flags and Constants
 
-- `ENABLE_REMOTE_CONTROL`: Must be enabled in both `main.ts` and `app/features/conference/components/Conference.tsx`
 - `config.defaultServerURL`: Default Jitsi Meet server (meet.jit.si)
 - `config.appProtocolPrefix`: Protocol scheme (jitsi-meet)
 - `config.defaultServerTimeout`: Loading timeout in seconds (30)
@@ -236,7 +246,7 @@ Documented in README.md Publishing section:
 
 ### Adding Translations
 1. Add translation keys to JSON files in `app/i18n/lang/`
-2. Register new language in `app/i18n/index.ts`
+2. Register new language in `app/i18n/languages.ts`
 3. Update `Comment[lang]` in `package.json` for Linux desktop file
 
 ### Modifying Jitsi Meet Configuration

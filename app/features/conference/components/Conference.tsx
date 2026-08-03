@@ -20,10 +20,6 @@ import { conferenceEnded, conferenceJoined } from '../actions';
 import JitsiMeetExternalAPI from '../external_api';
 import { LoadingIndicator, Wrapper } from '../styled';
 
-// For enabling remote control, please change ENABLE_REMOTE_CONTROL flag in
-// main.js to true as well
-const ENABLE_REMOTE_CONTROL = false;
-
 interface IProps {
     _alwaysOnTopWindowEnabled?: boolean;
     _disableAGC?: boolean;
@@ -214,9 +210,7 @@ class Conference extends Component<IProps, IConferenceState> {
         // through the window.jitsiElectronSDK bridge installed by the SDK preload.
         initPopupsConfigurationRender(this._api);
         setupScreenSharingRender(this._api);
-        if (ENABLE_REMOTE_CONTROL) {
-            setupRemoteControlRender(this._api);
-        }
+        setupRemoteControlRender(this._api);
         if (this.props._alwaysOnTopWindowEnabled) {
             setupPictureInPictureRender(this._api);
         }

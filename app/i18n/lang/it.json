@@ -14,5 +14,11 @@
 		"invalidServer": "URL del server errato",
 		"serverUrl": "URL Server",
 		"serverTimeout": "Timeout del server (in secondi)"
+	},
+	"remoteControl": {
+		"message": "Consentire il controllo remoto di questo computer?",
+		"detail": "Un partecipante alla conferenza sta richiedendo il controllo del mouse e della tastiera.",
+		"allow": "Consenti",
+		"deny": "Nega"
 	}
 }

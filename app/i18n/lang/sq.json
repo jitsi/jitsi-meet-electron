@@ -17,5 +17,11 @@
 		"serverUrl": "URL Shërbyesi",
 		"serverTimeout": "Mbarim Kohe Shërbyesi (në sekonda)",
 		"disableAGC": "Çaktivizoni kontroll të automatizuar gain-i"
+	},
+	"remoteControl": {
+		"message": "Të lejohet kontrolli në largësi i këtij kompjuteri?",
+		"detail": "Një pjesëmarrës në konferencë po kërkon kontrollin e miut dhe të tastierës tuaj.",
+		"allow": "Lejoje",
+		"deny": "Refuzoje"
 	}
 }

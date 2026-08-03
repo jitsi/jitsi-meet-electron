@@ -14,5 +14,11 @@
 		"invalidServer": "URL invalide",
 		"serverUrl": "URL du serveur",
 		"serverTimeout": "Délai de connexion au server (en secondes)"
+	},
+	"remoteControl": {
+		"message": "Autoriser le contrôle à distance de cet ordinateur ?",
+		"detail": "Un participant à la conférence demande à contrôler votre souris et votre clavier.",
+		"allow": "Autoriser",
+		"deny": "Refuser"
 	}
 }

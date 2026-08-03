@@ -15,5 +15,11 @@
 		"invalidServerTimeout": "Valor inválido para tempo limite do servidor",
 		"serverUrl": "URL do servidor",
 		"serverTimeout": "Tempo Limite do Servidor (em segundos)"
+	},
+	"remoteControl": {
+		"message": "Permitir o controle remoto deste computador?",
+		"detail": "Um participante da conferência está solicitando o controle do seu mouse e teclado.",
+		"allow": "Permitir",
+		"deny": "Negar"
 	}
 }

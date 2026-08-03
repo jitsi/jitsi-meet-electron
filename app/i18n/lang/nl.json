@@ -15,5 +15,11 @@
 		"invalidServerTimeout": "Ongeldige waarde voor server-tijdslimiet",
 		"serverUrl": "Server-URL",
 		"serverTimeout": "Server-tijdslimiet (in seconden)"
+	},
+	"remoteControl": {
+		"message": "Toestaan dat deze computer op afstand wordt bediend?",
+		"detail": "Een deelnemer aan de vergadering vraagt om de besturing van je muis en toetsenbord.",
+		"allow": "Toestaan",
+		"deny": "Weigeren"
 	}
 }

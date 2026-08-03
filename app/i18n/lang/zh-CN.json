@@ -17,5 +17,11 @@
 		"serverUrl": "服务器网址",
 		"serverTimeout": "服务器超时（秒）",
 		"disableAGC": "禁用自动增益控制"
+	},
+	"remoteControl": {
+		"message": "允许远程控制这台计算机？",
+		"detail": "一位会议参与者请求控制您的鼠标和键盘。",
+		"allow": "允许",
+		"deny": "拒绝"
 	}
 }

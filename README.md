@@ -10,7 +10,7 @@ Desktop application for [Jitsi Meet] built with [Electron].
 - Works with any Jitsi Meet deployment
 - Built-in auto-updates
 - Screen sharing
-- ~Remote control~ (currently [disabled](https://github.com/jitsi/jitsi-meet-electron/issues/483) due to [security issues](https://github.com/jitsi/security-advisories/blob/master/advisories/JSA-2020-0001.md))
+- Remote control
 - Always-On-Top window
 - Support for deeplinks such as `jitsi-meet://myroom` (will open `myroom` on the configured Jitsi instance) or `jitsi-meet://jitsi.mycompany.com/myroom` (will open `myroom` on the Jitsi instance running on `jitsi.mycompany.com`)
 
@@ -130,7 +130,7 @@ None
 
 The JSON files contain all the strings inside the application, and can be translated [here](/app/i18n/lang).
 
-New translations require the addition of a line in [index.js](/app/i18n/index.js).
+New translations require the addition of a line in [languages.ts](/app/i18n/languages.ts).
 
 `Localize desktop file on linux` requires the addition of a line in [package.json](/package.json).
 Please search for `Comment[hu]` as an example to help add your translation of the English string `Jitsi Meet Desktop App` for your language.

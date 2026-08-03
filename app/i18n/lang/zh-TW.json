@@ -17,5 +17,11 @@
 		"serverUrl": "伺服器網址",
 		"serverTimeout": "伺服器逾時（秒）",
 		"disableAGC": "停用自動增益控制"
+	},
+	"remoteControl": {
+		"message": "允許遠端控制這台電腦？",
+		"detail": "一位會議參與者要求控制您的滑鼠與鍵盤。",
+		"allow": "允許",
+		"deny": "拒絕"
 	}
 }

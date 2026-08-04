@@ -149,7 +149,7 @@
     "@types/styled-components": "^5.1.36",
     "babel-eslint": "10.0.3",
     "concurrently": "5.1.0",
-    "electron": "^43.1.0",
+    "electron": "^43.3.0",
     "electron-builder": "^26.15.3",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",

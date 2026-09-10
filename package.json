@@ -150,7 +150,7 @@
     "babel-eslint": "10.0.3",
     "concurrently": "5.1.0",
     "electron": "^43.3.0",
-    "electron-builder": "^26.15.3",
+    "electron-builder": "^26.16.1",
     "electron-context-menu": "^2.5.0",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.2",

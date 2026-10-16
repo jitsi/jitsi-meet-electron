@@ -158,7 +158,12 @@ class Conference extends Component<IProps, IConferenceState> {
             disableAGC: this.props._disableAGC,
             prejoinConfig: {
                 enabled: true
-            }
+            },
+
+            // The "always on top window" setting must keep meaning "no floating window": the custom
+            // PiP window is opened by jitsi-meet itself, so gating the SDK render hook alone (which
+            // only forwards the video-element PiP requests) is not enough to honor it.
+            ...this.props._alwaysOnTopWindowEnabled ? {} : { pip: { disabled: true } }
         };
 
         const interfaceConfigOverwrite = {
@@ -197,8 +202,13 @@ class Conference extends Component<IProps, IConferenceState> {
 
         this._api.on('suspendDetected', this._onVideoConferenceEnded);
         this._api.on('readyToClose', this._onVideoConferenceEnded);
-        this._api.on('pipLeft', () => {
-            window.jitsiElectronApp.ipc.send('restore-meeting-window');
+        this._api.on('pipLeft', (data?: { mode?: string; }) => {
+            // The custom PiP window reports the intent to return to the meeting explicitly (a
+            // double click, which the SDK turns into a focus of this window), so leaving it is not
+            // a request to restore the window. Only the video-element PiP has no such gesture.
+            if (data?.mode !== 'customWindow') {
+                window.jitsiElectronApp.ipc.send('restore-meeting-window');
+            }
         });
         this._api.on('videoConferenceJoined',
             () => {

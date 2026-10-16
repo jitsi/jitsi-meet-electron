@@ -18,15 +18,9 @@ Desktop application for [Jitsi Meet] built with [Electron].
 
 Download our latest release and you're off to the races!
 
-| Windows | macOS | GNU/Linux (AppImage) | GNU/Linux (Deb) |
-| -- | -- | -- | -- |
-| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [x64_64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) [arm64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-arm64.AppImage) | [x86_64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-amd64.deb) [arm64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-arm64.deb) |
-
-### Third-Party builds
-
-[<img src="https://dl.flathub.org/assets/badges/flathub-badge-en.svg"
-     alt="Download On Flathub"
-     height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet)
+| Windows | macOS | GNU/Linux (AppImage) | GNU/Linux (Deb) | GNU/Linux (Flatpak) |
+| -- | -- | -- | -- | -- |
+| [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.exe) | [Download](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet.dmg) | [x64_64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage) [arm64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-arm64.AppImage) | [x86_64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-amd64.deb) [arm64](https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-arm64.deb) | [<img src="https://dl.flathub.org/assets/badges/flathub-badge-en.svg" alt="Download On Flathub" height="60">](https://flathub.org/apps/details/org.jitsi.jitsi-meet) |
 
 ### Homebrew
 

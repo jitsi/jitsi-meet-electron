@@ -128,6 +128,12 @@ const appProtocolSurplus = `${config.appProtocolPrefix}://`;
 let rendererReady = false;
 let protocolDataForFrontApp: string | null = null;
 
+/**
+ * Whether the automatic update check already ran in this app run. The
+ * launcher window can be recreated, so this must not run on every creation.
+ */
+let updateCheckStarted = false;
+
 
 /**
  * Sets the application menu. It is hidden on all platforms except macOS because
@@ -207,11 +213,16 @@ function setApplicationMenu() {
  * Opens new window with index.html(Jitsi Meet is loaded in iframe there).
  */
 function createJitsiMeetWindow() {
+    // The launcher window can be recreated (close + relaunch re-attaches to the
+    // running process), so the renderer readiness flag must be per-window.
+    rendererReady = false;
+
     // Application menu.
     setApplicationMenu();
 
-    // Check for Updates.
-    if (!process.mas) {
+    // Check for Updates. Once per app run: the launcher window can be recreated.
+    if (!process.mas && !updateCheckStarted) {
+        updateCheckStarted = true;
         autoUpdater.checkForUpdatesAndNotify();
     }
 
@@ -349,13 +360,27 @@ function createJitsiMeetWindow() {
     mainWindow.once('ready-to-show', () => {
         mainWindow?.show();
     });
+}
 
-    /**
-     * When someone tries to enter something like jitsi-meet://test
-     *  while app is closed
-     * it will trigger this event below
-     */
-    handleProtocolCall(process.argv.pop());
+/**
+ * Brings the launcher window to the foreground, recreating it when it was
+ * closed. Running meeting windows are never touched.
+ *
+ * @returns {void}
+ */
+function showLauncherWindow() {
+    if (mainWindow === null) {
+        createJitsiMeetWindow();
+
+        return;
+    }
+
+    if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+    }
+
+    mainWindow.show();
+    mainWindow.focus();
 }
 
 /**
@@ -406,14 +431,16 @@ function handleProtocolCall(fullProtocolCall?: string) {
         mainWindow
             .webContents
             .send('protocol-data-msg', inputURL);
+        protocolDataForFrontApp = null;
     }
 }
 
 /**
  * Force Single Instance Application.
- * Handle this on darwin via LSMultipleInstancesProhibited in Info.plist as below does not work on MAS
+ * On MAS the lock below does not work; single-instancing is handled there via
+ * LSMultipleInstancesProhibited in Info.plist.
  */
-const gotInstanceLock = process.platform === 'darwin' ? true : app.requestSingleInstanceLock();
+const gotInstanceLock = process.mas ? true : app.requestSingleInstanceLock();
 
 if (!gotInstanceLock) {
     app.quit();
@@ -425,9 +452,7 @@ if (!gotInstanceLock) {
  */
 
 app.on('activate', () => {
-    if (mainWindow === null) {
-        createJitsiMeetWindow();
-    }
+    showLauncherWindow();
 });
 
 app.on('certificate-error',
@@ -442,7 +467,21 @@ app.on('certificate-error',
     }
 );
 
-app.on('ready', createJitsiMeetWindow);
+app.on('ready', () => {
+    createJitsiMeetWindow();
+
+    /**
+     * When someone tries to enter something like jitsi-meet://test
+     * while app is closed it arrives as a command line argument.
+     * Dispatched once and without mutating process.argv: switches may
+     * follow the URL.
+     */
+    const protocolArg = process.argv.find(arg => arg.startsWith(appProtocolSurplus));
+
+    if (protocolArg) {
+        handleProtocolCall(protocolArg);
+    }
+});
 
 if (isDev) {
     app.on('ready', createWebRTCInternalsWindow);
@@ -450,23 +489,23 @@ if (isDev) {
 
 app.on('second-instance', (event, commandLine) => {
     /**
-     * If someone creates second instance of the application, set focus on
-     * existing window.
+     * If someone launches the application again, bring the launcher window
+     * back into focus - recreating it if it was closed - without touching
+     * running meetings.
      */
-    if (meetingWindow) {
-        meetingWindow.isMinimized() && meetingWindow.restore();
-        meetingWindow.focus();
-    } else if (mainWindow) {
-        mainWindow.isMinimized() && mainWindow.restore();
-        mainWindow.focus();
-    }
+    showLauncherWindow();
 
     /**
      * This is for windows [win32]
      * so when someone tries to enter something like jitsi-meet://test
      * while app is opened it will trigger protocol handler.
+     * Select the URL without mutating commandLine: switches may follow it.
      */
-    handleProtocolCall(commandLine.pop());
+    const protocolArg = commandLine.find(arg => arg.startsWith(appProtocolSurplus));
+
+    if (protocolArg) {
+        handleProtocolCall(protocolArg);
+    }
 });
 
 app.on('window-all-closed', () => {
@@ -511,6 +550,7 @@ ipcMain.on('renderer-ready', event => {
             mainWindow
                 .webContents
                 .send('protocol-data-msg', protocolDataForFrontApp);
+            protocolDataForFrontApp = null;
         }
 
         if (defaultServerURL) {

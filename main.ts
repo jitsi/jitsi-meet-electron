@@ -640,8 +640,9 @@ async function confirmNewCall(parent: BrowserWindow | null): Promise<boolean> {
     };
 
     try {
-        const { response } = parent && !parent.isDestroyed()
-            ? await dialog.showMessageBox(parent, options)
+        const win = parent && !parent.isDestroyed() ? parent : null;
+        const { response } = win
+            ? await dialog.showMessageBox(win, options)
             : await dialog.showMessageBox(options);
 
         return response === 1;
@@ -671,14 +672,6 @@ function focusMeetingWindow(win: BrowserWindow) {
  * navigate to the new conference. Otherwise create a new one.
  */
 async function openMeetingWindow(event: IpcMainEvent, conference: IConference) {
-    if (!conference
-        || typeof conference.room !== 'string'
-        || typeof conference.serverURL !== 'string') {
-        console.warn('Ignoring invalid conference', conference);
-
-        return;
-    }
-
     if (meetingWindow) {
         if (newCallPending) {
             return;

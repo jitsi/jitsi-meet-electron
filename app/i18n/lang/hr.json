@@ -23,5 +23,11 @@
 		"detail": "Sudionik konferencije traži upravljanje tvojim mišem i tipkovnicom.",
 		"allow": "Dopusti",
 		"deny": "Odbij"
+	},
+	"newCall": {
+		"message": "Pridružiti se novoj konferenciji?",
+		"detail": "Napustit ćeš trenutnu konferenciju.",
+		"confirm": "Pridruži se novoj konferenciji",
+		"cancel": "Odustani"
 	}
 }

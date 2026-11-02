@@ -23,5 +23,11 @@
 		"detail": "A konferencia egyik résztvevője az egér és a billentyűzet irányítását kéri.",
 		"allow": "Engedélyezés",
 		"deny": "Elutasítás"
+	},
+	"newCall": {
+		"message": "Csatlakozik egy új konferenciához?",
+		"detail": "Elhagyja a jelenlegi konferenciát.",
+		"confirm": "Csatlakozás az új konferenciához",
+		"cancel": "Mégse"
 	}
 }

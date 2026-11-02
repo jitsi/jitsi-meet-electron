@@ -23,5 +23,11 @@
 		"detail": "A meeting participant is requesting control of your mouse and keyboard.",
 		"allow": "Allow",
 		"deny": "Deny"
+	},
+	"newCall": {
+		"message": "Join a new conference?",
+		"detail": "You'll leave your current conference.",
+		"confirm": "Join New Conference",
+		"cancel": "Cancel"
 	}
 }

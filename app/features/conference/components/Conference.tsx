@@ -156,6 +156,9 @@ class Conference extends Component<IProps, IConferenceState> {
         const configOverwrite: Record<string, any> = {
             enableCalendarIntegration: false,
             disableAGC: this.props._disableAGC,
+
+            // The macOS Info.plist has NSAudioCaptureUsageDescription, so system audio can be shared there.
+            desktopSharingMacOSSystemAudio: true,
             prejoinConfig: {
                 enabled: true
             }

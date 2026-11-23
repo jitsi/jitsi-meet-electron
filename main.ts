@@ -296,29 +296,22 @@ function createJitsiMeetWindow() {
     mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
         const responseHeaders = details.responseHeaders ?? {};
 
-        delete responseHeaders['x-frame-options'];
+        // Header names are case-insensitive (RFC 9110) and deployments vary, so
+        // match on the lowercased name instead of an exact key.
+        for (const name of Object.keys(responseHeaders)) {
+            const header = name.toLowerCase();
 
-        if (responseHeaders['content-security-policy']) {
-            const cspFiltered = responseHeaders['content-security-policy'][0]
-                .split(';')
-                .filter(x => x.indexOf('frame-ancestors') === -1)
-                .join(';');
-
-            responseHeaders['content-security-policy'] = [ cspFiltered ];
+            if (header === 'x-frame-options') {
+                delete responseHeaders[name];
+            } else if (header === 'content-security-policy') {
+                responseHeaders[name] = responseHeaders[name].map(value => value
+                    .split(';')
+                    .filter(directive => !directive.includes('frame-ancestors'))
+                    .join(';'));
+            }
         }
 
-        if (responseHeaders['Content-Security-Policy']) {
-            const cspFiltered = responseHeaders['Content-Security-Policy'][0]
-                .split(';')
-                .filter(x => x.indexOf('frame-ancestors') === -1)
-                .join(';');
-
-            responseHeaders['Content-Security-Policy'] = [ cspFiltered ];
-        }
-
-        callback({
-            responseHeaders
-        });
+        callback({ responseHeaders });
     });
 
     // Block redirects.

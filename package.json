@@ -164,7 +164,7 @@
     "eslint-plugin-jsdoc": "^50.6.1",
     "eslint-plugin-react": "^7.37.0",
     "history": "^4.10.1",
-    "i18next": "^19.9.2",
+    "i18next": "^27.2.6",
     "mousetrap": "^1.6.5",
     "patch-package": "8.0.1",
     "react": "^17.0.2",

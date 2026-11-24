@@ -23,5 +23,11 @@
 		"detail": "Ein Konferenzteilnehmer möchte Maus und Tastatur dieses Computers steuern.",
 		"allow": "Zulassen",
 		"deny": "Ablehnen"
+	},
+	"newCall": {
+		"message": "Neue Konferenz betreten?",
+		"detail": "Die aktuelle Konferenz wird verlassen.",
+		"confirm": "Neue Konferenz betreten",
+		"cancel": "Abbrechen"
 	}
 }

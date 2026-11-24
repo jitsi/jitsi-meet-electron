@@ -8,6 +8,7 @@ import {
 } from '@jitsi/electron-sdk/main';
 import {
     BrowserWindow,
+    IpcMainEvent,
     Menu,
     app,
     dialog,
@@ -26,6 +27,7 @@ import * as URL from 'url';
 import config from './app/features/config';
 import { openExternalLink } from './app/features/utils/openExternalLink';
 import { t } from './app/i18n/main';
+import type { IConference } from './app/types';
 import pkgJson from './package.json';
 
 // This file is bundled to ./build/main.js, so under esbuild __dirname is the
@@ -118,6 +120,16 @@ let mainWindow: BrowserWindow | null = null;
  */
 let meetingWindow: BrowserWindow | null = null;
 
+/**
+ * The conference last sent to the meeting window, or null when unknown (no
+ * meeting window, or a protocol URL changed it without us knowing).
+ */
+let currentConference: IConference | null = null;
+
+/**
+ * True while the "start a new call?" confirmation is open.
+ */
+let newCallPending = false;
 
 let webrtcInternalsWindow: BrowserWindow | null = null;
 
@@ -416,6 +428,7 @@ function handleProtocolCall(fullProtocolCall?: string) {
     const inputURL = fullProtocolCall.replace(appProtocolSurplus, '');
 
     if (meetingWindow) {
+        currentConference = null;
         meetingWindow.webContents.send('protocol-data-msg', inputURL);
 
         return;
@@ -611,14 +624,85 @@ async function requestRemoteControlConsent(): Promise<boolean> {
 }
 
 /**
- * Open the meeting in Window 2.
- * If a meeting window already exists, focus it and navigate to the new conference.
- * Otherwise create a new one.
+ * Asks the user whether the current call may be replaced by a new one.
+ *
+ * @param {BrowserWindow | null} parent - Window the dialog is attached to.
+ * @returns {Promise<boolean>} Whether the user chose to start the new call.
  */
-ipcMain.on('open-meeting-window', (event, conference) => {
+async function confirmNewCall(parent: BrowserWindow | null): Promise<boolean> {
+    const options = {
+        type: 'warning' as const,
+        buttons: [ t('newCall.cancel'), t('newCall.confirm') ],
+        defaultId: 0,
+        cancelId: 0,
+        message: t('newCall.message'),
+        detail: t('newCall.detail')
+    };
+
+    try {
+        const win = parent && !parent.isDestroyed() ? parent : null;
+        const { response } = win
+            ? await dialog.showMessageBox(win, options)
+            : await dialog.showMessageBox(options);
+
+        return response === 1;
+    } catch (error) {
+        console.error('New call confirmation failed', error);
+
+        return false;
+    }
+}
+
+/**
+ * Brings the meeting window to the foreground.
+ *
+ * @param {BrowserWindow} win - The meeting window.
+ * @returns {void}
+ */
+function focusMeetingWindow(win: BrowserWindow) {
+    if (win.isMinimized()) {
+        win.restore();
+    }
+    win.focus();
+}
+
+/**
+ * Open the meeting in Window 2.
+ * If a meeting window already exists, ask for confirmation, then focus it and
+ * navigate to the new conference. Otherwise create a new one.
+ */
+async function openMeetingWindow(event: IpcMainEvent, conference: IConference) {
     if (meetingWindow) {
-        meetingWindow.focus();
-        meetingWindow.webContents.send('navigate-to-conference', conference);
+        if (newCallPending) {
+            return;
+        }
+
+        if (currentConference
+            && currentConference.room === conference.room
+            && currentConference.serverURL === conference.serverURL) {
+            focusMeetingWindow(meetingWindow);
+
+            return;
+        }
+
+        const target = meetingWindow;
+        let confirmed = false;
+
+        newCallPending = true;
+        try {
+            confirmed = await confirmNewCall(
+                event.sender.isDestroyed() ? null : BrowserWindow.fromWebContents(event.sender));
+        } finally {
+            newCallPending = false;
+        }
+
+        if (!confirmed || meetingWindow !== target || target.isDestroyed()) {
+            return;
+        }
+
+        focusMeetingWindow(target);
+        currentConference = conference;
+        target.webContents.send('navigate-to-conference', conference);
 
         return;
     }
@@ -663,10 +747,11 @@ ipcMain.on('open-meeting-window', (event, conference) => {
         }
     });
 
+    currentConference = conference;
     meetingWindow.loadURL(meetingURL);
 
     meetingWindow.webContents.once('did-finish-load', () => {
-        meetingWindow?.webContents.send('navigate-to-conference', conference);
+        meetingWindow?.webContents.send('navigate-to-conference', currentConference ?? conference);
     });
 
     // SDK setup — these need the window that hosts the conference iframe.
@@ -690,11 +775,16 @@ ipcMain.on('open-meeting-window', (event, conference) => {
     // Closing the meeting window must NOT quit the app — launcher stays open.
     meetingWindow.on('closed', () => {
         meetingWindow = null;
+        currentConference = null;
     });
 
     meetingWindow.once('ready-to-show', () => {
         meetingWindow?.show();
     });
+}
+
+ipcMain.on('open-meeting-window', (event, conference) => {
+    openMeetingWindow(event, conference).catch(error => console.error('Failed to open meeting window', error));
 });
 
 /**

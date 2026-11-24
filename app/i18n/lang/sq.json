@@ -23,5 +23,11 @@
 		"detail": "Një pjesëmarrës në konferencë po kërkon kontrollin e miut dhe të tastierës tuaj.",
 		"allow": "Lejoje",
 		"deny": "Refuzoje"
+	},
+	"newCall": {
+		"message": "Dëshironi të hyni në një konferencë të re?",
+		"detail": "Do të largoheni nga konferenca aktuale.",
+		"confirm": "Hyr në konferencën e re",
+		"cancel": "Anuloje"
 	}
 }

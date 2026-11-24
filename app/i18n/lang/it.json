@@ -20,5 +20,11 @@
 		"detail": "Un partecipante alla conferenza sta richiedendo il controllo del mouse e della tastiera.",
 		"allow": "Consenti",
 		"deny": "Nega"
+	},
+	"newCall": {
+		"message": "Partecipare a una nuova conferenza?",
+		"detail": "Uscirai dalla conferenza corrente.",
+		"confirm": "Partecipa alla nuova conferenza",
+		"cancel": "Annulla"
 	}
 }

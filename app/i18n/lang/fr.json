@@ -20,5 +20,11 @@
 		"detail": "Un participant à la conférence demande à contrôler votre souris et votre clavier.",
 		"allow": "Autoriser",
 		"deny": "Refuser"
+	},
+	"newCall": {
+		"message": "Rejoindre une nouvelle conférence ?",
+		"detail": "Vous quitterez votre conférence en cours.",
+		"confirm": "Rejoindre la nouvelle conférence",
+		"cancel": "Annuler"
 	}
 }

@@ -21,5 +21,11 @@
 		"detail": "Een deelnemer aan de vergadering vraagt om de besturing van je muis en toetsenbord.",
 		"allow": "Toestaan",
 		"deny": "Weigeren"
+	},
+	"newCall": {
+		"message": "Deelnemen aan een nieuwe vergadering?",
+		"detail": "Je verlaat je huidige vergadering.",
+		"confirm": "Deelnemen",
+		"cancel": "Annuleren"
 	}
 }

@@ -20,5 +20,11 @@
 		"detail": "Un participante de la conferencia solicita controlar su ratón y su teclado.",
 		"allow": "Permitir",
 		"deny": "Denegar"
+	},
+	"newCall": {
+		"message": "¿Unirse a una nueva conferencia?",
+		"detail": "Saldrá de su conferencia actual.",
+		"confirm": "Unirse a la nueva conferencia",
+		"cancel": "Cancelar"
 	}
 }
